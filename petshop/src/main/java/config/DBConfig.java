@@ -19,7 +19,7 @@ public class DBConfig {
     public DataSource dataSource2() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("org.mariadb.jdbc.Driver");
-        ds.setUrl("jdbc:mariadb://127.0.0.1:3306/model1");
+        ds.setUrl("jdbc:mariadb://192.168.10.100:3306/model1");
         ds.setUsername("model2");
         ds.setPassword("1234");
         return ds;
@@ -29,7 +29,7 @@ public class DBConfig {
         ComboPooledDataSource ds = new ComboPooledDataSource();
         try {
             ds.setDriverClass("org.mariadb.jdbc.Driver");
-            ds.setJdbcUrl("jdbc:mariadb://127.0.0.1:3306/model1");
+            ds.setJdbcUrl("jdbc:mariadb://192.168.10.100:3306/model1");
             ds.setUser("model1");
             ds.setPassword("1234");
             ds.setMaxPoolSize(20);
