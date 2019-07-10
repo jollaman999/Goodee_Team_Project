@@ -1,0 +1,50 @@
+/* WebContent/css/main.css */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11pt;
+}
+
+th, td {
+    border: 1.5px solid #bcbcbc;
+    text-align: center;
+    padding: 8px;
+}
+
+th {
+    background-color: #2B95F3;
+    color: white;
+}
+
+td {
+    background-color: #FFFFFF;
+}
+
+caption {
+    color: #111111;
+    font-size: 20px;
+    background-color: #FFFFFF;
+}
+
+input[type=text], input[type=password], textarea {
+    width: 100%;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:hover {
+    color: #88A4DA;
+}
+
+.main-content {
+    margin-top: 10px;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-bottom: 50px;
+}
+
+.no_border {
+    border: 0px;
+}

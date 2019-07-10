@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.mapper.UserMapper">
+    <select id="list" resultType="User" parameterType="map">
+        select * from useraccount
+        <if test="userid != null">
+            where userid = #{userid}
+        </if>
+        <if test="ids != null">
+            where userid in (${ids})
+        </if>
+        order by userid
+    </select>
+</mapper>
