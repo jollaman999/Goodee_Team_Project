@@ -20,7 +20,7 @@ public class DBConfig {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("org.mariadb.jdbc.Driver");
         ds.setUrl("jdbc:mariadb://192.168.10.100:3306/model1");
-        ds.setUsername("model1");
+        ds.setUsername("model2");
         ds.setPassword("1234");
         return ds;
     }
