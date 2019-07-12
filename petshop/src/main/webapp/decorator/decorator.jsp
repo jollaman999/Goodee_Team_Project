@@ -6,39 +6,60 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><decorator:title /></title>
-    <script type="text/javascript" src="${path}/js/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="${path}/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="${path}/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="${path}/css/component.css" />
+    <script src="${path}/js/modernizr.custom.js"></script>
     <decorator:head />
 </head>
 <body>
-<table>
-    <tr>
-        <td colspan="3" align="right">
-            <c:if test="${empty sessionScope.loginUser}">
-                <a href="${path}/user/login.shop">로그인</a>&nbsp;
-                <a href="${path}/user/userEntry.shop">회원 가입</a>
-            </c:if>
-            <c:if test="${!empty sessionScope.loginUser}">
-                ${sessionScope.loginUser.userName}님
-                <a href="${path}/user/logout.shop">로그아웃</a>
-            </c:if>
-        </td>
-    </tr>
-    <tr>
-        <td width="15%" valign="top">
-            <a href="${path}/user/mypage.shop?id=${sessionScope.loginUser.userId}">회원 관리</a><br>
-            <a href="${path}/item/list.shop">상품 관리</a><br>
-            <a href="${path}/board/list.shop">게시판</a><br>
-            <a href="${path}/chat/chat.shop">채팅</a>
-        </td>
-        <td colspan="2" style="text-align: left; vertical-align: top">
-            <decorator:body />
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">구디아카데이 Since 2016</td>
-    </tr>
-</table>
+<div class="container">
+    <ul id="gn-menu" class="gn-menu-main">
+        <li class="gn-trigger">
+            <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+            <nav class="gn-menu-wrapper">
+                <div class="gn-scroller">
+                    <ul class="gn-menu">
+                        <li class="gn-search-item">
+                            <input placeholder="Search" type="search" class="gn-search">
+                            <a class="gn-icon gn-icon-search"><span>Search</span></a>
+                        </li>
+                        <li>
+                            <a class="gn-icon gn-icon-download">Downloads</a>
+                            <ul class="gn-submenu">
+                                <li><a class="gn-icon gn-icon-illustrator">Vector Illustrations</a></li>
+                                <li><a class="gn-icon gn-icon-photoshop">Photoshop files</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="gn-icon gn-icon-cog">Settings</a></li>
+                        <li><a class="gn-icon gn-icon-help">Help</a></li>
+                        <li>
+                            <a class="gn-icon gn-icon-archive">Archives</a>
+                            <ul class="gn-submenu">
+                                <li><a class="gn-icon gn-icon-article">Articles</a></li>
+                                <li><a class="gn-icon gn-icon-pictures">Images</a></li>
+                                <li><a class="gn-icon gn-icon-videos">Videos</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /gn-scroller -->
+            </nav>
+        </li>
+        <li><a href="http://tympanus.net/codrops">Codrops</a></li>
+        <li><a class="codrops-icon codrops-icon-prev" href="http://tympanus.net/Development/HeaderEffects/"><span>Previous Demo</span></a></li>
+        <li><a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=16030"><span>Back to the Codrops Article</span></a></li>
+    </ul>
+    <header>
+        <decorator:body/>
+    </header>
+</div><!-- /container -->
+<script src="${path}/js/classie.js"></script>
+<script src="${path}/js/gnmenu.js"></script>
+<script>
+    new gnMenu( document.getElementById( 'gn-menu' ) );
+</script>
 <link rel="stylesheet" href="${path}/css/main.css">
 </body>
 </html>
