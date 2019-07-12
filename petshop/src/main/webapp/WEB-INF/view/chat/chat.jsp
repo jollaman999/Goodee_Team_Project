@@ -9,7 +9,7 @@
     <c:set var="port" value="${pageContext.request.localPort}" />
     <c:set var="server" value="${pageContext.request.serverName}" />
     <c:set var="path" value="${pageContext.request.contextPath}" />
-    <script type="text/javascript" src="${path}/js/jquery-3.4.1.min.js"></script>
+
     <script type="text/javascript">
         $(function () {
             var ws = new WebSocket("ws://${server}:${port}${path}/chatting.shop");

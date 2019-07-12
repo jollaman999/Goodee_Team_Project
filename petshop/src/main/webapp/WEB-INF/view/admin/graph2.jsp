@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>글쓴이 분석</title>
-    <script src="${path}/js/jquery-3.4.1.min.js"></script>
+
     <script src="${path}/js/jquery.awesomeCloud-0.2.js"></script>
     <style type="text/css">
         .wordcloud {

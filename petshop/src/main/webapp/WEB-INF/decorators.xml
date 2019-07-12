@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <decorators defaultdir="/decorator">
     <decorator name="main" page="decorator.jsp">
+        <pattern>/index.jsp</pattern>
         <pattern>*.shop</pattern>
     </decorator>
 

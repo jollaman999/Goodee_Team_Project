@@ -8,7 +8,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>BAR graph</title>
 
-    <script src="${path}/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="${path}/js/Chart.bundle.min.js"></script>
 </head>
 <body>

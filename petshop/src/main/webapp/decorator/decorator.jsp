@@ -6,39 +6,47 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title><decorator:title /></title>
-    <script type="text/javascript" src="${path}/js/jquery-3.4.1.min.js"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="${path}/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="${path}/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="${path}/css/flaticon.css"/>
+    <link rel="stylesheet" href="${path}/css/slicknav.min.css"/>
+    <link rel="stylesheet" href="${path}/css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="${path}/css/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="${path}/css/animate.css"/>
+    <link rel="stylesheet" href="${path}/css/style.css"/>
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="${path}/css/main.css"/>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="${path}/js/jquery-3.2.1.min.js"></script>
+
     <decorator:head />
 </head>
 <body>
-<table>
-    <tr>
-        <td colspan="3" align="right">
-            <c:if test="${empty sessionScope.loginUser}">
-                <a href="${path}/user/login.shop">로그인</a>&nbsp;
-                <a href="${path}/user/userEntry.shop">회원 가입</a>
-            </c:if>
-            <c:if test="${!empty sessionScope.loginUser}">
-                ${sessionScope.loginUser.userName}님
-                <a href="${path}/user/logout.shop">로그아웃</a>
-            </c:if>
-        </td>
-    </tr>
-    <tr>
-        <td width="15%" valign="top">
-            <a href="${path}/user/mypage.shop?id=${sessionScope.loginUser.userId}">회원 관리</a><br>
-            <a href="${path}/item/list.shop">상품 관리</a><br>
-            <a href="${path}/board/list.shop">게시판</a><br>
-            <a href="${path}/chat/chat.shop">채팅</a>
-        </td>
-        <td colspan="2" style="text-align: left; vertical-align: top">
-            <decorator:body />
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">구디아카데이 Since 2016</td>
-    </tr>
-</table>
-<link rel="stylesheet" href="${path}/css/main.css">
+    <!-- Header section -->
+    <jsp:include page="include/header.jsp" />
+    <!-- Header section end -->
+
+    <!-- Body section -->
+    <div class="container" style="margin-top: 50px; margin-bottom: 50px">
+        <decorator:body />
+    </div>
+    <!-- Body section end -->
+
+    <!-- Footer section -->
+    <jsp:include page="include/footer.jsp" />
+    <!-- Footer section end -->
+
+    <!--====== Javascripts ======-->
+    <jsp:include page="include/javascripts.jsp" />
 </body>
 </html>
