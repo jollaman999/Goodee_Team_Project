@@ -8,6 +8,7 @@
         <typeAlias type="logic.SaleItem" alias="SaleItem"/>
         <typeAlias type="logic.Board" alias="Board"/>
         <typeAlias type="logic.CategoryGroup" alias="CategoryGroup"/>
+        <typeAlias type="logic.CategoryItem" alias="CategoryItem"/>
     </typeAliases>
     <mappers>
         <mapper resource="dao/mapper/Item.xml"/>
@@ -16,5 +17,6 @@
         <mapper resource="dao/mapper/SaleItem.xml"/>
         <mapper resource="dao/mapper/Board.xml"/>
         <mapper resource="dao/mapper/CategoryGroup.xml"/>
+        <mapper resource="dao/mapper/CategoryItem.xml"/>
     </mappers>
 </configuration>
