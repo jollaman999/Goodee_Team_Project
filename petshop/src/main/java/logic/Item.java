@@ -3,41 +3,45 @@ package logic;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 public class Item {
-    private Integer id;
-    @NotEmpty(message = "상품명을 등록하세요")
+    private int item_no;
+    @NotEmpty(message = " 상품을 등록할 카테고리를 선택 해주세요.")
+    private int category_item_code;
+    @NotEmpty(message = "상품명을 입력해주세요.")
     private String name;
-    @NotNull(message = "가격을 등록하세요")
-    @Min(value = 10, message = "가격은 10원이상 가능합니다.")
-    @Max(value = 100000, message = "가격은 10만원 이하만 가능합니다.")
+    @NotEmpty(message = "상품 이미지를 등록 해주세요.")
+    private String mainpic;
+    private MultipartFile mainpicMultipartFile;
+    @NotNull(message = "상품 가격을 입력해 주세요.")
     private Integer price;
-    @NotEmpty(message = "상품내용을 등록하세요")
+    @NotEmpty(message = "상품 요약 정보를 입력해 주세요.")
     private String description;
-    private String pictureUrl;
-    private MultipartFile picture;
+    @NotEmpty(message = "상품 내용을 입력해 주세요.")
+    private String content;
+    private String origin; // 원산지
+    private String mfr; // 제조사
+    private String mfr_tel; // 제조사 연락처
+    private Date expr_date; // 유통기한
+    @NotEmpty(message = "상품 수량을 입력해 주세요.")
+    private int quantity;
 
-    @Override
-    public String toString() {
-        return "Item{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", description='" + description + '\'' +
-                ", pictureUrl='" + pictureUrl + '\'' +
-                ", picture=" + picture +
-                '}';
+    public int getItem_no() {
+        return item_no;
     }
 
-    public Integer getId() {
-        return id;
+    public void setItem_no(int item_no) {
+        this.item_no = item_no;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public int getCategory_item_code() {
+        return category_item_code;
+    }
+
+    public void setCategory_item_code(int category_item_code) {
+        this.category_item_code = category_item_code;
     }
 
     public String getName() {
@@ -46,6 +50,22 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMainpic() {
+        return mainpic;
+    }
+
+    public void setMainpic(String mainpic) {
+        this.mainpic = mainpic;
+    }
+
+    public MultipartFile getMainpicMultipartFile() {
+        return mainpicMultipartFile;
+    }
+
+    public void setMainpicMultipartFile(MultipartFile mainpicMultipartFile) {
+        this.mainpicMultipartFile = mainpicMultipartFile;
     }
 
     public Integer getPrice() {
@@ -64,19 +84,51 @@ public class Item {
         this.description = description;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getContent() {
+        return content;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public MultipartFile getPicture() {
-        return picture;
+    public String getOrigin() {
+        return origin;
     }
 
-    public void setPicture(MultipartFile picture) {
-        this.picture = picture;
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getMfr() {
+        return mfr;
+    }
+
+    public void setMfr(String mfr) {
+        this.mfr = mfr;
+    }
+
+    public String getMfr_tel() {
+        return mfr_tel;
+    }
+
+    public void setMfr_tel(String mfr_tel) {
+        this.mfr_tel = mfr_tel;
+    }
+
+    public Date getExpr_date() {
+        return expr_date;
+    }
+
+    public void setExpr_date(Date expr_date) {
+        this.expr_date = expr_date;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

@@ -3,7 +3,7 @@ package logic;
 public class SaleItem {
     private int saleId;
     private int saleItemId;
-    private int itemId;
+    private int itemno;
     private int quantity;
     private Item item;
 
@@ -13,7 +13,7 @@ public class SaleItem {
         this.saleId = saleId;
         this.saleItemId = saleItemId;
         this.item = itemSet.getItem();
-        this.itemId = item.getId();
+        this.itemno = item.getItem_no();
         this.quantity = itemSet.getQuantity();
     }
 
@@ -33,12 +33,12 @@ public class SaleItem {
         this.saleItemId = saleItemId;
     }
 
-    public int getItemId() {
-        return itemId;
+    public int getItemno() {
+        return itemno;
     }
 
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
+    public void setItemno(int itemno) {
+        this.itemno = itemno;
     }
 
     public int getQuantity() {

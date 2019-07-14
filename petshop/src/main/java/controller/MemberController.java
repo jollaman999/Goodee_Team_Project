@@ -110,7 +110,7 @@ public class MemberController {
         for (Sale sa : salelist) {
             List<SaleItem> saleItemList = service.saleItemList(sa.getSaleId());
             for (SaleItem si : saleItemList) {
-                Item item = service.getItemById(si.getItemId());
+                Item item = service.getItemById(si.getItemno());
                 si.setItem(item);
             }
             sa.setItemList(saleItemList);

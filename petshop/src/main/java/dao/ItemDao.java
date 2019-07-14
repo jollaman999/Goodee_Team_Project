@@ -21,15 +21,15 @@ public class ItemDao {
         return sqlSessionTemplate.selectList(NS + "list");
     }
 
-    public Item selectOne(Integer id) {
+    public Item selectOne(int item_no) {
         param.clear();
-        param.put("id", id);
+        param.put("item_no", item_no);
         return sqlSessionTemplate.selectOne(NS + "list", param);
     }
 
     public void insert(Item item) {
         int id = sqlSessionTemplate.getMapper(ItemMapper.class).maxid();
-        item.setId(++id);
+        item.setItem_no(++id);
         sqlSessionTemplate.getMapper(ItemMapper.class).insert(item);
     }
 
@@ -37,7 +37,7 @@ public class ItemDao {
         sqlSessionTemplate.getMapper(ItemMapper.class).update(item);
     }
 
-    public void delete(Integer id) {
-        sqlSessionTemplate.getMapper(ItemMapper.class).delete(id);
+    public void delete(int item_no) {
+        sqlSessionTemplate.getMapper(ItemMapper.class).delete(item_no);
     }
 }

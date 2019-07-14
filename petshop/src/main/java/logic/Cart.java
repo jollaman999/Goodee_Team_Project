@@ -13,7 +13,7 @@ public class Cart {
 
     public void push(ItemSet itemSet) {
         for (ItemSet set : itemSetList) {
-            if (set.getItem().getId().equals(itemSet.getItem().getId())) {
+            if (set.getItem().getItem_no() == itemSet.getItem().getItem_no()) {
                 int quantity = set.getQuantity();
                 set.setQuantity(quantity + itemSet.getQuantity());
 

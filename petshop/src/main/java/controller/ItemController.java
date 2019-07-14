@@ -28,9 +28,9 @@ public class ItemController {
     }
 
     @RequestMapping("*")
-    public ModelAndView detail(Integer id) {
+    public ModelAndView detail(int item_no) {
         ModelAndView mav = new ModelAndView();
-        Item item = service.getItemById(id);
+        Item item = service.getItemById(item_no);
         mav.addObject("item", item);
         return mav;
     }
@@ -70,8 +70,8 @@ public class ItemController {
     }
 
     @RequestMapping("delete")
-    public String delete(Integer id) {
-        service.itemDelete(id);
+    public String delete(int item_no) {
+        service.itemDelete(item_no);
         return "redirect:/item/list.shop";
     }
 }

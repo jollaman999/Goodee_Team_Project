@@ -29,14 +29,14 @@ public class ShopService {
         return itemDao.list();
     }
 
-    public Item getItemById(Integer id) {
-        return itemDao.selectOne(id);
+    public Item getItemById(int item_no) {
+        return itemDao.selectOne(item_no);
     }
 
     public void itemCreate(Item item, HttpServletRequest request) {
-        if (item.getPicture() != null && !item.getPicture().isEmpty()) {
-            uploadFileCreate(item.getPicture(), request, "item/img/");
-            item.setPictureUrl(item.getPicture().getOriginalFilename());
+        if (item.getMainpicMultipartFile() != null && !item.getMainpicMultipartFile().isEmpty()) {
+            uploadFileCreate(item.getMainpicMultipartFile(), request, "item/img/");
+            item.setMainpic(item.getMainpicMultipartFile().getOriginalFilename());
         }
         itemDao.insert(item);
     }
@@ -53,16 +53,16 @@ public class ShopService {
     }
 
     public void itemUpdate(Item item, HttpServletRequest request) {
-        if (item.getPicture() != null && !item.getPicture().isEmpty()) {
-            uploadFileCreate(item.getPicture(), request, "item/img/");
-            item.setPictureUrl(item.getPicture().getOriginalFilename());
+        if (item.getMainpicMultipartFile() != null && !item.getMainpicMultipartFile().isEmpty()) {
+            uploadFileCreate(item.getMainpicMultipartFile(), request, "item/img/");
+            item.setMainpic(item.getMainpicMultipartFile().getOriginalFilename());
         }
 
         itemDao.update(item);
     }
 
-    public void itemDelete(Integer id) {
-        itemDao.delete(id);
+    public void itemDelete(int item_no) {
+        itemDao.delete(item_no);
     }
 
     public void memberCreate(Member member) {

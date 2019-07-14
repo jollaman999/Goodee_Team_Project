@@ -3,9 +3,9 @@
 <mapper namespace="dao.mapper.ItemMapper">
     <select id="list" resultType="Item" parameterType="map">
         select * from item
-        <if test="id != null">
-            where id = #{id}
+        <if test="item_no != null">
+            where item_no = #{item_no}
         </if>
-        order by id
+        order by item_no
     </select>
 </mapper>

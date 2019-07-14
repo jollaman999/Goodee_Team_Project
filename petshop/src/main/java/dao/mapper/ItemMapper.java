@@ -10,12 +10,15 @@ public interface ItemMapper {
     @Select("select ifnull(max(id), 0) from item")
     int maxid();
 
-    @Insert("insert into item (id, name, price, description, pictureUrl) values (#{id}, #{name}, #{price}, #{description}, #{pictureUrl})")
+    @Insert("insert into item (item_no, category_item_code, name, mainpic, price, description, content, origin, mfr, mfr_tel, expr_date, quantity)" +
+            "values (#{item_no}, #{category_item_code}, #{name}, #{mainpic}, #{price}, #{description), #{content}, #{origin}, #{mfr}, #{mfr_tel}, #{expr_date}, #{quantity")
     void insert(Item item);
 
-    @Update("update item set name = #{name}, price = #{price}, description = #{description}, pictureUrl = #{pictureUrl} where id = #{id}")
+    @Update("update item set category_item_code = #{category_item_code}, name = #{name}, price = #{price}, description = #{description}," +
+            "content = #{content}, origin = #{origin}, mfr = #{mfr}, mfr_tel = #{mfr_tel}, expr_date = #{expr_date}, quantity = #{quantity}" +
+            "where item_no = #{item_no}")
     void update(Item item);
 
-    @Delete("delete from item where id = #{id}")
-    void delete(Integer id);
+    @Delete("delete from item where item_no = #{item_no}")
+    void delete(Integer item_no);
 }
