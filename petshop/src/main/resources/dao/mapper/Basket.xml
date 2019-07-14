@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.mapper.BasketMapper">
+    <select id="list" resultType="Basket" parameterType="map">
+        select * from basket
+        <if test="item_no != null">
+            where item_no = #{item_no}
+        </if>
+        <if test="member_id != null">
+            where member_id = #{member_id}
+        </if>
+        order by list_num
+    </select>
+</mapper>
