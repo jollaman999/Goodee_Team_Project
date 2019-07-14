@@ -8,8 +8,7 @@
         </if>
     </select>
     <select id="list" resultType="Board" parameterType="map">
-        select num, name, pass, subject, content, file1 fileurl,
-               regdate, readcnt, ref, reflevel, refstep from board
+        select num, member_id, title, content, file1 fileurl, regdate from board
         <if test="num != null">
             where num = #{num}
         </if>
@@ -17,7 +16,7 @@
             where ${searchtype} like '%${searchcontent}%'
         </if>
         <if test="startrow != null and limit != null">
-            order by ref desc, refstep asc limit #{startrow}, #{limit}
+            limit #{startrow}, #{limit}
         </if>
     </select>
 </mapper>

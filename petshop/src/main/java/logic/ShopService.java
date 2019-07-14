@@ -133,18 +133,11 @@ public class ShopService {
     }
 
     public Board getBoard(int num, HttpServletRequest request) {
-        if (request.getRequestURI().contains("detail")) {
-            boardDao.readcntadd(num);
-        }
         return boardDao.selectOne(num);
     }
 
     public int boardInsert(Board board) {
         return boardDao.insert(board);
-    }
-
-    public void updateRefStep(Board board) {
-        boardDao.updateRefStep(board.getRef(), board.getRefstep());
     }
 
     public int boardUpdate(Board board) {
@@ -153,13 +146,5 @@ public class ShopService {
 
     public int boardDelete(Integer num) {
         return boardDao.delete(num);
-    }
-
-    public Map<String, Object> graph() {
-        Map<String,Object> map = new HashMap<>();
-        for(Map<String,Object> m : boardDao.graph()) {
-            map.put((String)m.get("key1"), m.get("value1"));
-        }
-        return map;
     }
 }

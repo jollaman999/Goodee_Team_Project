@@ -54,23 +54,8 @@ public class BoardDao {
         return sqlSessionTemplate.selectOne(NS + "list", param);
     }
 
-    public void readcntadd(int num) {
-        param.clear();
-        param.put("num", num);
-
-        sqlSessionTemplate.getMapper(BoardMapper.class).readcntadd(num);
-    }
-
     public int insert(Board board) {
         return sqlSessionTemplate.getMapper(BoardMapper.class).insert(board);
-    }
-
-    public void updateRefStep(int ref, int refstep) {
-        param.clear();
-        param.put("ref", ref);
-        param.put("refstep", refstep);
-
-        sqlSessionTemplate.getMapper(BoardMapper.class).updaterefstep(param);
     }
 
     public int update(Board board) {
@@ -82,9 +67,5 @@ public class BoardDao {
         param.put("num", num);
 
         return sqlSessionTemplate.getMapper(BoardMapper.class).delete(num);
-    }
-
-    public List<Map<String,Object>> graph(){
-        return sqlSessionTemplate.getMapper(BoardMapper.class).graph();
     }
 }

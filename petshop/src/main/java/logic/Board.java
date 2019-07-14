@@ -7,21 +7,15 @@ import java.util.Date;
 
 public class Board {
     private int num;
-    @NotEmpty(message = "글쓴이는 필수 입니다.")
-    private String name;
-    @NotEmpty(message = "비밀번호는 필수 입니다.")
-    private String pass;
-    @NotEmpty(message = "제목은 필수 입니다.")
+    @NotEmpty(message = "회원 정보를 가져올 수 없습니다.")
+    private String member_id;
+    @NotEmpty(message = "제목을 입력해 주세요.")
     private String title;
-    @NotEmpty(message = "내용은 필수 입니다.")
+    @NotEmpty(message = "내용을 입력해 주세요.")
     private String content;
     private MultipartFile file1;
     private String fileurl;
     private Date regdate;
-    private int readcnt;
-    private int ref;
-    private int reflevel;
-    private int refstep;
 
     public int getNum() {
         return num;
@@ -31,20 +25,12 @@ public class Board {
         this.num = num;
     }
 
-    public String getName() {
-        return name;
+    public String getMember_id() {
+        return member_id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
     }
 
     public String getTitle() {
@@ -85,37 +71,5 @@ public class Board {
 
     public void setRegdate(Date regdate) {
         this.regdate = regdate;
-    }
-
-    public int getReadcnt() {
-        return readcnt;
-    }
-
-    public void setReadcnt(int readcnt) {
-        this.readcnt = readcnt;
-    }
-
-    public int getRef() {
-        return ref;
-    }
-
-    public void setRef(int ref) {
-        this.ref = ref;
-    }
-
-    public int getReflevel() {
-        return reflevel;
-    }
-
-    public void setReflevel(int reflevel) {
-        this.reflevel = reflevel;
-    }
-
-    public int getRefstep() {
-        return refstep;
-    }
-
-    public void setRefstep(int refstep) {
-        this.refstep = refstep;
     }
 }

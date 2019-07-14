@@ -57,8 +57,6 @@
         <tr>
             <td colspan="7">
                 <input type="submit" value="메일보내기">&nbsp;&nbsp;
-                <input type="button" value="게시물 작성 그래프 보기 (막대)" onclick="graph_open('graph1')">&nbsp;&nbsp;
-                <input type="button" value="게시물 WordCloud" onclick="graph_open('graph2')">
             </td>
         </tr>
     </table>
