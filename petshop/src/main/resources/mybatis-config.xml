@@ -3,14 +3,14 @@
 <configuration>
     <typeAliases>
         <typeAlias type="logic.Item" alias="Item"/>
-        <typeAlias type="logic.User" alias="User"/>
+        <typeAlias type="logic.Member" alias="Member"/>
         <typeAlias type="logic.Sale" alias="Sale"/>
         <typeAlias type="logic.SaleItem" alias="SaleItem"/>
         <typeAlias type="logic.Board" alias="Board"/>
     </typeAliases>
     <mappers>
         <mapper resource="dao/mapper/Item.xml"/>
-        <mapper resource="dao/mapper/User.xml"/>
+        <mapper resource="dao/mapper/Member.xml"/>
         <mapper resource="dao/mapper/Sale.xml"/>
         <mapper resource="dao/mapper/SaleItem.xml"/>
         <mapper resource="dao/mapper/Board.xml"/>

@@ -10,8 +10,8 @@
 </head>
 <body>
 <h2>사용자 등록</h2>
-<form:form modelAttribute="user" method="post" action="userEntry.shop">
-    <spring:hasBindErrors name="user">
+<form:form modelAttribute="member" method="post" action="memberEntry.shop">
+    <spring:hasBindErrors name="member">
         <font color="red">
             <c:forEach items="${errors.globalErrors}" var="error">
                 <spring:message code="${error.code}" />
@@ -22,43 +22,29 @@
         <tr height="40px">
             <td>아이디</td>
             <td>
-                <form:input path="userId" />
-                <font color="red"><form:errors path="userId" /></font>
+                <form:input path="id" />
+                <font color="red"><form:errors path="id" /></font>
             </td>
         </tr>
         <tr height="40px">
             <td>비밀번호</td>
             <td>
-                <form:password path="password" />
-                <font color="red"><form:errors path="password" /></font>
+                <form:password path="pass" />
+                <font color="red"><form:errors path="pass" /></font>
             </td>
         </tr>
         <tr height="40px">
             <td>이름</td>
             <td>
-                <form:input path="userName" />
-                <font color="red"><form:errors path="userName" /></font>
+                <form:input path="name" />
+                <font color="red"><form:errors path="name" /></font>
             </td>
         </tr>
         <tr height="40px">
             <td>전화번호</td>
             <td>
-                <form:input path="phoneNo" />
-                <font color="red"><form:errors path="phoneNo" /></font>
-            </td>
-        </tr>
-        <tr height="40px">
-            <td>우편번호</td>
-            <td>
-                <form:input path="postcode" />
-                <font color="red"><form:errors path="postcode" /></font>
-            </td>
-        </tr>
-        <tr height="40px">
-            <td>주소</td>
-            <td>
-                <form:input path="address" />
-                <font color="red"><form:errors path="address" /></font>
+                <form:input path="phone" />
+                <font color="red"><form:errors path="phone" /></font>
             </td>
         </tr>
         <tr height="40px">
@@ -69,10 +55,24 @@
             </td>
         </tr>
         <tr height="40px">
-            <td>생년월일</td>
+            <td>주소</td>
             <td>
-                <form:input path="birthDay" />
-                <font color="red"><form:errors path="birthDay" /></font>
+                <form:input path="address" />
+                <font color="red"><form:errors path="address" /></font>
+            </td>
+        </tr>
+        <tr height="40px">
+            <td>상세 주소</td>
+            <td>
+                <form:input path="address_detail" />
+                <font color="red"><form:errors path="address_detail" /></font>
+            </td>
+        </tr>
+        <tr height="40px">
+            <td>우편번호</td>
+            <td>
+                <form:input path="postcode" />
+                <font color="red"><form:errors path="postcode" /></font>
             </td>
         </tr>
         <tr height="40px">

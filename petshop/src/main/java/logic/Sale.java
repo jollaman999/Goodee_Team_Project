@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Sale {
     private int saleId;
-    private User user;
+    private Member member;
     private Date updatetime;
     private List<SaleItem> itemList = new ArrayList<>();
     private long totAmount;
@@ -32,12 +32,12 @@ public class Sale {
         this.saleId = saleId;
     }
 
-    public User getUser() {
-        return user;
+    public Member getMember() {
+        return member;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public Date getUpdatetime() {

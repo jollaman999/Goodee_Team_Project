@@ -1,7 +1,7 @@
 package aop;
 
 import exception.LogInException;
-import logic.User;
+import logic.Member;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,18 +14,17 @@ import javax.servlet.http.HttpSession;
 public class AdminAspect {
     @Around("execution(* controller.Admin*.*(..)) && args(.., session)")
     public Object adminCheck(ProceedingJoinPoint joinPoint, HttpSession session) throws Throwable {
-        User loginUser = (User)session.getAttribute("loginUser");
+        Member loginMember = (Member)session.getAttribute("loginMember");
 
-        if (loginUser == null) {
+        if (loginMember == null) {
             throw new LogInException("로그인 후 이용하세요!", "../user/login.shop");
         }
 
-        if (!loginUser.getUserId().equals("admin")) {
-            throw new LogInException("관리자만 이용하세요", "../user/mypage.shop?id" + loginUser.getUserId());
+        if (!loginMember.getId().equals("admin")) {
+            throw new LogInException("관리자만 이용하세요", "../user/mypage.shop?id" + loginMember.getId());
         }
 
-        Object ret = joinPoint.proceed();
-        return ret;
+        return joinPoint.proceed();
     }
 
 

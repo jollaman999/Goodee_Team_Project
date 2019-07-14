@@ -112,39 +112,39 @@
         </tr>
         <tr>
             <td>아이디</td>
-            <td>${user.userId}</td>
+            <td>${member.id}</td>
         </tr>
         <tr>
             <td>이름</td>
-            <td>${user.userName}</td>
-        </tr>
-        <tr>
-            <td>우편번호</td>
-            <td>${user.postcode}</td>
-        </tr>
-        <tr>
-            <td>주소</td>
-            <td>${user.address}</td>
+            <td>${member.name}</td>
         </tr>
         <tr>
             <td>전화번호</td>
-            <td>${user.phoneNo}</td>
+            <td>${member.phone}</td>
         </tr>
         <tr>
             <td>이메일</td>
-            <td>${user.email}</td>
+            <td>${member.email}</td>
         </tr>
         <tr>
-            <td>생년월일</td>
-            <td><fmt:formatDate value="${user.birthDay}" pattern="yyyy-MM-dd" /></td>
+            <td>주소</td>
+            <td>${member.address}</td>
+        </tr>
+        <tr>
+            <td>상세 주소</td>
+            <td>${member.address_detail}</td>
+        </tr>
+        <tr>
+            <td>우편번호</td>
+            <td>${member.postcode}</td>
         </tr>
     </table>
     <br>
-    <a href="update.shop?id=${user.userId}">[회원 정보 수정]</a>&nbsp;
-    <c:if test="${user.userId != 'admin'}">
-        <a href="delete.shop?id=${user.userId}">[회원 탈퇴]</a>&nbsp;
+    <a href="update.shop?id=${member.id}">[회원 정보 수정]</a>&nbsp;
+    <c:if test="${member.id != 'admin'}">
+        <a href="delete.shop?id=${member.id}">[회원 탈퇴]</a>&nbsp;
     </c:if>
-    <c:if test="${loginUser.userId == 'admin'}">
+    <c:if test="${loginMember.id == 'admin'}">
         <a href="../admin/list.shop">[회원 목록]</a>
     </c:if>
 </div>

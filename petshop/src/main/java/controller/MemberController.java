@@ -1,5 +1,6 @@
 package controller;
 
+import dao.MemberDao;
 import exception.LogInException;
 import logic.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,11 @@ import util.SecurityUtil;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Component
-@RequestMapping("user")
-public class UserController {
+@RequestMapping("member")
+public class MemberController {
     @Autowired
     private ShopService service;
 
@@ -27,12 +29,12 @@ public class UserController {
 
     @GetMapping("*")
     public String form(Model model) {
-        model.addAttribute(new User());
+        model.addAttribute(new Member());
         return null;
     }
 
-    @PostMapping("userEntry")
-    public ModelAndView userEntry(@Valid User user, BindingResult bindingResult) {
+    @PostMapping("memberEntry")
+    public ModelAndView memberEntry(@Valid Member member, BindingResult bindingResult) {
         ModelAndView mav = new ModelAndView();
         if (bindingResult.hasErrors()) {
             mav.getModel().putAll(bindingResult.getModel());
@@ -40,36 +42,47 @@ public class UserController {
         }
 
         try {
-            service.userCreate(user);
-            mav.setViewName("user/login");
-            mav.addObject("user", user);
+            Map<String, Object> map = bindingResult.getModel();
+            Member mem = (Member)map.get("member");
+
+            if (mem.getId() != null && service.memberSelect(mem.getId()) != null) {
+                bindingResult.reject("error.duplicate.id");
+                new MemberDao().setDecryptedEmail(mem);
+
+                return mav;
+            }
+
+            service.memberCreate(member);
+            mav.setViewName("member/login");
+            mav.addObject("member", member);
         } catch (DataIntegrityViolationException e) {
             e.printStackTrace();
-            bindingResult.reject("error.duplicate.user");
+            bindingResult.reject("error.database");
         }
 
         return mav;
     }
 
     @PostMapping("login")
-    public ModelAndView login(@Valid User user, BindingResult bindingResult, HttpSession session) {
+    public ModelAndView login(@Valid Member member, BindingResult bindingResult, HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
         if (bindingResult.hasErrors()) {
-            bindingResult.reject("error.login.user");
+            bindingResult.reject("error.login.member");
             mav.getModel().putAll(bindingResult.getModel());
             return mav;
         }
 
-        User dbuser = service.userSelect(user.getUserId());
-        if (dbuser == null) {
+        Member dbmember = service.memberSelect(member.getId());
+        if (dbmember == null) {
             bindingResult.reject("error.login.id");
             return mav;
         }
 
-        if (securityUtil.encryptSHA256(user.getPassword()).equals(dbuser.getPassword())) {
-            session.setAttribute("loginUser", dbuser);
+        if (securityUtil.encryptSHA256(member.getPass()).equals(dbmember.getPass())) {
+            session.setAttribute("loginMember", dbmember);
         } else {
-            bindingResult.reject("error.login.password");
+            bindingResult.reject("error.login.pass");
             mav.getModel().putAll(bindingResult.getModel());
             return mav;
         }
@@ -85,14 +98,14 @@ public class UserController {
     }
 
     @RequestMapping("main")
-    public String checkmain(HttpSession session) {
-        return "user/main";
+    public String checkmain() {
+        return "member/main";
     }
 
     @RequestMapping("mypage")
     public ModelAndView mypage(String id) {
         ModelAndView mav = new ModelAndView();
-        User user = service.userSelect(id);
+        Member member = service.memberSelect(id);
         List<Sale> salelist = service.salelist(id);
         for (Sale sa : salelist) {
             List<SaleItem> saleItemList = service.saleItemList(sa.getSaleId());
@@ -102,7 +115,7 @@ public class UserController {
             }
             sa.setItemList(saleItemList);
         }
-        mav.addObject("user", user);
+        mav.addObject("member", member);
         mav.addObject("salelist", salelist);
 
         return mav;
@@ -111,14 +124,14 @@ public class UserController {
     @GetMapping(value = {"update", "delete"})
     public ModelAndView checkupdateForm(String id) {
         ModelAndView mav = new ModelAndView();
-        User user = service.userSelect(id);
-        mav.addObject(user);
+        Member member = service.memberSelect(id);
+        mav.addObject(member);
 
         return mav;
     }
 
     @PostMapping("update")
-    public ModelAndView doupdate(@Valid User user, BindingResult bindingResult, HttpSession session) {
+    public ModelAndView doupdate(@Valid Member member, BindingResult bindingResult, HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
@@ -126,54 +139,42 @@ public class UserController {
             return mav;
         }
 
-        User loginUser = (User)session.getAttribute("loginUser");
-        User dbuser = service.userSelect(user.getUserId());
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        Member dbmember = service.memberSelect(member.getId());
 
-        if (!dbuser.getPassword().equals(securityUtil.encryptSHA256(user.getPassword()))) {
-            bindingResult.reject("error.login.password");
+        if (!dbmember.getPass().equals(securityUtil.encryptSHA256(member.getPass()))) {
+            bindingResult.reject("error.login.pass");
             return mav;
         }
 
         try {
-            service.userUpdate(user);
-            mav.setViewName("redirect:mypage.shop?id=" + user.getUserId());
-            if (loginUser.getUserId().equals(dbuser.getUserId()))
-                session.setAttribute("loginUser", user);
+            service.memberUpdate(member);
+            mav.setViewName("redirect:mypage.shop?id=" + member.getId());
+            if (loginMember.getId().equals(dbmember.getId()))
+                session.setAttribute("loginMember", member);
         } catch (Exception e) {
             e.printStackTrace();
-            bindingResult.reject("error.user.update");
+            bindingResult.reject("error.member.update");
         }
 
         return mav;
     }
 
-    /*
-    1. 관리자 강제 탈퇴
-        - 비밀번호에 관리자 비밀번호 입력하기
-        - 관리자 비밀번호가 맞는 경우 해당 회원정보 db에서 삭제
-        - 삭제성공 : mypage.shop 으로 페이지 이동
-        - 삭제 실패 : delete.shop 으로 페이지 이동
-    2. 본인 탈퇴
-        - 비밀번호에 본인 비밀번호 입력하기
-        - 비밀번호가 맞는 경우 회원 정보 삭제
-        - 삭제 성공 : 로그아웃 후 login.shop 으로 페이지 이동
-        - 삭제 실패 : delete.shop 으로 페이지 이동
-     */
     @PostMapping("delete")
-    public ModelAndView delete(User user, HttpSession session) {
+    public ModelAndView delete(Member member, HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        User loginUser = (User)session.getAttribute(("loginUser"));
-        if (loginUser == null) {
+        Member loginMember = (Member)session.getAttribute(("loginMember"));
+        if (loginMember == null) {
             throw new LogInException("로그인 후 이용해 주십시오!", "login.shop");
         }
 
-        if (!loginUser.getPassword().equals(securityUtil.encryptSHA256(user.getPassword()))) {
-            throw new LogInException("비밀번호가 일치하지 않습니다!", "delete.shop?id=" + user.getUserId());
+        if (!loginMember.getPass().equals(securityUtil.encryptSHA256(member.getPass()))) {
+            throw new LogInException("비밀번호가 일치하지 않습니다!", "delete.shop?id=" + member.getId());
         }
 
         try {
-            service.userDelete(user);
-            if (loginUser.getUserId().equals("admin")) {
+            service.memberDelete(member);
+            if (loginMember.getId().equals("admin")) {
                 mav.setViewName("redirect:/admin/list.shop");
             } else {
                 session.invalidate();
@@ -183,7 +184,7 @@ public class UserController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new LogInException("회원 정보 삭제가 실패했습니다. 전산부 전화요망. (전화 : 1234)", "delete.shop?id=" + user.getUserId());
+            throw new LogInException("회원 정보 삭제가 실패했습니다. 전산부 전화요망. (전화 : 1234)", "delete.shop?id=" + member.getId());
         }
 
         return mav;

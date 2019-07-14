@@ -12,7 +12,7 @@ public class Board {
     @NotEmpty(message = "비밀번호는 필수 입니다.")
     private String pass;
     @NotEmpty(message = "제목은 필수 입니다.")
-    private String subject;
+    private String title;
     @NotEmpty(message = "내용은 필수 입니다.")
     private String content;
     private MultipartFile file1;
@@ -47,12 +47,12 @@ public class Board {
         this.pass = pass;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getTitle() {
+        return title;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {

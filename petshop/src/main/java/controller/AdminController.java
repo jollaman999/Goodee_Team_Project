@@ -2,8 +2,8 @@ package controller;
 
 import exception.LogInException;
 import logic.Mail;
+import logic.Member;
 import logic.ShopService;
-import logic.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +28,7 @@ public class AdminController {
 
     @RequestMapping("list")
     public ModelAndView list() {
-        List<User> list = service.userList();
+        List<Member> list = service.memberList();
         ModelAndView mav = new ModelAndView();
         mav.addObject("list", list);
         return mav;
@@ -40,7 +40,7 @@ public class AdminController {
         if (idchks == null || idchks.length == 0) {
             throw new LogInException("메일을 보낼 대상자를 선택하세요.", "list.shop");
         }
-        List<User> list = service.userList(idchks);
+        List<Member> list = service.memberList(idchks);
         mav.addObject("userList", list);
         return mav;
     }
@@ -162,6 +162,10 @@ public class AdminController {
         MimeBodyPart body = new MimeBodyPart();
         String orgFile = mf.getOriginalFilename();
         File f1 = new File("G:/spring/mailupload/" + orgFile);
+
+        if (orgFile == null) {
+            return body;
+        }
 
         try {
             mf.transferTo(f1);

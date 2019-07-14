@@ -100,7 +100,7 @@ public class BoardController {
             Board dbBoard = service.getBoard(board.getNum(), request);
             Map<String, Object> map = br.getModel();
             Board b = (Board)map.get("board");
-            b.setSubject(dbBoard.getSubject());
+            b.setTitle(dbBoard.getTitle());
 
             return mav;
         }

@@ -17,7 +17,7 @@ public class ShopService {
     @Autowired
     private ItemDao itemDao;
     @Autowired
-    private UserDao userDao;
+    private MemberDao memberDao;
     @Autowired
     private SaleDao saleDao;
     @Autowired
@@ -65,26 +65,26 @@ public class ShopService {
         itemDao.delete(id);
     }
 
-    public void userCreate(User user) {
-        userDao.insert(user);
+    public void memberCreate(Member member) {
+        memberDao.insert(member);
     }
 
-    public User userSelect (String userId) {
-        return userDao.selectOne(userId);
+    public Member memberSelect (String id) {
+        return memberDao.selectOne(id);
     }
 
-    public void userUpdate(User user) {
-        userDao.update(user);
+    public void memberUpdate(Member member) {
+        memberDao.update(member);
     }
 
-    public void userDelete(User user) {
-        userDao.delete(user);
+    public void memberDelete(Member member) {
+        memberDao.delete(member);
     }
 
-    public Sale checkEnd(User loginUser, Cart cart) {
+    public Sale checkEnd(Member loginMember, Cart cart) {
         Sale sale = new Sale();
         sale.setSaleId(saleDao.getMaxSaleId());
-        sale.setUser(loginUser);
+        sale.setMember(loginMember);
         sale.setUpdatetime(new Date());
         List<ItemSet> itemList = cart.getItemSetList();
 
@@ -112,12 +112,12 @@ public class ShopService {
         return saleItemDao.list(saleId);
     }
 
-    public List<User> userList() {
-        return userDao.list();
+    public List<Member> memberList() {
+        return memberDao.list();
     }
 
-    public List<User> userList(String[] idchks) {
-        return userDao.list(idchks);
+    public List<Member> memberList(String[] idchks) {
+        return memberDao.list(idchks);
     }
 
     public int boardcount(String searchtype, String searchcontent) {

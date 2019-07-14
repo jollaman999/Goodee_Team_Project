@@ -10,20 +10,16 @@
 <table>
     <tr>
         <td>아이디</td>
-        <td>${user.userId}</td>
+        <td>${member.id}</td>
     </tr>
     <tr>
         <td>이름</td>
-        <td>${user.userName}</td>
-    </tr>
-    <tr>
-        <td>생년월일</td>
-        <td><fmt:formatDate value="${user.birthDay}" pattern="yyyy-MM-dd" /></td>
+        <td>${member.name}</td>
     </tr>
 </table>
 <form action="delete.shop" method="post" name="deleteform">
-    <input type="hidden" name="userId" value="${param.id}">
-    비밀번호<input type="password" name="password">
+    <input type="hidden" name="id" value="${param.id}">
+    비밀번호<input type="password" name="pass">
     <a href="javascript:deleteform.submit()">[회원탈퇴]</a>
 </form>
 </body>

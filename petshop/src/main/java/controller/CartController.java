@@ -82,8 +82,8 @@ public class CartController {
     public ModelAndView checkend (HttpSession session) {
         ModelAndView mav = new ModelAndView();
         Cart cart = (Cart)session.getAttribute("CART");
-        User loginUser = (User)session.getAttribute("loginUser");
-        Sale sale = service.checkEnd(loginUser, cart);
+        Member loginMember = (Member)session.getAttribute("loginMember");
+        Sale sale = service.checkEnd(loginMember, cart);
         long tot = cart.getTotal();
         cart.clearAll(session);
         mav.addObject("sale", sale);

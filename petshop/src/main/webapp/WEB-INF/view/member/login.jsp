@@ -9,9 +9,12 @@
     <title>로그인</title>
 </head>
 <body>
-<form:form modelAttribute="user" method="post" action="login.shop">
-    <input type="hidden" name="userName" value="유효성 검증을 위한 의미없는 이름">
-    <spring:hasBindErrors name="user">
+<form:form modelAttribute="member" method="post" action="login.shop">
+    <input type="hidden" name="name" value="유효성 검증 통과">
+    <input type="hidden" name="phone" value="유효성 검증 통과">
+    <input type="hidden" name="email" value="유효성 검증 통과">
+    <input type="hidden" name="address" value="유효성 검증 통과">
+    <spring:hasBindErrors name="member">
         <font color="red">
             <c:forEach items="${errors.globalErrors}" var="error">
                 <spring:message code="${error.code}" />
@@ -22,21 +25,21 @@
         <tr height="40px">
             <td>아이디</td>
             <td>
-                <form:input path="userId" />
-                <font color="red"><form:errors path="userId" /></font>
+                <form:input path="id" />
+                <font color="red"><form:errors path="id" /></font>
             </td>
         </tr>
         <tr height="40px">
             <td>비밀번호</td>
             <td>
-                <form:password path="password" />
-                <font color="red"><form:errors path="password" /></font>
+                <form:password path="pass" />
+                <font color="red"><form:errors path="pass" /></font>
             </td>
         </tr>
         <tr>
             <td colspan="2" align="center">
                 <input type="submit" value="로그인">&nbsp;
-                <input type="button" value="회원가입" onclick="location.href='userEntry.shop'">
+                <input type="button" value="회원가입" onclick="location.href='memberEntry.shop'">
             </td>
         </tr>
     </table>

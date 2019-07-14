@@ -7,8 +7,8 @@
     <title>회원 정보</title>
 </head>
 <body>
-<h2>${sessionScope.loginUser.userName}님 반갑습니다!</h2>
-<a href="mypage.shop?id=${loginUser.userId}">마이페이지</a><br>
+<h2>${sessionScope.loginMember.name}님 반갑습니다!</h2>
+<a href="mypage.shop?id=${loginMember.id}">마이페이지</a><br>
 <a href="logout.shop">로그아웃</a>
 </body>
 </html>
