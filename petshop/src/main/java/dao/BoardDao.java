@@ -70,7 +70,7 @@ public class BoardDao {
         param.put("ref", ref);
         param.put("refstep", refstep);
 
-        sqlSessionTemplate.getMapper(BoardMapper.class).updaterefstep();
+        sqlSessionTemplate.getMapper(BoardMapper.class).updaterefstep(param);
     }
 
     public int update(Board board) {

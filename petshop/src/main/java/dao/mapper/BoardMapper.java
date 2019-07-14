@@ -21,7 +21,7 @@ public interface BoardMapper {
     int insert(Board board);
 
     @Update("update board set refstep = refstep + 1 where ref = #{ref} and refstep > #{refstep}")
-    void updaterefstep();
+    void updaterefstep(Map map);
 
     @Update("update board set name = #{name}, subject = #{subject}, content = #{content}, file1 = #{fileurl} where num = #{num}")
     int update(Board board);
