@@ -1,6 +1,7 @@
 package controller;
 
 import logic.Board;
+import logic.Member;
 import logic.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,11 +14,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("board")
@@ -78,7 +79,6 @@ public class BoardController {
         }
 
         board.setNum(num);
-        board.setRef(num);
 
         int result = service.boardInsert(board);
 
@@ -88,44 +88,6 @@ public class BoardController {
         } else {
             mav.addObject("msg","게시글 작성을 실패하였습니다!.");
             mav.addObject("url","write.shop");
-        }
-
-        return mav;
-    }
-
-    @PostMapping("reply")
-    public ModelAndView replyBoard(@Valid Board board, BindingResult br, MultipartHttpServletRequest request) {
-        if (br.hasErrors()) {
-            ModelAndView mav = new ModelAndView();
-            Board dbBoard = service.getBoard(board.getNum(), request);
-            Map<String, Object> map = br.getModel();
-            Board b = (Board)map.get("board");
-            b.setTitle(dbBoard.getTitle());
-
-            return mav;
-        }
-
-        ModelAndView mav = new ModelAndView("/alert");
-        int num = service.boardmaxnum() + 1;
-
-        if (!FileUpload(num, board, mav, request, "reply.shop?num=" + num)) {
-            return mav;
-        }
-
-        board.setNum(num);
-        board.setReflevel(board.getReflevel() + 1);
-        board.setRefstep(board.getRefstep() + 1);
-
-        service.updateRefStep(board);
-
-        int result = service.boardInsert(board);
-
-        if (result > 0) {
-            mav.addObject("msg","답변글 작성이 완료되었습니다.");
-            mav.addObject("url","detail.shop?num=" + num);
-        } else {
-            mav.addObject("msg","답변글 작성을 실패하였습니다!.");
-            mav.addObject("url","reply.shop");
         }
 
         return mav;
@@ -147,14 +109,6 @@ public class BoardController {
         }
 
         int num = Integer.parseInt(request.getParameter("num"));
-
-        Board dbBoard = service.getBoard(num, request);
-        if (!dbBoard.getPass().equals(board.getPass())) {
-            mav.addObject("msg","비밀번호가 일치하지 않습니다!");
-            mav.addObject("url","update.shop?num=" + num);
-
-            return mav;
-        }
 
         if (!FileUpload(num, board, mav, request, "update.shop?num=" + num)) {
             return mav;
@@ -185,14 +139,6 @@ public class BoardController {
         }
 
         int num = Integer.parseInt(request.getParameter("num"));
-
-        Board dbBoard = service.getBoard(num, request);
-        if (!dbBoard.getPass().equals(request.getParameter("password"))) {
-            mav.addObject("msg","비밀번호가 일치하지 않습니다!");
-            mav.addObject("url","delete.shop?num=" + num);
-
-            return mav;
-        }
 
         if (!DeleteAllFiles(num, mav, request)) {
             return mav;
@@ -240,12 +186,14 @@ public class BoardController {
     }
 
     @RequestMapping("*")
-    public ModelAndView getBoard(Integer num, HttpServletRequest request) {
+    public ModelAndView getBoard(Integer num, HttpServletRequest request, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         Board board = new Board();
+        Member loginMember = (Member) session.getAttribute("loginMember");
         if (num != null) {
             board = service.getBoard(num, request);
         }
+        board.setMember_id(loginMember.getId());
         mav.addObject("board", board);
 
         return mav;

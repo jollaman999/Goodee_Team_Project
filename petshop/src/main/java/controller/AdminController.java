@@ -54,14 +54,6 @@ public class AdminController {
         return mav;
     }
 
-    @RequestMapping("graph*")
-    public ModelAndView ShowStickGraph() {
-        ModelAndView mav = new ModelAndView();
-        Map<String, Object> graph = service.graph();
-        mav.addObject("map", graph);
-        return mav;
-    }
-
     private static final class MyAuthenticator extends Authenticator {
         private String id;
         private String pw;
