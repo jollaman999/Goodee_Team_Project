@@ -106,17 +106,17 @@ public class MemberController {
     public ModelAndView mypage(String id) {
         ModelAndView mav = new ModelAndView();
         Member member = service.memberSelect(id);
-        List<Sale> salelist = service.salelist(id);
-        for (Sale sa : salelist) {
-            List<SaleItem> saleItemList = service.saleItemList(sa.getSaleId());
-            for (SaleItem si : saleItemList) {
-                Item item = service.getItemById(si.getItemno());
-                si.setItem(item);
-            }
-            sa.setItemList(saleItemList);
-        }
+//        List<Sale> salelist = service.salelist(id);
+//        for (Sale sa : salelist) {
+//            List<SaleItem> saleItemList = service.saleItemList(sa.getSaleId());
+//            for (SaleItem si : saleItemList) {
+//                Item item = service.getItemById(si.getItemno());
+//                si.setItem(item);
+//            }
+//            sa.setItemList(saleItemList);
+//        }
         mav.addObject("member", member);
-        mav.addObject("salelist", salelist);
+//        mav.addObject("salelist", salelist);
 
         return mav;
     }
