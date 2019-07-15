@@ -12,11 +12,10 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-
 @Service
 public class ShopService {
-	
-	// 자동연결할 dao들 
+
+    // 자동연결할 dao들
     @Autowired
     private ItemDao itemDao;
     @Autowired
@@ -33,17 +32,16 @@ public class ShopService {
     @Autowired
     private CategoryItemDao categoryItemDao;
 
-    //list 
-    
+    //list
     //카테고리 리스트 추가한것.
     public List<CategoryItemMapper> CategoryItemList() {
-    	return categoryItemDao.list();
-	}
+        return categoryItemDao.list();
+    }
 
-	public List<CategoryGroup> CategoryGroupList() {
-		return categoryGroupDao.list();
-	}
-    
+    public List<CategoryGroup> CategoryGroupList() {
+        return categoryGroupDao.list();
+    }
+
     public List<Item> getItemList() {
         return itemDao.list();
     }
@@ -67,14 +65,7 @@ public class ShopService {
     public List<Board> boardlist(int pageNum, int limit, String searchtype, String searchcontent) {
         return boardDao.list(pageNum, limit, searchtype, searchcontent);
     }
-    
- 
 
-
-    
-    
-    
-    
     // item
     public void itemUpdate(Item item, HttpServletRequest request) {
         if (item.getMainpicMultipartFile() != null && !item.getMainpicMultipartFile().isEmpty()) {
@@ -88,12 +79,12 @@ public class ShopService {
     public void itemDelete(int item_no) {
         itemDao.delete(item_no);
     }
-    
+
     public Item getItemById(int item_no) {
         return itemDao.selectOne(item_no);
     }
-    
-    
+
+
     public void itemCreate(Item item, HttpServletRequest request) {
         if (item.getMainpicMultipartFile() != null && !item.getMainpicMultipartFile().isEmpty()) {
             uploadFileCreate(item.getMainpicMultipartFile(), request, "item/img/");
@@ -101,6 +92,7 @@ public class ShopService {
         }
         itemDao.insert(item);
     }
+
     private void uploadFileCreate(MultipartFile picture, HttpServletRequest request, String path) {
         String orgFile = picture.getOriginalFilename();
         String uploadPath = request.getServletContext().getRealPath("/") + path;
@@ -111,20 +103,14 @@ public class ShopService {
             e.printStackTrace();
         }
     }
-    
-    
-    
-    
-    
-    
-    
+
     //member
     public void memberCreate(Member member) {
         memberDao.insert(member);
     }
-    
-    
-    public Member memberSelect (String id) {
+
+
+    public Member memberSelect(String id) {
         return memberDao.selectOne(id);
     }
 
@@ -135,11 +121,7 @@ public class ShopService {
     public void memberDelete(Member member) {
         memberDao.delete(member);
     }
-    
-    
-    
 
-   
     // board
     public int boardcount(String searchtype, String searchcontent) {
         return boardDao.count(searchtype, searchcontent);
@@ -164,11 +146,7 @@ public class ShopService {
     public int boardDelete(Integer num) {
         return boardDao.delete(num);
     }
-    
-    
-    
-    
-    
+
     //Sale
     public Sale checkEnd(Member loginMember, Cart cart) {
         Sale sale = new Sale();
@@ -192,6 +170,4 @@ public class ShopService {
 
         return sale;
     }
-
-	
 }
