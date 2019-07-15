@@ -27,7 +27,8 @@
                             <i class="flaticon-profile"></i>
                             <c:choose>
                                 <c:when test="${empty sessionScope.loginUser}">
-                                    <a href="${path}/member/login.shop">로그인</a>&nbsp;&nbsp;/&nbsp;<a href="${path}/member/userEntry.shop">회원가입</a>
+                                    <a href="${path}/member/login.shop">로그인</a>&nbsp;&nbsp;/&nbsp;
+                                    <a href="${path}/member/memberEntry.shop">회원가입</a>
                                 </c:when>
                                 <c:otherwise>
                                     ${sessionScope.loginUser.userName}님&nbsp;&nbsp;/&nbsp;<a href="${path}/member/logout.shop">로그아웃</a>
@@ -59,9 +60,9 @@
                         <span class="new">New</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="#">서브메뉴 1</a></li>
-                        <li><a href="#">서브메뉴 2</a></li>
-                        <li><a href="#">서브메뉴 3</a></li>
+                        <li><a href="/petshop/item/list.shop">건식사료</a></li>
+                        <li><a href="#">소프트사료</a></li>
+                        <li><a href="#">습식사료</a></li>
                     </ul>
                 </li>
                 <li>
@@ -71,9 +72,9 @@
                         <span class="new">New</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="#">서브메뉴 1</a></li>
-                        <li><a href="#">서브메뉴 2</a></li>
-                        <li><a href="#">서브메뉴 3</a></li>
+                        <li><a href="#">껌</a></li>
+                        <li><a href="#">소시지</a></li>
+                        <li><a href="#">음료</a></li>
                     </ul>
                 </li>
                 <li>
@@ -83,9 +84,9 @@
                         <span class="new">New</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="#">서브메뉴 1</a></li>
-                        <li><a href="#">서브메뉴 2</a></li>
-                        <li><a href="#">서브메뉴 3</a></li>
+                        <li><a href="#">티셔츠</a></li>
+                        <li><a href="#">후드티</a></li>
+                        <li><a href="#">신발</a></li>
                     </ul>
                 </li>
                 <li>
@@ -95,9 +96,9 @@
                         <span class="new">New</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="#">서브메뉴 1</a></li>
-                        <li><a href="#">서브메뉴 2</a></li>
-                        <li><a href="#">서브메뉴 3</a></li>
+                        <li><a href="#">방석</a></li>
+                        <li><a href="#">집</a></li>
+                        <li><a href="#">울타리</a></li>
                     </ul>
                 </li>
                 <li>
