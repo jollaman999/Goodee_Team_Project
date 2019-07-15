@@ -16,7 +16,7 @@
         <td colspan="3" align="right">
             <c:if test="${empty sessionScope.loginUser}">
                 <a href="${path}/user/login.shop">로그인</a>&nbsp;
-                <a href="${path}/user/userEntry.shop">회원 가입</a>
+                <a href="${path}/user/memberEntry.shop">회원 가입</a>
             </c:if>
             <c:if test="${!empty sessionScope.loginUser}">
                 ${sessionScope.loginUser.userName}님
