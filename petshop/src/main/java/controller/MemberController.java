@@ -72,7 +72,6 @@ public class MemberController {
 
         if (bindingResult.hasErrors()) {
             bindingResult.reject("error.login.member");
-            System.out.println(bindingResult.getModel());
             mav.getModel().putAll(bindingResult.getModel());
             return mav;
         }
