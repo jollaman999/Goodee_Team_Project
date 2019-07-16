@@ -1,44 +1,34 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set value="${pageContext.request.contextPath}" var="path" />
+<c:set value="${pageContext.request.contextPath}" var="path"/>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">        
-    <!-- css  -->
-    <link rel="stylesheet" href="${path}/css/sidebar.css">
-    <link rel="stylesheet" href="${path}/css/regular.css">
-    <link rel="stylesheet" href="${path}/css/regular.min.css">
-    <link rel="stylesheet" href="${path}/css/solid.min.css">
-    <link rel="stylesheet" href="${path}/css/solid.css">
-    <!--  JS -->
-    <script src="${path}/js/sidebar.js"></script>
-</head>
+<!-- css -->
+<link rel="stylesheet" href="${path}/css/sidebar.css">
+<link rel="stylesheet" href="${path}/css/regular.css">
+<link rel="stylesheet" href="${path}/css/regular.min.css">
+<link rel="stylesheet" href="${path}/css/solid.min.css">
+<link rel="stylesheet" href="${path}/css/solid.css">
 
+<!-- JS -->
+<script src="${path}/js/sidebar.js"></script>
 
-
-<body>
-  <div class="sidebar">    
-    <img src="${path}/img/sidebar/Hotdog.png" alt=""  width="120px" height="120px">
+<div class="sidebar">
+    <img src="${path}/img/sidebar/Hotdog.png" alt="" width="120px" height="120px">
     <ul>
-       <!--admin »çÀÌµå¸Ş´º-->
-       
-     <li><a href="${path}/admin/list.shop"><i class="far fa-address-book"></i>&nbsp;È¸¿ø°ü¸®</a></li>   
-     <li><a href="${path}/item/list.shop"><i class="fas fa-archive"></i>&nbsp;»óÇ°°ü¸®</a></li>                          
-     <li><a href="${path}/item/list.shop"><i class="far fa-chart-bar"></i>&nbsp;ÆÇ¸Å³»¿ª</a></li>
-     <li><a href="${path}/item/list.shop"><i class="fas fa-boxes"></i>&nbsp;Àç°í°ü¸®</a></li>                       
-     <li><a href="${path}/item/list.shop"><i class="fas fa-chalkboard-teacher"></i>&nbsp;°øÁö»çÇ×</a></li>
-     <li><a href="${path}/item/list.shop"><i class="far fa-comment-dots"></i>&nbsp;1:1¹®ÀÇ</a></li>                 
-     <li><a href="${path}/member/logout.shop"><i class="fas fa-sign-out-alt"></i>&nbsp;·Î±×¾Æ¿ô</a></li>                              
-    </ul>  
-  </div>
-  <div class="button">
+        <!--admin ì‚¬ì´ë“œë©”ë‰´-->
+
+        <li><a href="${path}/admin/list.shop"><i class="far fa-address-book"></i>&nbsp;&nbsp;íšŒì›ê´€ë¦¬</a></li>
+        <li><a href="${path}/item/list.shop"><i class="fas fa-archive"></i>&nbsp;&nbsp;ìƒí’ˆê´€ë¦¬</a></li>
+        <li><a href="${path}/item/list.shop"><i class="far fa-chart-bar"></i>&nbsp;&nbsp;íŒë§¤ë‚´ì—­</a></li>
+        <li><a href="${path}/item/list.shop"><i class="fas fa-boxes"></i>&nbsp;&nbsp;ì¬ê³ ê´€ë¦¬</a></li>
+        <li><a href="${path}/item/list.shop"><i class="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;ê³µì§€ì‚¬í•­</a></li>
+        <li><a href="${path}/item/list.shop"><i class="far fa-comment-dots"></i>&nbsp;&nbsp;1:1ë¬¸ì˜</a></li>
+        <li><a href="${path}/member/logout.shop"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;ë¡œê·¸ì•„ì›ƒ</a></li>
+    </ul>
+</div>
+
+<div class="button">
     <button class="sidebtn">
-      <span></span>
-  </div>
-</body>
-</html>
+    <span></span>
+</div>

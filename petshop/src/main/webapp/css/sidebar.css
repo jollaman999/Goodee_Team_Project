@@ -1,23 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Lato");
 @import url("https://fonts.googleapis.com/css?family=Raleway");
-<!--
-
-font import
-
--->
 @import url(//fonts.googleapis.com/earlyaccess/hanna.css);
-<!--
-icon import
 
--->
-@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
-
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Hanna', sans-serif;
-    box-sizing: border-box;
-}
 
 body {
     overflow-x: hidden;
@@ -38,6 +22,7 @@ html {
     width: 200px;
     transition: all ease-in-out 200ms;
     -webkit-transition: all ease-in-out 200ms;
+    font-family: 'Hanna', sans-serif;
 }
 
 .sidebar img {
@@ -74,7 +59,7 @@ html {
 
 }
 
-.sidebar ul li:nth-child(1) a:after {
+.sidebar ul li a:after {
     content: "";
     position: absolute;
     bottom: 3px;
@@ -85,53 +70,12 @@ html {
     transition: all ease-in-out 200ms;
 }
 
-.sidebar ul li:nth-child(2) a:after {
-    content: "";
-    position: absolute;
-    bottom: 3px;
-    left: 20px;
-    width: 0;
-    height: 3px;
-    background: rgba(52, 152, 219, 1);
-    transition: all ease-in-out 200ms;
+.sidebar ul li:hover:nth-child(6) a:after {
+    width: 88px;
 }
 
-.sidebar ul li:nth-child(3) a:after {
-    content: "";
-    position: absolute;
-    bottom: 3px;
-    left: 20px;
-    width: 0;
-    height: 3px;
-    background: rgba(52, 152, 219, 1);
-    transition: all ease-in-out 200ms;
-}
-
-.sidebar ul li:nth-child(4) a:after {
-    content: "";
-    position: absolute;
-    bottom: 3px;
-    left: 20px;
-    width: 0;
-    height: 3px;
-    background: rgba(52, 152, 219, 1);
-    transition: all ease-in-out 200ms;
-}
-
-.sidebar ul li:hover:nth-child(1) a:after {
-    width: 59px;
-}
-
-.sidebar ul li:hover:nth-child(2) a:after {
-    width: 65px;
-}
-
-.sidebar ul li:hover:nth-child(3) a:after {
-    width: 108px;
-}
-
-.sidebar ul li:hover:nth-child(4) a:after {
-    width: 90px;
+.sidebar ul li:hover a:after {
+    width: 98px;
 }
 
 .button {
