@@ -165,10 +165,16 @@ public class BoardController {
 
         File folder_path = new File(path);
         if (!folder_path.exists()) {
-            folder_path.mkdirs();
+            if (!folder_path.mkdirs()) {
+                return null;
+            }
         }
 
         if (!upload.isEmpty()) {
+            if (upload.getOriginalFilename() == null) {
+                return null;
+            }
+
             File file = new File(path, upload.getOriginalFilename());
             try {
                 upload.transferTo(file);
@@ -186,12 +192,12 @@ public class BoardController {
     }
 
     @RequestMapping("*")
-    public ModelAndView getBoard(Integer num, HttpServletRequest request, HttpSession session) {
+    public ModelAndView getBoard(Integer num, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         Board board = new Board();
         Member loginMember = (Member) session.getAttribute("loginMember");
         if (num != null) {
-            board = service.getBoard(num, request);
+            board = service.getBoard(num);
         }
         board.setMember_id(loginMember.getId());
         mav.addObject("board", board);
@@ -227,8 +233,9 @@ public class BoardController {
 
             board.setFileurl(mf.getOriginalFilename());
         } else if (request.getRequestURI().contains("update") &&
-                (board.getFile1() == null || board.getFile1().getOriginalFilename().length() == 0)) {
-            Board dbBoard = service.getBoard(num, request);
+                (board.getFile1() == null || board.getFile1().getOriginalFilename() == null ||
+                        board.getFile1().getOriginalFilename().length() == 0)) {
+            Board dbBoard = service.getBoard(num);
 
             if (dbBoard.getFileurl() != null && dbBoard.getFileurl().length() != 0) {
                 String filepath = request.getServletContext().getRealPath("/") + "board/file/" + num + "/";
