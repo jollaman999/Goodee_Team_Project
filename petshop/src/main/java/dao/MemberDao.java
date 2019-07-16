@@ -88,4 +88,11 @@ public class MemberDao {
         String decrypted_email = CipherUtil.decrypt(encrypted_email, member.getPass().substring(0, 16));
         member.setEmail(decrypted_email);
     }
+    
+	public Member find_id(String email) {
+		param.clear();
+		param.put("email", email);
+
+		return sqlSessionTemplate.selectOne(NS + "list", param);
+	}
 }

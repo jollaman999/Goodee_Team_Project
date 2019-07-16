@@ -62,6 +62,11 @@
                 <button onclick="location.href='memberEntry.shop'" class="login100-form-btn" style="margin-left: 10px">
                     	회원가입
                 </button>
+                 
+                 <button onclick="location.href='../member/find_id_form.shop'" class="login100-form-btn" style="margin-left: 10px">
+                    	아이디 찾기
+                </button>
+                 
             </div>
         </form:form>
 

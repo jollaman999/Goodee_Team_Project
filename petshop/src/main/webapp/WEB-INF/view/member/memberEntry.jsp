@@ -66,7 +66,7 @@
                 <font color="red"><form:errors path="email" /></font>
                 <br><br>
 
-        		주소<br>      
+        		주소    
 				<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
 				<form:input path="address" class="form-control" type="text" id="sample4_roadAddress" placeholder="주소"/>
                 <font color="red"><form:errors path="address" /></font>
@@ -75,7 +75,7 @@
                 
                 <form:input path="postcode" class="form-control" id="sample4_postcode" placeholder="우편번호" />
                 <font color="red"><form:errors path="postcode" /></font>
-                <br>
+                <br><br>
 	
 
 

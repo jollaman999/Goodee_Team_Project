@@ -2,13 +2,19 @@ package logic;
 
 import dao.*;
 import dao.mapper.CategoryItemMapper;
+import util.CipherUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -169,5 +175,25 @@ public class ShopService {
         }
 
         return sale;
+    }
+    
+    public String find_id_by_email(HttpServletResponse response, String email) throws Exception {
+    	response.setContentType("text/html;charset=utf-8");
+    	PrintWriter out = response.getWriter();
+
+    	List<Member> memberList = memberDao.list();
+    	for (Member member : memberList) {
+    		if (member.getEmail().equals(email)) {
+    			return member.getId();
+    		}
+    	}
+    	
+		out.println("<script>");
+		out.println("alert('가입된 아이디가 없습니다.');");
+		out.println("history.go(-1);");
+		out.println("</script>");
+		out.close();
+		
+		return null;
     }
 }

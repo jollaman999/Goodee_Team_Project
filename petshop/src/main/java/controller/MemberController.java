@@ -11,9 +11,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import util.SecurityUtil;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -69,6 +72,7 @@ public class MemberController {
 
         if (bindingResult.hasErrors()) {
             bindingResult.reject("error.login.member");
+            System.out.println(bindingResult.getModel());
             mav.getModel().putAll(bindingResult.getModel());
             return mav;
         }
@@ -189,4 +193,16 @@ public class MemberController {
 
         return mav;
     }
+    
+    @RequestMapping(value = "/find_id_form.do")
+	public String find_id_form() throws Exception{
+		return "/member/find_id_form";
+	}
+    
+    @RequestMapping(value = "/find_id.shop", method = RequestMethod.POST)
+	public String find_id_form(HttpServletResponse response, @RequestParam("email") String email, Model md) throws Exception
+    {
+    	md.addAttribute("id", service.find_id_by_email(response, email));
+		return "/member/find_id";
+	}
 }
