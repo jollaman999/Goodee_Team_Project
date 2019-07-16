@@ -15,7 +15,7 @@
 
 <div class="sidebar">
     <a href="${path}/index.jsp">
-        <img src="${path}/img/sidebar/Hotdog.png" alt="" width="120px" height="120px" style="margin-top: 90px; margin-bottom: 20px; margin-left: 25px">
+        <img src="${path}/img/sidebar/Hotdog.png" alt="" width="120px" height="120px" style="margin-top: 100px; margin-bottom: 40px; margin-left: 40px">
     </a>
     <ul>
         <!--admin 사이드메뉴-->
