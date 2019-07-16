@@ -31,6 +31,7 @@
 			<input type="hidden" name="phone" value="유효성 검증 통과">
 			<input type="hidden" name="email" value="유효성 검증 통과">
 			<input type="hidden" name="address" value="유효성 검증 통과">
+			<input type="hidden" name="postcode" value="유효성 검증 통과">
 
 			<spring:hasBindErrors name="member">
 				<font color="red"> <c:forEach items="${errors.globalErrors}"
