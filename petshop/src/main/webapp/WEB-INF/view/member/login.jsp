@@ -42,7 +42,7 @@
 			</spring:hasBindErrors>
 
             <span class="login100-form-title p-b-37">
-                Sign In
+                Login
             </span>
 
             <div class="wrap-input100 validate-input m-b-20" data-validate="아이디 입력">
