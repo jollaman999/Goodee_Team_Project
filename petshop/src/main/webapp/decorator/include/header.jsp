@@ -26,12 +26,12 @@
                         <div class="up-item">
                             <i class="flaticon-profile"></i>
                             <c:choose>
-                                <c:when test="${empty sessionScope.loginUser}">
+                                <c:when test="${empty sessionScope.loginMember}">
                                     <a href="${path}/member/login.shop">로그인</a>&nbsp;&nbsp;/&nbsp;
                                     <a href="${path}/member/memberEntry.shop">회원가입</a>
                                 </c:when>
                                 <c:otherwise>
-                                    ${sessionScope.loginUser.userName}님&nbsp;&nbsp;/&nbsp;<a href="${path}/member/logout.shop">로그아웃</a>
+                                    ${sessionScope.loginMember.name}님&nbsp;&nbsp;/&nbsp;<a href="${path}/member/logout.shop">로그아웃</a>
                                 </c:otherwise>
                             </c:choose>
                         </div>
