@@ -106,7 +106,7 @@ public class MemberController {
     }
 
     @RequestMapping("mypage")
-    public ModelAndView mypage(String id) {
+    public ModelAndView mypage(String id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         Member member = service.memberSelect(id);
 //        List<Sale> salelist = service.salelist(id);
@@ -125,7 +125,7 @@ public class MemberController {
     }
 
     @GetMapping(value = {"update", "delete"})
-    public ModelAndView checkupdateForm(String id) {
+    public ModelAndView checkupdateForm(String id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         Member member = service.memberSelect(id);
         mav.addObject(member);

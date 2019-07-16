@@ -3,6 +3,7 @@ package aop;
 import exception.CartEmptyException;
 import exception.LogInException;
 import logic.Cart;
+import logic.Member;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -13,8 +14,23 @@ import javax.servlet.http.HttpSession;
 @Component
 @Aspect
 public class CartAspect {
-    @Around("execution(* controller.Cart*.check*(..))")
+    @Around("execution(* controller.Cart*.view(..)) && args(session, ..)")
+    public Object view(ProceedingJoinPoint joinPoint, HttpSession session) throws Throwable {
+        System.out.println("Cart: view aop");
+
+        Member loginMember = (Member)session.getAttribute("loginMember");
+
+        if (loginMember == null) {
+            throw new LogInException("로그인 후 이용해주세요!", "../member/login.shop");
+        }
+
+        return joinPoint.proceed();
+    }
+
+    @Around("execution(* controller.Cart*.checkout(..))")
     public Object cartCheck(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("Cart: checkout aop");
+
         HttpSession session = (HttpSession)joinPoint.getArgs()[0];
         Cart cart = (Cart)session.getAttribute("CART");
 

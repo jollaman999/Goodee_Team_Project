@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 public class AdminAspect {
     @Around("execution(* controller.Admin*.*(..)) && args(.., session)")
     public Object adminCheck(ProceedingJoinPoint joinPoint, HttpSession session) throws Throwable {
+        System.out.println("Admin: * aop");
+
         Member loginMember = (Member)session.getAttribute("loginMember");
 
         if (loginMember == null) {

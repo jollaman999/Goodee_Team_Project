@@ -27,7 +27,7 @@ public class BoardController {
     private ShopService service;
 
     @RequestMapping("list")
-    public ModelAndView list(Integer pageNum, String searchtype, String searchcontent) {
+    public ModelAndView list(HttpSession session, Integer pageNum, String searchtype, String searchcontent) {
         ModelAndView mav = new ModelAndView();
 
         if (pageNum == null || pageNum.toString().equals("")) {
@@ -66,7 +66,7 @@ public class BoardController {
     }
 
     @PostMapping("write")
-    public ModelAndView writeBoard(@Valid Board board, BindingResult br, MultipartHttpServletRequest request) {
+    public ModelAndView writeBoard(HttpSession session, @Valid Board board, BindingResult br, MultipartHttpServletRequest request) {
         if (br.hasErrors()) {
             return new ModelAndView();
         }
@@ -94,7 +94,7 @@ public class BoardController {
     }
 
     @PostMapping("update")
-    public ModelAndView updateBoard(@Valid Board board, BindingResult br, MultipartHttpServletRequest request) {
+    public ModelAndView updateBoard(HttpSession session, @Valid Board board, BindingResult br, MultipartHttpServletRequest request) {
         if (br.hasErrors()) {
             return new ModelAndView();
         }
@@ -128,7 +128,7 @@ public class BoardController {
     }
 
     @PostMapping("delete")
-    public ModelAndView deleteBoard(HttpServletRequest request) {
+    public ModelAndView deleteBoard(HttpSession session, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("/alert");
 
         if (request.getParameter("num") == null) {
@@ -158,7 +158,7 @@ public class BoardController {
     }
 
     @RequestMapping("imgupload")
-    public String imgupload(MultipartFile upload, String CKEditorFuncNum, HttpServletRequest request, Model model) {
+    public String imgupload(HttpSession session, MultipartFile upload, String CKEditorFuncNum, HttpServletRequest request, Model model) {
         int num = service.boardmaxnum() + 1;
 
         String path = request.getServletContext().getRealPath("/") + "board/imgfile/" + num + "/";
@@ -192,7 +192,7 @@ public class BoardController {
     }
 
     @RequestMapping("*")
-    public ModelAndView getBoard(Integer num, HttpSession session) {
+    public ModelAndView getBoard(HttpSession session, Integer num) {
         ModelAndView mav = new ModelAndView();
         Board board = new Board();
         Member loginMember = (Member) session.getAttribute("loginMember");
