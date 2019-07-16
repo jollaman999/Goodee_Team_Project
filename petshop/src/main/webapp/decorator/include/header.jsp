@@ -54,6 +54,8 @@
             <ul class="main-menu">
                 <li><a href="${path}/index.jsp">Home</a></li>
                 <li>
+                  <!-- side bar include -->
+                   <jsp:include page = "sidebar.jsp"/>
                     <a href="#">
                         Meal
                         <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
