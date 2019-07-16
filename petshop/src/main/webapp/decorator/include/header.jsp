@@ -8,7 +8,16 @@
             <div class="row">
                 <div class="col-lg-2 text-center text-lg-left">
                     <!-- side bar include -->
-                    <jsp:include page = "sidebar.jsp"/>
+                    <c:if test="${!empty sessionScope.loginMember}">
+                        <c:choose>
+                            <c:when test="${sessionScope.loginMember.id == 'admin'}">
+                                <jsp:include page = "sidebar_admin.jsp"/>
+                            </c:when>
+                            <c:otherwise>
+                                <jsp:include page = "sidebar_user.jsp"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
 
                     <!-- logo -->
                     <a href="${path}/index.jsp" class="site-logo">
