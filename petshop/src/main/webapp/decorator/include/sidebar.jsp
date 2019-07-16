@@ -14,10 +14,11 @@
 <script src="${path}/js/sidebar.js"></script>
 
 <div class="sidebar">
-    <img src="${path}/img/sidebar/Hotdog.png" alt="" width="120px" height="120px">
+    <a href="${path}/index.jsp">
+        <img src="${path}/img/sidebar/Hotdog.png" alt="" width="120px" height="120px" style="margin-top: 90px; margin-bottom: 20px; margin-left: 25px">
+    </a>
     <ul>
         <!--admin 사이드메뉴-->
-
         <li><a href="${path}/admin/list.shop"><i class="far fa-address-book"></i>&nbsp;&nbsp;회원관리</a></li>
         <li><a href="${path}/item/list.shop"><i class="fas fa-archive"></i>&nbsp;&nbsp;상품관리</a></li>
         <li><a href="${path}/item/list.shop"><i class="far fa-chart-bar"></i>&nbsp;&nbsp;판매내역</a></li>
