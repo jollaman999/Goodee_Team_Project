@@ -12,7 +12,8 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="${path}/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="${path}/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="${path}/css/fontawesome.css"/>
+    <link rel="stylesheet" href="${path}/css/brands.css"/>
     <link rel="stylesheet" href="${path}/css/flaticon.css"/>
     <link rel="stylesheet" href="${path}/css/slicknav.min.css"/>
     <link rel="stylesheet" href="${path}/css/jquery-ui.min.css"/>
@@ -29,7 +30,8 @@
     <decorator:head />
 </head>
 <body>
-    <!-- Header section -->
+ 
+    <!-- Header section -->   
     <jsp:include page="include/header.jsp" />
     <!-- Header section end -->
 
