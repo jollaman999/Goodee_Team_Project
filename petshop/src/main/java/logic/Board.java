@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class Board {
     private int num;
+    int type;
     @NotEmpty(message = "회원 정보를 가져올 수 없습니다.")
     private String member_id;
     @NotEmpty(message = "제목을 입력해 주세요.")
@@ -23,6 +24,14 @@ public class Board {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getMember_id() {
