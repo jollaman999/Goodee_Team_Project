@@ -5,61 +5,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script language="javascript">
-// opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다. ("팝업API 호출 소스"도 동일하게 적용시켜야 합니다.)
-//document.domain = "abc.go.kr";
-
-function goPopup(){
-	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
-    var pop = window.open("jusoPopup.shop","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
-    
-	// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
-    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
-}
-/** API 서비스 제공항목 확대 (2017.02) **/
-function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
-						, detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
-	// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
-	document.form.roadAddrPart1.value = roadAddrPart1;
-	document.form.roadAddrPart2.value = roadAddrPart2;
-	document.form.addrDetail.value = addrDetail;
-	document.form.zipNo.value = zipNo;
-}
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+        }
+    }).open();
 </script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample4_postcode').value = data.zonecode;
+                document.getElementById("sample4_roadAddress").value = roadAddr;
+                document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+                
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                } else {
+                    document.getElementById("sample4_extraAddress").value = '';
+                }
+
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+
+                } else if(data.autoJibunAddress) {
+                    var expJibunAddr = data.autoJibunAddress;
+                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+            }
+        }).open();
+    }
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <title>회원가입 - 핫도그 몰</title>
     <link rel = "stylesheet" href="style.css">
 </head>
 <body>
-<form name="form" id="form" method="post">
-	<table >
-			<colgroup>
-				<col style="width:20%"><col>
-			</colgroup>
-			<tbody>
-				<tr>
-					<th>우편번호</th>
-					<td>
-					    <input type="hidden" id="confmKey" name="confmKey" value=""  >
-						<input type="text" id="zipNo" name="zipNo" readonly style="width:100px">
-						<input type="button"  value="주소검색" onclick="goPopup();">
-					</td>
-				</tr>
-				<tr>
-					<th><label>도로명주소</label></th>
-					<td><input type="text" id="roadAddrPart1" style="width:85%"></td>
-				</tr>
-				<tr>
-					<th>상세주소</th>
-						<td>
-							<input type="text" id="addrDetail" style="width:40%" value="">
-							<input type="text" id="roadAddrPart2"  style="width:40%" value="">
-						</td>
-				</tr>
-			</tbody>
-		</table>
-</form>
 <h2>회원가입</h2>
 <br>
 <form:form modelAttribute="member" method="post" action="memberEntry.shop" >
@@ -99,6 +117,13 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
         		주소      
                 <form:input path="address" class="form-control" />
                 <font color="red"><form:errors path="address" /></font>
+                <input type="text" id="sample4_postcode" placeholder="우편번호">
+				<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+				<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+				<input type="text" id="sample4_jibunAddress" placeholder="지번주소">
+				<span id="guide" style="color:#999;display:none"></span>
+				<input type="text" id="sample4_detailAddress" placeholder="상세주소">
+				<input type="text" id="sample4_extraAddress" placeholder="참고항목">
                 <br><br>
 
 				상세 주소
