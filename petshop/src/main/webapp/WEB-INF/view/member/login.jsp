@@ -21,9 +21,8 @@
     <link rel="stylesheet" type="text/css" href="${path}/css/loginform-main.css">
 </head>
 <body>
-
 <div class="container-login100">
-    <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
+    <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30" style="margin-top: 80px; margin-bottom: 80px">
         <form:form modelAttribute="member" method="post" action="login.shop" class="login100-form validate-form">
             <input type="hidden" name="back_url" value="<%= request.getHeader("referer") %>">
 
@@ -59,15 +58,12 @@
                 <button type="submit" class="login100-form-btn">
                     로그인
                 </button>
-                <button onclick="location.href='memberEntry.shop'" class="login100-form-btn" style="margin-left: 10px">
+                <button onclick="location.href='memberEntry.shop'" class="login100-form-btn" style="margin-left: 20px">
                     회원가입
                 </button>
-
-                <button onclick="location.href='../member/find_id_form.shop'" class="login100-form-btn"
-                        style="margin-left: 10px">
-                    아이디 찾기
-                </button>
-
+            </div>
+            <div style="text-align: center; margin-top: 40px">
+                <a href="find_id_form.shop">아이디 찾기</a>
             </div>
         </form:form>
 
