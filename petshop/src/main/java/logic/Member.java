@@ -18,6 +18,7 @@ public class Member {
     @NotEmpty(message = "주소는 필수 입력 사항 입니다.")
     private String address;
     private String address_detail;
+    @NotEmpty(message = "우편번호는 필수 입력 사항 입니다.")
     private String postcode;
 
     public String getId() {
