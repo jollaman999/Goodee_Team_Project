@@ -1,8 +1,6 @@
 package logic;
 
 import dao.*;
-import dao.mapper.CategoryItemMapper;
-import util.CipherUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,17 +8,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class ShopService {
-
     // 자동연결할 dao들
     @Autowired
     private ItemDao itemDao;
@@ -32,19 +27,17 @@ public class ShopService {
     private SaleItemDao saleItemDao;
     @Autowired
     private BoardDao boardDao;
-    // 이한솔 추가
     @Autowired
     private CategoryGroupDao categoryGroupDao;
     @Autowired
     private CategoryItemDao categoryItemDao;
 
-    //list
-    //카테고리 리스트 추가한것.
-    public List<CategoryItemMapper> CategoryItemList() {
+    // list
+    public List<CategoryItem> getCategoryItemList() {
         return categoryItemDao.list();
     }
 
-    public List<CategoryGroup> CategoryGroupList() {
+    public List<CategoryGroup> getCategoryGroupList() {
         return categoryGroupDao.list();
     }
 
@@ -90,7 +83,6 @@ public class ShopService {
         return itemDao.selectOne(item_no);
     }
 
-
     public void itemCreate(Item item, HttpServletRequest request) {
         if (item.getMainpicMultipartFile() != null && !item.getMainpicMultipartFile().isEmpty()) {
             uploadFileCreate(item.getMainpicMultipartFile(), request, "item/img/");
@@ -110,7 +102,7 @@ public class ShopService {
         }
     }
 
-    //member
+    // member
     public void memberCreate(Member member) {
         memberDao.insert(member);
     }
@@ -128,6 +120,26 @@ public class ShopService {
         memberDao.delete(member);
     }
 
+    public String find_id_by_email(HttpServletResponse response, String email) throws Exception {
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+
+        List<Member> memberList = memberDao.list();
+        for (Member member : memberList) {
+            if (member.getEmail().equals(email)) {
+                return member.getId();
+            }
+        }
+
+        out.println("<script type=\"text/javascript\">");
+        out.println("alert('가입된 아이디가 없습니다.');");
+        out.println("history.go(-1);");
+        out.println("</script>");
+        out.close();
+
+        return null;
+    }
+
     // board
     public int boardcount(String searchtype, String searchcontent) {
         return boardDao.count(searchtype, searchcontent);
@@ -137,7 +149,7 @@ public class ShopService {
         return boardDao.maxnum();
     }
 
-    public Board getBoard(int num, HttpServletRequest request) {
+    public Board getBoard(int num) {
         return boardDao.selectOne(num);
     }
 
@@ -153,7 +165,7 @@ public class ShopService {
         return boardDao.delete(num);
     }
 
-    //Sale
+    // Sale
     public Sale checkEnd(Member loginMember, Cart cart) {
         Sale sale = new Sale();
         sale.setSaleId(saleDao.getMaxSaleId());
@@ -175,25 +187,5 @@ public class ShopService {
         }
 
         return sale;
-    }
-    
-    public String find_id_by_email(HttpServletResponse response, String email) throws Exception {
-    	response.setContentType("text/html;charset=utf-8");
-    	PrintWriter out = response.getWriter();
-
-    	List<Member> memberList = memberDao.list();
-    	for (Member member : memberList) {
-    		if (member.getEmail().equals(email)) {
-    			return member.getId();
-    		}
-    	}
-    	
-		out.println("<script>");
-		out.println("alert('가입된 아이디가 없습니다.');");
-		out.println("history.go(-1);");
-		out.println("</script>");
-		out.close();
-		
-		return null;
     }
 }

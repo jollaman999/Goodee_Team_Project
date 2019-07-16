@@ -1,9 +1,7 @@
 package dao;
 
 import dao.mapper.BasketMapper;
-import dao.mapper.ItemMapper;
 import logic.Basket;
-import logic.Item;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
