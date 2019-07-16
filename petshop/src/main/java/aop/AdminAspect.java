@@ -17,11 +17,11 @@ public class AdminAspect {
         Member loginMember = (Member)session.getAttribute("loginMember");
 
         if (loginMember == null) {
-            throw new LogInException("로그인 후 이용하세요!", "../user/login.shop");
+            throw new LogInException("로그인 후 이용하세요!", "../member/login.shop");
         }
 
         if (!loginMember.getId().equals("admin")) {
-            throw new LogInException("관리자만 이용하세요", "../user/mypage.shop?id" + loginMember.getId());
+            throw new LogInException("관리자만 이용하세요", "../member/mypage.shop?id" + loginMember.getId());
         }
 
         return joinPoint.proceed();
