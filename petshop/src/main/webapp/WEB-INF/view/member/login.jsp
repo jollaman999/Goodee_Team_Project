@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>로그인</title>
 
-    <link rel="stylesheet" type="text/css" href="${path}/css/bootstrap.min.css">
+   
     <link rel="stylesheet" type="text/css" href="${path}/fonts/iconic/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" type="text/css" href="${path}/vendor/animate/animate.css">
     <link rel="stylesheet" type="text/css" href="${path}/vendor/css-hamburgers/hamburgers.min.css">
@@ -48,7 +48,7 @@
                 <input class="input100" type="text" name="id" placeholder="ID">
                 <span class="focus-input100"></span>
             </div>
-
+            
             <div class="wrap-input100 validate-input m-b-25" data-validate = "비밀번호 입력">
                 <input class="input100" type="password" name="pass" placeholder="Password">
                 <span class="focus-input100"></span>
