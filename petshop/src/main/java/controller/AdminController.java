@@ -41,7 +41,7 @@ public class AdminController {
             throw new LogInException("메일을 보낼 대상자를 선택하세요.", "list.shop");
         }
         List<Member> list = service.memberList(idchks);
-        mav.addObject("userList", list);
+        mav.addObject("memberList", list);
         return mav;
     }
 
