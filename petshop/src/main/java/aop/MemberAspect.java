@@ -22,6 +22,10 @@ public class MemberAspect {
             throw new LogInException("로그인 후 이용해주세요!", "login.shop");
         }
 
+        if (id == null || id.length() == 0) {
+            return joinPoint.proceed();
+        }
+
         if (!loginMember.getId().equals(id) && !loginMember.getId().equals("admin")) {
             throw new LogInException("본인 정보만 조회 가능합니다!", "main.shop");
         }
@@ -37,6 +41,10 @@ public class MemberAspect {
 
         if (loginMember == null) {
             throw new LogInException("로그인 후 이용해주세요!", "login.shop");
+        }
+
+        if (id == null || id.length() == 0) {
+            return joinPoint.proceed();
         }
 
         if (!loginMember.getId().equals(id) && !loginMember.getId().equals("admin")) {

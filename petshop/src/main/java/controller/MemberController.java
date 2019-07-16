@@ -108,6 +108,10 @@ public class MemberController {
     @RequestMapping("mypage")
     public ModelAndView mypage(String id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        if (id == null || id.length() == 0) {
+            id = ((Member)session.getAttribute("loginMember")).getId();
+        }
         Member member = service.memberSelect(id);
 //        List<Sale> salelist = service.salelist(id);
 //        for (Sale sa : salelist) {
@@ -127,6 +131,10 @@ public class MemberController {
     @GetMapping(value = {"update", "delete"})
     public ModelAndView checkupdateForm(String id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        if (id == null || id.length() == 0) {
+            id = ((Member)session.getAttribute("loginMember")).getId();
+        }
         Member member = service.memberSelect(id);
         mav.addObject(member);
 
