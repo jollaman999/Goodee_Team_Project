@@ -55,14 +55,10 @@
             </div>
 
             <div class="container-login100-form-btn" style="margin-top: 30px;">
-                <button type="submit" class="login100-form-btn">
-                    로그인
-                </button>
-                <button onclick="location.href='memberEntry.shop'" class="login100-form-btn" style="margin-left: 20px">
-                    회원가입
-                </button>
+                <input type="submit" value="로그인" class="login100-form-btn">
+                <input type="button" value="회원가입" onclick="location.href='memberEntry.shop'" class="login100-form-btn" style="margin-left: 20px">
             </div>
-            <div style="text-align: center; margin-top: 40px">
+            <div style="text-align: center; margin-top: 45px; margin-bottom: 10px">
                 <a href="find_id_form.shop">아이디 찾기</a>
             </div>
         </form:form>
