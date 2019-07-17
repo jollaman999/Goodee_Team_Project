@@ -6,7 +6,7 @@
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="org.mariadb.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/hotdogmall"/>
+        <property name="jdbcUrl" value="jdbc:mariadb://192.168.10.100:3306/hotdogmall"/>
         <property name="user" value="model1"/>
         <property name="password" value="1234"/>
         <property name="maxPoolSize" value="20"/>
