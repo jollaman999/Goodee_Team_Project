@@ -19,13 +19,13 @@
     </a>
     <ul>
         <!-- admin 사이드메뉴 -->
-        <li><a href="${path}/admin/list.shop"><i class="far fa-address-book"></i>&nbsp;&nbsp;회원관리</a></li>
-        <li><a href="${path}/item/list.shop"><i class="fas fa-archive"></i>&nbsp;&nbsp;상품관리</a></li>
-        <li><a href="${path}/item/list.shop"><i class="far fa-chart-bar"></i>&nbsp;&nbsp;판매내역</a></li>
-        <li><a href="${path}/item/list.shop"><i class="fas fa-boxes"></i>&nbsp;&nbsp;재고관리</a></li>
-        <li><a href="${path}/item/list.shop"><i class="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;공지사항</a></li>
-        <li><a href="${path}/item/list.shop"><i class="far fa-comment-dots"></i>&nbsp;&nbsp;1:1문의</a></li>
-        <li><a href="${path}/member/logout.shop"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;로그아웃</a></li>
+        <li><a href="${path}/admin/list.shop"><i class="far fa-address-book sidebaricon"></i>&nbsp;&nbsp;회원관리</a></li>
+        <li><a href="${path}/item/list.shop"><i class="fas fa-archive sidebaricon"></i>&nbsp;&nbsp;상품관리</a></li>
+        <li><a href="${path}/item/list.shop"><i class="far fa-chart-bar sidebaricon"></i>&nbsp;&nbsp;판매내역</a></li>
+        <li><a href="${path}/item/list.shop"><i class="fas fa-boxes sidebaricon"></i>&nbsp;&nbsp;재고관리</a></li>
+        <li><a href="${path}/item/list.shop"><i class="fas fa-chalkboard-teacher sidebaricon"></i>&nbsp;&nbsp;공지사항</a></li>
+        <li><a href="${path}/item/list.shop"><i class="far fa-comment-dots sidebaricon"></i>&nbsp;&nbsp;1:1문의</a></li>
+        <li><a href="${path}/member/logout.shop"><i class="fas fa-sign-out-alt sidebaricon"></i>&nbsp;&nbsp;로그아웃</a></li>
     </ul>
 </div>
 

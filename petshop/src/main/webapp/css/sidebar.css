@@ -45,7 +45,9 @@ html {
 
 .sidebar ul li {
     list-style: none;
+    margin-left: 5px;
     margin-bottom: 22px;
+    text-align: left;
 }
 
 .sidebar ul li a {
@@ -72,6 +74,10 @@ html {
 
 .sidebar ul li:hover a:after {
     width: 110px;
+}
+
+.sidebaricon {
+	width: 25px;
 }
 
 .button {
