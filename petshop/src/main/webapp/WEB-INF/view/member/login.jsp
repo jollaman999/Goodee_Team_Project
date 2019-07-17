@@ -61,6 +61,9 @@
             <div style="text-align: center; margin-top: 45px; margin-bottom: 10px">
                 <a href="find_id_form.shop">아이디 찾기</a>
             </div>
+            <div style="text-align: center; margin-bottom: 10px">
+                <a href="find_pw_form.shop">비밀번호  찾기</a>
+            </div>
         </form:form>
 
 

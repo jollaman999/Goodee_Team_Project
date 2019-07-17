@@ -55,7 +55,7 @@ public class AdminController {
         return mav;
     }
 
-    private static final class MyAuthenticator extends Authenticator {
+    public static final class MyAuthenticator extends Authenticator {
         private String id;
         private String pw;
 
