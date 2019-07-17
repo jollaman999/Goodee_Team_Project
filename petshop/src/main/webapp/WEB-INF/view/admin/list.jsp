@@ -32,25 +32,23 @@
             <th>아이디</th>
             <th>이름</th>
             <th>전화</th>
-            <th>생일</th>
             <th>이메일</th>
             <th>&nbsp;</th>
             <th><input type="checkbox" name="allchk" onchange="allchkbox(this)"></th>
         </tr>
-        <c:forEach items="${list}" var="user">
+        <c:forEach items="${list}" var="member">
             <tr>
-                <td>${user.userId}</td>
-                <td>${user.userName}</td>
-                <td>${user.phoneNo}</td>
-                <td><fmt:formatDate value="${user.birthDay}" pattern="yyyy-MM-dd" /></td>
-                <td>${user.email}</td>
+                <td>${member.id}</td>
+                <td>${member.name}</td>
+                <td>${member.phone}</td>
+                <td>${member.email}</td>
                 <td>
-                    <a href="../user/update.shop?id=${user.userId}">수정</a>
-                    <a href="../user/delete.shop?id=${user.userId}">강제 탈퇴</a>
-                    <a href="../user/mypage.shop?id=${user.userId}">회원 정보</a>
+                    <a href="../user/update.shop?id=${member.id}">수정</a>&nbsp;&nbsp;
+                    <a href="../user/delete.shop?id=${member.id}">강제 탈퇴</a>&nbsp;&nbsp;
+                    <a href="../user/mypage.shop?id=${member.id}">회원 정보</a>
                 </td>
                 <td>
-                    <input type="checkbox" name="idchks" value="${user.userId}">
+                    <input type="checkbox" name="idchks" value="${member.id}">
                 </td>
             </tr>
         </c:forEach>

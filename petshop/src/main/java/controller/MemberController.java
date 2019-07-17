@@ -11,9 +11,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import util.SecurityUtil;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -103,8 +106,12 @@ public class MemberController {
     }
 
     @RequestMapping("mypage")
-    public ModelAndView mypage(String id) {
+    public ModelAndView mypage(String id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        if (id == null || id.length() == 0) {
+            id = ((Member)session.getAttribute("loginMember")).getId();
+        }
         Member member = service.memberSelect(id);
 //        List<Sale> salelist = service.salelist(id);
 //        for (Sale sa : salelist) {
@@ -122,8 +129,12 @@ public class MemberController {
     }
 
     @GetMapping(value = {"update", "delete"})
-    public ModelAndView checkupdateForm(String id) {
+    public ModelAndView checkupdateForm(String id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        if (id == null || id.length() == 0) {
+            id = ((Member)session.getAttribute("loginMember")).getId();
+        }
         Member member = service.memberSelect(id);
         mav.addObject(member);
 
@@ -189,4 +200,16 @@ public class MemberController {
 
         return mav;
     }
+    
+    @RequestMapping(value = "/find_id_form.shop")
+	public String find_id_form() throws Exception{
+		return "/member/find_id_form";
+	}
+    
+    @RequestMapping(value = "/find_id.shop", method = RequestMethod.POST)
+	public String find_id_form(HttpServletResponse response, @RequestParam("email") String email, Model md) throws Exception
+    {
+    	md.addAttribute("id", service.find_id_by_email(response, email));
+		return "/member/find_id";
+	}
 }

@@ -59,13 +59,13 @@
     <table>
         <tr>
             <td>보내는 사람</td>
-            <td>${loginUser.email}</td>
+            <td>${loginMember.email}</td>
         </tr>
         <tr>
             <td>받는 사람</td>
             <td>
                 <input type="text" name="recipient" size="100"
-                       value="<c:forEach items="${userList}" var="user" varStatus="stat">${user.userName} &lt;${user.email}&gt;<c:if test="${!stat.last}">, </c:if></c:forEach>">
+                       value="<c:forEach items="${memberList}" var="member" varStatus="stat">${member.name} &lt;${member.email}&gt;<c:if test="${!stat.last}">, </c:if></c:forEach>">
             </td>
         </tr>
         <tr>
@@ -92,7 +92,9 @@
         <tr>
             <td colspan="2">
                 <textarea name="contents" cols="120" rows="10"></textarea>
-                <script type="text/javascript">CKEDITOR.replace("contents")</script>
+                <script type="text/javascript">
+                    CKEDITOR.replace("content", {filebrowserImageUploadUrl : "imgupload.shop"});
+                </script>
             </td>
         </tr>
         <tr>

@@ -19,7 +19,7 @@ public class BoardDao {
 
     public int count(String searchtype, String searchcontent) {
         if (searchtype != null && searchtype.length() != 0 &&
-            searchcontent != null && searchcontent.length() != 0) {
+                searchcontent != null && searchcontent.length() != 0) {
             param.clear();
             param.put("searchtype", searchtype);
             param.put("searchcontent", searchcontent);
