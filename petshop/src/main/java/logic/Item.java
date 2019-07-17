@@ -8,7 +8,9 @@ import java.util.Date;
 
 public class Item {
     private int item_no;
-    @NotEmpty(message = " 상품을 등록할 카테고리를 선택 해주세요.")
+    @NotEmpty(message = " 상품을 등록할 카테고리 그룹을 선택 해주세요.")
+    private int category_group_code;
+    @NotEmpty(message = " 상품을 등록할 세부 카테고리를 선택 해주세요.")
     private int category_item_code;
     @NotEmpty(message = "상품명을 입력해주세요.")
     private String name;
@@ -34,6 +36,14 @@ public class Item {
 
     public void setItem_no(int item_no) {
         this.item_no = item_no;
+    }
+
+    public int getCategory_group_code() {
+        return category_group_code;
+    }
+
+    public void setCategory_group_code(int category_group_code) {
+        this.category_group_code = category_group_code;
     }
 
     public int getCategory_item_code() {

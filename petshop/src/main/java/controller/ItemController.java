@@ -1,7 +1,10 @@
 package controller;
 
+import logic.CategoryGroup;
+import logic.CategoryItem;
 import logic.Item;
 import logic.ShopService;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -38,6 +41,11 @@ public class ItemController {
     @RequestMapping("create")
     public ModelAndView create() {
         ModelAndView mav = new ModelAndView("item/add");
+        List<CategoryGroup> categoryGroupList = service.getCategoryGroupList();
+        List<CategoryItem> categoryItemList = service.getCategoryItemList();
+
+        mav.addObject("categoryGroupList",JSONArray.fromObject(categoryGroupList));
+        mav.addObject("categoryItemList", JSONArray.fromObject(categoryItemList));
         mav.addObject(new Item());
         return mav;
     }
