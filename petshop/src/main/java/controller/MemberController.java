@@ -201,7 +201,7 @@ public class MemberController {
         return mav;
     }
     
-    @RequestMapping(value = "/find_id_form.do")
+    @RequestMapping(value = "/find_id_form.shop")
 	public String find_id_form() throws Exception{
 		return "/member/find_id_form";
 	}
