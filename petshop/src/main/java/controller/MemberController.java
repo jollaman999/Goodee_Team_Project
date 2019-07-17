@@ -8,17 +8,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import util.SecurityUtil;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -202,7 +199,7 @@ public class MemberController {
     }
     
     @RequestMapping(value = "/find_id_form.shop")
-	public String find_id_form() throws Exception{
+	public String find_id_form() {
 		return "/member/find_id_form";
 	}
     
@@ -212,4 +209,16 @@ public class MemberController {
     	md.addAttribute("id", service.find_id_by_email(response, email));
 		return "/member/find_id";
 	}
+
+	@RequestMapping(value = "/find_pw_form.shop")
+	public String find_pw_form()  {
+		return "/member/find_pw_form";
+	}
+
+    @RequestMapping(value = "/find_pw.shop", method = RequestMethod.POST)
+    public void find_pw(HttpServletResponse response, Member member) throws Exception{
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        service.find_pw(out, member);
+    }
 }

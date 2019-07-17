@@ -15,6 +15,9 @@ public interface MemberMapper {
             "email = #{email}, address = #{address}, address_detail = #{address_detail}, postcode = #{postcode} where id = #{id}")
     void update(Member member);
 
+    @Update("update member set pass = #{pass}, email = #{email} where id = #{id}")
+    void update_pass(Member member);
+
     @Delete("delete from member where id = #{id}")
     void delete(Member member);
 }
