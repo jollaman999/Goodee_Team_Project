@@ -45,7 +45,7 @@
             </span>
 
             <div class="wrap-input100 validate-input m-b-20" data-validate="아이디 입력">
-                <input class="input100" type="text" name="id" placeholder="ID">
+                <input class="input100" type="text" name="id" placeholder="ID" value="${param.id}">
                 <span class="focus-input100"></span>
             </div>
 

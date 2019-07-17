@@ -40,7 +40,7 @@
         </div>
 
         <div class="container-login100-form-btn" style="margin-top: 30px;">
-            <input type="button" value="로그인" onclick="location.href='login.shop'" class="login100-form-btn">
+            <input type="button" value="로그인" onclick="location.href='login.shop?id=${id}'" class="login100-form-btn">
             <input type="button" value="비밀번호 찾기" onclick="location.href='find_pw_form.shop'" class="login100-form-btn" style="margin-left: 20px">
         </div>
     </div>
