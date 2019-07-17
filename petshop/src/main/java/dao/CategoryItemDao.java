@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@Repository("CategoryItemDao")
 public class CategoryItemDao {
     @Autowired
     public SqlSessionTemplate sqlSessionTemplate;
