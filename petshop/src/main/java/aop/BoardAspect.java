@@ -19,7 +19,7 @@ public class BoardAspect {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
 
         if (loginMember == null) {
-            throw new LogInException("로그인 후 이용해주세요!", "login.shop");
+            throw new LogInException("로그인 후 이용해주세요!", "../member/login.shop");
         }
 
         return joinPoint.proceed();

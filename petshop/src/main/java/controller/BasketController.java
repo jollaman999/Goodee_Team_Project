@@ -10,28 +10,25 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("cart")
-public class CartController {
+@RequestMapping("basket")
+public class BasketController {
     @Autowired
     private ShopService service;
 
-    @RequestMapping("cartAdd")
-    public ModelAndView add(Integer id, Integer quantity, HttpSession session) {
-        Item selectedItem = service.getItemById(id);
-        Cart cart = (Cart)session.getAttribute("CART");
-        if (cart == null) {
-            cart = new Cart();
-            session.setAttribute("CART", cart);
-        }
+    @RequestMapping("add")
+    public ModelAndView add(Basket basket, HttpSession session) {
+        Member loginMember = (Member)session.getAttribute(("loginMember"));
+        Item selectedItem = service.getItemById(basket.getItem_no());
 
-        cart.push(new ItemSet(selectedItem, quantity));
-        ModelAndView mav = new ModelAndView("cart/cart");
-        mav.addObject("message", selectedItem.getName() + " : " + quantity + "개 장바구니 추가");
-        mav.addObject("cart", cart);
+        basket.setMember_id(loginMember.getId());
+        service.basketAdd(basket);
+
+        ModelAndView mav = new ModelAndView("basket/basket");
+        mav.addObject("message", selectedItem.getName() + " : " + basket.getQuantity() + "개 장바구니 추가");
         return mav;
     }
 
-    @RequestMapping("cartDelete")
+    @RequestMapping("delete")
     public ModelAndView delete(Integer index, HttpSession session) {
         Cart cart = (Cart)session.getAttribute("CART");
         ModelAndView mav = new ModelAndView("cart/cart");
@@ -55,7 +52,7 @@ public class CartController {
         return mav;
     }
 
-    @RequestMapping("cartView")
+    @RequestMapping("view")
     public ModelAndView view(HttpSession session) {
         Cart cart = (Cart)session.getAttribute("CART");
         ModelAndView mav = new ModelAndView("cart/cart");
@@ -93,7 +90,7 @@ public class CartController {
     }
 
     @RequestMapping("*")
-    public String cart (HttpSession session) {
+    public String basket (HttpSession session) {
         return  null;
     }
 }

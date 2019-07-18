@@ -6,6 +6,9 @@
         <if test="item_no != null">
             where item_no = #{item_no}
         </if>
+        <if test="name != null">
+            where name = #{name}
+        </if>
         order by item_no
     </select>
 </mapper>

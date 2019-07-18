@@ -3,18 +3,21 @@ package logic;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class Item {
     private int item_no;
-    @NotEmpty(message = " 상품을 등록할 카테고리를 선택 해주세요.")
-    private int category_item_code;
+    @Min(value = 1, message = " 상품을 등록할 카테고리 그룹을 선택 해주세요.")
+    private Integer category_group_code;
+    @Min(value = 1, message = " 상품을 등록할 세부 카테고리를 선택 해주세요.")
+    private Integer category_item_code;
     @NotEmpty(message = "상품명을 입력해주세요.")
     private String name;
-    @NotEmpty(message = "상품 이미지를 등록 해주세요.")
-    private String mainpic;
-    private MultipartFile mainpicMultipartFile;
+    @NotNull(message = "상품 이미지를 등록 해주세요.")
+    private MultipartFile mainpic;
+    private String mainpicurl;
     @NotNull(message = "상품 가격을 입력해 주세요.")
     private Integer price;
     @NotEmpty(message = "상품 요약 정보를 입력해 주세요.")
@@ -25,8 +28,8 @@ public class Item {
     private String mfr; // 제조사
     private String mfr_tel; // 제조사 연락처
     private Date expr_date; // 유통기한
-    @NotEmpty(message = "상품 수량을 입력해 주세요.")
-    private int quantity;
+    @NotNull(message = "상품 수량을 입력해 주세요.")
+    private Integer quantity;
 
     public int getItem_no() {
         return item_no;
@@ -36,11 +39,19 @@ public class Item {
         this.item_no = item_no;
     }
 
-    public int getCategory_item_code() {
+    public Integer getCategory_group_code() {
+        return category_group_code;
+    }
+
+    public void setCategory_group_code(Integer category_group_code) {
+        this.category_group_code = category_group_code;
+    }
+
+    public Integer getCategory_item_code() {
         return category_item_code;
     }
 
-    public void setCategory_item_code(int category_item_code) {
+    public void setCategory_item_code(Integer category_item_code) {
         this.category_item_code = category_item_code;
     }
 
@@ -52,20 +63,20 @@ public class Item {
         this.name = name;
     }
 
-    public String getMainpic() {
+    public MultipartFile getMainpic() {
         return mainpic;
     }
 
-    public void setMainpic(String mainpic) {
+    public void setMainpic(MultipartFile mainpic) {
         this.mainpic = mainpic;
     }
 
-    public MultipartFile getMainpicMultipartFile() {
-        return mainpicMultipartFile;
+    public String getMainpicurl() {
+        return mainpicurl;
     }
 
-    public void setMainpicMultipartFile(MultipartFile mainpicMultipartFile) {
-        this.mainpicMultipartFile = mainpicMultipartFile;
+    public void setMainpicurl(String mainpicurl) {
+        this.mainpicurl = mainpicurl;
     }
 
     public Integer getPrice() {
@@ -124,11 +135,11 @@ public class Item {
         this.expr_date = expr_date;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 }

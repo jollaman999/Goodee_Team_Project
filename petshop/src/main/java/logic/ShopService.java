@@ -31,6 +31,8 @@ public class ShopService {
     @Autowired
     private ItemDao itemDao;
     @Autowired
+    private BasketDao basketDao;
+    @Autowired
     private MemberDao memberDao;
     @Autowired
     private SaleDao saleDao;
@@ -79,40 +81,49 @@ public class ShopService {
     }
 
     // item
-    public void itemUpdate(Item item, HttpServletRequest request) {
-        if (item.getMainpicMultipartFile() != null && !item.getMainpicMultipartFile().isEmpty()) {
-            uploadFileCreate(item.getMainpicMultipartFile(), request, "item/img/");
-            item.setMainpic(item.getMainpicMultipartFile().getOriginalFilename());
-        }
-
-        itemDao.update(item);
+    public int item_max_item_no() {
+        return itemDao.max_item_no();
     }
 
-    public void itemDelete(int item_no) {
-        itemDao.delete(item_no);
+    public int itemAdd(Item item) {
+        return itemDao.insert(item);
+    }
+
+    public int itemUpdate(Item item) {
+        return itemDao.update(item);
+    }
+
+    public int itemDelete(int item_no) {
+        return itemDao.delete(item_no);
     }
 
     public Item getItemById(int item_no) {
         return itemDao.selectOne(item_no);
     }
 
-    public void itemCreate(Item item, HttpServletRequest request) {
-        if (item.getMainpicMultipartFile() != null && !item.getMainpicMultipartFile().isEmpty()) {
-            uploadFileCreate(item.getMainpicMultipartFile(), request, "item/img/");
-            item.setMainpic(item.getMainpicMultipartFile().getOriginalFilename());
-        }
-        itemDao.insert(item);
+    public Item getItemByName(String name) {
+        return itemDao.selectOne(name);
     }
 
-    private void uploadFileCreate(MultipartFile picture, HttpServletRequest request, String path) {
-        String orgFile = picture.getOriginalFilename();
-        String uploadPath = request.getServletContext().getRealPath("/") + path;
+    // basket
+    public List<Basket> basketList(String member_id) {
+        return basketDao.list(member_id);
+    }
 
-        try {
-            picture.transferTo(new File(uploadPath + orgFile));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public int basketAdd(Basket basket) {
+        return basketDao.insert(basket);
+    }
+
+    public int basketUpdate(String member_id, int item_no, int quantity) {
+        return basketDao.update(member_id, item_no, quantity);
+    }
+
+    public int basketDelete(String member_id, int item_no) {
+        return basketDao.delete(member_id, item_no);
+    }
+
+    public int basketClear(String member_id) {
+        return basketDao.clear(member_id);
     }
 
     // member
