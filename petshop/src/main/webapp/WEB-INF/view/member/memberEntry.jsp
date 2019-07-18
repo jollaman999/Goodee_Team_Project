@@ -40,6 +40,8 @@
             </c:forEach>
         </font>
     </spring:hasBindErrors>
+    <br><br>
+
     아이디
     <form:input path="id" class="form-control"/>
     <font color="red"><form:errors path="id"/></font>

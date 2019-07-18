@@ -60,7 +60,7 @@
                                 <!-- 장바구니 수량 DB 쿼리하여 표시되도록 수정 필요 -->
                                 <span>0</span>
                             </div>
-                            <a href="${path}/cart/cartView.shop">장바구니</a>
+                            <a href="${path}/basket/view.shop">장바구니</a>
                         </div>
                     </div>
                 </div>

@@ -13,10 +13,10 @@ import javax.servlet.http.HttpSession;
 
 @Component
 @Aspect
-public class CartAspect {
-    @Around("execution(* controller.Cart*.view(..)) && args(session, ..)")
+public class BasketAspect {
+    @Around("execution(* controller.Basket*.view(..)) && args(session, ..)")
     public Object view(ProceedingJoinPoint joinPoint, HttpSession session) throws Throwable {
-        System.out.println("Cart: view aop");
+        System.out.println("Basket: view aop");
 
         Member loginMember = (Member)session.getAttribute("loginMember");
 
@@ -27,9 +27,9 @@ public class CartAspect {
         return joinPoint.proceed();
     }
 
-    @Around("execution(* controller.Cart*.checkout(..))")
+    @Around("execution(* controller.Basket*.checkout(..))")
     public Object cartCheck(ProceedingJoinPoint joinPoint) throws Throwable {
-        System.out.println("Cart: checkout aop");
+        System.out.println("Basket: checkout aop");
 
         HttpSession session = (HttpSession)joinPoint.getArgs()[0];
         Cart cart = (Cart)session.getAttribute("CART");

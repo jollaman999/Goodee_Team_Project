@@ -1,4 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -8,49 +10,91 @@
     <script src="https://cdn.ckeditor.com/4.5.7/full-all/ckeditor.js"></script>
 </head>
 <body>
-<form:form modelAttribute="item" action="register.shop"
-           enctype="multipart/form-data">
+<form:form modelAttribute="item" action="register.shop" enctype="multipart/form-data">
     <h2>상품 등록</h2>
 
+    <spring:hasBindErrors name="item">
+        <font color="red">
+            <c:forEach items="${errors.globalErrors}" var="error">
+                <spring:message code="${error.code}"/>
+            </c:forEach>
+        </font>
+    </spring:hasBindErrors>
+    <br><br>
+
     <label>1차 분류</label>
-    <select class="category1" name="category_group_code">
-        <option value="">전체</option>
-    </select>
+    <form:select class="category1" path="category_group_code">
+        <option value="0">전체</option>
+    </form:select>
+    <font color="red"><form:errors path="category_group_code"/></font>
+
+    <br>
 
     <label>2차 분류</label>
-    <select class="category2" name="category_item_code">
-        <option value="">전체</option>
-    </select>
+    <form:select class="category2" path="category_item_code">
+        <option value="0">전체</option>
+    </form:select>
+    <font color="red"><form:errors path="category_item_code"/></font>
+
     <table>
         <tr>
             <td>상품명</td>
-            <td><form:input path="name" maxlength="20"/></td>
-            <td><font color="red"><form:errors path="name"/></font></td>
+            <td>
+                <form:input path="name" maxlength="20"/>
+                <font color="red"><form:errors path="name"/></font>
+            </td>
         </tr>
         <tr>
             <td>상품 이미지</td>
             <td colspan="2"><input type="file" name="mainpic"/></td>
+            <font color="red"><form:errors path="mainpic"/></font>
         </tr>
         <tr>
             <td>상품 가격</td>
-            <td><form:input path="price" maxlength="20"/></td>
-            <td><font color="red"><form:errors path="price"/></font></td>
+            <td>
+                <form:input path="price" maxlength="20"/>
+                <font color="red"><form:errors path="price"/></font>
+            </td>
+        </tr>
+        <tr>
+            <td>상품 수량</td>
+            <td>
+                <form:input path="quantity" maxlength="20"/>
+                <font color="red"><form:errors path="quantity"/></font>
+            </td>
+        </tr>
+        <tr>
+            <td>원산지</td>
+            <td><form:input path="origin" maxlength="20"/></td>
+        </tr>
+        <tr>
+            <td>제조사</td>
+            <td><form:input path="mfr" maxlength="20"/></td>
+        </tr>
+        <tr>
+            <td>제조사 연락처</td>
+            <td><form:input path="mfr_tel" maxlength="20"/></td>
+        </tr>
+        <tr>
+            <td>유통기한</td>
+            <td><form:input path="expr_date" maxlength="20"/></td>
         </tr>
         <tr>
             <td>상품 설명</td>
-            <td><form:textarea path="description" cols="20" rows="5"/></td>
-            <td><font color="red"><form:errors path="description"/></font></td>
+            <td>
+                <form:textarea path="description" cols="20" rows="5"/>
+                <font color="red"><form:errors path="description"/></font>
+            </td>
         </tr>
         <tr>
             <td>상품 상세</td>
-            <td>
+            <td colspan="2">
                 <form:textarea path="content" rows="15" cols="80" />
                 <font color="red"><form:errors path="content" /></font>
                 <script type="text/javascript">
                     CKEDITOR.replace("content", {filebrowserImageUploadUrl : "imgupload.shop", language : "ko", skin : "moono"});
                 </script>
             </td>
-            <td><font color="red"><form:errors path="content"/></font></td>
         </tr>
         <tr>
             <td colspan="3"><input type="submit" value="상품 등록">&nbsp;
@@ -87,7 +131,7 @@
 				+ cate1Arr[i].group_name + "</option>");
 	}
 
-	//이제 2차 분류에 데이터를 추가하기 위한 코드를 작성합니다.
+	// 이제 2차 분류에 데이터를 추가하기 위한 코드를 작성합니다.
 	$(document).on("change", "select.category1", function () {
 		var jsonData2 = JSON.parse('${categoryItemList}');
 

@@ -1,6 +1,5 @@
 package controller;
 
-import dao.MemberDao;
 import exception.LogInException;
 import logic.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Map;
 
 @Component
@@ -47,8 +45,6 @@ public class MemberController {
 
             if (mem.getId() != null && service.memberSelect(mem.getId()) != null) {
                 bindingResult.reject("error.duplicate.id");
-                new MemberDao().setDecryptedEmail(mem);
-
                 return mav;
             }
 
