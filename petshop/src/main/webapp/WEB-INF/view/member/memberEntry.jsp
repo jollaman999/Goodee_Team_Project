@@ -1,13 +1,120 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set value="${pageContext.request.contextPath}" var="path"/>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>회원가입 - 핫도그 몰</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>회원 가입 - 핫도그 몰</title>
+
+    <link rel="stylesheet" type="text/css" href="${path}/fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="${path}/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="${path}/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="${path}/vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="${path}/vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="${path}/vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="${path}/css/submitform_util.css">
+    <link rel="stylesheet" type="text/css" href="${path}/css/submitform.css">
+
+    <script type="text/javascript">
+        var idcheckForm;
+        var emailcheckForm;
+
+        function win_id_check() {
+            if (idcheckForm != null)
+                idcheckForm.close();
+
+            var op = "width=600, height=150, left=50, top=150";
+            idcheckForm = open("idcheckForm.shop", "", op);
+        }
+
+        function win_email_check() {
+            if (emailcheckForm != null)
+                emailcheckForm.close();
+
+            var op = "width=600, height=150, left=50, top=150";
+            emailcheckForm = open("emailcheckForm.shop", "", op);
+        }
+
+        function join_submit() {
+            f = document.f;
+
+            if (!f.id.value || f.id.value === " ") {
+                alert("아이디를 입력 해주세요!");
+                f.id.focus();
+                return;
+            }
+
+            if (!f.id.value.length < 5 || f.id.value.length > 100) {
+                alert("아이디를 입력 해주세요!");
+                f.id.focus();
+                return;
+            }
+
+            if (!f.pass.value) {
+                alert("비밀번호를 입력해주세요!");
+                f.pass.focus();
+                return;
+            }
+
+            if (!f.nickname.value || f.nickname.value === "") {
+                alert("이름을 입력해주세요!");
+                f.nickname.focus();
+                return;
+            }
+
+            if (!f.tel.value) {
+                alert("전화번호를 입력해주세요!");
+                f.tel.focus();
+                return;
+            }
+            if (!f.email.value) {
+                alert("이메일을 입력해주세요!");
+                f.email.focus();
+                return;
+            }
+
+            if (f.pass.value.length < 5 || f.pass.value.length > 100) {
+                alert("비밀번호를 5~100자로 입력해주세요!");
+                f.pass.focus();
+                return;
+            }
+
+            if (f.checked_duplicate_id.value === 0) {
+                alert("아이디 중복확인을 해주세요!");
+                f.id.focus();
+                return;
+            }
+
+            if (f.checked_duplicate_email.value === 0) {
+                alert("닉네임 중복확인을 해주세요!");
+                f.email.focus();
+                return;
+            }
+
+            if (f.pass.value !== f.pass_check.value) {
+                alert("입력한 두 비밀번호가 다릅니다! 비밀번호를 재확인 해주세요!");
+                f.pass.focus();
+
+                return;
+            }
+
+            if (f.email_check_passed.value * 1 === 0) {
+                alert("이메일 주소가 올바르지 않습니다!");
+                f.email.focus();
+                return;
+            }
+
+            f.submit();
+        }
+
+        function gender_selected() {
+            f = document.f;
+
+            f.is_gender_selected.value = 1;
+        }
+    </script>
 
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <script>
@@ -30,57 +137,80 @@
     </script>
 </head>
 <body>
-<h2>회원가입</h2>
-<br>
-<form:form modelAttribute="member" method="post" action="memberEntry.shop">
-    <spring:hasBindErrors name="member">
-        <font color="red">
-            <c:forEach items="${errors.globalErrors}" var="error">
-                <spring:message code="${error.code}"/>
-            </c:forEach>
-        </font>
-    </spring:hasBindErrors>
-    <br><br>
+<div class="container">
+    <form class="contact100-form validate-form" action="memberEntry.shop" name="f" method="post">
+        <input type="hidden" name="checked_duplicate_id" value="0">
+        <input type="hidden" name="checked_duplicate_email" value="0">
+        <input type="hidden" name="email_check_passed" value="0">
 
-    아이디
-    <form:input path="id" class="form-control"/>
-    <font color="red"><form:errors path="id"/></font>
-    <br><br>
+        <div class="wrap-input100 validate-input" data-validate="ID 중복확인을 해주세요!">
+            <i class="input100 fa fa-user-o fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="id" placeholder="ID" onclick="win_id_check()" readonly>
+            <span class="focus-input100"></span>
+        </div>
 
-    비밀번호
-    <form:password path="pass" class="form-control"/>
-    <font color="red"><form:errors path="pass"/></font>
-    <br><br>
+        <div class="wrap-input100 validate-input" id="div-pass" data-validate="비밀번호를 입력해주세요!">
+            <i class="input100 fa fa-key fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="password" name="pass" placeholder="PASSWORD">
+            <span class="focus-input100"></span>
+        </div>
 
-    이름
-    <form:input path="name" class="form-control"/>
-    <font color="red"><form:errors path="name"/></font>
-    <br><br>
+        <div class="wrap-input100 validate-input" id="div-pass_check" data-validate="재확인 비밀번호를 입력해주세요!">
+            <i class="input100 fa fa-key fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="password" name="pass_check" placeholder="PASSWORD CHECK">
+            <span class="focus-input100"></span>
+        </div>
 
-    전화번호
-    <form:input path="phone" class="form-control"/>
-    <font color="red"><form:errors path="phone"/></font>
-    <br><br>
+        <div class="wrap-input100 validate-input" data-validate="이메일 주소가 올바르지 않습니다!">
+            <i class="input100 fa fa-vcard fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="email" placeholder="E-MAIL" onclick="win_email_check()" readonly>
+            <span class="focus-input100"></span>
+        </div>
 
-    이메일
-    <form:input path="email" class="form-control"/>
-    <font color="red"><form:errors path="email"/></font>
-    <br><br>
+        <div class="wrap-input100 validate-input" data-validate="이름을 입력해주세요!">
+            <i class="input100 fa fa-key fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="name" placeholder="NAME">
+            <span class="focus-input100"></span>
+        </div>
 
-    주소
-    <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-    <form:input path="address" class="form-control" type="text" id="sample4_roadAddress" placeholder="주소"/>
-    <font color="red"><form:errors path="address"/></font>
+        <div class="wrap-input100 validate-input" data-validate="전화번호를 입력해주세요!">
+            <i class="input100 fa fa-phone fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="tel" placeholder="TEL">
+            <span class="focus-input100"></span>
+        </div>
 
-    <form:input path="address_detail" class="form-control" id="sample4_extraAddress" placeholder="상세주소"/>
+        <div class="wrap-input100 validate-input" data-validate="주소를 입력해 주세요!">
+            <i class="input100 fa fa-envelope-o fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="address" placeholder="ADDRESS" onclick="execDaumPostcode()" readonly>
+            <span class="focus-input100"></span>
+        </div>
 
-    <form:input path="postcode" class="form-control" id="sample4_postcode" placeholder="우편번호"/>
-    <font color="red"><form:errors path="postcode"/></font>
-    <br><br>
+        <div class="wrap-input100">
+            <i class="input100 fa fa-envelope-o fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="address_detail" id="extraAddress" placeholder="ADDRESS DETAIL">
+            <span class="focus-input100"></span>
+        </div>
 
-    <input type="submit" value="등록">
-    <input type="reset" value="초기화">
-</form:form>
+        <div class="wrap-input100 validate-input" data-validate="주소란을 클릭하여 우편번호를 입력해 주세요!">
+            <i class="input100 fa fa-envelope-o fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="postcode" placeholder="POSTCODE">
+            <span class="focus-input100"></span>
+        </div>
+
+
+        <div class="container-contact100-form-btn">
+            <a href="javascript:join_submit()" class="btn musica-btn">회원가입</a>
+        </div>
+    </form>
+</div>
+
+<script src="${path}/vendor/animsition/js/animsition.min.js"></script>
+<script src="${path}/js/popper.js"></script>
+<script src="${path}/js/bootstrap.min.js"></script>
+<script src="${path}/vendor/select2/select2.min.js"></script>
+<script src="${path}/vendor/daterangepicker/moment.min.js"></script>
+<script src="${path}/vendor/daterangepicker/daterangepicker.js"></script>
+<script src="${path}/vendor/countdowntime/countdowntime.js"></script>
+<script src="${path}/js/submitform/submitform.js"></script>
 </body>
 </html>
-
