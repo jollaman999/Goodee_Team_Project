@@ -15,7 +15,7 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-widget about-widget">
                     <h2>About</h2>
-                    <p>고객님의 강아지를 내 자식처럼 생각하며 엄선된 먹거리와 생활용품을 제공해 드리겠습니다.</p>
+                    <p>고객님의 강아지를 <br> 내 자식처럼 생각하며 <br> 엄선된 먹거리와 생활용품을 <br> 제공해 드리겠습니다.</p>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">

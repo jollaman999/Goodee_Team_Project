@@ -9,6 +9,10 @@
 /*----------------------------------------*/
 /* Template default CSS
 /*----------------------------------------*/
+@font-face {
+	font-family: JosefinSans-Bold;
+	src: url('../fonts/JosefinSans/JosefinSans-Bold.ttf');
+}
 
 html,
 body {

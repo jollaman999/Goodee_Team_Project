@@ -15,6 +15,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -27,7 +28,7 @@ public class AdminController {
     private ShopService service;
 
     @RequestMapping("list")
-    public ModelAndView list() {
+    public ModelAndView list(HttpSession session) {
         List<Member> list = service.memberList();
         ModelAndView mav = new ModelAndView();
         mav.addObject("list", list);
@@ -35,18 +36,18 @@ public class AdminController {
     }
 
     @RequestMapping("mailForm")
-    public ModelAndView mailForm(String[] idchks) {
+    public ModelAndView mailForm(String[] idchks, HttpSession session) {
         ModelAndView mav = new ModelAndView("admin/mail");
         if (idchks == null || idchks.length == 0) {
             throw new LogInException("메일을 보낼 대상자를 선택하세요.", "list.shop");
         }
         List<Member> list = service.memberList(idchks);
-        mav.addObject("userList", list);
+        mav.addObject("memberList", list);
         return mav;
     }
 
     @RequestMapping("mail")
-    public ModelAndView mail(Mail mail) {
+    public ModelAndView mail(Mail mail, HttpSession session) {
         ModelAndView mav = new ModelAndView("/alert");
         mailSend(mail);
         mav.addObject("msg","메일 전송이 완료되었습니다.");
@@ -54,7 +55,7 @@ public class AdminController {
         return mav;
     }
 
-    private static final class MyAuthenticator extends Authenticator {
+    public static final class MyAuthenticator extends Authenticator {
         private String id;
         private String pw;
 

@@ -10,8 +10,8 @@ public interface BoardMapper {
     @Select("select ifnull(max(num), 0) from board")
     int maxnum();
 
-    @Insert("insert into board (num, member_id, title, content, file1, regdate) " +
-                            "values (#{num}, #{member_id}, #{title}, #{content}, #{fileurl}, now())")
+    @Insert("insert into board (num, type, member_id, title, content, file1, regdate) " +
+                            "values (#{num}, #{type}, #{member_id}, #{title}, #{content}, #{fileurl}, now())")
     int insert(Board board);
 
     @Update("update board set title = #{title}, content = #{content}, file1 = #{fileurl}, regdate = now() where num = #{num}")

@@ -5,6 +5,7 @@ import logic.Member;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import util.CipherUtil;
 import util.SecurityUtil;
 
@@ -36,6 +37,7 @@ public class MemberDao {
         if (member != null) {
             setDecryptedEmail(member);
         }
+
         return member;
     }
 
@@ -44,6 +46,9 @@ public class MemberDao {
         member.setPass(encrypted_password);
         setEncryptedEmail(member);
         sqlSessionTemplate.getMapper(MemberMapper.class).update(member);
+    }
+    public void update_pass(Member member) {
+        sqlSessionTemplate.getMapper(MemberMapper.class).update_pass(member);
     }
 
     public void delete(Member member) {
@@ -62,7 +67,7 @@ public class MemberDao {
     public List<Member> list(String[] idchks) {
         StringBuilder ids = new StringBuilder();
 
-        for (int i = 0; i <idchks.length; i++) {
+        for (int i = 0; i < idchks.length; i++) {
             ids.append("'").append(idchks[i]).append((i == idchks.length - 1) ? "'" : "',");
         }
 
@@ -87,5 +92,12 @@ public class MemberDao {
         String encrypted_email = member.getEmail();
         String decrypted_email = CipherUtil.decrypt(encrypted_email, member.getPass().substring(0, 16));
         member.setEmail(decrypted_email);
+    }
+
+    public Member find_id(String email) {
+        param.clear();
+        param.put("email", email);
+
+        return sqlSessionTemplate.selectOne(NS + "list", param);
     }
 }

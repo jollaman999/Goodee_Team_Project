@@ -6,6 +6,9 @@
         <if test="id != null">
             where id = #{id}
         </if>
+        <if test="email != null">
+        	where email = #{email}
+        </if>
         <if test="ids != null">
             where id in (${ids})
         </if>

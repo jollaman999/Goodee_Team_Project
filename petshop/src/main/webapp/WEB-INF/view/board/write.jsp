@@ -1,4 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -11,24 +13,10 @@
 <form:form modelAttribute="board" action="write.shop" enctype="multipart/form-data" name="f">
     <table>
         <tr>
-            <td>글쓴이</td>
-            <td>
-                <form:input path="name" />
-                <font color="red"><form:errors path="name" /></font>
-            </td>
-        </tr>
-        <tr>
-            <td>비밀번호</td>
-            <td>
-                <form:password path="pass" />
-                <font color="red"><form:errors path="pass" /></font>
-            </td>
-        </tr>
-        <tr>
             <td>제목</td>
             <td>
-                <form:input path="subject" />
-                <font color="red"><form:errors path="subject" /></font>
+                <form:input path="title" />
+                <font color="red"><form:errors path="title" /></font>
             </td>
         </tr>
         <tr>
@@ -37,7 +25,7 @@
                 <form:textarea path="content" rows="15" cols="80" />
                 <font color="red"><form:errors path="content" /></font>
                 <script type="text/javascript">
-                    CKEDITOR.replace("content", {filebrowserImageUploadUrl : "imgupload.shop"});
+                    CKEDITOR.replace("content", {filebrowserImageUploadUrl : "imgupload.shop", language : "ko", skin : "moono"});
                 </script>
             </td>
         </tr>

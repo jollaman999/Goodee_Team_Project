@@ -4,20 +4,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>게시물 상세 보기</title>
+    <title>게시글 상세 보기</title>
 </head>
 <body>
 <table>
     <tr>
-        <td colspan="2">Spring 게시판</td>
-    </tr>
-    <tr>
-        <td width="15%">글쓴이</td>
-        <td width="85%">${board.name}</td>
+        <td colspan="2">게시글 상세 보기</td>
     </tr>
     <tr>
         <td>제목</td>
-        <td>${board.subject}</td>
+        <td>${board.title}</td>
     </tr>
     <tr>
         <td>내용</td>

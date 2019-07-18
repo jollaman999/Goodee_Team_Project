@@ -1,3 +1,10 @@
+<%@ page import="org.springframework.web.context.ContextLoader" %>
+<%@ page import="org.springframework.web.context.WebApplicationContext" %>
+<%@ page import="java.util.List" %>
+<%@ page import="dao.CategoryGroupDao" %>
+<%@ page import="dao.CategoryItemDao" %>
+<%@ page import="logic.CategoryGroup" %>
+<%@ page import="logic.CategoryItem" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set value="${pageContext.request.contextPath}" var="path" />
@@ -7,6 +14,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-2 text-center text-lg-left">
+                    <!-- side bar include -->
+                    <c:if test="${!empty sessionScope.loginMember}">
+                        <c:choose>
+                            <c:when test="${sessionScope.loginMember.id == 'admin'}">
+                                <jsp:include page = "sidebar_admin.jsp"/>
+                            </c:when>
+                            <c:otherwise>
+                                <jsp:include page = "sidebar_user.jsp"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+
                     <!-- logo -->
                     <a href="${path}/index.jsp" class="site-logo">
                         <!--  핫 도그몰 로고 제작 필요 -->
@@ -26,12 +45,12 @@
                         <div class="up-item">
                             <i class="flaticon-profile"></i>
                             <c:choose>
-                                <c:when test="${empty sessionScope.loginUser}">
+                                <c:when test="${empty sessionScope.loginMember}">
                                     <a href="${path}/member/login.shop">로그인</a>&nbsp;&nbsp;/&nbsp;
                                     <a href="${path}/member/memberEntry.shop">회원가입</a>
                                 </c:when>
                                 <c:otherwise>
-                                    ${sessionScope.loginUser.userName}님&nbsp;&nbsp;/&nbsp;<a href="${path}/member/logout.shop">로그아웃</a>
+                                    ${sessionScope.loginMember.name}님&nbsp;&nbsp;/&nbsp;<a href="${path}/member/logout.shop">로그아웃</a>
                                 </c:otherwise>
                             </c:choose>
                         </div>
@@ -41,7 +60,7 @@
                                 <!-- 장바구니 수량 DB 쿼리하여 표시되도록 수정 필요 -->
                                 <span>0</span>
                             </div>
-                            <a href="${path}/cart/cartView.shop">장바구니</a>
+                            <a href="${path}/basket/view.shop">장바구니</a>
                         </div>
                     </div>
                 </div>
@@ -52,67 +71,49 @@
         <div class="container">
             <!-- menu -->
             <ul class="main-menu">
-                <li><a href="${path}/index.jsp">Home</a></li>
                 <li>
-                    <a href="#">
-                        Meal
-                        <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
-                        <span class="new">New</span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li><a href="/petshop/item/list.shop">건식사료</a></li>
-                        <li><a href="#">소프트사료</a></li>
-                        <li><a href="#">습식사료</a></li>
-                    </ul>
+                    <a href="${path}/index.jsp">Home</a>
                 </li>
-                <li>
-                    <a href="#">
-                        Snack
-                        <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
-                        <span class="new">New</span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li><a href="#">껌</a></li>
-                        <li><a href="#">소시지</a></li>
-                        <li><a href="#">음료</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        Dress
-                        <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
-                        <span class="new">New</span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li><a href="#">티셔츠</a></li>
-                        <li><a href="#">후드티</a></li>
-                        <li><a href="#">신발</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        House
-                        <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
-                        <span class="new">New</span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li><a href="#">방석</a></li>
-                        <li><a href="#">집</a></li>
-                        <li><a href="#">울타리</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        Living
-                        <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
-                        <span class="new">New</span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li><a href="#">서브메뉴 1</a></li>
-                        <li><a href="#">서브메뉴 2</a></li>
-                        <li><a href="#">서브메뉴 3</a></li>
-                    </ul>
-                </li>
+
+                <%
+                    WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+
+                    if (context != null) {
+                        CategoryGroupDao categoryGroupDao = (CategoryGroupDao) context.getBean("CategoryGroupDao");
+                        CategoryItemDao categoryItemDao = (CategoryItemDao) context.getBean("CategoryItemDao");
+                        List<CategoryGroup> categoryGroupList = categoryGroupDao.list();
+                        List<CategoryItem> categoryItemList = categoryItemDao.list();
+
+                        for (CategoryGroup categoryGroup : categoryGroupList) {
+                %>
+                            <li>
+                                <a href="${path}/item/list.shop?category_group=<%= categoryGroup.getGroup_code() %>">
+                                    <%= categoryGroup.getGroup_name() %>
+                                    <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
+                                    <span class="new">New</span>
+                                </a>
+                                <ul class="sub-menu">
+                <%
+                                    for (CategoryItem categoryItem : categoryItemList) {
+                                        if (categoryGroup.getGroup_code() == categoryItem.getGroup_code()) {
+                %>
+                                            <li>
+                                                <a href="${path}/item/list.shop?category_group=<%= categoryGroup.getGroup_code() %>&category_item=<%= categoryItem.getCode() %>">
+                                                    <%= categoryItem.getName() %>
+                                                </a>
+                                            </li>
+                <%
+                                        }
+                                    }
+                %>
+                                </ul>
+                            </li>
+                <%
+                        }
+                    } else {
+                        System.out.println("decorator-header: Can't get WebApplicationContext!");
+                    }
+                %>
             </ul>
         </div>
     </nav>

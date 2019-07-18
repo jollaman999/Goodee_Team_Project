@@ -17,6 +17,10 @@ public class ItemDao {
     private final String NS = "dao.mapper.ItemMapper.";
     private Map<String, Object> param = new HashMap<>();
 
+    public int max_item_no() {
+        return sqlSessionTemplate.getMapper(ItemMapper.class).max_item_no();
+    }
+
     public List<Item> list() {
         return sqlSessionTemplate.selectList(NS + "list");
     }
@@ -27,17 +31,23 @@ public class ItemDao {
         return sqlSessionTemplate.selectOne(NS + "list", param);
     }
 
-    public void insert(Item item) {
-        int id = sqlSessionTemplate.getMapper(ItemMapper.class).maxid();
-        item.setItem_no(++id);
-        sqlSessionTemplate.getMapper(ItemMapper.class).insert(item);
+    public Item selectOne(String name) {
+        param.clear();
+        param.put("name", name);
+        return sqlSessionTemplate.selectOne(NS + "list", param);
     }
 
-    public void update(Item item) {
-        sqlSessionTemplate.getMapper(ItemMapper.class).update(item);
+    public int insert(Item item) {
+        int no = sqlSessionTemplate.getMapper(ItemMapper.class).max_item_no();
+        item.setItem_no(++no);
+        return sqlSessionTemplate.getMapper(ItemMapper.class).insert(item);
     }
 
-    public void delete(int item_no) {
-        sqlSessionTemplate.getMapper(ItemMapper.class).delete(item_no);
+    public int update(Item item) {
+        return sqlSessionTemplate.getMapper(ItemMapper.class).update(item);
+    }
+
+    public int delete(int item_no) {
+        return sqlSessionTemplate.getMapper(ItemMapper.class).delete(item_no);
     }
 }

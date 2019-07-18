@@ -1,9 +1,7 @@
 package dao;
 
 import dao.mapper.BasketMapper;
-import dao.mapper.ItemMapper;
 import logic.Basket;
-import logic.Item;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,6 +25,16 @@ public class BasketDao {
     }
 
     public int insert(Basket basket) {
+        List<Basket> basketList = list(basket.getMember_id());
+        if (basketList != null) {
+            for (Basket b : basketList) {
+                // 장바구니에 이미 해당 상품이 담겨 있는 경우
+                if (b.getItem_no() == basket.getItem_no()) {
+                    return Basket.ITEM_ALREADY_ADDED;
+                }
+            }
+        }
+
         int count = sqlSessionTemplate.getMapper(BasketMapper.class).count();
         basket.setList_num(++count);
 

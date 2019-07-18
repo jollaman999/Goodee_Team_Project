@@ -29,23 +29,20 @@
 [ RESTYLE TAG ]*/
 
 * {
-	margin: 0px; 
-	padding: 0px; 
+	margin: 0;
+	padding: 0;
 	box-sizing: border-box;
 }
 
-body, html {
-	height: 100%;
-	font-family: SourceSansPro-Regular, sans-serif;
-}
+
 
 /*---------------------------------------------*/
 a {
-	font-family: SourceSansPro-Regular;
+  font-family: SourceSansPro-Regular, sans-serif;
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
-	margin: 0px;
+	margin: 0;
 	transition: all 0.4s;
 	-webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -62,19 +59,18 @@ a:hover {
 
 /*---------------------------------------------*/
 h1,h2,h3,h4,h5,h6 {
-	margin: 0px;
+	margin: 0;
 }
 
 p {
-	font-family: SourceSansPro-Regular;
+  font-family: SourceSansPro-Regular, sans-serif;
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
-	margin: 0px;
 }
 
 ul, li {
-	margin: 0px;
+	margin: 0;
 	list-style-type: none;
 }
 
@@ -94,10 +90,10 @@ textarea:focus, input:focus {
   border-color: transparent !important;
 }
 
-input::-webkit-input-placeholder { color: #4b2354;}
-input:-moz-placeholder { color: #4b2354;}
-input::-moz-placeholder { color: #4b2354;}
-input:-ms-input-placeholder { color: #4b2354;}
+input::-webkit-input-placeholder { color: #000000;}
+input:-moz-placeholder { color: #000000;}
+input::-moz-placeholder { color: #000000;}
+input:-ms-input-placeholder { color: #000000;}
 
 textarea::-webkit-input-placeholder { color: #4b2354;}
 textarea:-moz-placeholder { color: #4b2354;}
@@ -124,14 +120,14 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
 .txt1 {
-  font-family: SourceSansPro-Regular;
+  font-family: SourceSansPro-Regular, sans-serif;
   font-size: 16px;
   line-height: 1.4;
   color: #999999;
 }
 
 .txt2 {
-  font-family: SourceSansPro-Regular;
+  font-family: SourceSansPro-Regular, sans-serif;
   font-size: 16px;
   line-height: 1.4;
   color: #4b2354;
@@ -148,8 +144,8 @@ iframe {
 
 .container-login100 {
   width: 100%;  
-  min-height: 100vh;
-  height: 100px;
+  min-height: 500px;
+  height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -185,11 +181,11 @@ iframe {
   border-radius: 10px;
   overflow: hidden;
 
-  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+  -o-box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+  -ms-box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.1);
 }
 
 
@@ -202,9 +198,9 @@ iframe {
 
 .login100-form-title {
   display: block;
-  font-family: SourceSansPro-Bold;
+  font-family: SourceSansPro-Bold, sans-serif;
   font-size: 30px;
-  color: #4b2354;
+  color: #000000;
   line-height: 1.2;
   text-align: center;
 }
@@ -220,9 +216,9 @@ iframe {
 }
 
 .input100 {
-  font-family: SourceSansPro-Bold;
+  font-family: SourceSansPro-Bold, sans-serif;
   font-size: 16px;
-  color: #4b2354;
+  color: #000000;
   line-height: 1.2;
 
   display: block;
@@ -245,11 +241,11 @@ iframe {
   left: 0;
   pointer-events: none;
   border-radius: 20px;
-  box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.1);
+  -o-box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.1);
+  -ms-box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.1);
 
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -258,11 +254,11 @@ iframe {
 }
 
 .input100:focus + .focus-input100 {
-  box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.2);
-  -o-box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.2);
-  -ms-box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.2);
+  -o-box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.2);
 }
 
 /*------------------------------------------------------------------
@@ -289,10 +285,10 @@ iframe {
   padding: 0 20px;
   min-width: 60px;
   height: 50px;
-  background-color: #bd59d4;
+  background-color: #686de0;
   border-radius: 25px;
 
-  font-family: SourceSansPro-SemiBold;
+  font-family: SourceSansPro-SemiBold, sans-serif;
   font-size: 14px;
   color: #fff;
   line-height: 1.2;
@@ -303,20 +299,20 @@ iframe {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
-  box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
-  -moz-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
-  -webkit-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
-  -o-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
-  -ms-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
+  box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.5);
+  -moz-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.5);
+  -webkit-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.5);
+  -o-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.5);
+  -ms-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.5);
 }
 
 .login100-form-btn:hover {
   background-color: #4b2354;
-  box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
-  -moz-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
-  -webkit-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
-  -o-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
-  -ms-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
+  box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.8);
+  -moz-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.8);
+  -webkit-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.8);
+  -o-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.8);
+  -ms-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.8);
 }
 
 
@@ -328,11 +324,11 @@ iframe {
 }
 
 .alert-validate .focus-input100 {
-  box-shadow: 0 5px 30px 0px rgba(250, 66, 81, 0.1);
-  -moz-box-shadow: 0 5px 30px 0px rgba(250, 66, 81, 0.1);
-  -webkit-box-shadow: 0 5px 30px 0px rgba(250, 66, 81, 0.1);
-  -o-box-shadow: 0 5px 30px 0px rgba(250, 66, 81, 0.1);
-  -ms-box-shadow: 0 5px 30px 0px rgba(250, 66, 81, 0.1);
+  box-shadow: 0 5px 30px 0 rgba(250, 66, 81, 0.1);
+  -moz-box-shadow: 0 5px 30px 0 rgba(250, 66, 81, 0.1);
+  -webkit-box-shadow: 0 5px 30px 0 rgba(250, 66, 81, 0.1);
+  -o-box-shadow: 0 5px 30px 0 rgba(250, 66, 81, 0.1);
+  -ms-box-shadow: 0 5px 30px 0 rgba(250, 66, 81, 0.1);
 }
 
 .alert-validate::before {
@@ -348,19 +344,19 @@ iframe {
   min-height: 62px;
   background-color: #fff;
   border-radius: 20px;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   padding: 0 45px 0 22px;
   pointer-events: none;
 
-  font-family: SourceSansPro-Bold;
+  font-family: SourceSansPro-Bold, sans-serif;
   font-size: 16px;
   color: #fa4251;
   line-height: 1.2;
 }
 
 .btn-hide-validate {
-  font-family: Material-Design-Iconic-Font;
+  font-family: Material-Design-Iconic-Font, sans-serif;
   font-size: 15px;
   color: #fa4251;
   cursor: pointer;
@@ -373,7 +369,7 @@ iframe {
   justify-content: center;
   position: absolute;
   height: 62px;
-  top: 0px;
+  top: 0;
   right: 23px;
 }
 
@@ -383,7 +379,7 @@ iframe {
 
 .true-validate::after {
   content: "\f269";
-  font-family: Material-Design-Iconic-Font;
+  font-family: Material-Design-Iconic-Font, sans-serif;
   font-size: 15px;
   color: #57b846;
   display: -webkit-box;
@@ -395,7 +391,7 @@ iframe {
   justify-content: center;
   position: absolute;
   height: 62px;
-  top: 0px;
+  top: 0;
   right: 23px;
 }
 
@@ -420,11 +416,11 @@ iframe {
   border-radius: 50%;
   background-color: #fff;
   margin: 5px;
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
+  -o-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
+  -ms-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
 }
 
 .login100-social-item img {
@@ -433,11 +429,11 @@ iframe {
 
 .login100-social-item:hover {
   color: #3b5998;
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2);
-  -o-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2);
-  -ms-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.2);
+  -o-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.2);
 }
 
 /*//////////////////////////////////////////////////////////////////

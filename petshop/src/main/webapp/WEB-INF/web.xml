@@ -13,15 +13,10 @@
         <servlet-name>petshop</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
-            <param-name>contextClass</param-name>
-            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
-        </init-param>
-        <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>
-                config.MvcConfig
-                config.DBConfig
-                config.WebSocketConfig
+                classpath:spring-mvc.xml
+                classpath:spring-db.xml
             </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
@@ -30,6 +25,18 @@
         <servlet-name>petshop</servlet-name>
         <url-pattern>*.shop</url-pattern>
     </servlet-mapping>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:spring-mvc.xml
+            classpath:spring-db.xml
+        </param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
     <filter>
         <filter-name>CharacterEncoding</filter-name>

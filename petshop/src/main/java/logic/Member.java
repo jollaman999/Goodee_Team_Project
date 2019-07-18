@@ -5,9 +5,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 public class Member {
-    @Size(min = 3, max = 10, message = "아이디를 3자 이상 10자 이하로 입력하세요.")
+    @Size(min = 3, max = 50, message = "아이디를 3자 이상 50자 이하로 입력하세요.")
     private String id;
-    @Size(min = 3, max = 12, message = "비밀번호를 3자 이상 10자 이하로 입력하세요.")
+    @Size(min = 3, max = 50, message = "비밀번호를 3자 이상 50자 이하로 입력하세요.")
     private String pass;
     @NotEmpty(message = "사용자 이름은 필수 입력 사항 입니다.")
     private String name;
@@ -18,6 +18,7 @@ public class Member {
     @NotEmpty(message = "주소는 필수 입력 사항 입니다.")
     private String address;
     private String address_detail;
+    @NotEmpty(message = "우편번호는 필수 입력 사항 입니다.")
     private String postcode;
 
     public String getId() {

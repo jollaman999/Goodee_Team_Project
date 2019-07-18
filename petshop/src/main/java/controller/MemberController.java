@@ -1,6 +1,5 @@
 package controller;
 
-import dao.MemberDao;
 import exception.LogInException;
 import logic.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +7,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import util.SecurityUtil;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
+import java.io.PrintWriter;
 import java.util.Map;
 
 @Component
@@ -47,8 +45,6 @@ public class MemberController {
 
             if (mem.getId() != null && service.memberSelect(mem.getId()) != null) {
                 bindingResult.reject("error.duplicate.id");
-                new MemberDao().setDecryptedEmail(mem);
-
                 return mav;
             }
 
@@ -103,8 +99,12 @@ public class MemberController {
     }
 
     @RequestMapping("mypage")
-    public ModelAndView mypage(String id) {
+    public ModelAndView mypage(String id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        if (id == null || id.length() == 0) {
+            id = ((Member)session.getAttribute("loginMember")).getId();
+        }
         Member member = service.memberSelect(id);
 //        List<Sale> salelist = service.salelist(id);
 //        for (Sale sa : salelist) {
@@ -122,8 +122,12 @@ public class MemberController {
     }
 
     @GetMapping(value = {"update", "delete"})
-    public ModelAndView checkupdateForm(String id) {
+    public ModelAndView checkupdateForm(String id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        if (id == null || id.length() == 0) {
+            id = ((Member)session.getAttribute("loginMember")).getId();
+        }
         Member member = service.memberSelect(id);
         mav.addObject(member);
 
@@ -188,5 +192,29 @@ public class MemberController {
         }
 
         return mav;
+    }
+    
+    @RequestMapping(value = "/find_id_form.shop")
+	public String find_id_form() {
+		return "/member/find_id_form";
+	}
+    
+    @RequestMapping(value = "/find_id.shop", method = RequestMethod.POST)
+	public String find_id_form(HttpServletResponse response, @RequestParam("email") String email, Model md) throws Exception
+    {
+    	md.addAttribute("id", service.find_id_by_email(response, email));
+		return "/member/find_id";
+	}
+
+	@RequestMapping(value = "/find_pw_form.shop")
+	public String find_pw_form()  {
+		return "/member/find_pw_form";
+	}
+
+    @RequestMapping(value = "/find_pw.shop", method = RequestMethod.POST)
+    public void find_pw(HttpServletResponse response, Member member) throws Exception{
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        service.find_pw(out, member);
     }
 }
