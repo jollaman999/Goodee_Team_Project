@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -49,12 +50,62 @@ public class MemberController {
             }
 
             service.memberCreate(member);
-            mav.setViewName("member/login");
+            mav.setViewName("redirect:login.shop");
             mav.addObject("member", member);
         } catch (DataIntegrityViolationException e) {
             e.printStackTrace();
             bindingResult.reject("error.database");
         }
+
+        return mav;
+    }
+
+    @RequestMapping("idcheck")
+    public ModelAndView idcheck(String id) {
+        ModelAndView mav = new ModelAndView("/alert");
+        Member member = service.memberSelect(id);
+        String msg;
+
+        mav.addObject("url", "idcheckForm.shop");
+
+        if (member != null && id != null && id.length() != 0 && member.getId().equalsIgnoreCase(id)) {
+            msg = id + " 는(은) 이미 존재하는 아이디 입니다!";
+        } else if (id != null && id.equals("admin")) {
+            msg = id + " 는(은) 사용할 수 없는 아이디 입니다!";
+        } else if (id != null && !id.equals("중복확인을 눌러주세요")) {
+            msg = id + " 는(은) 사용 가능한 아이디 입니다.";
+            mav.addObject("check_id", true);
+        } else {
+            return mav;
+        }
+
+        mav.addObject("msg", msg);
+
+        return mav;
+    }
+
+    @RequestMapping("emailcheck")
+    public ModelAndView emailcheck(String email) {
+        ModelAndView mav = new ModelAndView("/alert");
+        List<Member> memberList = service.memberList();
+        String msg;
+
+        mav.addObject("url", "emailcheckForm.shop");
+
+        if (memberList != null) {
+            for (Member member : memberList) {
+                if (member.getEmail().equals(email)) {
+                    msg = email + " 는(은) 사용중인 이메일 주소 입니다!";
+                    mav.addObject("msg", msg);
+                    return mav;
+                }
+            }
+        }
+
+        msg = email + " 는(은) 사용 가능한 이메일 주소 입니다.";
+        mav.addObject("msg", msg);
+
+        mav.addObject("check_email", true);
 
         return mav;
     }
