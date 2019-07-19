@@ -2,6 +2,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<!-- 오늘 날짜 출력하기 -->
+<jsp:useBean id="now" class="java.util.Date" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,10 +78,20 @@
             <td>제조사 연락처</td>
             <td><form:input path="mfr_tel" maxlength="20"/></td>
         </tr>
+        
+        <!--  유통기한 원본소스 
+        <form id="frm" action="action.jsp">
+        <p>유통기한 입력:</p>
+        <div><input type="date" id="userdate" name="userdate"
+                value="2015-10-10"></div>
+        <div><input type="submit" value="전송"></div>
+        </form>         
+                                                  -->                                            
         <tr>
             <td>유통기한</td>
-            <td><form:input path="expr_date" maxlength="20"/></td>
+            <td><form:input path="expr_date" type="date" name="userdate" pattern="yyyy-MM-dd" var="today"/></td>
         </tr>
+      
         <tr>
             <td>상품 설명</td>
             <td>
