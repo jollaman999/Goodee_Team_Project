@@ -32,6 +32,8 @@ public class Item {
     private Date expr_date; // 유통기한
     @NotNull(message = "상품 수량을 입력해 주세요.")
     private Integer quantity;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date update_time;
 
     public int getItem_no() {
         return item_no;
@@ -143,5 +145,13 @@ public class Item {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Date getUpdate_time() {
+        return update_time;
+    }
+
+    public void setUpdate_time(Date update_time) {
+        this.update_time = update_time;
     }
 }
