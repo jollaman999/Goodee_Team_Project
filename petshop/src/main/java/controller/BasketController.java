@@ -1,6 +1,5 @@
 package controller;
 
-import exception.CartEmptyException;
 import logic.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,7 +84,7 @@ public class BasketController {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
 
         List<Basket> basketList = service.basketList(loginMember.getId());
-        ModelAndView mav = new ModelAndView("basket/cart");
+        ModelAndView mav = new ModelAndView("basket/basket");
         mav.addObject("basketList", basketList);
 
         int max_item_num = service.item_max_item_no();
