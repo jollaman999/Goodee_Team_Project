@@ -67,9 +67,10 @@ public class BoardController {
     }
 
     @PostMapping("write")
-    public ModelAndView writeBoard(HttpSession session, @Valid Board board, MultipartHttpServletRequest request) {
+    public ModelAndView writeBoard(HttpSession session, Integer type, @Valid Board board, MultipartHttpServletRequest request) {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
         board.setMember_id(loginMember.getId());
+        board.setType(type);
 
         ModelAndView mav = new ModelAndView("/alert");
 
