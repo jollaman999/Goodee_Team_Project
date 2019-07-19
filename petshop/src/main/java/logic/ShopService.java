@@ -85,6 +85,25 @@ public class ShopService {
         return boardDao.list(pageNum, limit, searchtype, searchcontent);
     }
 
+    // category
+    public String getCategoryGroupName(Integer group_code) {
+        CategoryGroup categoryGroup = categoryGroupDao.selectOne(group_code);
+        if (categoryGroup != null) {
+            return categoryGroup.getGroup_name();
+        }
+
+        return null;
+    }
+
+    public String getCategoryItemName(Integer group_code, Integer code) {
+        CategoryItem categoryItem = categoryItemDao.selectOne(group_code, code);
+        if (categoryItem != null) {
+            return categoryItem.getName();
+        }
+
+        return null;
+    }
+
     // item
     public int itemcount(Integer category_group, Integer category_item, String searchtype, String searchcontent) {
         return itemDao.count(category_group, category_item, searchtype, searchcontent);

@@ -1,5 +1,6 @@
 package controller;
 
+import logic.CategoryGroup;
 import logic.Item;
 import logic.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,18 @@ public class ShopController {
     public ModelAndView list(HttpSession session, Integer category_group, Integer category_item,
                              Integer pageNum, String searchtype, String searchcontent) {
         ModelAndView mav = new ModelAndView();
+
+        mav.addObject("category_group", category_group);
+        mav.addObject("category_item", category_item);
+
+        if (category_group != null) {
+            String categoryGroupName = service.getCategoryGroupName(category_group);
+            mav.addObject("categoryGroupName", categoryGroupName);
+            if (category_item != null) {
+                String categoryItemName = service.getCategoryItemName(category_group, category_item);
+                mav.addObject("categoryItemName", categoryItemName);
+            }
+        }
 
         if (pageNum == null || pageNum.toString().equals("")) {
             pageNum = 1;

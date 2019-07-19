@@ -21,7 +21,7 @@ public class CategoryGroupDao {
         return sqlSessionTemplate.selectList(NS + "list");
     }
 
-    public CategoryGroup selectOne(int group_code) {
+    public CategoryGroup selectOne(Integer group_code) {
         param.clear();
         param.put("group_code", group_code);
         return sqlSessionTemplate.selectOne(NS + "list", param);

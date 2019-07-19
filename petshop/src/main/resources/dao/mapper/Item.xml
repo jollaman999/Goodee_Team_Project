@@ -22,8 +22,11 @@
             <if test="name != null">
                 and name = #{name}
             </if>
-            <if test="category_group != null and category_item != null">
-                and category_group_code = #{category_group} and category_item_code = #{category_item}
+            <if test="category_group != null">
+                and category_group_code = #{category_group}
+            </if>
+            <if test="category_item != null">
+                and category_item_code = #{category_item}
             </if>
             <if test="searchtype != null and searchcontent != null">
                 and ${searchtype} like '%${searchcontent}%'

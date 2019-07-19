@@ -26,9 +26,15 @@
 <div class="page-top-info">
     <div class="container">
         <h4>CAtegory PAge</h4>
+        <br>
         <div class="site-pagination">
-            <a href="">Home</a> /
-            <a href="">Shop</a> /
+            <a href="${path}/shop/list.shop">All</a>
+            <c:if test="${!empty category_group}">
+                <a href="${path}/shop/list.shop?category_group=${category_group}"> / ${categoryGroupName}</a>
+            </c:if>
+            <c:if test="${!empty category_item}">
+                <a href="${path}/shop/list.shop?category_group=${category_group}&category_item=${category_item}"> / ${categoryItemName}</a>
+            </c:if>
         </div>
     </div>
 </div>

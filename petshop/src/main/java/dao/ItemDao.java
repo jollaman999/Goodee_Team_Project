@@ -50,9 +50,11 @@ public class ItemDao {
         param.put("startrow", (pageNum - 1) * limit);
         param.put("limit", limit);
 
-        if (category_group != null && category_group != 0 &&
-                category_item != null && category_item != 0) {
+        if (category_group != null && category_group != 0) {
             param.put("category_group", category_group);
+        }
+
+        if (category_item != null && category_item != 0) {
             param.put("category_item", category_item);
         }
 
