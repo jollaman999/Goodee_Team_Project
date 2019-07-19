@@ -5,9 +5,13 @@
 <%@ page import="dao.CategoryItemDao" %>
 <%@ page import="logic.CategoryGroup" %>
 <%@ page import="logic.CategoryItem" %>
+<%@ page import="logic.Member" %>
+<%@ page import="dao.BasketDao" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set value="${pageContext.request.contextPath}" var="path" />
+
+<% WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext(); %>
 
 <header class="header-section">
     <div class="header-top">
@@ -58,7 +62,16 @@
                             <div class="shopping-card">
                                 <i class="flaticon-bag"></i>
                                 <!-- 장바구니 수량 DB 쿼리하여 표시되도록 수정 필요 -->
-                                <span>0</span>
+                                <%
+                                    Member loginMember = (Member)session.getAttribute(("loginMember"));
+                                    if (context != null) {
+                                        BasketDao basketDao = (BasketDao)context.getBean("BasketDao");
+                                        if (loginMember != null && basketDao != null) { %>
+                                            <span><%= basketDao.count(loginMember.getId()) %></span>
+                                <%
+                                        }
+                                    }
+                                %>
                             </div>
                             <a href="${path}/basket/view.shop">장바구니</a>
                         </div>
@@ -76,42 +89,36 @@
                 </li>
 
                 <%
-                    WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+                    CategoryGroupDao categoryGroupDao = (CategoryGroupDao) context.getBean("CategoryGroupDao");
+                    CategoryItemDao categoryItemDao = (CategoryItemDao) context.getBean("CategoryItemDao");
+                    List<CategoryGroup> categoryGroupList = categoryGroupDao.list();
+                    List<CategoryItem> categoryItemList = categoryItemDao.list();
 
-                    if (context != null) {
-                        CategoryGroupDao categoryGroupDao = (CategoryGroupDao) context.getBean("CategoryGroupDao");
-                        CategoryItemDao categoryItemDao = (CategoryItemDao) context.getBean("CategoryItemDao");
-                        List<CategoryGroup> categoryGroupList = categoryGroupDao.list();
-                        List<CategoryItem> categoryItemList = categoryItemDao.list();
-
-                        for (CategoryGroup categoryGroup : categoryGroupList) {
+                    for (CategoryGroup categoryGroup : categoryGroupList) {
                 %>
-                            <li>
-                                <a href="${path}/item/list.shop?category_group=<%= categoryGroup.getGroup_code() %>">
-                                    <%= categoryGroup.getGroup_name() %>
-                                    <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
-                                    <span class="new">New</span>
-                                </a>
-                                <ul class="sub-menu">
+                        <li>
+                            <a href="${path}/item/list.shop?category_group=<%= categoryGroup.getGroup_code() %>">
+                                <%= categoryGroup.getGroup_name() %>
+                                <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
+                                <span class="new">New</span>
+                            </a>
+                            <ul class="sub-menu">
                 <%
-                                    for (CategoryItem categoryItem : categoryItemList) {
-                                        if (categoryGroup.getGroup_code() == categoryItem.getGroup_code()) {
+                                for (CategoryItem categoryItem : categoryItemList) {
+                                    if (categoryGroup.getGroup_code() == categoryItem.getGroup_code()) {
                 %>
-                                            <li>
-                                                <a href="${path}/shop/list.shop?category_group=<%= categoryGroup.getGroup_code() %>&category_item=<%= categoryItem.getCode() %>">
-                                                    <%= categoryItem.getName() %>
-                                                </a>
-                                            </li>
+                                        <li>
+                                            <a href="${path}/shop/list.shop?category_group=<%= categoryGroup.getGroup_code() %>&category_item=<%= categoryItem.getCode() %>">
+                                                <%= categoryItem.getName() %>
+                                            </a>
+                                        </li>
                 <%
-                                        }
                                     }
+                                }
                 %>
-                                </ul>
-                            </li>
+                            </ul>
+                        </li>
                 <%
-                        }
-                    } else {
-                        System.out.println("decorator-header: Can't get WebApplicationContext!");
                     }
                 %>
             </ul>

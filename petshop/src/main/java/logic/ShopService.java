@@ -123,8 +123,8 @@ public class ShopService {
         return basketDao.insert(basket);
     }
 
-    public int basketUpdate(String member_id, Integer item_no, int quantity) {
-        return basketDao.update(member_id, item_no, quantity);
+    public int basketUpdate(Basket basket) {
+        return basketDao.update(basket);
     }
 
     public int basketDelete(String member_id, Integer item_no) {

@@ -4,10 +4,13 @@ import exception.CartEmptyException;
 import logic.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("basket")
@@ -16,15 +19,45 @@ public class BasketController {
     private ShopService service;
 
     @RequestMapping("add")
-    public ModelAndView add(Basket basket, HttpSession session) {
+    public ModelAndView add(HttpSession session, HttpServletRequest request, Integer item_no) {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
-        Item selectedItem = service.getItemById(basket.getItem_no());
 
+        Basket basket = new Basket();
         basket.setMember_id(loginMember.getId());
-        service.basketAdd(basket);
+        basket.setItem_no(item_no);
+        int result = service.basketAdd(basket);
 
-        ModelAndView mav = new ModelAndView("basket/basket");
-        mav.addObject("message", selectedItem.getName() + " : " + basket.getQuantity() + "개 장바구니 추가");
+        ModelAndView mav = new ModelAndView("/alert");
+        if (result > 0) {
+            mav.addObject("msg", "장바구니에 상품이 추가되었습니다.");
+            mav.addObject("url", request.getHeader("referer"));
+        } else {
+            mav.addObject("msg", "장바구니 상품 추가 실패!");
+            mav.addObject("url", request.getHeader("referer"));
+        }
+
+        return mav;
+    }
+
+    @PostMapping("update")
+    public ModelAndView add(HttpSession session, HttpServletRequest request, Integer item_no, Integer quantity) {
+        Member loginMember = (Member)session.getAttribute(("loginMember"));
+
+        Basket basket = new Basket();
+        basket.setMember_id(loginMember.getId());
+        basket.setItem_no(item_no);
+        basket.setQuantity(quantity);
+        int result = service.basketUpdate(basket);
+
+        ModelAndView mav = new ModelAndView("/alert");
+        if (result > 0) {
+            mav.addObject("msg", "해당 상품의 수량이 변경되었습니다.");
+            mav.addObject("url", request.getHeader("referer"));
+        } else {
+            mav.addObject("msg", "상품 수량 변경 실패!");
+            mav.addObject("url", request.getHeader("referer"));
+        }
+
         return mav;
     }
 
@@ -54,13 +87,16 @@ public class BasketController {
 
     @RequestMapping("view")
     public ModelAndView view(HttpSession session) {
-        Cart cart = (Cart)session.getAttribute("CART");
-        ModelAndView mav = new ModelAndView("cart/cart");
+        Member loginMember = (Member)session.getAttribute(("loginMember"));
 
-        if (cart == null || cart.isEmpty()) {
+        List<Basket> basketList = service.basketList(loginMember.getId());
+        ModelAndView mav = new ModelAndView("basket/cart");
+
+        if (basketList == null || basketList.isEmpty()) {
             throw new CartEmptyException("장바구니에 상품이 없습니다.", "../item/list.shop");
         }
-        mav.addObject("cart", cart);
+
+        mav.addObject("basketList", basketList);
 
         return mav;
     }

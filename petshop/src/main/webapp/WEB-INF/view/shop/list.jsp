@@ -113,8 +113,8 @@
                                     <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
                                 </div>
                                 <div class="pi-links">
-                                    <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                                    <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                                    <a href="../basket/add.shop?item_no=${item.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                    <a href="#" class="wishlist-btn" style="width: 80px"><i class="flaticon-heart"></i><span style="font-size: 12pt">&nbsp;123</span></a>
                                 </div>
                             </div>
                             <div class="pi-text">

@@ -10,12 +10,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@Repository("BasketDao")
 public class BasketDao {
     @Autowired
     public SqlSessionTemplate sqlSessionTemplate;
     private final String NS = "dao.mapper.BasketMapper.";
     private Map<String, Object> param = new HashMap<>();
+
+    public int count(String member_id) {
+        return sqlSessionTemplate.getMapper(BasketMapper.class).count(member_id);
+    }
 
     public List<Basket> list(String member_id) {
         param.clear();
@@ -28,26 +32,21 @@ public class BasketDao {
         List<Basket> basketList = list(basket.getMember_id());
         if (basketList != null) {
             for (Basket b : basketList) {
-                // 장바구니에 이미 해당 상품이 담겨 있는 경우
                 if (b.getItem_no() == basket.getItem_no()) {
-                    return Basket.ITEM_ALREADY_ADDED;
+                    basket.setQuantity(b.getQuantity() + 1);
+                    return update(basket);
                 }
             }
         }
 
-        int count = sqlSessionTemplate.getMapper(BasketMapper.class).count();
+        int count = count(basket.getMember_id());
         basket.setList_num(++count);
 
         return sqlSessionTemplate.getMapper(BasketMapper.class).insert(basket);
     }
 
-    public int update(String member_id, int item_no, int quantity) {
-        param.clear();
-        param.put("member_id", member_id);
-        param.put("item_no", item_no);
-        param.put("quantity", quantity);
-
-        return sqlSessionTemplate.getMapper(BasketMapper.class).update(param);
+    public int update(Basket basket) {
+        return sqlSessionTemplate.getMapper(BasketMapper.class).update(basket);
     }
 
     // 장바구니에서 특정 상품을 특정 회원의 장바구니 목록에서 삭제 (삭제 후 목록 번호 재설정)

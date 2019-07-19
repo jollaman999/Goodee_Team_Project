@@ -10,14 +10,14 @@ import java.util.Map;
 
 public interface BasketMapper {
     @Select("select count(*) from basket where member_id = #{member_id}")
-    int count();
+    int count(String member_id);
 
     @Insert("insert into basket (member_id, list_num, item_no, quantity) " +
-            "values (#{member_id}, #{list_num}, #{item_no}, #{quantity})")
+            "values (#{member_id}, #{list_num}, #{item_no}, 1)")
     int insert(Basket basket);
 
     @Update("update basket set quantity = #{quantity} where member_id = #{member_id} and item_no = #{item_no}")
-    int update(Map map);
+    int update(Basket basket);
 
     @Delete("delete from basket where member_id = #{member_id} and item_no = #{item_no}")
     int delete(Map map);
