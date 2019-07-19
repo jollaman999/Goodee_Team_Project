@@ -21,9 +21,6 @@
     <link rel="stylesheet" href="${path}/css/animate.css"/>
     <link rel="stylesheet" href="${path}/css/style.css"/>
 
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="${path}/css/main.css"/>
-
     <!-- jQuery -->
     <script type="text/javascript" src="${path}/js/jquery-3.2.1.min.js"></script>
 
@@ -36,7 +33,7 @@
     <!-- Header section end -->
 
     <!-- Body section -->
-    <div>
+    <div class="container" style="margin-top: 50px; margin-bottom: 50px">
         <decorator:body />
     </div>
     <!-- Body section end -->

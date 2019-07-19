@@ -4,6 +4,10 @@
         <pattern>/index.jsp</pattern>
         <pattern>*.shop</pattern>
     </decorator>
+
+    <decorator name="nomaincss" page="decorator_nomaincss.jsp">
+        <pattern>/basket/view.shop</pattern>
+    </decorator>
     
     <decorator name="nomargin" page="decorator_nomargin.jsp">
         <pattern>/member/login.shop</pattern>
