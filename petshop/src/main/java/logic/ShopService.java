@@ -60,6 +60,11 @@ public class ShopService {
         return itemDao.list();
     }
 
+    public List<Item> getItemList(Integer category_group, Integer category_item,
+                                  Integer pageNum, int limit, String searchtype, String searchcontent) {
+        return itemDao.list(category_group, category_item, pageNum, limit, searchtype, searchcontent);
+    }
+
     public List<Sale> salelist(String id) {
         return saleDao.list(id);
     }
@@ -81,6 +86,10 @@ public class ShopService {
     }
 
     // item
+    public int itemcount(Integer category_group, Integer category_item, String searchtype, String searchcontent) {
+        return itemDao.count(category_group, category_item, searchtype, searchcontent);
+    }
+
     public int item_max_item_no() {
         return itemDao.max_item_no();
     }
@@ -93,11 +102,11 @@ public class ShopService {
         return itemDao.update(item);
     }
 
-    public int itemDelete(int item_no) {
+    public int itemDelete(Integer item_no) {
         return itemDao.delete(item_no);
     }
 
-    public Item getItemById(int item_no) {
+    public Item getItemById(Integer item_no) {
         return itemDao.selectOne(item_no);
     }
 
@@ -114,11 +123,11 @@ public class ShopService {
         return basketDao.insert(basket);
     }
 
-    public int basketUpdate(String member_id, int item_no, int quantity) {
+    public int basketUpdate(String member_id, Integer item_no, int quantity) {
         return basketDao.update(member_id, item_no, quantity);
     }
 
-    public int basketDelete(String member_id, int item_no) {
+    public int basketDelete(String member_id, Integer item_no) {
         return basketDao.delete(member_id, item_no);
     }
 

@@ -12,6 +12,7 @@
 
     <!-- 제외 설정 -->
     <excludes>
+        <pattern>/member/*check*</pattern>
         <pattern>/board/imgupload*</pattern>
         <pattern>/admin/graph*</pattern>
     </excludes>

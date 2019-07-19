@@ -57,8 +57,11 @@ public class MemberDao {
 
     public List<Member> list() {
         List<Member> member_list = sqlSessionTemplate.selectList(NS + "list");
-        for (Member member : member_list) {
-            setDecryptedEmail(member);
+
+        if (member_list != null) {
+            for (Member member : member_list) {
+                setDecryptedEmail(member);
+            }
         }
 
         return member_list;

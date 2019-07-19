@@ -98,7 +98,7 @@
                                         if (categoryGroup.getGroup_code() == categoryItem.getGroup_code()) {
                 %>
                                             <li>
-                                                <a href="${path}/item/list.shop?category_group=<%= categoryGroup.getGroup_code() %>&category_item=<%= categoryItem.getCode() %>">
+                                                <a href="${path}/shop/list.shop?category_group=<%= categoryGroup.getGroup_code() %>&category_item=<%= categoryItem.getCode() %>">
                                                     <%= categoryItem.getName() %>
                                                 </a>
                                             </li>

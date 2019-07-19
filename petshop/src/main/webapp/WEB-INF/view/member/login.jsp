@@ -32,14 +32,6 @@
             <input type="hidden" name="address" value="유효성 검증 통과">
             <input type="hidden" name="postcode" value="유효성 검증 통과">
 
-            <spring:hasBindErrors name="member">
-                <font color="red"> <c:forEach items="${errors.globalErrors}"
-                                              var="error">
-                    <spring:message code="${error.code}"/>
-                </c:forEach>
-                </font>
-            </spring:hasBindErrors>
-
             <span class="login100-form-title p-b-37">
                 Login
             </span>
@@ -52,6 +44,16 @@
             <div class="wrap-input100 validate-input m-b-25" data-validate="비밀번호 입력">
                 <input class="input100" type="password" name="pass" placeholder="Password">
                 <span class="focus-input100"></span>
+            </div>
+
+            <div style="text-align: center">
+                <spring:hasBindErrors name="member">
+                    <font color="red"> <c:forEach items="${errors.globalErrors}"
+                                                  var="error">
+                        <spring:message code="${error.code}"/>
+                    </c:forEach>
+                    </font>
+                </spring:hasBindErrors>
             </div>
 
             <div class="container-login100-form-btn" style="margin-top: 30px;">

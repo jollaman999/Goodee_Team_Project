@@ -5,9 +5,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 public class Member {
-    @Size(min = 3, max = 50, message = "아이디를 3자 이상 50자 이하로 입력하세요.")
+    // login시 체크 안되게 하기위함 / 회원가입시 Javascript 에서 처리
+    // @Size(min = 3, max = 50, message = "아이디를 3자 이상 50자 이하로 입력하세요.")
     private String id;
-    @Size(min = 3, max = 50, message = "비밀번호를 3자 이상 50자 이하로 입력하세요.")
+    // login시 체크 안되게 하기위함 / 회원가입시 Javascript 에서 처리
+    // @Size(min = 5, max = 100, message = "비밀번호를 5자 이상 100자 이하로 입력하세요.")
     private String pass;
     @NotEmpty(message = "사용자 이름은 필수 입력 사항 입니다.")
     private String name;
