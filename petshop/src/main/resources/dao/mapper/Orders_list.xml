@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.mapper.Orders_listMapper">
+    <select id="list" resultType="Orders_list" parameterType="map">
+    select * from orders_list
+      <if test="order_num; != null">
+            where order_num; = #{order_num;}
+        </if>
+        order by order_num;
+    </select>
+</mapper>

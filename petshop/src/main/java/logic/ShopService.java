@@ -13,7 +13,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.File;
@@ -46,6 +45,10 @@ public class ShopService {
     private CategoryItemDao categoryItemDao;
     @Autowired
     private AdminMailDao adminMailDao;
+    @Autowired
+    private OrdersDao ordersDao;
+    @Autowired
+    private Orders_listDao orders_listDao;
 
     // list
     public List<CategoryItem> getCategoryItemList() {
@@ -65,12 +68,12 @@ public class ShopService {
         return itemDao.list(category_group, category_item, pageNum, limit, searchtype, searchcontent);
     }
 
-    public List<Sale> salelist(String id) {
-        return saleDao.list(id);
+    public List<Orders_list> getOrders_listList() {
+        return orders_listDao.list();
     }
 
-    public List<SaleItem> saleItemList(int saleId) {
-        return saleItemDao.list(saleId);
+    public List<Orders> getOrdersList() {
+        return ordersDao.list();
     }
 
     public List<Member> memberList() {
