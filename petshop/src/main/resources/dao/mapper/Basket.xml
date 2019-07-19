@@ -3,12 +3,14 @@
 <mapper namespace="dao.mapper.BasketMapper">
     <select id="list" resultType="Basket" parameterType="map">
         select * from basket
-        <if test="item_no != null">
-            where item_no = #{item_no}
-        </if>
-        <if test="member_id != null">
-            where member_id = #{member_id}
-        </if>
+        <where>
+            <if test="item_no != null">
+                and item_no = #{item_no}
+            </if>
+            <if test="member_id != null">
+                and member_id = #{member_id}
+            </if>
+        </where>
         order by list_num
     </select>
 </mapper>

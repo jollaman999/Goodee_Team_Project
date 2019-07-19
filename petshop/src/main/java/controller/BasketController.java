@@ -54,7 +54,7 @@ public class BasketController {
             mav.addObject("msg", "해당 상품의 수량이 변경되었습니다.");
             mav.addObject("url", request.getHeader("referer"));
         } else {
-            mav.addObject("msg", "상품 수량 변경 실패!");
+            mav.addObject("msg", "해당 상품의 수량 변경을 실패 하였습니다!");
             mav.addObject("url", request.getHeader("referer"));
         }
 
@@ -62,26 +62,20 @@ public class BasketController {
     }
 
     @RequestMapping("delete")
-    public ModelAndView delete(Integer index, HttpSession session) {
-        Cart cart = (Cart)session.getAttribute("CART");
-        ModelAndView mav = new ModelAndView("cart/cart");
+    public ModelAndView delete(HttpSession session, HttpServletRequest request, Integer item_no) {
+        Member loginMember = (Member)session.getAttribute(("loginMember"));
 
-        ItemSet selectedItemSet = null;
+        int result = service.basketDelete(loginMember.getId(), item_no);
 
-        try {
-            // selectedItem : ItemSetList 리스트 객체에서 삭제된 객체
-            selectedItemSet = cart.getItemSetList().remove((int)index);
-            mav.addObject("message", selectedItemSet.getItem().getName() + "상품 장바구니에서 삭제");
-        } catch (Exception e) {
-            e.printStackTrace();
-            mav.addObject("message", selectedItemSet.getItem().getName() + "상품 장바구니에서 삭제 실패");
+        ModelAndView mav = new ModelAndView("/alert");
+        if (result > 0) {
+            mav.addObject("msg", "해당 상품이 장바구니에서 삭제 되었습니다.");
+            mav.addObject("url", request.getHeader("referer"));
+        } else {
+            mav.addObject("msg", "해당 상품을 장바구니에서 삭제하는데 실패하였습니다!");
+            mav.addObject("url", request.getHeader("referer"));
         }
 
-        if (cart.isEmpty()) {
-            mav.addObject("message2", "장바구니가 비어있습니다.");
-        }
-
-        mav.addObject("cart", cart);
         return mav;
     }
 
@@ -92,10 +86,6 @@ public class BasketController {
         List<Basket> basketList = service.basketList(loginMember.getId());
         ModelAndView mav = new ModelAndView("basket/cart");
 
-        if (basketList == null || basketList.isEmpty()) {
-            throw new CartEmptyException("장바구니에 상품이 없습니다.", "../item/list.shop");
-        }
-
         mav.addObject("basketList", basketList);
 
         return mav;
@@ -103,26 +93,7 @@ public class BasketController {
 
     @RequestMapping("checkout")
     public String checkout (HttpSession session) {
-        return "cart/checkout";
-    }
-
-    /*
-    주문 확정
-    1. 주문테이블에 내용 등록
-    2. 장바구니의 상품 제거
-     */
-    @RequestMapping("end")
-    public ModelAndView checkend (HttpSession session) {
-        ModelAndView mav = new ModelAndView();
-        Cart cart = (Cart)session.getAttribute("CART");
-        Member loginMember = (Member)session.getAttribute("loginMember");
-        Sale sale = service.checkEnd(loginMember, cart);
-        long tot = cart.getTotal();
-        cart.clearAll(session);
-        mav.addObject("sale", sale);
-        mav.addObject("tot", tot);
-
-        return mav;
+        return "order/checkout";
     }
 
     @RequestMapping("*")

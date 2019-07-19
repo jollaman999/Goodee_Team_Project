@@ -336,26 +336,26 @@ public class ShopService {
     }
 
     // Sale
-    public Sale checkEnd(Member loginMember, Cart cart) {
-        Sale sale = new Sale();
-        sale.setSaleId(saleDao.getMaxSaleId());
-        sale.setMember(loginMember);
-        sale.setUpdatetime(new Date());
-        List<ItemSet> itemList = cart.getItemSetList();
-
-        int i = 0;
-        for (ItemSet is : itemList) {
-            int saleItemId = ++i;
-            SaleItem saleItem = new SaleItem(sale.getSaleId(), saleItemId, is);
-            sale.getItemList().add(saleItem);
-        }
-        saleDao.insert(sale);
-        List<SaleItem> saleItemList = sale.getItemList();
-
-        for (SaleItem si : saleItemList) {
-            saleItemDao.insert(si);
-        }
-
-        return sale;
-    }
+//    public Sale checkEnd(Member loginMember, Cart cart) {
+//        Sale sale = new Sale();
+//        sale.setSaleId(saleDao.getMaxSaleId());
+//        sale.setMember(loginMember);
+//        sale.setUpdatetime(new Date());
+//        List<ItemSet> itemList = cart.getItemSetList();
+//
+//        int i = 0;
+//        for (ItemSet is : itemList) {
+//            int saleItemId = ++i;
+//            SaleItem saleItem = new SaleItem(sale.getSaleId(), saleItemId, is);
+//            sale.getItemList().add(saleItem);
+//        }
+//        saleDao.insert(sale);
+//        List<SaleItem> saleItemList = sale.getItemList();
+//
+//        for (SaleItem si : saleItemList) {
+//            saleItemDao.insert(si);
+//        }
+//
+//        return sale;
+//    }
 }

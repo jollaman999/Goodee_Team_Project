@@ -38,16 +38,17 @@
 <section class="cart-section spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div style="width: 80%; padding-right: 30px">
                 <div class="cart-table">
                     <h3>Your Cart</h3>
                     <div class="cart-table-warp">
                         <table>
                             <thead>
                             <tr>
-                                <th class="product-th" style="font-size: 16px">상품</th>
-                                <th class="quy-th" style="font-size: 16px">수량</th>
-                                <th class="total-th" style="font-size: 16px">가격</th>
+                                <th style="font-size: 16px; width: 50%">상품</th>
+                                <th style="font-size: 16px; width: 22%">수량</th>
+                                <th style="font-size: 16px; width: 8%">삭제</th>
+                                <th style="font-size: 16px; width: 20%">가격</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -60,37 +61,58 @@
                                     }
                                 %>
                                 <c:set var="total" value="0" />
-                                <c:forEach items="${basketList}" var="basket">
-                                    <c:set var="item_no" value="${basket.item_no}" />
-                                    <%
-                                        if (itemDao != null && pageContext.getAttribute("item_no") != null) {
-                                            pageContext.setAttribute("item", itemDao.selectOne((Integer)pageContext.getAttribute("item_no")));
-                                        }
-                                    %>
-                                    <tr>
-                                        <td class="product-col">
-                                            <img src="../item/img/${item.item_no}/${item.mainpicurl}" alt="">
-                                            <div class="pc-title">
-                                                <h4>${item.name}</h4>
-                                                <p><fmt:formatNumber value="${item.price}" pattern="###,###" /> 원</p>
-                                            </div>
-                                        </td>
-                                        <td class="quy-col">
-                                            <div class="quantity">
-                                                <form name="f" method="post" action="update.shop">
-                                                    <div class="pro-qty">
-                                                        <input type="text" name="quantity" value="${basket.quantity}" onkeydown="onlyNumber()">
+                                <c:choose>
+                                    <c:when test="${basketList != null && !basketList.isEmpty()}">
+                                        <c:forEach items="${basketList}" var="basket">
+                                            <c:set var="item_no" value="${basket.item_no}" />
+                                            <%
+                                                if (itemDao != null && pageContext.getAttribute("item_no") != null) {
+                                                    pageContext.setAttribute("item", itemDao.selectOne((Integer)pageContext.getAttribute("item_no")));
+                                                }
+                                            %>
+                                            <tr>
+                                                <td class="product-col">
+                                                    <img src="../item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                                                    <div class="pc-title">
+                                                        <h4>${item.name}</h4>
+                                                        <p><fmt:formatNumber value="${item.price}" pattern="###,###" /> 원</p>
                                                     </div>
-                                                    <input type="hidden" name="item_no" value="${item.item_no}">
-                                                    <input type="submit" class="site-btn sb-dark" value="변경"
-                                                           style="width: 50px; height: 20px; padding: 5px 0 20px; font-size: 12px; margin-left: 10px; margin-top: 6px">
-                                                </form>
-                                            </div>
-                                        </td>
-                                        <td class="total-col"><h4><fmt:formatNumber value="${item.price * basket.quantity}" pattern="###,###" /> 원</h4></td>
-                                    </tr>
-                                    <c:set var="total" value="${total + item.price * basket.quantity}" />
-                                </c:forEach>
+                                                </td>
+                                                <td class="quy-col">
+                                                    <div class="quantity">
+                                                        <form name="f" method="post" action="update.shop">
+                                                            <div class="pro-qty">
+                                                                <input type="text" name="quantity" value="${basket.quantity}" onkeydown="onlyNumber()">
+                                                            </div>
+                                                            <input type="hidden" name="item_no" value="${item.item_no}">
+                                                            <input type="submit" class="site-btn sb-dark" value="변경"
+                                                                   style="width: 50px; height: 20px; padding: 5px 0 20px; font-size: 12px; margin-left: 10px; margin-top: 6px">
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                                <td class="size-col">
+                                                    <form name="f" method="post" action="delete.shop">
+                                                        <input type="hidden" name="item_no" value="${item.item_no}">
+                                                        <input type="submit" class="site-btn" value="삭제"
+                                                               style="width: 50px; height: 20px; padding: 5px 0 20px; font-size: 12px;
+                                                       margin-left: 10px; margin-top: 6px; background-color: #f51167">
+                                                    </form>
+                                                </td>
+                                                <td class="total-col"><h4><fmt:formatNumber value="${item.price * basket.quantity}" pattern="###,###" /> 원</h4></td>
+                                            </tr>
+                                            <c:set var="total" value="${total + item.price * basket.quantity}" />
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <tr>
+                                            <td colspan="4">
+                                                <div style="text-align: center">
+                                                    <h5>장바구니에 담긴 상품이 없습니다.</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:otherwise>
+                                </c:choose>
                             </tbody>
                         </table>
                     </div>
@@ -99,9 +121,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 card-right">
-                <a href="" class="site-btn" style="font-size: 20px">주문 하기</a>
-                <a href="" class="site-btn sb-dark" style="font-size: 20px">쇼핑 계속하기</a>
+            <div class="card-right" style="width: 20%">
+                <a href="" class="site-btn" style="font-size: 18px; min-width: 160px; padding-left: 15px;
+                        padding-right: 15px; padding-bottom: 22px">주문 하기</a>
+                <a href="" class="site-btn sb-dark" style="font-size: 18px; min-width: 160px; padding-left: 15px;
+                        padding-right: 15px; padding-bottom: 22px">쇼핑 계속하기</a>
             </div>
         </div>
     </div>
