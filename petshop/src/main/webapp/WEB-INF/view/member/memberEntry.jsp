@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>회원 가입 - 핫도그 몰</title>
+    <title>회원 가입 - 핫 도그몰</title>
 
     <link rel="stylesheet" type="text/css" href="${path}/fonts/iconic/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" type="text/css" href="${path}/vendor/animate/animate.css">
@@ -17,11 +17,18 @@
     <link rel="stylesheet" type="text/css" href="${path}/css/submitform_util.css">
     <link rel="stylesheet" type="text/css" href="${path}/css/submitform.css">
 
+    <!-- https://fontawesome.com/v4.7.0/icons/ -->
+    <link rel="stylesheet" type="text/css" href="${path}/css/font-awesome-4.7.min.css">
+
+
     <script type="text/javascript">
         var idcheckForm;
         var emailcheckForm;
+        var jusoForm;
 
         function win_id_check() {
+            document.f.id.focus();
+
             if (idcheckForm != null)
                 idcheckForm.close();
 
@@ -30,6 +37,8 @@
         }
 
         function win_email_check() {
+            document.f.email.focus();
+
             if (emailcheckForm != null)
                 emailcheckForm.close();
 
@@ -40,14 +49,14 @@
         function join_submit() {
             f = document.f;
 
-            if (!f.id.value || f.id.value === " ") {
+            if (!f.id.value || f.id.value === "") {
                 alert("아이디를 입력 해주세요!");
                 f.id.focus();
                 return;
             }
 
-            if (!f.id.value.length < 5 || f.id.value.length > 100) {
-                alert("아이디를 입력 해주세요!");
+            if (f.id.value.length < 3 || f.id.value.length > 50) {
+                alert("아이디를 3자 이상 50자 이하로 입력 해주세요!");
                 f.id.focus();
                 return;
             }
@@ -58,27 +67,62 @@
                 return;
             }
 
-            if (!f.nickname.value || f.nickname.value === "") {
-                alert("이름을 입력해주세요!");
-                f.nickname.focus();
+            if (!f.pass_check.value) {
+                alert("재확인 비밀번호를 입력해주세요!");
+                f.pass_check.focus();
                 return;
             }
 
-            if (!f.tel.value) {
-                alert("전화번호를 입력해주세요!");
-                f.tel.focus();
+            if (f.pass.value !== f.pass_check.value) {
+                alert("입력한 두 비밀번호가 다릅니다! 비밀번호를 재입력 해주세요!");
+                f.pass.focus();
+
                 return;
             }
+
+            if (f.pass.value.length < 5 || f.pass.value.length > 100) {
+                alert("비밀번호를 5자 이상 100자 이하로 입력 해주세요!");
+                f.id.focus();
+                return;
+            }
+
+            if (!f.pass.value) {
+                alert("비밀번호를 입력해주세요!");
+                f.pass.focus();
+                return;
+            }
+
+            if (f.pass.value.length < 5 || f.pass.value.length > 100) {
+                alert("비밀번호를 5자 이상 100자 이하로 입력 해주세요!");
+                f.id.focus();
+                return;
+            }
+
             if (!f.email.value) {
                 alert("이메일을 입력해주세요!");
                 f.email.focus();
                 return;
             }
 
-            if (f.pass.value.length < 5 || f.pass.value.length > 100) {
-                alert("비밀번호를 5~100자로 입력해주세요!");
-                f.pass.focus();
+            if (!f.name.value || f.name.value === "") {
+                alert("이름을 입력해주세요!");
+                f.nickname.focus();
                 return;
+
+            }
+
+            if (!f.phone.value) {
+                alert("전화번호를 입력해주세요!");
+                f.phone.focus();
+                return;
+
+            }
+
+            if (!f.address.value) {
+                alert("주소를 입력해주세요!");
+                f.address.focus();
+                return;
+
             }
 
             if (f.checked_duplicate_id.value === 0) {
@@ -88,15 +132,8 @@
             }
 
             if (f.checked_duplicate_email.value === 0) {
-                alert("닉네임 중복확인을 해주세요!");
+                alert("이메일 중복확인을 해주세요!");
                 f.email.focus();
-                return;
-            }
-
-            if (f.pass.value !== f.pass_check.value) {
-                alert("입력한 두 비밀번호가 다릅니다! 비밀번호를 재확인 해주세요!");
-                f.pass.focus();
-
                 return;
             }
 
@@ -107,12 +144,6 @@
             }
 
             f.submit();
-        }
-
-        function gender_selected() {
-            f = document.f;
-
-            f.is_gender_selected.value = 1;
         }
     </script>
 
@@ -129,77 +160,87 @@
                     var roadAddr = data.roadAddress; // 도로명 주소 변수
 
                     // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                    document.getElementById('sample4_postcode').value = data.zonecode;
-                    document.getElementById("sample4_roadAddress").value = roadAddr;
+                    document.getElementById('postcode').value = data.zonecode;
+                    document.getElementById("address").value = roadAddr;
                 }
             }).open();
         }
     </script>
 </head>
 <body>
-<div class="container">
+<div style="margin-left: 100px; margin-right: 100px">
     <form class="contact100-form validate-form" action="memberEntry.shop" name="f" method="post">
         <input type="hidden" name="checked_duplicate_id" value="0">
         <input type="hidden" name="checked_duplicate_email" value="0">
         <input type="hidden" name="email_check_passed" value="0">
 
         <div class="wrap-input100 validate-input" data-validate="ID 중복확인을 해주세요!">
-            <i class="input100 fa fa-user-o fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
-            <input class="input100" type="text" name="id" placeholder="ID" onclick="win_id_check()" readonly>
+            <i class="input100 fa fa-id-badge fa-fw"
+               style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="id" placeholder="ID" onclick="win_id_check()" value="" readonly>
             <span class="focus-input100"></span>
         </div>
 
         <div class="wrap-input100 validate-input" id="div-pass" data-validate="비밀번호를 입력해주세요!">
-            <i class="input100 fa fa-key fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <i class="input100 fa fa-key fa-fw"
+               style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
             <input class="input100" type="password" name="pass" placeholder="PASSWORD">
             <span class="focus-input100"></span>
         </div>
 
         <div class="wrap-input100 validate-input" id="div-pass_check" data-validate="재확인 비밀번호를 입력해주세요!">
-            <i class="input100 fa fa-key fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <i class="input100 fa fa-key fa-fw"
+               style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
             <input class="input100" type="password" name="pass_check" placeholder="PASSWORD CHECK">
             <span class="focus-input100"></span>
         </div>
 
-        <div class="wrap-input100 validate-input" data-validate="이메일 주소가 올바르지 않습니다!">
-            <i class="input100 fa fa-vcard fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+        <div class="wrap-input100 validate-input" data-validate="이메일 중복확인을 해주세요!">
+            <i class="input100 fa fa-envelope fa-fw"
+               style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
             <input class="input100" type="text" name="email" placeholder="E-MAIL" onclick="win_email_check()" readonly>
             <span class="focus-input100"></span>
         </div>
 
         <div class="wrap-input100 validate-input" data-validate="이름을 입력해주세요!">
-            <i class="input100 fa fa-key fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <i class="input100 fa fa-user-o fa-fw"
+               style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
             <input class="input100" type="text" name="name" placeholder="NAME">
             <span class="focus-input100"></span>
         </div>
 
         <div class="wrap-input100 validate-input" data-validate="전화번호를 입력해주세요!">
-            <i class="input100 fa fa-phone fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
-            <input class="input100" type="text" name="tel" placeholder="TEL">
+            <i class="input100 fa fa-phone fa-fw"
+               style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="phone" placeholder="PHONE">
             <span class="focus-input100"></span>
         </div>
 
         <div class="wrap-input100 validate-input" data-validate="주소를 입력해 주세요!">
-            <i class="input100 fa fa-envelope-o fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
-            <input class="input100" type="text" name="address" placeholder="ADDRESS" onclick="execDaumPostcode()" readonly>
+            <i class="input100 fa fa-address-card fa-fw"
+               style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="address" id="address" placeholder="ADDRESS" onclick="execDaumPostcode()"
+                   readonly>
             <span class="focus-input100"></span>
         </div>
 
         <div class="wrap-input100">
-            <i class="input100 fa fa-envelope-o fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
-            <input class="input100" type="text" name="address_detail" id="extraAddress" placeholder="ADDRESS DETAIL">
+            <i class="input100 fa fa-home fa-fw"
+               style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="address_detail" placeholder="ADDRESS DETAIL">
             <span class="focus-input100"></span>
         </div>
 
         <div class="wrap-input100 validate-input" data-validate="주소란을 클릭하여 우편번호를 입력해 주세요!">
-            <i class="input100 fa fa-envelope-o fa-fw" style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
-            <input class="input100" type="text" name="postcode" placeholder="POSTCODE">
+            <i class="input100 fa fa-envelope-open-o fa-fw"
+               style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
+            <input class="input100" type="text" name="postcode" id="postcode" placeholder="POSTCODE">
             <span class="focus-input100"></span>
         </div>
 
 
         <div class="container-contact100-form-btn">
-            <a href="javascript:join_submit()" class="btn musica-btn">회원가입</a>
+            <a href="javascript:join_submit()" class="contact100-form-btn">회원가입</a>
         </div>
     </form>
 </div>

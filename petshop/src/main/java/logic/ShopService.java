@@ -60,6 +60,11 @@ public class ShopService {
         return itemDao.list();
     }
 
+    public List<Item> getItemList(Integer category_group, Integer category_item,
+                                  Integer pageNum, int limit, String searchtype, String searchcontent) {
+        return itemDao.list(category_group, category_item, pageNum, limit, searchtype, searchcontent);
+    }
+
     public List<Sale> salelist(String id) {
         return saleDao.list(id);
     }
@@ -81,6 +86,10 @@ public class ShopService {
     }
 
     // item
+    public int itemcount(Integer category_group, Integer category_item, String searchtype, String searchcontent) {
+        return itemDao.count(category_group, category_item, searchtype, searchcontent);
+    }
+
     public int item_max_item_no() {
         return itemDao.max_item_no();
     }

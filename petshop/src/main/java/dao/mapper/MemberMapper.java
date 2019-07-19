@@ -11,7 +11,7 @@ public interface MemberMapper {
             "values (#{id}, #{pass}, #{name}, #{phone}, #{email}, #{address}, #{address_detail}, #{postcode})")
     void insert(Member member);
 
-    @Update("update member set pass = #{pass}, name = #{name}, phone = #{phone}," +
+    @Update("update member set name = #{name}, phone = #{phone}," +
             "email = #{email}, address = #{address}, address_detail = #{address_detail}, postcode = #{postcode} where id = #{id}")
     void update(Member member);
 

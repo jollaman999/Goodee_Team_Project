@@ -28,7 +28,7 @@ public class ItemController {
     private FileUtil fileUtil = new FileUtil();
 
     @RequestMapping("list")
-    public ModelAndView list() {
+    public ModelAndView list(HttpSession session) {
         List<Item> itemList  = service.getItemList();
         // /WEB-INF/view/item/list.jsp 뷰로 지정
         ModelAndView mav = new ModelAndView();
@@ -37,7 +37,7 @@ public class ItemController {
     }
 
     @RequestMapping("*")
-    public ModelAndView detail(int item_no) {
+    public ModelAndView detail(int item_no, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         Item item = service.getItemById(item_no);
         mav.addObject("item", item);
@@ -45,7 +45,7 @@ public class ItemController {
     }
 
     @RequestMapping("create")
-    public ModelAndView create() {
+    public ModelAndView create(HttpSession session) {
         ModelAndView mav = new ModelAndView("item/add");
         List<CategoryGroup> categoryGroupList = service.getCategoryGroupList();
         List<CategoryItem> categoryItemList = service.getCategoryItemList();
@@ -133,7 +133,7 @@ public class ItemController {
         ModelAndView mav = new ModelAndView("/alert");
 
         if (request.getParameter("item_no") == null) {
-            mav.addObject("msg","게시글 정보를 가져올 수 없습니다!");
+            mav.addObject("msg","상품 정보를 가져올 수 없습니다!");
             mav.addObject("url","list.shop");
 
             return mav;
