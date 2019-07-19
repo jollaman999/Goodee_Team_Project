@@ -65,7 +65,7 @@ public class ItemDao {
         return sqlSessionTemplate.selectList(NS + "list", param);
     }
 
-    public Item selectOne(int item_no) {
+    public Item selectOne(Integer item_no) {
         param.clear();
         param.put("item_no", item_no);
         return sqlSessionTemplate.selectOne(NS + "list", param);
@@ -87,7 +87,7 @@ public class ItemDao {
         return sqlSessionTemplate.getMapper(ItemMapper.class).update(item);
     }
 
-    public int delete(int item_no) {
+    public int delete(Integer item_no) {
         return sqlSessionTemplate.getMapper(ItemMapper.class).delete(item_no);
     }
 }

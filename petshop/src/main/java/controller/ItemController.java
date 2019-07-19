@@ -37,7 +37,7 @@ public class ItemController {
     }
 
     @RequestMapping("*")
-    public ModelAndView detail(int item_no, HttpSession session) {
+    public ModelAndView detail(Integer item_no, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         Item item = service.getItemById(item_no);
         mav.addObject("item", item);
