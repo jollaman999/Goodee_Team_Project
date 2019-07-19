@@ -89,42 +89,60 @@
                 </li>
 
                 <%
-                    CategoryGroupDao categoryGroupDao = (CategoryGroupDao) context.getBean("CategoryGroupDao");
-                    CategoryItemDao categoryItemDao = (CategoryItemDao) context.getBean("CategoryItemDao");
-                    ItemDao itemDao = (ItemDao) context.getBean("ItemDao");
-
-                    List<CategoryGroup> categoryGroupList = categoryGroupDao.list();
-                    List<CategoryItem> categoryItemList = categoryItemDao.list();
-
-                    for (CategoryGroup categoryGroup : categoryGroupList) {
+                    if (context != null) {
+                        ItemDao itemDao = (ItemDao) context.getBean("ItemDao");
+                        CategoryGroupDao categoryGroupDao = (CategoryGroupDao) context.getBean("CategoryGroupDao");
+                        CategoryItemDao categoryItemDao = (CategoryItemDao) context.getBean("CategoryItemDao");
                 %>
                         <li>
-                            <a href="${path}/item/list.shop?category_group=<%= categoryGroup.getGroup_code() %>">
-                                <%= categoryGroup.getGroup_name() %>
-                                <% if (itemDao.check_new(categoryGroup.getGroup_code(), null, null)) { %>
+                            <a href="${path}/shop/list.shop">
+                                All
+                                <% if (itemDao != null && itemDao.check_new(null, null, null)) { %>
                                     <span class="new">New</span>
                                 <% } %>
                             </a>
-                            <ul class="sub-menu">
-                <%
-                                for (CategoryItem categoryItem : categoryItemList) {
-                                    if (categoryGroup.getGroup_code() == categoryItem.getGroup_code()) {
-                %>
-                                        <li>
-                                            <a href="${path}/shop/list.shop?category_group=<%= categoryGroup.getGroup_code() %>&category_item=<%= categoryItem.getCode() %>">
-                                                <%= categoryItem.getName() %>
-                                                <% if (itemDao.check_new(categoryGroup.getGroup_code(), categoryItem.getCode(), null)) { %>
-                                                    <span class="new" style="margin-left: 65px; margin-top: 14px">New</span>
-                                                <% } %>
-                                            </a>
-                                        </li>
-                <%
-                                    }
-                                }
-                %>
-                            </ul>
                         </li>
+
                 <%
+                        if (categoryGroupDao != null && categoryItemDao != null) {
+                            List<CategoryGroup> categoryGroupList = categoryGroupDao.list();
+                            List<CategoryItem> categoryItemList = categoryItemDao.list();
+
+                            if (categoryGroupList != null && categoryItemList != null) {
+                                for (CategoryGroup categoryGroup : categoryGroupList) {
+                %>
+                                    <li>
+                                        <a href="${path}/shop/list.shop?category_group=<%= categoryGroup.getGroup_code() %>">
+                                            <%= categoryGroup.getGroup_name() %>
+                                            <% if (itemDao.check_new(categoryGroup.getGroup_code(), null, null)) { %>
+                                                <span class="new">New</span>
+                                            <% } %>
+                                        </a>
+                                        <ul class="sub-menu">
+                <%
+                                            for (CategoryItem categoryItem : categoryItemList) {
+                                                if (categoryGroup.getGroup_code() == categoryItem.getGroup_code()) {
+                %>
+                                                    <li>
+                                                        <a href="${path}/shop/list.shop?category_group=<%= categoryGroup.getGroup_code() %>&category_item=<%= categoryItem.getCode() %>">
+                                                            <%= categoryItem.getName() %>
+                                                            <% if (itemDao.check_new(categoryGroup.getGroup_code(), categoryItem.getCode(), null)) { %>
+                                                                <span class="new" style="margin-left: 65px; margin-top: 14px">New</span>
+                                                            <% } %>
+                                                        </a>
+                                                    </li>
+                <%
+                                                }
+                                            }
+                %>
+                                        </ul>
+                                    </li>
+                <%
+                                }
+                            }
+                        }
+                    } else {
+                        System.out.println("header: Can't get WebApplicationContext!");
                     }
                 %>
             </ul>
