@@ -115,6 +115,7 @@ public class MemberController {
         ModelAndView mav = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
             bindingResult.reject("error.login.member");
             mav.getModel().putAll(bindingResult.getModel());
             return mav;
