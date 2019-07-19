@@ -1,10 +1,9 @@
 <%@ page import="org.springframework.web.context.ContextLoader" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
-<%@ page import="dao.BasketDao" %>
-<%@ page import="logic.Item" %>
 <%@ page import="dao.ItemDao" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set value="${pageContext.request.contextPath}" var="path" />
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -72,7 +71,7 @@
                                             %>
                                             <tr>
                                                 <td class="product-col">
-                                                    <img src="../item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                                                    <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
                                                     <div class="pc-title">
                                                         <h4>${item.name}</h4>
                                                         <p><fmt:formatNumber value="${item.price}" pattern="###,###" /> 원</p>
@@ -139,67 +138,27 @@
             <h2>Continue Shopping</h2>
         </div>
         <div class="row">
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <div class="tag-new">New</div>
-                        <img src="./img/product/2.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+            <c:forEach var="item" items="${randomitemList}">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
+                            <div class="tag-new">new</div>
+                            <div style="height: 420px">
+                                <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                            </div>
+                            <div class="pi-links">
+                                <a href="${path}/basket/add.shop?item_no=${item.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                <a href="#" class="wishlist-btn" style="width: 80px"><i class="flaticon-heart"></i><span style="font-size: 12pt">&nbsp;123</span></a>
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6>${item.price}원</h6>
+                            <p>${item.name}</p>
                         </div>
                     </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Black and White Stripes Dress</p>
-                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/5.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/9.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/1.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
         </div>
     </div>
 </section>

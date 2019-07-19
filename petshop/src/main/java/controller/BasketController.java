@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -85,8 +86,43 @@ public class BasketController {
 
         List<Basket> basketList = service.basketList(loginMember.getId());
         ModelAndView mav = new ModelAndView("basket/cart");
-
         mav.addObject("basketList", basketList);
+
+        int max_item_num = service.item_max_item_no();
+        int limit = 6;
+        List<Item> randomitemList = new ArrayList<>();
+
+        System.out.print("basket/view: randomList-item_no: [ ");
+        for (int i = 1; i < max_item_num; i++) {
+            int random_item_no = (int) (Math.random() * max_item_num) + 1;
+            Item item = service.getItemById(random_item_no);
+
+            if (item == null) {
+                i--;
+                continue;
+            } else {
+                boolean random_dupicated = false;
+                for (Item randomitem : randomitemList) {
+                    if (randomitem.getItem_no() == random_item_no) {
+                        i--;
+                        random_dupicated = true;
+                        break;
+                    }
+                }
+                if (random_dupicated) {
+                    continue;
+                }
+
+                randomitemList.add(item);
+                System.out.print(random_item_no + " ");
+            }
+
+            if (i + 1 > limit) {
+                break;
+            }
+        }
+        System.out.println("]");
+        mav.addObject("randomitemList", randomitemList);
 
         return mav;
     }

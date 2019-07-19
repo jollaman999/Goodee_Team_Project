@@ -104,25 +104,25 @@
             <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
                 <div class="row">
                     <c:forEach var="item" items="${itemList}">
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
-                                <div class="tag-new">new</div>
-                                <div style="height: 420px">
-                                    <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="product-item">
+                                <div class="pi-pic">
+                                    <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
+                                    <div class="tag-new">new</div>
+                                    <div style="height: 420px">
+                                        <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                                    </div>
+                                    <div class="pi-links">
+                                        <a href="${path}/basket/add.shop?item_no=${item.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                        <a href="#" class="wishlist-btn" style="width: 80px"><i class="flaticon-heart"></i><span style="font-size: 12pt">&nbsp;123</span></a>
+                                    </div>
                                 </div>
-                                <div class="pi-links">
-                                    <a href="../basket/add.shop?item_no=${item.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                                    <a href="#" class="wishlist-btn" style="width: 80px"><i class="flaticon-heart"></i><span style="font-size: 12pt">&nbsp;123</span></a>
+                                <div class="pi-text">
+                                    <h6>${item.price}원</h6>
+                                    <p>${item.name}</p>
                                 </div>
-                            </div>
-                            <div class="pi-text">
-                                <h6>${item.price}원</h6>
-                                <p>${item.name}</p>
                             </div>
                         </div>
-                    </div>
                     </c:forEach>
 
                     <div class="text-center w-100 pt-3">
