@@ -1,10 +1,11 @@
 <%@ page import="org.springframework.web.context.ContextLoader" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="dao.ItemDao" %>
+<%@ page import="logic.Item" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set value="${pageContext.request.contextPath}" var="path" />
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +22,15 @@
     </script>
 </head>
 <body>
+<%
+    WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+
+    ItemDao itemDao = null;
+    if (context != null) {
+        itemDao = (ItemDao)context.getBean("ItemDao");
+    }
+%>
+
 <!-- Page info -->
 <div class="page-top-info">
     <div class="container">
@@ -51,14 +61,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <%
-                                    WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
-                                    ItemDao itemDao = null;
-
-                                    if (context != null) {
-                                        itemDao = (ItemDao)context.getBean("ItemDao");
-                                    }
-                                %>
                                 <c:set var="total" value="0" />
                                 <c:choose>
                                     <c:when test="${basketList != null && !basketList.isEmpty()}">
@@ -142,11 +144,14 @@
                 <div class="col-lg-4 col-sm-6">
                     <div class="product-item">
                         <div class="pi-pic">
-                            <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
+                            <%
+                                Item item = (Item) pageContext.getAttribute("item");
+                                if (itemDao != null && item != null && itemDao.check_new(null, null, item.getItem_no())) { %>
                             <div class="tag-new">new</div>
-                            <div style="height: 420px">
-                                <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
-                            </div>
+                            <%
+                                }
+                            %>
+                            <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
                             <div class="pi-links">
                                 <a href="${path}/basket/add.shop?item_no=${item.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                                 <a href="#" class="wishlist-btn" style="width: 80px"><i class="flaticon-heart"></i><span style="font-size: 12pt">&nbsp;123</span></a>

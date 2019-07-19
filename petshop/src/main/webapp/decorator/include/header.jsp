@@ -1,12 +1,13 @@
 <%@ page import="org.springframework.web.context.ContextLoader" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="java.util.List" %>
+<%@ page import="dao.BasketDao" %>
 <%@ page import="dao.CategoryGroupDao" %>
 <%@ page import="dao.CategoryItemDao" %>
+<%@ page import="dao.ItemDao" %>
 <%@ page import="logic.CategoryGroup" %>
 <%@ page import="logic.CategoryItem" %>
 <%@ page import="logic.Member" %>
-<%@ page import="dao.BasketDao" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set value="${pageContext.request.contextPath}" var="path" />
@@ -61,7 +62,6 @@
                         <div class="up-item">
                             <div class="shopping-card">
                                 <i class="flaticon-bag"></i>
-                                <!-- 장바구니 수량 DB 쿼리하여 표시되도록 수정 필요 -->
                                 <%
                                     Member loginMember = (Member)session.getAttribute(("loginMember"));
                                     if (context != null) {
@@ -91,6 +91,8 @@
                 <%
                     CategoryGroupDao categoryGroupDao = (CategoryGroupDao) context.getBean("CategoryGroupDao");
                     CategoryItemDao categoryItemDao = (CategoryItemDao) context.getBean("CategoryItemDao");
+                    ItemDao itemDao = (ItemDao) context.getBean("ItemDao");
+
                     List<CategoryGroup> categoryGroupList = categoryGroupDao.list();
                     List<CategoryItem> categoryItemList = categoryItemDao.list();
 
@@ -99,8 +101,9 @@
                         <li>
                             <a href="${path}/item/list.shop?category_group=<%= categoryGroup.getGroup_code() %>">
                                 <%= categoryGroup.getGroup_name() %>
-                                <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
-                                <span class="new">New</span>
+                                <% if (itemDao.check_new(categoryGroup.getGroup_code(), null, null)) { %>
+                                    <span class="new">New</span>
+                                <% } %>
                             </a>
                             <ul class="sub-menu">
                 <%
@@ -110,6 +113,9 @@
                                         <li>
                                             <a href="${path}/shop/list.shop?category_group=<%= categoryGroup.getGroup_code() %>&category_item=<%= categoryItem.getCode() %>">
                                                 <%= categoryItem.getName() %>
+                                                <% if (itemDao.check_new(categoryGroup.getGroup_code(), categoryItem.getCode(), null)) { %>
+                                                    <span class="new" style="margin-left: 65px; margin-top: 14px">New</span>
+                                                <% } %>
                                             </a>
                                         </li>
                 <%
