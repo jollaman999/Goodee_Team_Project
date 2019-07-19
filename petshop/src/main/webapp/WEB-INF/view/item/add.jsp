@@ -2,9 +2,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
-<!-- 오늘 날짜 출력하기 -->
-<jsp:useBean id="now" class="java.util.Date" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,7 +86,7 @@
                                                   -->                                            
         <tr>
             <td>유통기한</td>
-            <td><form:input path="expr_date" type="date" name="userdate" pattern="yyyy-MM-dd" var="today"/></td>
+            <td><form:input path="expr_date" type="text" name="userdate"/></td>
         </tr>
       
         <tr>

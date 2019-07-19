@@ -1,6 +1,7 @@
 package logic;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Min;
@@ -27,6 +28,7 @@ public class Item {
     private String origin; // 원산지
     private String mfr; // 제조사
     private String mfr_tel; // 제조사 연락처
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expr_date; // 유통기한
     @NotNull(message = "상품 수량을 입력해 주세요.")
     private Integer quantity;
