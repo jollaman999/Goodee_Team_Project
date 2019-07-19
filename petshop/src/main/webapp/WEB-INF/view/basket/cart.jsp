@@ -11,6 +11,15 @@
 <head>
     <meta charset="UTF-8">
     <title>장바구니</title>
+
+    <script type="text/javascript">
+        function onlyNumber(){
+            if((event.keyCode<48)||(event.keyCode>57)) {
+                event.returnValue = false;
+                alert("숫자만 입력하세요!");
+            }
+        }
+    </script>
 </head>
 <body>
 <!-- Page info -->
@@ -70,7 +79,7 @@
                                             <div class="quantity">
                                                 <form name="f" method="post" action="update.shop">
                                                     <div class="pro-qty">
-                                                        <input type="number" name="quantity" value="${basket.quantity}">
+                                                        <input type="text" name="quantity" value="${basket.quantity}" onkeydown="onlyNumber()">
                                                     </div>
                                                     <input type="hidden" name="item_no" value="${item.item_no}">
                                                     <input type="submit" class="site-btn sb-dark" value="변경"
