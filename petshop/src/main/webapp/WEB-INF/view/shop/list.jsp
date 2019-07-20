@@ -148,7 +148,7 @@
                                     <%
                                         }
                                     %>
-                                    <a href="detail.shop?category_group=${category_group}&category_item=${category_item}&item_no=${item.item_no}">
+                                    <a href="detail.shop?item_no=${item.item_no}">
                                         <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
                                     </a>
                                     <div class="pi-links">
@@ -158,7 +158,7 @@
                                 </div>
                                 <div class="pi-text">
                                     <h6>${item.price}원</h6>
-                                    <a href="detail.shop?category_group=${category_group}&category_item=${category_item}&item_no=${item.item_no}">
+                                    <a href="detail.shop?item_no=${item.item_no}">
                                         <p>${item.name}</p>
                                     </a>
                                 </div>

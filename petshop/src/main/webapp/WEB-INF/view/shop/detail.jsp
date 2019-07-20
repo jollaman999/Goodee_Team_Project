@@ -35,12 +35,8 @@
         <br>
         <div class="site-pagination">
             <a href="${path}/shop/list.shop">All</a>
-            <c:if test="${!empty category_group}">
-                <a href="${path}/shop/list.shop?category_group=${category_group}"> / ${categoryGroupName}</a>
-            </c:if>
-            <c:if test="${!empty category_item}">
-                <a href="${path}/shop/list.shop?category_group=${category_group}&category_item=${category_item}"> / ${categoryItemName}</a>
-            </c:if>
+            <a href="${path}/shop/list.shop?category_group=${item.category_group_code}"> / ${categoryGroupName}</a>
+            <a href="${path}/shop/list.shop?category_group=${item.category_group_code}&category_item=${item.category_item_code}"> / ${categoryItemName}</a>
         </div>
     </div>
 </div>
@@ -51,7 +47,7 @@
 <section class="product-section">
     <div class="container">
         <div class="back-link">
-            <a href="${path}/shop/list.shop?category_group=${category_group}&category_item=${category_item}" style="font-size: 12pt"> &lt;&lt; 목록으로 돌아가기</a>
+            <a href="${path}/shop/list.shop?category_group=${item.category_group_code}&category_item=${item.category_item_code}" style="font-size: 12pt"> &lt;&lt; 목록으로 돌아가기</a>
         </div>
         <div class="row">
             <div class="col-lg-6">

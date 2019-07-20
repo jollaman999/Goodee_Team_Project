@@ -68,24 +68,18 @@ public class ShopController {
     }
 
     @RequestMapping("*")
-    public ModelAndView detail(Integer category_group, Integer category_item, int item_no) {
+    public ModelAndView detail(int item_no) {
         ModelAndView mav = new ModelAndView();
-
-        mav.addObject("category_group", category_group);
-        mav.addObject("category_item", category_item);
-
-        if (category_group != null) {
-            String categoryGroupName = service.getCategoryGroupName(category_group);
-            mav.addObject("categoryGroupName", categoryGroupName);
-            if (category_item != null) {
-                String categoryItemName = service.getCategoryItemName(category_group, category_item);
-                mav.addObject("categoryItemName", categoryItemName);
-            }
-        }
 
         Item item = service.getItemById(item_no);
         item.setDescription(item.getDescription().replaceAll(System.getProperty("line.separator"), "<br>"));
         item.setContent(item.getContent().replaceAll(System.getProperty("line.separator"), "<br>"));
+
+        String categoryGroupName = service.getCategoryGroupName(item.getCategory_group_code());
+        String categoryItemName = service.getCategoryItemName(item.getCategory_group_code(), item.getCategory_item_code());
+
+        mav.addObject("categoryGroupName", categoryGroupName);
+        mav.addObject("categoryItemName", categoryItemName);
 
         mav.addObject("item", item);
 
