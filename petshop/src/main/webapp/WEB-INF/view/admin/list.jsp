@@ -6,6 +6,15 @@
 <head>
     <meta charset="UTF-8">
     <title>회원 목록</title>
+
+    <script type="text/javascript">
+        function allchkbox(allchk) {
+            var chks = document.getElementsByName("idchks");
+            for (var i = 0; i < chks.length; i++) {
+                chks[i].checked = allchk.checked;
+            }
+        }
+    </script>
 </head>
 <body>
 
