@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.mapper.OrdersMapper">
     <select id="list" resultType="Orders" parameterType="map">
-    select * from orders
-      <if test="member_id; != null">
-            where member_id; = #{member_id;}
+        select * from orders
+        <if test="member_id != null">
+            where member_id = #{member_id;}
         </if>
         order by member_id;
     </select>

@@ -37,6 +37,6 @@ public class Orders_listDao {
     }
 
 	public List<Orders_list> list() {
-		 return sqlSessionTemplate.selectList(NS + "list", param);
+		 return sqlSessionTemplate.selectList(NS + "list");
 	}
 }
