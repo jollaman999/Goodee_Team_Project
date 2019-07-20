@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("basket")
@@ -19,12 +20,14 @@ public class BasketController {
     private ShopService service;
 
     @RequestMapping("add")
-    public ModelAndView add(HttpSession session, HttpServletRequest request, Integer item_no) {
+    public ModelAndView add(HttpSession session, HttpServletRequest request, Integer item_no, Integer quantity) {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
 
         Basket basket = new Basket();
         basket.setMember_id(loginMember.getId());
         basket.setItem_no(item_no);
+        basket.setQuantity(Objects.requireNonNullElse(quantity, 1));
+
         int result = service.basketAdd(basket);
 
         ModelAndView mav = new ModelAndView("/alert");
@@ -40,7 +43,7 @@ public class BasketController {
     }
 
     @PostMapping("update")
-    public ModelAndView add(HttpSession session, HttpServletRequest request, Integer item_no, Integer quantity) {
+    public ModelAndView update(HttpSession session, HttpServletRequest request, Integer item_no, Integer quantity) {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
 
         Basket basket = new Basket();

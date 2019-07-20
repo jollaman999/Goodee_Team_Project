@@ -1679,7 +1679,10 @@ ol {
 }
 
 .product-details .site-btn {
-	min-width: 190px;
+	min-width: 120px;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 20px;
 }
 
 .product-details .social-sharing {

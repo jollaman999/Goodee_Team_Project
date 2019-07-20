@@ -13,7 +13,7 @@ public interface BasketMapper {
     int count(String member_id);
 
     @Insert("insert into basket (member_id, list_num, item_no, quantity) " +
-            "values (#{member_id}, #{list_num}, #{item_no}, 1)")
+            "values (#{member_id}, #{list_num}, #{item_no}, #{quantity})")
     int insert(Basket basket);
 
     @Update("update basket set quantity = #{quantity} where member_id = #{member_id} and item_no = #{item_no}")
