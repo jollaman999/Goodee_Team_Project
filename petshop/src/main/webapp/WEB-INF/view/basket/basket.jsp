@@ -190,7 +190,9 @@
                             <%
                                 }
                             %>
-                            <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                            <a href="${path}/shop/detail.shop?item_no=${item.item_no}">
+                                <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                            </a>
                             <div class="pi-links">
                                 <a href="${path}/basket/add.shop?item_no=${item.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                                 <a href="#" class="wishlist-btn" style="width: 80px"><i class="flaticon-heart"></i><span style="font-size: 12pt">&nbsp;123</span></a>
@@ -198,7 +200,9 @@
                         </div>
                         <div class="pi-text">
                             <h6>${item.price}원</h6>
-                            <p>${item.name}</p>
+                            <a href="${path}/shop/detail.shop?item_no=${item.item_no}">
+                                <p>${item.name}</p>
+                            </a>
                         </div>
                     </div>
                 </div>
