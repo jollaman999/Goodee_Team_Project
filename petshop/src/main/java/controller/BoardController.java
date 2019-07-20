@@ -36,8 +36,17 @@ public class BoardController {
         }
 
         int limit = 10;
-        int listcount = service.boardcount(searchtype, searchcontent);
-        List<Board> boardlist = service.boardlist(pageNum, limit, searchtype, searchcontent);
+        int listcount = service.boardcount(type, searchtype, searchcontent);
+        List<Board> boardlist = service.boardlist(type, pageNum, limit, searchtype, searchcontent);
+        if (boardlist != null) {
+            for (Board board : boardlist) {
+                Member member = service.memberSelect(board.getMember_id());
+                if (member != null) {
+                    board.setName(member.getName());
+                }
+            }
+        }
+
         int maxpage = listcount / limit;
         if (listcount % limit != 0) {
             maxpage++;

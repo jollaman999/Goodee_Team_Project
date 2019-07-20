@@ -14,10 +14,12 @@
     </script>
 </head>
 <body>
+<br>
 <table>
     <tr>
         <td colspan="5">
             <form action="list.shop" method="post" name="searcform">
+                <input type="hidden" name="type" value="${param.type}">
                 <input type="hidden" name="pageNum" value="1">
                 <table>
                     <tr>
@@ -45,7 +47,7 @@
     </tr>
     <c:if test="${listcount > 0}">
         <tr>
-            <td colspan="4">Spring 게시판</td>
+            <td colspan="3">Spring 게시판</td>
             <td>글개수 : ${listcount}</td>
         </tr>
         <tr>
@@ -53,7 +55,6 @@
             <th>제목</th>
             <th width="12%">글쓴이</th>
             <th width="20%">날짜</th>
-            <th width="10%">조회 수</th>
         </tr>
         <c:forEach var="board" items="${boardlist}">
             <tr>
@@ -68,13 +69,10 @@
                             &nbsp;&nbsp;&nbsp;
                         </c:otherwise>
                     </c:choose>
-                    <c:forEach begin="1" end="${board.reflevel}">&nbsp;&nbsp;</c:forEach>
-                    <c:if test="${board.reflevel > 0}">└</c:if>
-                    <a href="detail.shop?num=${board.num}">${board.subject}</a>
+                    <a href="detail.shop?type=${param.type}&num=${board.num}">${board.title}</a>
                 </td>
                 <td>${board.name}</td>
                 <td>${board.regdate}</td>
-                <td>${board.readcnt}</td>
             </tr>
         </c:forEach>
         <tr>
@@ -103,7 +101,7 @@
     </c:if>
     <tr>
         <td colspan="5" align="right">
-            <a href="write.shop">[글쓰기]</a>
+            <a href="write.shop?type=${param.type}">[글쓰기]</a>
         </td>
     </tr>
 </table>

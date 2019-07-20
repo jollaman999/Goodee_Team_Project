@@ -10,6 +10,7 @@ public class Board {
     private int type;
     @NotEmpty(message = "회원 정보를 가져올 수 없습니다.")
     private String member_id;
+    private String name;
     @NotEmpty(message = "제목을 입력해 주세요.")
     private String title;
     @NotEmpty(message = "내용을 입력해 주세요.")
@@ -40,6 +41,14 @@ public class Board {
 
     public void setMember_id(String member_id) {
         this.member_id = member_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTitle() {
