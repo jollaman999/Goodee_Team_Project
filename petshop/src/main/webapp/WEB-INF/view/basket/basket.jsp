@@ -19,6 +19,32 @@
                 alert("숫자만 입력하세요!");
             }
         }
+
+        function allchkbox(allchk) {
+            var chks = document.getElementsByName("itemchks");
+            for (var i = 0; i < chks.length; i++) {
+                chks[i].checked = allchk.checked;
+            }
+        }
+
+        function delete_items() {
+            var chks = document.getElementsByName("itemchks");
+            var items = "";
+            var checked = false;
+
+            for (var i = 0; i < chks.length; i++) {
+                if (chks[i].checked) {
+                    items += chks[i].value + ",";
+                    checked = true;
+                }
+            }
+
+            if (checked) {
+                items = items.substr(0, items.length - 1);
+            }
+
+            location.href = "delete.shop?items=" + items;
+        }
     </script>
 </head>
 <body>
@@ -54,6 +80,7 @@
                         <table>
                             <thead>
                             <tr>
+                                <th style="padding-top: 10px"><input type="checkbox" name="allchk" onchange="allchkbox(this)" style="margin-right: 5px" checked></th>
                                 <th style="font-size: 16px; width: 50%">상품</th>
                                 <th style="font-size: 16px; width: 22%">수량</th>
                                 <th style="font-size: 16px; width: 8%">삭제</th>
@@ -72,6 +99,9 @@
                                                 }
                                             %>
                                             <tr>
+                                                <td style="text-align: center">
+                                                    <input type="checkbox" name="itemchks" value="${basket.item_no}" style="margin-right: 5px; margin-bottom: 23px" checked>
+                                                </td>
                                                 <td class="product-col">
                                                     <a href="${path}/shop/detail.shop?item_no=${item.item_no}">
                                                         <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
@@ -127,8 +157,13 @@
                 </div>
             </div>
             <div class="card-right" style="width: 20%">
+                <div style="margin-bottom: 20px; text-align: center">
+                    <h4>선택한 상품을</h4>
+                </div>
                 <a href="" class="site-btn" style="font-size: 18px; min-width: 160px; padding-left: 15px;
                         padding-right: 15px; padding-bottom: 22px">주문 하기</a>
+                <input type="button" class="site-btn" style="font-size: 18px; min-width: 160px; padding-left: 15px;
+                            padding-right: 15px; padding-bottom: 22px" value="삭제 하기" onclick="delete_items()">
                 <a href="" class="site-btn sb-dark" style="font-size: 18px; min-width: 160px; padding-left: 15px;
                         padding-right: 15px; padding-bottom: 22px">쇼핑 계속하기</a>
             </div>

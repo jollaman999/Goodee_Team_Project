@@ -65,17 +65,42 @@ public class BasketController {
     }
 
     @RequestMapping("delete")
-    public ModelAndView delete(HttpSession session, HttpServletRequest request, Integer item_no) {
+    public ModelAndView delete(HttpSession session, HttpServletRequest request, Integer item_no, String items) {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
 
-        int result = service.basketDelete(loginMember.getId(), item_no);
+        int result;
+        boolean error_occured = false;
+
+        if (items == null) {
+            result = service.basketDelete(loginMember.getId(), item_no);
+            if (result <= 0) {
+                error_occured = true;
+            }
+        } else {
+            String[] items_selected = items.split(",");
+
+            for (String item : items_selected) {
+                result = service.basketDelete(loginMember.getId(), Integer.parseInt(item));
+                if (result <= 0) {
+                    error_occured = true;
+                }
+            }
+        }
 
         ModelAndView mav = new ModelAndView("/alert");
-        if (result > 0) {
-            mav.addObject("msg", "해당 상품이 장바구니에서 삭제 되었습니다.");
+        if (!error_occured) {
+            if (items == null) {
+                mav.addObject("msg", "해당 상품이 장바구니에서 삭제 되었습니다.");
+            } else {
+                mav.addObject("msg", "선택하신 상품들이 장바구니에서 삭제 되었습니다.");
+            }
             mav.addObject("url", request.getHeader("referer"));
         } else {
-            mav.addObject("msg", "해당 상품을 장바구니에서 삭제하는데 실패하였습니다!");
+            if (items == null) {
+                mav.addObject("msg", "해당 상품을 장바구니에서 삭제하는데 실패하였습니다!");
+            } else {
+                mav.addObject("msg", "일부 선택하신 상품들을 삭제하는데 실패하였습니다!");
+            }
             mav.addObject("url", request.getHeader("referer"));
         }
 
