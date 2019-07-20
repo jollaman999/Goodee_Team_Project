@@ -11,8 +11,9 @@
     </title>
 </head>
 <body>
-<form name="mailform" method="post" action="write.shop" enctype="multipart/form-data">
-	<input type="hidden" name="type" value="${type}">
+<form name="f" method="post" action="write.shop" enctype="multipart/form-data">
+	<input type="hidden" name="type" value="${param.type}">
+	<input type="hidden" name="member_id" value="${sessionScope.loginMember.id}">
 
 	<br>
 	<table>

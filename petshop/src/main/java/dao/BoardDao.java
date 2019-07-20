@@ -23,6 +23,12 @@ public class BoardDao {
 
         if (searchtype != null && searchtype.length() != 0 &&
                 searchcontent != null && searchcontent.length() != 0) {
+            if (searchtype.equals("name")) {
+                param.put("name", searchcontent);
+
+                return sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name_count(param);
+            }
+
             param.put("searchtype", searchtype);
             param.put("searchcontent", searchcontent);
         }
@@ -42,6 +48,12 @@ public class BoardDao {
 
         if (searchtype != null && searchtype.length() != 0 &&
                 searchcontent != null && searchcontent.length() != 0) {
+            if (searchtype.equals("name")) {
+                param.put("name", searchcontent);
+
+                return sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name(param);
+            }
+
             param.put("searchtype", searchtype);
             param.put("searchcontent", searchcontent);
         }

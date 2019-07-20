@@ -76,10 +76,9 @@ public class BoardController {
     }
 
     @PostMapping("write")
-    public ModelAndView writeBoard(HttpSession session, Integer type, MultipartHttpServletRequest request, @Valid Board board) {
-        Member loginMember = (Member)session.getAttribute(("loginMember"));
-        board.setMember_id(loginMember.getId());
+    public ModelAndView writeBoard(HttpSession session, Integer type, String member_id, MultipartHttpServletRequest request, @Valid Board board) {
         board.setType(type);
+        board.setMember_id(member_id);
 
         ModelAndView mav = new ModelAndView("/alert");
 
@@ -95,10 +94,10 @@ public class BoardController {
 
         if (result > 0) {
             mav.addObject("msg","게시글 작성이 완료되었습니다.");
-            mav.addObject("url","detail.shop?num=" + num);
+            mav.addObject("url","detail.shop?type=" + type + "&num=" + num);
         } else {
             mav.addObject("msg","게시글 작성을 실패하였습니다!.");
-            mav.addObject("url","write.shop");
+            mav.addObject("url","write.shop?type=" + type + "&num=" + num);
         }
 
         return mav;
@@ -110,14 +109,14 @@ public class BoardController {
 
         if (request.getParameter("num") == null) {
             mav.addObject("msg","게시글 정보를 가져올 수 없습니다!");
-            mav.addObject("url","list.shop");
+            mav.addObject("url","list.shop?type=" + type);
 
             return mav;
         }
 
         int num = Integer.parseInt(request.getParameter("num"));
 
-        if (!fileUtil.FileUpload(num, service, board, mav, request, "update.shop?num=" + num)) {
+        if (!fileUtil.FileUpload(num, service, board, mav, request, "update.shop?type=" + type + "&num=" + num)) {
             return mav;
         }
 
@@ -125,22 +124,22 @@ public class BoardController {
 
         if (result > 0) {
             mav.addObject("msg","게시글 수정이 완료되었습니다.");
-            mav.addObject("url","detail.shop?num=" + num);
+            mav.addObject("url","detail.shop?type=" + type + "&num=" + num);
         } else {
             mav.addObject("msg","게시글 수정을 실패하였습니다!.");
-            mav.addObject("url","write.shop");
+            mav.addObject("url","update.shop?type=" + type + "&num=" + num);
         }
 
         return mav;
     }
 
     @PostMapping("delete")
-    public ModelAndView deleteBoard(HttpSession session, Integer type, HttpServletRequest request) {
+    public ModelAndView deleteBoardPost(HttpSession session, Integer type, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("/alert");
 
         if (request.getParameter("num") == null) {
             mav.addObject("msg","게시글 정보를 가져올 수 없습니다!");
-            mav.addObject("url","list.shop");
+            mav.addObject("url","list.shop?type=" + type);
 
             return mav;
         }
@@ -155,10 +154,10 @@ public class BoardController {
 
         if (result > 0) {
             mav.addObject("msg","게시글 삭제가 완료되었습니다.");
-            mav.addObject("url","list.shop");
+            mav.addObject("url","list.shop?type=" + type);
         } else {
             mav.addObject("msg","게시글 삭제를 실패하였습니다!.");
-            mav.addObject("url","detail.shop?num=" + num);
+            mav.addObject("url","detail.shop?type=" + type + "&num=" + num);
         }
 
         return mav;
@@ -203,10 +202,40 @@ public class BoardController {
         ModelAndView mav = new ModelAndView();
         Board board = new Board();
         Member loginMember = (Member) session.getAttribute("loginMember");
+
         if (num != null) {
             board = service.getBoard(num);
         }
-        board.setMember_id(loginMember.getId());
+
+        if (request.getRequestURI().contains("detail")) {
+            Member member = service.memberSelect(board.getMember_id());
+            if (member != null) {
+                board.setName(member.getName());
+            }
+        } else if (request.getRequestURI().contains("update") || request.getRequestURI().contains("delete")) {
+            if (request.getParameter("num") == null) {
+                mav = new ModelAndView("/alert");
+                mav.addObject("msg","게시글 정보를 가져올 수 없습니다!");
+                mav.addObject("url","list.shop?type=" + type);
+
+                return mav;
+            }
+
+            if (!loginMember.getId().equals(board.getMember_id())) {
+                mav = new ModelAndView("/alert");
+                if (request.getRequestURI().contains("update")) {
+                    mav.addObject("msg", "본인 게시글만 수정 가능합니다!");
+                } else {
+                    mav.addObject("msg", "본인 게시글만 삭제 가능합니다!");
+                }
+                mav.addObject("url","detail.shop?type=" + type + "&num=" + num);
+
+                return mav;
+            }
+        } else {
+            board.setMember_id(loginMember.getId());
+        }
+
         mav.addObject("board", board);
 
         return mav;

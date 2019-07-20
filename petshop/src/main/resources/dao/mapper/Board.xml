@@ -25,6 +25,7 @@
                 and ${searchtype} like '%${searchcontent}%'
             </if>
         </where>
+        order by num desc
         <if test="startrow != null and limit != null">
             limit #{startrow}, #{limit}
         </if>

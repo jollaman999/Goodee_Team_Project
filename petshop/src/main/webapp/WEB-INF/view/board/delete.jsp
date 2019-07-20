@@ -17,9 +17,11 @@
     </script>
 </head>
 <body>
-<h2>게시글을 삭제하시려면 비밀번호를 입력해 주세요.</h2>
+<br>
+<h5>게시글을 삭제하시려면 비밀번호를 입력해 주세요.</h5>
 <br>
 <form action="delete.shop" method="post" name="f">
+    <input type="hidden" name="type" value="${param.type}">
     <input type="hidden" name="num" value="${param.num}" />
 
     <table>
