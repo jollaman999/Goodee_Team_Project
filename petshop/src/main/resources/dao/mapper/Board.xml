@@ -3,18 +3,29 @@
 <mapper namespace="dao.mapper.BoardMapper">
     <select id="count" resultType="int" parameterType="map">
         select count(*) from board
-        <if test="searchtype != null and searchcontent != null">
-            where ${searchtype} like '%${searchcontent}%'
-        </if>
+        <where>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="searchtype != null and searchcontent != null">
+                and ${searchtype} like '%${searchcontent}%'
+            </if>
+        </where>
     </select>
     <select id="list" resultType="Board" parameterType="map">
         select num, member_id, title, content, file1 fileurl, regdate from board
-        <if test="num != null">
-            where num = #{num}
-        </if>
-        <if test="searchtype != null and searchcontent != null">
-            where ${searchtype} like '%${searchcontent}%'
-        </if>
+        <where>
+            <if test="num != null">
+                and num = #{num}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="searchtype != null and searchcontent != null">
+                and ${searchtype} like '%${searchcontent}%'
+            </if>
+        </where>
+        order by num desc
         <if test="startrow != null and limit != null">
             limit #{startrow}, #{limit}
         </if>

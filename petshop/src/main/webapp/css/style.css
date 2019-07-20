@@ -183,7 +183,7 @@ ol {
 	border: none;
 	font-size: 14px;
 	font-weight: 600;
-	min-width: 167px;
+	min-width: 50px;
 	padding: 18px 47px 14px;
 	border-radius: 50px;
 	text-transform: uppercase;
@@ -1274,7 +1274,7 @@ ol {
 
 .site-pagination a {
 	display: inline-block;
-	font-size: 14px;
+	font-size: 15px;
 	color: #414141;
 }
 
@@ -1679,7 +1679,10 @@ ol {
 }
 
 .product-details .site-btn {
-	min-width: 190px;
+	min-width: 120px;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 20px;
 }
 
 .product-details .social-sharing {

@@ -7,9 +7,14 @@
     <title>게시글 상세 보기</title>
 </head>
 <body>
+<br>
 <table>
     <tr>
         <td colspan="2">게시글 상세 보기</td>
+    </tr>
+    <tr>
+        <td>글쓴이</td>
+        <td>${board.name}</td>
     </tr>
     <tr>
         <td>제목</td>
@@ -29,16 +34,15 @@
         <td>첨부 파일</td>
         <td>
             <c:if test="${!empty board.fileurl}">
-                <a href="file/${board.num}/${board.fileurl}">${board.fileurl}</a>
+                <a href="file/${board.num}/${board.fileurl}" target="_blank">${board.fileurl}</a>
             </c:if>
         </td>
     </tr>
     <tr>
         <td colspan="2">
-            <a href="reply.shop?num=${board.num}">[답변]</a>
-            <a href="update.shop?num=${board.num}">[수정]</a>
-            <a href="delete.shop?num=${board.num}">[삭제]</a>
-            <a href="list.shop">[게시물 목록]</a>
+            <a href="update.shop?type=${param.type}&num=${board.num}">[수정]</a>
+            <a href="delete.shop?type=${param.type}&num=${board.num}">[삭제]</a>
+            <a href="list.shop?type=${param.type}">[게시물 목록]</a>
         </td>
     </tr>
 </table>

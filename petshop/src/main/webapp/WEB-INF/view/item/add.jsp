@@ -75,10 +75,20 @@
             <td>제조사 연락처</td>
             <td><form:input path="mfr_tel" maxlength="20"/></td>
         </tr>
+        
+        <!--  유통기한 원본소스 
+        <form id="frm" action="action.jsp">
+        <p>유통기한 입력:</p>
+        <div><input type="date" id="userdate" name="userdate"
+                value="2015-10-10"></div>
+        <div><input type="submit" value="전송"></div>
+        </form>         
+                                                  -->                                            
         <tr>
             <td>유통기한</td>
-            <td><form:input path="expr_date" maxlength="20"/></td>
+            <td><form:input path="expr_date" type="text" name="userdate"/></td>
         </tr>
+      
         <tr>
             <td>상품 설명</td>
             <td>

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@Repository("ItemDao")
 public class ItemDao {
     @Autowired
     public SqlSessionTemplate sqlSessionTemplate;
@@ -50,9 +50,11 @@ public class ItemDao {
         param.put("startrow", (pageNum - 1) * limit);
         param.put("limit", limit);
 
-        if (category_group != null && category_group != 0 &&
-                category_item != null && category_item != 0) {
+        if (category_group != null && category_group != 0) {
             param.put("category_group", category_group);
+        }
+
+        if (category_item != null && category_item != 0) {
             param.put("category_item", category_item);
         }
 
@@ -63,6 +65,25 @@ public class ItemDao {
         }
 
         return sqlSessionTemplate.selectList(NS + "list", param);
+    }
+
+    public boolean check_new(Integer category_group, Integer category_item, Integer item_no) {
+        param.clear();
+
+        if (item_no != null && item_no != 0) {
+            param.put("item_no", item_no);
+        }
+
+        if (category_group != null && category_group != 0) {
+            param.put("category_group", category_group);
+        }
+
+        if (category_item != null && category_item != 0) {
+            param.put("category_item", category_item);
+        }
+
+        List<Item> recent_item_list = sqlSessionTemplate.selectList(NS + "recent", param);
+        return recent_item_list != null && !recent_item_list.isEmpty();
     }
 
     public Item selectOne(Integer item_no) {

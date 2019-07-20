@@ -1,13 +1,18 @@
 <%@ page import="org.springframework.web.context.ContextLoader" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="java.util.List" %>
+<%@ page import="dao.BasketDao" %>
 <%@ page import="dao.CategoryGroupDao" %>
 <%@ page import="dao.CategoryItemDao" %>
+<%@ page import="dao.ItemDao" %>
 <%@ page import="logic.CategoryGroup" %>
 <%@ page import="logic.CategoryItem" %>
+<%@ page import="logic.Member" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set value="${pageContext.request.contextPath}" var="path" />
+
+<% WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext(); %>
 
 <header class="header-section">
     <div class="header-top">
@@ -57,8 +62,16 @@
                         <div class="up-item">
                             <div class="shopping-card">
                                 <i class="flaticon-bag"></i>
-                                <!-- 장바구니 수량 DB 쿼리하여 표시되도록 수정 필요 -->
-                                <span>0</span>
+                                <%
+                                    Member loginMember = (Member)session.getAttribute(("loginMember"));
+                                    if (context != null) {
+                                        BasketDao basketDao = (BasketDao)context.getBean("BasketDao");
+                                        if (loginMember != null && basketDao != null) { %>
+                                            <span><%= basketDao.count(loginMember.getId()) %></span>
+                                <%
+                                        }
+                                    }
+                                %>
                             </div>
                             <a href="${path}/basket/view.shop">장바구니</a>
                         </div>
@@ -76,42 +89,60 @@
                 </li>
 
                 <%
-                    WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
-
                     if (context != null) {
+                        ItemDao itemDao = (ItemDao) context.getBean("ItemDao");
                         CategoryGroupDao categoryGroupDao = (CategoryGroupDao) context.getBean("CategoryGroupDao");
                         CategoryItemDao categoryItemDao = (CategoryItemDao) context.getBean("CategoryItemDao");
-                        List<CategoryGroup> categoryGroupList = categoryGroupDao.list();
-                        List<CategoryItem> categoryItemList = categoryItemDao.list();
-
-                        for (CategoryGroup categoryGroup : categoryGroupList) {
                 %>
-                            <li>
-                                <a href="${path}/item/list.shop?category_group=<%= categoryGroup.getGroup_code() %>">
-                                    <%= categoryGroup.getGroup_name() %>
-                                    <!-- DB 쿼리 조회하여 최근에 등록 된 상품 있을시에만 New 표시하도록 수정 -->
+                        <li>
+                            <a href="${path}/shop/list.shop">
+                                All
+                                <% if (itemDao != null && itemDao.check_new(null, null, null)) { %>
                                     <span class="new">New</span>
-                                </a>
-                                <ul class="sub-menu">
+                                <% } %>
+                            </a>
+                        </li>
+
                 <%
-                                    for (CategoryItem categoryItem : categoryItemList) {
-                                        if (categoryGroup.getGroup_code() == categoryItem.getGroup_code()) {
+                        if (categoryGroupDao != null && categoryItemDao != null) {
+                            List<CategoryGroup> categoryGroupList = categoryGroupDao.list();
+                            List<CategoryItem> categoryItemList = categoryItemDao.list();
+
+                            if (categoryGroupList != null && categoryItemList != null) {
+                                for (CategoryGroup categoryGroup : categoryGroupList) {
                 %>
-                                            <li>
-                                                <a href="${path}/shop/list.shop?category_group=<%= categoryGroup.getGroup_code() %>&category_item=<%= categoryItem.getCode() %>">
-                                                    <%= categoryItem.getName() %>
-                                                </a>
-                                            </li>
+                                    <li>
+                                        <a href="${path}/shop/list.shop?category_group=<%= categoryGroup.getGroup_code() %>">
+                                            <%= categoryGroup.getGroup_name() %>
+                                            <% if (itemDao.check_new(categoryGroup.getGroup_code(), null, null)) { %>
+                                                <span class="new">New</span>
+                                            <% } %>
+                                        </a>
+                                        <ul class="sub-menu">
                 <%
-                                        }
-                                    }
+                                            for (CategoryItem categoryItem : categoryItemList) {
+                                                if (categoryGroup.getGroup_code() == categoryItem.getGroup_code()) {
                 %>
-                                </ul>
-                            </li>
+                                                    <li>
+                                                        <a href="${path}/shop/list.shop?category_group=<%= categoryGroup.getGroup_code() %>&category_item=<%= categoryItem.getCode() %>">
+                                                            <%= categoryItem.getName() %>
+                                                            <% if (itemDao.check_new(categoryGroup.getGroup_code(), categoryItem.getCode(), null)) { %>
+                                                                <span class="new" style="margin-left: 65px; margin-top: 14px">New</span>
+                                                            <% } %>
+                                                        </a>
+                                                    </li>
                 <%
+                                                }
+                                            }
+                %>
+                                        </ul>
+                                    </li>
+                <%
+                                }
+                            }
                         }
                     } else {
-                        System.out.println("decorator-header: Can't get WebApplicationContext!");
+                        System.out.println("header: Can't get WebApplicationContext!");
                     }
                 %>
             </ul>

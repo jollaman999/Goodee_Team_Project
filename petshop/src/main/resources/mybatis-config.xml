@@ -11,6 +11,8 @@
         <typeAlias type="logic.CategoryGroup" alias="CategoryGroup"/>
         <typeAlias type="logic.CategoryItem" alias="CategoryItem"/>
         <typeAlias type="logic.AdminMail" alias="AdminMail"/>
+        <typeAlias type="logic.Orders" alias="Orders"/>
+        <typeAlias type="logic.Orders_list" alias="Orders_list"/>
     </typeAliases>
     <mappers>
         <mapper resource="dao/mapper/Item.xml"/>
@@ -22,5 +24,7 @@
         <mapper resource="dao/mapper/CategoryGroup.xml"/>
         <mapper resource="dao/mapper/CategoryItem.xml"/>
         <mapper resource="dao/mapper/AdminMail.xml"/>
+        <mapper resource="dao/mapper/Orders.xml"/>
+        <mapper resource="dao/mapper/Orders_list.xml"/>
     </mappers>
 </configuration>

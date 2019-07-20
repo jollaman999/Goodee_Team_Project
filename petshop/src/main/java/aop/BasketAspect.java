@@ -1,45 +1,29 @@
 package aop;
 
-import exception.CartEmptyException;
 import exception.LogInException;
-import logic.Cart;
 import logic.Member;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Component
 @Aspect
 public class BasketAspect {
-    @Around("execution(* controller.Basket*.view(..)) && args(session, ..)")
-    public Object view(ProceedingJoinPoint joinPoint, HttpSession session) throws Throwable {
-        System.out.println("Basket: view aop");
+    @Around("execution(* controller.Basket*.*(..)) && args(session, request, ..)")
+    public Object add(ProceedingJoinPoint joinPoint, HttpSession session, HttpServletRequest request) throws Throwable {
+        System.out.println("Basket: add aop");
 
         Member loginMember = (Member)session.getAttribute("loginMember");
 
         if (loginMember == null) {
-            throw new LogInException("로그인 후 이용해주세요!", "../member/login.shop");
-        }
-
-        return joinPoint.proceed();
-    }
-
-    @Around("execution(* controller.Basket*.checkout(..))")
-    public Object cartCheck(ProceedingJoinPoint joinPoint) throws Throwable {
-        System.out.println("Basket: checkout aop");
-
-        HttpSession session = (HttpSession)joinPoint.getArgs()[0];
-        Cart cart = (Cart)session.getAttribute("CART");
-
-        if (cart == null || cart.isEmpty()) {
-            throw new CartEmptyException("장바구니에 주문 상품이 없습니다.", "../item/list.shop");
-        }
-
-        if (session.getAttribute("loginUser") == null) {
-            throw new LogInException("로그인 한 고객만 상품 주문이 가능합니다!", "../item/list.shop");
+            String referer = URLEncoder.encode(request.getHeader("referer"), StandardCharsets.UTF_8);
+            throw new LogInException("로그인 후 이용해주세요!", "../member/login.shop?back_url=" + referer);
         }
 
         return joinPoint.proceed();

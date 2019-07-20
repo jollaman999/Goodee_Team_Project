@@ -13,7 +13,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.File;
@@ -46,6 +45,10 @@ public class ShopService {
     private CategoryItemDao categoryItemDao;
     @Autowired
     private AdminMailDao adminMailDao;
+    @Autowired
+    private OrdersDao ordersDao;
+    @Autowired
+    private Orders_listDao orders_listDao;
 
     // list
     public List<CategoryItem> getCategoryItemList() {
@@ -65,12 +68,12 @@ public class ShopService {
         return itemDao.list(category_group, category_item, pageNum, limit, searchtype, searchcontent);
     }
 
-    public List<Sale> salelist(String id) {
-        return saleDao.list(id);
+    public List<Orders_list> getOrders_listList() {
+        return orders_listDao.list();
     }
 
-    public List<SaleItem> saleItemList(int saleId) {
-        return saleItemDao.list(saleId);
+    public List<Orders> getOrdersList() {
+        return ordersDao.list();
     }
 
     public List<Member> memberList() {
@@ -81,8 +84,27 @@ public class ShopService {
         return memberDao.list(idchks);
     }
 
-    public List<Board> boardlist(int pageNum, int limit, String searchtype, String searchcontent) {
-        return boardDao.list(pageNum, limit, searchtype, searchcontent);
+    public List<Board> boardlist(int type, int pageNum, int limit, String searchtype, String searchcontent) {
+        return boardDao.list(type, pageNum, limit, searchtype, searchcontent);
+    }
+
+    // category
+    public String getCategoryGroupName(Integer group_code) {
+        CategoryGroup categoryGroup = categoryGroupDao.selectOne(group_code);
+        if (categoryGroup != null) {
+            return categoryGroup.getGroup_name();
+        }
+
+        return null;
+    }
+
+    public String getCategoryItemName(Integer group_code, Integer code) {
+        CategoryItem categoryItem = categoryItemDao.selectOne(group_code, code);
+        if (categoryItem != null) {
+            return categoryItem.getName();
+        }
+
+        return null;
     }
 
     // item
@@ -123,8 +145,8 @@ public class ShopService {
         return basketDao.insert(basket);
     }
 
-    public int basketUpdate(String member_id, Integer item_no, int quantity) {
-        return basketDao.update(member_id, item_no, quantity);
+    public int basketUpdate(Basket basket) {
+        return basketDao.update(basket);
     }
 
     public int basketDelete(String member_id, Integer item_no) {
@@ -311,8 +333,8 @@ public class ShopService {
     }
 
     // board
-    public int boardcount(String searchtype, String searchcontent) {
-        return boardDao.count(searchtype, searchcontent);
+    public int boardcount(int type, String searchtype, String searchcontent) {
+        return boardDao.count(type, searchtype, searchcontent);
     }
 
     public int boardmaxnum() {
@@ -336,26 +358,26 @@ public class ShopService {
     }
 
     // Sale
-    public Sale checkEnd(Member loginMember, Cart cart) {
-        Sale sale = new Sale();
-        sale.setSaleId(saleDao.getMaxSaleId());
-        sale.setMember(loginMember);
-        sale.setUpdatetime(new Date());
-        List<ItemSet> itemList = cart.getItemSetList();
-
-        int i = 0;
-        for (ItemSet is : itemList) {
-            int saleItemId = ++i;
-            SaleItem saleItem = new SaleItem(sale.getSaleId(), saleItemId, is);
-            sale.getItemList().add(saleItem);
-        }
-        saleDao.insert(sale);
-        List<SaleItem> saleItemList = sale.getItemList();
-
-        for (SaleItem si : saleItemList) {
-            saleItemDao.insert(si);
-        }
-
-        return sale;
-    }
+//    public Sale checkEnd(Member loginMember, Cart cart) {
+//        Sale sale = new Sale();
+//        sale.setSaleId(saleDao.getMaxSaleId());
+//        sale.setMember(loginMember);
+//        sale.setUpdatetime(new Date());
+//        List<ItemSet> itemList = cart.getItemSetList();
+//
+//        int i = 0;
+//        for (ItemSet is : itemList) {
+//            int saleItemId = ++i;
+//            SaleItem saleItem = new SaleItem(sale.getSaleId(), saleItemId, is);
+//            sale.getItemList().add(saleItem);
+//        }
+//        saleDao.insert(sale);
+//        List<SaleItem> saleItemList = sale.getItemList();
+//
+//        for (SaleItem si : saleItemList) {
+//            saleItemDao.insert(si);
+//        }
+//
+//        return sale;
+//    }
 }

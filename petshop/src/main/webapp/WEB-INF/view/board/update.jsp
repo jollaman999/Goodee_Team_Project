@@ -15,29 +15,18 @@
     </script>
 </head>
 <body>
+<br>
 <form:form modelAttribute="board" action="update.shop" enctype="multipart/form-data" name="f">
     <form:hidden path="num" />
+    <form:hidden path="type" />
+    <input type="hidden" name="member_id" value="${sessionScope.loginMember.id}">
 
     <table>
         <tr>
-            <td>글쓴이</td>
-            <td>
-                <form:input path="name" />
-                <font color="red"><form:errors path="name" /></font>
-            </td>
-        </tr>
-        <tr>
-            <td>비밀번호</td>
-            <td>
-                <form:password path="pass" />
-                <font color="red"><form:errors path="pass" /></font>
-            </td>
-        </tr>
-        <tr>
             <td>제목</td>
             <td>
-                <form:input path="subject" />
-                <font color="red"><form:errors path="subject" /></font>
+                <form:input path="title" />
+                <font color="red"><form:errors path="title" /></font>
             </td>
         </tr>
         <tr>

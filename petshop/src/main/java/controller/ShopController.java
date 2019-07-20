@@ -1,5 +1,6 @@
 package controller;
 
+import logic.CategoryGroup;
 import logic.Item;
 import logic.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,21 @@ public class ShopController {
     private ShopService service;
 
     @RequestMapping("list")
-    public ModelAndView list(HttpSession session, Integer category_group, Integer category_item,
+    public ModelAndView list(Integer category_group, Integer category_item,
                              Integer pageNum, String searchtype, String searchcontent) {
         ModelAndView mav = new ModelAndView();
+
+        mav.addObject("category_group", category_group);
+        mav.addObject("category_item", category_item);
+
+        if (category_group != null) {
+            String categoryGroupName = service.getCategoryGroupName(category_group);
+            mav.addObject("categoryGroupName", categoryGroupName);
+            if (category_item != null) {
+                String categoryItemName = service.getCategoryItemName(category_group, category_item);
+                mav.addObject("categoryItemName", categoryItemName);
+            }
+        }
 
         if (pageNum == null || pageNum.toString().equals("")) {
             pageNum = 1;
@@ -55,10 +68,27 @@ public class ShopController {
     }
 
     @RequestMapping("*")
-    public ModelAndView detail(int item_no, HttpSession session) {
+    public ModelAndView detail(Integer category_group, Integer category_item, int item_no) {
         ModelAndView mav = new ModelAndView();
+
+        mav.addObject("category_group", category_group);
+        mav.addObject("category_item", category_item);
+
+        if (category_group != null) {
+            String categoryGroupName = service.getCategoryGroupName(category_group);
+            mav.addObject("categoryGroupName", categoryGroupName);
+            if (category_item != null) {
+                String categoryItemName = service.getCategoryItemName(category_group, category_item);
+                mav.addObject("categoryItemName", categoryItemName);
+            }
+        }
+
         Item item = service.getItemById(item_no);
+        item.setDescription(item.getDescription().replaceAll(System.getProperty("line.separator"), "<br>"));
+        item.setContent(item.getContent().replaceAll(System.getProperty("line.separator"), "<br>"));
+
         mav.addObject("item", item);
+
         return mav;
     }
 }

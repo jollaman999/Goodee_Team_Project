@@ -17,29 +17,43 @@ public class BoardDao {
     private final String NS = "dao.mapper.BoardMapper.";
     private Map<String, Object> param = new HashMap<>();
 
-    public int count(String searchtype, String searchcontent) {
+    public int count(int type, String searchtype, String searchcontent) {
+        param.clear();
+        param.put("type", type);
+
         if (searchtype != null && searchtype.length() != 0 &&
                 searchcontent != null && searchcontent.length() != 0) {
-            param.clear();
+            if (searchtype.equals("name")) {
+                param.put("name", searchcontent);
+
+                return sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name_count(param);
+            }
+
             param.put("searchtype", searchtype);
             param.put("searchcontent", searchcontent);
-
-            return sqlSessionTemplate.selectOne(NS + "count", param);
         }
-        return sqlSessionTemplate.selectOne(NS + "count");
+
+        return sqlSessionTemplate.selectOne(NS + "count", param);
     }
 
     public int maxnum() {
         return sqlSessionTemplate.getMapper(BoardMapper.class).maxnum();
     }
 
-    public List<Board> list(int pageNum, int limit, String searchtype, String searchcontent) {
+    public List<Board> list(int type, int pageNum, int limit, String searchtype, String searchcontent) {
         param.clear();
+        param.put("type", type);
         param.put("startrow", (pageNum - 1) * limit);
         param.put("limit", limit);
 
         if (searchtype != null && searchtype.length() != 0 &&
                 searchcontent != null && searchcontent.length() != 0) {
+            if (searchtype.equals("name")) {
+                param.put("name", searchcontent);
+
+                return sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name(param);
+            }
+
             param.put("searchtype", searchtype);
             param.put("searchcontent", searchcontent);
         }

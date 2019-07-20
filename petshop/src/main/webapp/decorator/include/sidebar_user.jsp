@@ -22,7 +22,7 @@
         <li><a href="${path}/member/mypage.shop"><i class="far fa-id-badge sidebaricon"></i>&nbsp;&nbsp;마이페이지</a></li>
         <li><a href="${path}/cart/checkout.shop"><i class="fas fa-truck sidebaricon"></i>&nbsp;&nbsp;주문내역</a></li>
         <li><a href="${path}/cart/cartView.shop"><i class="fas fa-shopping-cart sidebaricon"></i>&nbsp;&nbsp;장바구니</a></li>
-        <li><a href="${path}/item/list.shop"><i class="far fa-comment-dots sidebaricon"></i>&nbsp;&nbsp;1:1문의</a></li>
+        <li><a href="${path}/board/write.shop?type=1"><i class="far fa-comment-dots sidebaricon"></i>&nbsp;&nbsp;1:1문의</a></li>
         <li><a href="${path}/member/logout.shop"><i class="fas fa-sign-out-alt sidebaricon"></i>&nbsp;&nbsp;로그아웃</a></li>
         <li><a href="${path}/member/delete.shop"><i class="fas fa-user-slash sidebaricon"></i>&nbsp;&nbsp;회원탈퇴</a></li>
     </ul>

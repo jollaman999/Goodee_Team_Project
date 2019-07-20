@@ -3,8 +3,8 @@
 <mapper namespace="dao.mapper.CategoryItemMapper">
     <select id="list" resultType="CategoryItem" parameterType="map">
         select * from category_item
-        <if test="code != null">
-            where code = #{code}
+        <if test="group_code != null and code != null">
+            where group_code = #{group_code} and code = #{code}
         </if>
         order by group_code, code
     </select>

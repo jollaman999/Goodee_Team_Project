@@ -23,7 +23,24 @@ public class AdminAspect {
         }
 
         if (!loginMember.getId().equals("admin")) {
-            throw new LogInException("관리자만 이용하세요", "../member/mypage.shop?id" + loginMember.getId());
+            throw new LogInException("잘못된 접근입니다!", "../index.jsp");
+        }
+
+        return joinPoint.proceed();
+    }
+
+    @Around("execution(* controller.Inventory*.*(..)) && args(.., session)")
+    public Object inventoryCheck(ProceedingJoinPoint joinPoint, HttpSession session) throws Throwable {
+        System.out.println("Inventory: * aop");
+
+        Member loginMember = (Member)session.getAttribute("loginMember");
+
+        if (loginMember == null) {
+            throw new LogInException("로그인 후 이용하세요!", "../member/login.shop");
+        }
+
+        if (!loginMember.getId().equals("admin")) {
+            throw new LogInException("잘못된 접근입니다!", "../index.jsp");
         }
 
         return joinPoint.proceed();

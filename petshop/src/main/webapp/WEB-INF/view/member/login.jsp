@@ -24,7 +24,14 @@
 <div class="container-login100">
     <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30" style="margin-top: 80px; margin-bottom: 80px">
         <form:form modelAttribute="member" method="post" action="login.shop" class="login100-form validate-form">
-            <input type="hidden" name="back_url" value="<%= request.getHeader("referer") %>">
+            <%
+                String back_url = request.getParameter("back_url");
+
+                if (back_url == null) {
+                    back_url = request.getHeader("referer");
+                }
+            %>
+            <input type="hidden" name="back_url" value="<%= back_url %>">
 
             <input type="hidden" name="name" value="유효성 검증 통과">
             <input type="hidden" name="phone" value="유효성 검증 통과">

@@ -12,6 +12,7 @@
             </if>
         </where>
     </select>
+
     <select id="list" resultType="Item" parameterType="map">
         select *, mainpic as mainpicurl from item
         <where>
@@ -21,16 +22,35 @@
             <if test="name != null">
                 and name = #{name}
             </if>
-            <if test="category_group != null and category_item != null">
-                and category_group_code = #{category_group} and category_item_code = #{category_item}
+            <if test="category_group != null">
+                and category_group_code = #{category_group}
+            </if>
+            <if test="category_item != null">
+                and category_item_code = #{category_item}
             </if>
             <if test="searchtype != null and searchcontent != null">
                 and ${searchtype} like '%${searchcontent}%'
             </if>
         </where>
-        order by item_no
+        order by item_no desc
         <if test="startrow != null and limit != null">
             limit #{startrow}, #{limit}
         </if>
+    </select>
+
+    <select id="recent" resultType="Item" parameterType="map">
+        select * from item
+        <where>
+            and update_time > (curdate() - interval 1 day)
+            <if test="item_no != null">
+                and item_no = #{item_no}
+            </if>
+            <if test="category_group != null">
+                and category_group_code = #{category_group}
+            </if>
+            <if test="category_item != null">
+                and category_item_code = #{category_item}
+            </if>
+        </where>
     </select>
 </mapper>

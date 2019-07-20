@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="${path}/css/font-awesome-4.7.min.css">
 
 
+    <!-- submit check -->
     <script type="text/javascript">
         var idcheckForm;
         var emailcheckForm;
@@ -147,6 +148,10 @@
         }
     </script>
 
+    <!-- change phone input format -->
+    <script type="text/javascript" src="${path}/js/phone_format.js"></script>
+
+    <!-- kakao address API -->
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <script>
         //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -212,7 +217,7 @@
         <div class="wrap-input100 validate-input" data-validate="전화번호를 입력해주세요!">
             <i class="input100 fa fa-phone fa-fw"
                style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
-            <input class="input100" type="text" name="phone" placeholder="PHONE">
+            <input class="input100" type="phone" name="phone" placeholder="PHONE" onkeyup="inputPhoneNumber(this);" maxlength="13">
             <span class="focus-input100"></span>
         </div>
 

@@ -1,8 +1,6 @@
 package logic;
 
 public class Basket {
-    public final static int ITEM_ALREADY_ADDED = -99;
-
     private String member_id;
     private int list_num;
     private int item_no;
