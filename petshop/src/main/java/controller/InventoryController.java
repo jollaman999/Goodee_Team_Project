@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -19,7 +21,7 @@ public class InventoryController {
     private ShopService service;
 
     @RequestMapping("list")
-    public ModelAndView inventoryManagement() {
+    public ModelAndView inventoryManagement(HttpSession session) {
 
         ModelAndView mav = new ModelAndView();
         
@@ -39,7 +41,7 @@ public class InventoryController {
     }
     
     @RequestMapping("detail")
-    public ModelAndView inventoryManagementdetail() {
+    public ModelAndView inventoryManagementdetail(HttpSession session) {
         List<Item> itemList  = service.getItemList();
         ModelAndView mav = new ModelAndView();
         mav.addObject("itemList", itemList);
