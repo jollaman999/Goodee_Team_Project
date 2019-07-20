@@ -2,8 +2,6 @@ package logic;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.Size;
-
 public class Member {
     // login시 체크 안되게 하기위함 / 회원가입시 Javascript 에서 처리
     // @Size(min = 3, max = 50, message = "아이디를 3자 이상 50자 이하로 입력하세요.")
