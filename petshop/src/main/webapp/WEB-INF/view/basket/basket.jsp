@@ -73,9 +73,13 @@
                                             %>
                                             <tr>
                                                 <td class="product-col">
-                                                    <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                                                    <a href="${path}/shop/detail.shop?item_no=${item.item_no}">
+                                                        <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                                                    </a>
                                                     <div class="pc-title">
-                                                        <h4>${item.name}</h4>
+                                                        <a href="${path}/shop/detail.shop?item_no=${item.item_no}">
+                                                            <h4>${item.name}</h4>
+                                                        </a>
                                                         <p><fmt:formatNumber value="${item.price}" pattern="###,###" /> 원</p>
                                                     </div>
                                                 </td>
