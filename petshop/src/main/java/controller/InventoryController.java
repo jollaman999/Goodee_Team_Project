@@ -12,20 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
-
 @Controller
-@RequestMapping("InventoryManagement")
-
-public class InventoryManagement {
+@RequestMapping("inventory")
+public class InventoryController {
     @Autowired
     private ShopService service;
 
-
-    //itemlist 부르기
-    @RequestMapping("InventoryManagement")
-
-    // /WEB-INF/view/InventoryManagement/InventoryManagement.shop 뷰로 지정
-
+    @RequestMapping("list")
     public ModelAndView inventoryManagement() {
 
         ModelAndView mav = new ModelAndView();
@@ -45,15 +38,13 @@ public class InventoryManagement {
         return mav;
     }
     
-    @RequestMapping("InventoryManagementdetail")
+    @RequestMapping("detail")
     public ModelAndView inventoryManagementdetail() {
         List<Item> itemList  = service.getItemList();
         ModelAndView mav = new ModelAndView();
         mav.addObject("itemList", itemList);
         return mav;
     }
-
-
 
     /*
     //페이징
