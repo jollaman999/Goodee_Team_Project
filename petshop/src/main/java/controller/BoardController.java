@@ -28,7 +28,7 @@ public class BoardController {
     private FileUtil fileUtil = new FileUtil();
 
     @RequestMapping("list")
-    public ModelAndView list(HttpSession session, Integer pageNum, String searchtype, String searchcontent) {
+    public ModelAndView list(HttpSession session, Integer type, Integer pageNum, String searchtype, String searchcontent) {
         ModelAndView mav = new ModelAndView();
 
         if (pageNum == null || pageNum.toString().equals("")) {
@@ -67,7 +67,7 @@ public class BoardController {
     }
 
     @PostMapping("write")
-    public ModelAndView writeBoard(HttpSession session, Integer type, @Valid Board board, MultipartHttpServletRequest request) {
+    public ModelAndView writeBoard(HttpSession session, Integer type, MultipartHttpServletRequest request, @Valid Board board) {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
         board.setMember_id(loginMember.getId());
         board.setType(type);
@@ -96,7 +96,7 @@ public class BoardController {
     }
 
     @PostMapping("update")
-    public ModelAndView updateBoard(HttpSession session, @Valid Board board, MultipartHttpServletRequest request) {
+    public ModelAndView updateBoard(HttpSession session, Integer type, MultipartHttpServletRequest request, @Valid Board board) {
         ModelAndView mav = new ModelAndView("/alert");
 
         if (request.getParameter("num") == null) {
@@ -126,7 +126,7 @@ public class BoardController {
     }
 
     @PostMapping("delete")
-    public ModelAndView deleteBoard(HttpSession session, HttpServletRequest request) {
+    public ModelAndView deleteBoard(HttpSession session, Integer type, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("/alert");
 
         if (request.getParameter("num") == null) {
@@ -156,7 +156,7 @@ public class BoardController {
     }
 
     @RequestMapping("imgupload")
-    public String imgupload(HttpSession session, MultipartFile upload, String CKEditorFuncNum, HttpServletRequest request, Model model) {
+    public String imgupload(HttpSession session, Integer type, MultipartHttpServletRequest request, MultipartFile upload, String CKEditorFuncNum, Model model) {
         int num = service.boardmaxnum() + 1;
 
         String path = request.getServletContext().getRealPath("/") + "board/imgfile/" + num + "/";
@@ -190,7 +190,7 @@ public class BoardController {
     }
 
     @RequestMapping("*")
-    public ModelAndView getBoard(HttpSession session, Integer num) {
+    public ModelAndView getBoard(HttpSession session, Integer type, HttpServletRequest request, Integer num) {
         ModelAndView mav = new ModelAndView();
         Board board = new Board();
         Member loginMember = (Member) session.getAttribute("loginMember");

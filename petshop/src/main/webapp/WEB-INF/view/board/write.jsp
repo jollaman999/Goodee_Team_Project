@@ -7,15 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>
-    	게시글 작성 - 
-    	<c:choose>
-			<c:when test="${param.type eq '0'}">
-				공지사항 
-			</c:when>
-			<c:when test="${param.type eq '1'}">
-				1대1 문의 게시판
-			</c:when>
-		</c:choose>
+    	게시글 작성 - ${board_title}
     </title>
 </head>
 <body>

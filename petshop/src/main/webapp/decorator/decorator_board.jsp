@@ -39,34 +39,8 @@
 
     <!-- Body section -->
     <div class="container" style="margin-top: 50px; margin-bottom: 50px">
-    	<h2>
-    	<%
-    		String type = request.getParameter("type");
-    		if (type != null) {
-    			switch (type) {
-    			case "0":
-    	%>
-    				공지사항 
-    	<%
-    				break;
-    			case "1":
-    	%>
-    				1대1 문의 게시판
-    	<%
-    				break;
-    			}
-    		} else {
-    	%>
-    		<script type="text/javascript">
-    			alert("게시판 유형을 알 수 없습니다!");
-    			history.go(-1);
-    		</script>
-   		<%
-   			}
-   		%>
-		</h2>
-		
-		<decorator:body />
+        <h2>${board_title}</h2>
+        <decorator:body />
     </div>
     <!-- Body section end -->
 
