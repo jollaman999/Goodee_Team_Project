@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import util.SecurityUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -27,7 +28,16 @@ public class MemberController {
     private SecurityUtil securityUtil = new SecurityUtil();
 
     @GetMapping("*")
-    public String form(Model model) {
+    public String form(Model model, HttpServletRequest request) {
+        if (request.getRequestURI().contains("login")) {
+            if (request.getSession().getAttribute("loginMember") != null) {
+                String url = request.getParameter("back_url");
+                if (url == null || url.length() == 0 || url.contains("login") || url.contains("memberEntry")) {
+                    url = "../index.jsp";
+                }
+                throw new LogInException( "이미 로그인 중입니다!", url);
+            }
+        }
         model.addAttribute(new Member());
         return null;
     }
@@ -111,7 +121,7 @@ public class MemberController {
     }
 
     @PostMapping("login")
-    public ModelAndView login(@Valid Member member, BindingResult bindingResult, HttpSession session) {
+    public ModelAndView login(@Valid Member member, BindingResult bindingResult, HttpSession session, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
@@ -135,7 +145,7 @@ public class MemberController {
             return mav;
         }
 
-        mav.setViewName("redirect:main.shop");
+        mav.setViewName("redirect:" + request.getParameter("back_url"));
         return mav;
     }
 

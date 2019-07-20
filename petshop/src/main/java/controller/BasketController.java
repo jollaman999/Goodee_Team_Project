@@ -83,7 +83,7 @@ public class BasketController {
     }
 
     @RequestMapping("view")
-    public ModelAndView view(HttpSession session) {
+    public ModelAndView view(HttpSession session, HttpServletRequest request) {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
 
         List<Basket> basketList = service.basketList(loginMember.getId());
@@ -130,12 +130,12 @@ public class BasketController {
     }
 
     @RequestMapping("checkout")
-    public String checkout (HttpSession session) {
+    public String checkout (HttpSession session, HttpServletRequest request) {
         return "order/checkout";
     }
 
     @RequestMapping("*")
-    public String basket (HttpSession session) {
+    public String basket (HttpSession session, HttpServletRequest request) {
         return  null;
     }
 }
