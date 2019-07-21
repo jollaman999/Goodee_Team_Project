@@ -32,7 +32,7 @@ public class MemberController {
         if (request.getRequestURI().contains("login")) {
             if (request.getSession().getAttribute("loginMember") != null) {
                 String url = request.getParameter("back_url");
-                if (url == null || url.length() == 0 || url.contains("login") || url.contains("memberEntry")) {
+                if (url == null || url.length() == 0 || url.contains("login") || url.contains("memberEntry") || url.contains("basket")) {
                     url = "../index.jsp";
                 }
                 throw new ShopException( "이미 로그인 중입니다!", url);
