@@ -48,9 +48,9 @@
         }
 
         function onlyNumber() {
-            if((event.keyCode < 48)||(event.keyCode > 57)) {
+            if(((event.keyCode < 48) || (event.keyCode > 57)) && (event.keyCode != 189) && (event.keyCode != 8)) {
                 event.returnValue = false;
-                alert("숫자만 입력하세요!");
+                alert("숫자와 대쉬(-)만 입력하세요!");
             }
         }
 
