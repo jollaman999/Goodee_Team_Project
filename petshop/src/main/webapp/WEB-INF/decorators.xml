@@ -10,7 +10,7 @@
     </decorator>
 
     <decorator name="nomaincss" page="decorator_nomaincss.jsp">
-        <pattern>/basket/view.shop</pattern>
+        <pattern>/basket/*</pattern>
     </decorator>
     
     <decorator name="nomargin" page="decorator_nomargin.jsp">

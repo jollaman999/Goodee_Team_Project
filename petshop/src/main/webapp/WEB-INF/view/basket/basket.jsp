@@ -14,7 +14,7 @@
 
     <script type="text/javascript">
         function onlyNumber(){
-            if((event.keyCode<48)||(event.keyCode>57)) {
+            if((event.keyCode < 48)||(event.keyCode > 57)) {
                 event.returnValue = false;
                 alert("숫자만 입력하세요!");
             }

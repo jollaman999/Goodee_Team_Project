@@ -162,8 +162,34 @@ public class BasketController {
     }
 
     @RequestMapping("checkout")
-    public String checkout (HttpSession session, HttpServletRequest request) {
-        return "order/checkout";
+    public ModelAndView checkout (HttpSession session, HttpServletRequest request, String items) {
+        Member loginMember = (Member)session.getAttribute(("loginMember"));
+        List<Basket> basketList = service.basketList(loginMember.getId());
+        List<Basket> checkoutList = new ArrayList<>();
+
+        ModelAndView mav = new ModelAndView("/alert");
+        if (items == null || items.length() == 0) {
+            mav.addObject("msg", "주문할 상품이 선택되지 않았습니다!");
+            mav.addObject("url", "view.shop");
+
+            return mav;
+        } else {
+            String[] items_selected = items.split(",");
+
+            for (Basket basket : basketList) {
+                for (String item : items_selected) {
+                    if (basket.getItem_no() == Integer.parseInt(item)) {
+                        checkoutList.add(basket);
+                    }
+                }
+            }
+        }
+
+        mav = new ModelAndView("basket/checkout");
+        mav.addObject("checkoutList", checkoutList);
+        mav.addObject("loginMember", loginMember);
+
+        return mav;
     }
 
     @RequestMapping("*")
