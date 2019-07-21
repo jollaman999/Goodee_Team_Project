@@ -3,7 +3,7 @@ package logic;
 public class Deposit {
     private int num;
     private String account_bank;
-    private String account_num;
+    private String account_number;
 
     public int getNum() {
         return num;
@@ -21,11 +21,11 @@ public class Deposit {
         this.account_bank = account_bank;
     }
 
-    public String getAccount_num() {
-        return account_num;
+    public String getAccount_number() {
+        return account_number;
     }
 
-    public void setAccount_num(String account_num) {
-        this.account_num = account_num;
+    public void setAccount_number(String account_number) {
+        this.account_number = account_number;
     }
 }

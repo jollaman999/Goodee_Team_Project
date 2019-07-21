@@ -24,7 +24,4 @@ public interface BasketMapper {
 
     @Update("update basket set list_num = list_num - 1 where member_id = #{member_id} and list_num > #{list_num}")
     void update_list_num(Map map);
-
-    @Delete("delete from basket where member_id = #{member_id}")
-    int clear(Map map);
 }

@@ -15,11 +15,13 @@ public class Orders {
     private String phone2;
     @NotEmpty(message = "주소지를 입력하셔야합니다.")
     private String address;
+    private String address_detail;
+    private String postcode;
     private int deposit_bank_select;
     private int status;
     private String account_holder;
     private String account_bank;
-    private int account_num;
+    private String account_number;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date update_time;
 
@@ -71,6 +73,22 @@ public class Orders {
         this.address = address;
     }
 
+    public String getAddress_detail() {
+        return address_detail;
+    }
+
+    public void setAddress_detail(String address_detail) {
+        this.address_detail = address_detail;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
     public int getDeposit_bank_select() {
         return deposit_bank_select;
     }
@@ -103,12 +121,12 @@ public class Orders {
         this.account_bank = account_bank;
     }
 
-    public int getAccount_num() {
-        return account_num;
+    public String getAccount_number() {
+        return account_number;
     }
 
-    public void setAccount_num(int account_num) {
-        this.account_num = account_num;
+    public void setAccount_number(String account_number) {
+        this.account_number = account_number;
     }
 
     public Date getUpdate_time() {

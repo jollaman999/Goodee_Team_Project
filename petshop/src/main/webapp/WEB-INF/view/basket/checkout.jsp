@@ -13,9 +13,9 @@
 
     <script type="text/javascript">
         function onlyNumber() {
-            if((event.keyCode < 48)||(event.keyCode > 57)) {
+            if(((event.keyCode < 48) || (event.keyCode > 57)) && (event.keyCode != 189) && (event.keyCode != 8)) {
                 event.returnValue = false;
-                alert("숫자만 입력하세요!");
+                alert("숫자와 대쉬(-)만 입력하세요!");
             }
         }
 
@@ -39,6 +39,13 @@
             if (!f.address.value) {
                 alert("주소를 입력해주세요!");
                 f.address.focus();
+                return;
+
+            }
+
+            if (f.deposit_bank_select.value == 0) {
+                alert("입금하실 은행을 선택해 주세요!");
+                f.deposit_bank_select.focus();
                 return;
 
             }
@@ -164,11 +171,13 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 order-2 order-lg-1">
-                <form class="checkout-form" name="checkout">
+                <form class="checkout-form" name="checkout" action="order.shop" method="post">
+                    <input type="hidden" name="items" value="${items}">
+
                     <div class="cf-title">배송지 정보</div>
                     <div class="row address-inputs">
                         <div class="col-md-6">
-                            <input type="text" name="name" placeholder="이름" value="${loginMember.name}">
+                            <input type="text" name="name" placeholder="배송받는 분" value="${loginMember.name}">
                         </div>
                         <div class="col-md-12">
                             <input type="text" name="address" id="address" placeholder="주소"
@@ -180,14 +189,36 @@
                                    onkeydown="onlyNumber()" value="${loginMember.postcode}">
                         </div>
                         <div class="col-md-6">
-                            <input type="text" name="phone" placeholder="전화 번호"
+                            <input type="text" name="phone" placeholder="휴대 전화 번호"
                                    onkeyup="inputPhoneNumber(this)" onkeydown="onlyNumber()" maxlength="13" value="${loginMember.phone}">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="phone2" placeholder="전화 번호 (옵션)"
+                                   onkeyup="inputPhoneNumber(this)" onkeydown="onlyNumber()" maxlength="13">
                         </div>
                     </div>
                     <div class="cf-title">결제 정보</div>
-                    <ul class="payment-list">
-                        <li>입금할 은행 선택</li>
+                    <ul class="payment-list" style="margin-left: 20px">
+                        <div style="margin-bottom: 30px">
+                            <li>입금할 은행 선택</li>
+                            <select name="deposit_bank_select" style="width: 400px">
+                                <option value="0">입금하실 은행을 선택해 주세요.</option>
+                                <c:forEach items="${depositList}" var="deposit">
+                                    <option value="${deposit.num}">${deposit.account_bank} : ${deposit.account_number}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <li>
+                            입급하시는 분 성함
+                            <input type="text" name="account_holder" placeholder="성함">
+                        </li>
+                        <li>
+                            입금하시는 분 계좌 번호
+                            <input type="text" name="account_bank" placeholder="은행 명">
+                            <input type="text" name="account_number" placeholder="계좌 번호">
+                        </li>
 
+                        <div style="color: red; font-size: 10pt">입금하시는 분 성함과 계좌번호는 환불요청시 해당 계좌로 입금해 드리는데 사용됩니다.</div>
                     </ul>
                     <a href="javascript:checkout_submit()" class="site-btn submit-order-btn">주문 하기</a>
                 </form>

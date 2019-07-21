@@ -6,6 +6,6 @@
         <if test="order_num != null">
             where order_num = #{order_num;}
         </if>
-        order by order_num;
+        order by list_num;
     </select>
 </mapper>

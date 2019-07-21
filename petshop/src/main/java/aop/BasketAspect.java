@@ -22,8 +22,12 @@ public class BasketAspect {
         Member loginMember = (Member)session.getAttribute("loginMember");
 
         if (loginMember == null) {
-            String referer = URLEncoder.encode(request.getHeader("referer"), StandardCharsets.UTF_8);
-            throw new ShopException("로그인 후 이용해주세요!", "../member/login.shop?back_url=" + referer);
+            String back_url = "";
+
+            if (request.getHeader("referer") != null) {
+                back_url = "?back_url=" + URLEncoder.encode(request.getHeader("referer"), StandardCharsets.UTF_8);
+            }
+            throw new ShopException("로그인 후 이용해주세요!", "../member/login.shop" + back_url);
         }
 
         return joinPoint.proceed();

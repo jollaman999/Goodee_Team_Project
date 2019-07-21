@@ -18,16 +18,10 @@ public class Orders_listDao {
     @Autowired
     public SqlSessionTemplate sqlSessionTemplate;
     private final String NS = "dao.mapper.Orders_listMapper.";
-    private RowMapper<Orders_list> mapper = new BeanPropertyRowMapper<>(Orders_list.class);
     private Map<String, Object> param = new HashMap<>();
 
-    public int getMaxorder_num() {
-        int max = sqlSessionTemplate.getMapper(Orders_listMapper.class).maxorder_num();
-        return max + 1;
-    }
-
-    public void insert(Orders_list orderslist) {
-        sqlSessionTemplate.getMapper(Orders_listMapper.class).insert(orderslist);
+    public int insert(Orders_list ordersList) {
+        return sqlSessionTemplate.getMapper(Orders_listMapper.class).insert(ordersList);
     }
 
     public List<Orders_list> list(int order_num) {

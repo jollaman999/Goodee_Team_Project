@@ -1,16 +1,17 @@
 package logic;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class Orders_list {
     private int order_num;
     private int list_num;
     private int item_no;
     private int quantity;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date update_time;
+
+    public Orders_list(int order_num, int list_num, int item_no, int quantity) {
+        this.order_num = order_num;
+        this.list_num = list_num;
+        this.item_no = item_no;
+        this.quantity = quantity;
+    }
 
     public int getOrder_num() {
         return order_num;
@@ -42,13 +43,5 @@ public class Orders_list {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public Date getUpdate_time() {
-        return update_time;
-    }
-
-    public void setUpdate_time(Date update_time) {
-        this.update_time = update_time;
     }
 }

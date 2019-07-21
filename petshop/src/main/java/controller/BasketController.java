@@ -162,7 +162,7 @@ public class BasketController {
     }
 
     @RequestMapping("checkout")
-    public ModelAndView checkout (HttpSession session, HttpServletRequest request, String items) {
+    public ModelAndView checkout(HttpSession session, HttpServletRequest request, String items) {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
         List<Basket> basketList = service.basketList(loginMember.getId());
         List<Basket> checkoutList = new ArrayList<>();
@@ -178,8 +178,15 @@ public class BasketController {
 
             for (Basket basket : basketList) {
                 for (String item : items_selected) {
-                    if (basket.getItem_no() == Integer.parseInt(item)) {
-                        checkoutList.add(basket);
+                    try {
+                        if (basket.getItem_no() == Integer.parseInt(item)) {
+                            checkoutList.add(basket);
+                        }
+                    } catch (NumberFormatException e) {
+                        mav.addObject("msg", "주문할 상품 목록이 올바르게 선택되지 않았습니다!");
+                        mav.addObject("url", "view.shop");
+
+                        return mav;
                     }
                 }
             }
@@ -188,6 +195,54 @@ public class BasketController {
         mav = new ModelAndView("basket/checkout");
         mav.addObject("checkoutList", checkoutList);
         mav.addObject("loginMember", loginMember);
+
+        mav.addObject("items", items);
+
+        List<Deposit> depositList = service.depositList();
+        mav.addObject("depositList", depositList);
+
+        return mav;
+    }
+
+    @PostMapping("order")
+    public ModelAndView order(HttpSession session, HttpServletRequest request, Orders order, String items) {
+        Member loginMember = (Member)session.getAttribute(("loginMember"));
+        List<Basket> basketList = service.basketList(loginMember.getId());
+        List<Basket> orderList = new ArrayList<>();
+
+        ModelAndView mav = new ModelAndView("/alert");
+        if (items == null || items.length() == 0) {
+            mav.addObject("msg", "주문할 상품이 선택되지 않았습니다!");
+            mav.addObject("url", "view.shop");
+
+            return mav;
+        } else {
+            String[] items_selected = items.split(",");
+
+            for (Basket basket : basketList) {
+                for (String item : items_selected) {
+                    try {
+                        if (basket.getItem_no() == Integer.parseInt(item)) {
+                            orderList.add(basket);
+                        }
+                    } catch (NumberFormatException e) {
+                        mav.addObject("msg", "주문할 상품 목록이 올바르게 선택되지 않았습니다!");
+                        mav.addObject("url", "view.shop");
+
+                        return mav;
+                    }
+                }
+            }
+        }
+
+        int result = service.ordersAdd(loginMember.getId(), order, orderList);
+        if (result > 0) {
+            mav.addObject("msg", "주문이 완료되었습니다.");
+            mav.addObject("url", "end.shop");
+        } else {
+            mav.addObject("msg", "주문 처리를 하는 중 문제가 발생하였습니다!");
+            mav.addObject("url", "checkout.shop?items=" + items);
+        }
 
         return mav;
     }

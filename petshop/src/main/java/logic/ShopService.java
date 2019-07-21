@@ -32,11 +32,9 @@ public class ShopService {
     @Autowired
     private BasketDao basketDao;
     @Autowired
+    private DepositDao depositDao;
+    @Autowired
     private MemberDao memberDao;
-    @Autowired
-    private SaleDao saleDao;
-    @Autowired
-    private SaleItemDao saleItemDao;
     @Autowired
     private BoardDao boardDao;
     @Autowired
@@ -88,6 +86,14 @@ public class ShopService {
         return boardDao.list(type, pageNum, limit, searchtype, searchcontent);
     }
 
+    public List<Basket> basketList(String member_id) {
+        return basketDao.list(member_id);
+    }
+
+    public List<Deposit> depositList() {
+        return depositDao.list();
+    }
+
     // category
     public String getCategoryGroupName(Integer group_code) {
         CategoryGroup categoryGroup = categoryGroupDao.selectOne(group_code);
@@ -137,10 +143,6 @@ public class ShopService {
     }
 
     // basket
-    public List<Basket> basketList(String member_id) {
-        return basketDao.list(member_id);
-    }
-
     public int basketAdd(Basket basket) {
         return basketDao.insert(basket);
     }
@@ -153,8 +155,54 @@ public class ShopService {
         return basketDao.delete(member_id, item_no);
     }
 
-    public int basketClear(String member_id) {
-        return basketDao.clear(member_id);
+    // orders
+    public Orders ordersSelect(Integer num) {
+        return ordersDao.selectOne(num);
+    }
+
+    public int ordersAdd(String member_id, Orders order, List<Basket> orderList) {
+        int num = ordersDao.max_num();
+        order.setMember_id(member_id);
+        order.setNum(++num);
+
+        int result;
+
+        result = ordersDao.insert(order);
+        if (result <= 0) {
+            System.out.println("ordersAdd/ordersDao.insert error!");
+            return result;
+        }
+
+        int list_num = 0;
+        for (Basket item : orderList) {
+            Orders_list orders_list = new Orders_list(order.getNum(), ++list_num, item.getItem_no(), item.getQuantity());
+            result = orders_listDao.insert(orders_list);
+            if (result <= 0) {
+                System.out.println("ordersAdd/orders_listDao.insert error!");
+                return result;
+            }
+
+            result = basketDao.delete(member_id, item.getItem_no());
+            if (result <= 0) {
+                System.out.println("ordersAdd/basketDao.delete error!");
+                return result;
+            }
+        }
+
+        return result;
+    }
+
+    public int ordersUpdate(Orders orders) {
+        return ordersDao.update(orders);
+    }
+
+    public int ordersDelete(Integer num) {
+        return ordersDao.delete(num);
+    }
+
+    // deposit
+    public Deposit depositSelect(int num) {
+        return depositDao.selectOne(num);
     }
 
     // member
@@ -356,28 +404,4 @@ public class ShopService {
     public int boardDelete(Integer num) {
         return boardDao.delete(num);
     }
-
-    // Sale
-//    public Sale checkEnd(Member loginMember, Cart cart) {
-//        Sale sale = new Sale();
-//        sale.setSaleId(saleDao.getMaxSaleId());
-//        sale.setMember(loginMember);
-//        sale.setUpdatetime(new Date());
-//        List<ItemSet> itemList = cart.getItemSetList();
-//
-//        int i = 0;
-//        for (ItemSet is : itemList) {
-//            int saleItemId = ++i;
-//            SaleItem saleItem = new SaleItem(sale.getSaleId(), saleItemId, is);
-//            sale.getItemList().add(saleItem);
-//        }
-//        saleDao.insert(sale);
-//        List<SaleItem> saleItemList = sale.getItemList();
-//
-//        for (SaleItem si : saleItemList) {
-//            saleItemDao.insert(si);
-//        }
-//
-//        return sale;
-//    }
 }

@@ -5,26 +5,24 @@
         <typeAlias type="logic.Item" alias="Item"/>
         <typeAlias type="logic.Basket" alias="Basket"/>
         <typeAlias type="logic.Member" alias="Member"/>
-        <typeAlias type="logic.Sale" alias="Sale"/>
-        <typeAlias type="logic.SaleItem" alias="SaleItem"/>
         <typeAlias type="logic.Board" alias="Board"/>
         <typeAlias type="logic.CategoryGroup" alias="CategoryGroup"/>
         <typeAlias type="logic.CategoryItem" alias="CategoryItem"/>
         <typeAlias type="logic.AdminMail" alias="AdminMail"/>
         <typeAlias type="logic.Orders" alias="Orders"/>
         <typeAlias type="logic.Orders_list" alias="Orders_list"/>
+        <typeAlias type="logic.Deposit" alias="Deposit"/>
     </typeAliases>
     <mappers>
         <mapper resource="dao/mapper/Item.xml"/>
         <mapper resource="dao/mapper/Basket.xml"/>
         <mapper resource="dao/mapper/Member.xml"/>
-        <mapper resource="dao/mapper/Sale.xml"/>
-        <mapper resource="dao/mapper/SaleItem.xml"/>
         <mapper resource="dao/mapper/Board.xml"/>
         <mapper resource="dao/mapper/CategoryGroup.xml"/>
         <mapper resource="dao/mapper/CategoryItem.xml"/>
         <mapper resource="dao/mapper/AdminMail.xml"/>
         <mapper resource="dao/mapper/Orders.xml"/>
         <mapper resource="dao/mapper/Orders_list.xml"/>
+        <mapper resource="dao/mapper/Deposit.xml"/>
     </mappers>
 </configuration>

@@ -49,7 +49,6 @@ public class BasketDao {
         return sqlSessionTemplate.getMapper(BasketMapper.class).update(basket);
     }
 
-    // 장바구니에서 특정 상품을 특정 회원의 장바구니 목록에서 삭제 (삭제 후 목록 번호 재설정)
     public int delete(String member_id, int item_no) {
         param.clear();
         param.put("member_id", member_id);
@@ -64,13 +63,5 @@ public class BasketDao {
         sqlSessionTemplate.getMapper(BasketMapper.class).update_list_num(param);
 
         return sqlSessionTemplate.getMapper(BasketMapper.class).delete(param);
-    }
-
-    // 특정 회원의 장바구니 목록을 삭제
-    public int clear(String member_id) {
-        param.clear();
-        param.put("member_id", member_id);
-
-        return sqlSessionTemplate.getMapper(BasketMapper.class).clear(param);
     }
 }
