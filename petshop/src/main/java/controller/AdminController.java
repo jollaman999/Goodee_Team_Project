@@ -1,6 +1,6 @@
 package controller;
 
-import exception.LogInException;
+import exception.ShopException;
 import logic.Mail;
 import logic.Member;
 import logic.ShopService;
@@ -39,7 +39,7 @@ public class AdminController {
     public ModelAndView mailForm(String[] idchks, HttpSession session) {
         ModelAndView mav = new ModelAndView("admin/mail");
         if (idchks == null || idchks.length == 0) {
-            throw new LogInException("메일을 보낼 대상자를 선택하세요.", "list.shop");
+            throw new ShopException("메일을 보낼 대상자를 선택하세요.", "list.shop");
         }
         List<Member> list = service.memberList(idchks);
         mav.addObject("memberList", list);

@@ -1,9 +1,9 @@
 package exception;
 
-public class LogInException extends RuntimeException {
+public class ShopException extends RuntimeException {
     private String url;
 
-    public LogInException(String msg, String url) {
+    public ShopException(String msg, String url) {
         super(msg);
         this.url = url;
     }

@@ -1,6 +1,6 @@
 package aop;
 
-import exception.LogInException;
+import exception.ShopException;
 import logic.Member;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -19,7 +19,7 @@ public class MemberAspect {
         Member loginMember = (Member)session.getAttribute("loginMember");
 
         if (loginMember == null) {
-            throw new LogInException("로그인 후 이용해주세요!", "login.shop");
+            throw new ShopException("로그인 후 이용해주세요!", "login.shop");
         }
 
         if (id == null || id.length() == 0) {
@@ -27,7 +27,7 @@ public class MemberAspect {
         }
 
         if (!loginMember.getId().equals(id) && !loginMember.getId().equals("admin")) {
-            throw new LogInException("본인 정보만 조회 가능합니다!", "main.shop");
+            throw new ShopException("본인 정보만 조회 가능합니다!", "main.shop");
         }
 
         return joinPoint.proceed();
@@ -40,7 +40,7 @@ public class MemberAspect {
         Member loginMember = (Member)session.getAttribute("loginMember");
 
         if (loginMember == null) {
-            throw new LogInException("로그인 후 이용해주세요!", "login.shop");
+            throw new ShopException("로그인 후 이용해주세요!", "login.shop");
         }
 
         if (id == null || id.length() == 0) {
@@ -48,7 +48,7 @@ public class MemberAspect {
         }
 
         if (!loginMember.getId().equals(id) && !loginMember.getId().equals("admin")) {
-            throw new LogInException("본인만 이용 가능합니다!", "main.shop");
+            throw new ShopException("본인만 이용 가능합니다!", "main.shop");
         }
 
         return joinPoint.proceed();

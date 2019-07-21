@@ -1,6 +1,6 @@
 package aop;
 
-import exception.LogInException;
+import exception.ShopException;
 import logic.Member;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,11 +20,11 @@ public class BoardAspect {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
 
         if (loginMember == null) {
-            throw new LogInException("로그인 후 이용해주세요!", "../member/login.shop");
+            throw new ShopException("로그인 후 이용해주세요!", "../member/login.shop");
         }
 
         if (type == null) {
-            throw new LogInException("게시판 유형을 알 수 없습니다!", "../index.jsp");
+            throw new ShopException("게시판 유형을 알 수 없습니다!", "../index.jsp");
         }
 
         switch (type) {

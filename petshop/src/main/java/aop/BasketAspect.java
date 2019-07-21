@@ -1,6 +1,6 @@
 package aop;
 
-import exception.LogInException;
+import exception.ShopException;
 import logic.Member;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -23,7 +23,7 @@ public class BasketAspect {
 
         if (loginMember == null) {
             String referer = URLEncoder.encode(request.getHeader("referer"), StandardCharsets.UTF_8);
-            throw new LogInException("로그인 후 이용해주세요!", "../member/login.shop?back_url=" + referer);
+            throw new ShopException("로그인 후 이용해주세요!", "../member/login.shop?back_url=" + referer);
         }
 
         return joinPoint.proceed();

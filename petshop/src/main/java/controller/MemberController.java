@@ -1,6 +1,6 @@
 package controller;
 
-import exception.LogInException;
+import exception.ShopException;
 import logic.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -35,7 +35,7 @@ public class MemberController {
                 if (url == null || url.length() == 0 || url.contains("login") || url.contains("memberEntry")) {
                     url = "../index.jsp";
                 }
-                throw new LogInException( "이미 로그인 중입니다!", url);
+                throw new ShopException( "이미 로그인 중입니다!", url);
             }
         }
         model.addAttribute(new Member());
@@ -231,11 +231,11 @@ public class MemberController {
         ModelAndView mav = new ModelAndView();
         Member loginMember = (Member)session.getAttribute(("loginMember"));
         if (loginMember == null) {
-            throw new LogInException("로그인 후 이용해 주십시오!", "login.shop");
+            throw new ShopException("로그인 후 이용해 주십시오!", "login.shop");
         }
 
         if (!loginMember.getPass().equals(securityUtil.encryptSHA256(member.getPass()))) {
-            throw new LogInException("비밀번호가 일치하지 않습니다!", "delete.shop?id=" + member.getId());
+            throw new ShopException("비밀번호가 일치하지 않습니다!", "delete.shop?id=" + member.getId());
         }
 
         try {
@@ -250,7 +250,7 @@ public class MemberController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new LogInException("회원 정보 삭제가 실패했습니다. 전산부 전화요망. (전화 : 1234)", "delete.shop?id=" + member.getId());
+            throw new ShopException("회원 정보 삭제가 실패했습니다. 전산부 전화요망. (전화 : 1234)", "delete.shop?id=" + member.getId());
         }
 
         return mav;

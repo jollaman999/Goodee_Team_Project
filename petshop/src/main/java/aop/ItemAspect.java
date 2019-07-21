@@ -1,6 +1,6 @@
 package aop;
 
-import exception.LogInException;
+import exception.ShopException;
 import logic.Member;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -19,11 +19,11 @@ public class ItemAspect {
         Member loginMember = (Member)session.getAttribute("loginMember");
 
         if (loginMember == null) {
-            throw new LogInException("로그인 후 이용하세요!", "../member/login.shop");
+            throw new ShopException("로그인 후 이용하세요!", "../member/login.shop");
         }
 
         if (!loginMember.getId().equals("admin")) {
-            throw new LogInException("관리자만 이용하세요", "../member/mypage.shop?id" + loginMember.getId());
+            throw new ShopException("관리자만 이용하세요", "../member/mypage.shop?id" + loginMember.getId());
         }
 
         return joinPoint.proceed();
