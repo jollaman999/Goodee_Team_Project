@@ -67,9 +67,17 @@ public class BasketController {
     @RequestMapping("delete")
     public ModelAndView delete(HttpSession session, HttpServletRequest request, Integer item_no, String items) {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
+        ModelAndView mav = new ModelAndView("/alert");
 
         int result;
         boolean error_occured = false;
+
+        if (item_no == null && items == null || items != null && items.length() == 0) {
+            mav.addObject("msg", "삭제할 상품이 선택되지 않았습니다!");
+            mav.addObject("url", "view.shop");
+
+            return mav;
+        }
 
         if (items == null) {
             result = service.basketDelete(loginMember.getId(), item_no);
@@ -87,7 +95,6 @@ public class BasketController {
             }
         }
 
-        ModelAndView mav = new ModelAndView("/alert");
         if (!error_occured) {
             if (items == null) {
                 mav.addObject("msg", "해당 상품이 장바구니에서 삭제 되었습니다.");
