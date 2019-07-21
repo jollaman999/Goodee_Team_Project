@@ -13,8 +13,8 @@
     <title>장바구니</title>
 
     <script type="text/javascript">
-        function onlyNumber(){
-            if((event.keyCode < 48)||(event.keyCode > 57)) {
+        function onlyNumber() {
+            if(((event.keyCode < 48)||(event.keyCode > 57)) && (event.keyCode != 8)) {
                 event.returnValue = false;
                 alert("숫자만 입력하세요!");
             }
