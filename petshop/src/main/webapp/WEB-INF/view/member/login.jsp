@@ -29,6 +29,9 @@
 
                 if (back_url == null) {
                     back_url = request.getHeader("referer");
+                    if (back_url != null && back_url.contains("member") && back_url.contains("find")) {
+                        back_url = "../index.jsp";
+                    }
                 }
             %>
             <input type="hidden" name="back_url" value="<%= back_url %>">
