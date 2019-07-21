@@ -20,16 +20,47 @@
             }
         }
 
+        Number.prototype.format = function(){
+            if(this == 0) return 0;
+
+            var reg = /(^[+-]?\d+)(\d{3})/;
+            var n = (this + '');
+
+            while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+
+            return n;
+        };
+
+        function calculate_total() {
+            var chks = document.getElementsByName("itemchks");
+            var prices = document.getElementsByName("price");
+            var quantities = document.getElementsByName("quantity");
+            var total = 0;
+
+            for (var i = 0; i < chks.length; i++) {
+                if (chks[i].checked) {
+                    total += prices[i].value * quantities[i].value;
+                }
+            }
+
+            document.getElementById("total").innerHTML = "<h6>합 계 <span>" + total.format() + " 원</span></h6>";
+        }
+
         function allchkbox(allchk) {
             var chks = document.getElementsByName("itemchks");
             for (var i = 0; i < chks.length; i++) {
                 chks[i].checked = allchk.checked;
             }
+
+            calculate_total();
         }
 
-        function delete_items() {
+        let items;
+
+        function parse_selected_items() {
+            items = "";
+
             var chks = document.getElementsByName("itemchks");
-            var items = "";
             var checked = false;
 
             for (var i = 0; i < chks.length; i++) {
@@ -42,8 +73,16 @@
             if (checked) {
                 items = items.substr(0, items.length - 1);
             }
+        }
 
+        function delete_items() {
+            parse_selected_items();
             location.href = "delete.shop?items=" + items;
+        }
+
+        function order_items() {
+            parse_selected_items();
+            location.href = "../basket/checkout.shop?items=" + items;
         }
     </script>
 </head>
@@ -62,20 +101,20 @@
     <div class="container">
         <h4>Your cart</h4>
         <div class="site-pagination">
-            <a href="">Home</a> /
-            <a href="">Your cart</a>
+            <a href="${path}/index.jsp">Home</a> /
+            <a href="${path}/basket/view.shop">Your cart</a>
         </div>
     </div>
 </div>
 <!-- Page info end -->
 
-<!-- cart section end -->
+<!-- cart section -->
 <section class="cart-section spad">
     <div class="container">
         <div class="row">
             <div style="width: 80%; padding-right: 30px">
                 <div class="cart-table">
-                    <h3>Your Cart</h3>
+                    <h3>장바구니 목록</h3>
                     <div class="cart-table-warp">
                         <table>
                             <thead>
@@ -100,7 +139,8 @@
                                             %>
                                             <tr>
                                                 <td style="text-align: center">
-                                                    <input type="checkbox" name="itemchks" value="${basket.item_no}" style="margin-right: 5px; margin-bottom: 23px" checked>
+                                                    <input type="checkbox" name="itemchks" value="${basket.item_no}"
+                                                           style="margin-right: 5px; margin-bottom: 23px" checked onclick="calculate_total()">
                                                 </td>
                                                 <td class="product-col">
                                                     <a href="${path}/shop/detail.shop?item_no=${item.item_no}">
@@ -110,6 +150,7 @@
                                                         <a href="${path}/shop/detail.shop?item_no=${item.item_no}">
                                                             <h4>${item.name}</h4>
                                                         </a>
+                                                        <input type="hidden" name="price" value="${item.price}">
                                                         <p><fmt:formatNumber value="${item.price}" pattern="###,###" /> 원</p>
                                                     </div>
                                                 </td>
@@ -140,7 +181,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <tr>
-                                            <td colspan="4">
+                                            <td colspan="5">
                                                 <div style="text-align: center">
                                                     <h5>장바구니에 담긴 상품이 없습니다.</h5>
                                                 </div>
@@ -151,7 +192,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="total-cost">
+                    <div class="total-cost" id="total">
                         <h6>합 계 <span><fmt:formatNumber value="${total}" pattern="###,###" /> 원</span></h6>
                     </div>
                 </div>
@@ -160,8 +201,8 @@
                 <div style="margin-bottom: 20px; text-align: center">
                     <h4>선택한 상품을</h4>
                 </div>
-                <a href="" class="site-btn" style="font-size: 18px; min-width: 160px; padding-left: 15px;
-                        padding-right: 15px; padding-bottom: 22px">주문 하기</a>
+                <input type="button" class="site-btn" style="font-size: 18px; min-width: 160px; padding-left: 15px;
+                            padding-right: 15px; padding-bottom: 22px" value="주문 하기" onclick="order_items()">
                 <input type="button" class="site-btn" style="font-size: 18px; min-width: 160px; padding-left: 15px;
                             padding-right: 15px; padding-bottom: 22px" value="삭제 하기" onclick="delete_items()">
                 <a href="" class="site-btn sb-dark" style="font-size: 18px; min-width: 160px; padding-left: 15px;
