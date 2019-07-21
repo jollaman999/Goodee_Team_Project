@@ -47,6 +47,13 @@
             emailcheckForm = open("emailcheckForm.shop", "", op);
         }
 
+        function onlyNumber() {
+            if((event.keyCode < 48)||(event.keyCode > 57)) {
+                event.returnValue = false;
+                alert("숫자만 입력하세요!");
+            }
+        }
+
         function join_submit() {
             f = document.f;
 
@@ -107,7 +114,7 @@
 
             if (!f.name.value || f.name.value === "") {
                 alert("이름을 입력해주세요!");
-                f.nickname.focus();
+                f.name.focus();
                 return;
 
             }
@@ -217,7 +224,8 @@
         <div class="wrap-input100 validate-input" data-validate="전화번호를 입력해주세요!">
             <i class="input100 fa fa-phone fa-fw"
                style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
-            <input class="input100" type="phone" name="phone" placeholder="PHONE" onkeyup="inputPhoneNumber(this);" maxlength="13">
+            <input class="input100" type="phone" name="phone" placeholder="PHONE"
+                   onkeyup="inputPhoneNumber(this)" onkeydown="onlyNumber()" maxlength="13">
             <span class="focus-input100"></span>
         </div>
 
@@ -239,7 +247,7 @@
         <div class="wrap-input100 validate-input" data-validate="주소란을 클릭하여 우편번호를 입력해 주세요!">
             <i class="input100 fa fa-envelope-open-o fa-fw"
                style="position: absolute; margin-top: 25px; margin-left: 23px; color: #828282"></i>
-            <input class="input100" type="text" name="postcode" id="postcode" placeholder="POSTCODE">
+            <input class="input100" type="text" name="postcode" id="postcode" placeholder="POSTCODE" onkeydown="onlyNumber()">
             <span class="focus-input100"></span>
         </div>
 
