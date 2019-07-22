@@ -57,8 +57,16 @@
             </div>
             <div class="col-lg-6 product-details">
                 <h2 class="p-title">${item.name}</h2>
-                <h3 class="p-price">${item.price} 원</h3>
-                <h4 class="p-stock">재고 현황 : <span>주문 가능</span></h4>
+                <h3 class="p-price"><fmt:formatNumber value="${item.price}" pattern="###,###" /> 원</h3>
+                <c:choose>
+                    <c:when test="${item.remained_quantity > 0}">
+                        <h4 class="p-stock">재고 현황 : <span class="available">주문 가능</span></h4>
+                        <h4 class="p-stock">주문 가능 수량 : ${item.remained_quantity}</h4>
+                    </c:when>
+                    <c:otherwise>
+                        <h4 class="p-stock">재고 현황 : <span class="sold-out">재고 없음</span></h4>
+                    </c:otherwise>
+                </c:choose>
                 <div style="margin-top: 20px; margin-bottom: 10px">
                     [추천수 표시할 영역]
                 </div>
@@ -66,8 +74,10 @@
                     <a href="">3 reviews</a>|<a href="">Add your review</a>
                 </div>
                 <div class="quantity" style="margin-top: -10px">
-                    <p>수량</p>
-                    <div class="pro-qty" style="margin-top: 10px"><input type="text" value="1" id="quantity"></div>
+                    <c:if test="${item.remained_quantity > 0}">
+                        <p>수량</p>
+                        <div class="pro-qty" style="margin-top: 10px"><input type="text" value="1" id="quantity"></div>
+                    </c:if>
                 </div>
                 <a href="javascript:do_basket_add()" class="site-btn" style="margin-right: 10px">장바구니 담기</a>
                 <a href="${path}/board/write.shop?type=1&item_no=${item.item_no}" class="site-btn sb-dark" style="margin-right: 10px">상품 문의</a>

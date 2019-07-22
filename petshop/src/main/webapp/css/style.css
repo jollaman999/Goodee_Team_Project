@@ -1608,14 +1608,18 @@ ol {
 }
 
 .product-details .p-stock {
-	font-size: 12px;
+	font-size: 15px;
 	color: #000;
 	font-weight: 700;
 	color: #414141;
 	margin-bottom: 10px;
 }
 
-.product-details .p-stock span {
+.product-details .p-stock .available {
+	color: #50e550;
+}
+
+.product-details .p-stock .sold-out {
 	color: #f51167;
 }
 

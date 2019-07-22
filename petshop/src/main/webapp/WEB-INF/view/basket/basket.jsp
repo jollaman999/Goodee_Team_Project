@@ -82,7 +82,7 @@
 
         function order_items() {
             parse_selected_items();
-            location.href = "../basket/checkout.shop?items=" + items;
+            location.href = "checkout.shop?items=" + items;
         }
     </script>
 </head>
