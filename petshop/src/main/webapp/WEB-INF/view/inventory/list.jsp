@@ -1,25 +1,24 @@
 <!-- 재고관리  -->
-
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<c:set value="${pageContext.request.contextPath}" var="path" />
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>재고관리 게시판 </title>
-    
-<!--  페이지 리스트   -->
-   <script type="text/javascript">
-        function listcall(page) {
-            document.searcform.pageNum.value = page;
-            document.searcform.submit();
-        }
-    </script></head><body>
+   <meta charset="UTF-8">
+   <style> <!-- 검색창 가운데 정렬 -->
+    .centeringContainer { text-align: center; } 
+    .centered { display: table; margin-left: auto; margin-right: auto; display: inline-block; } 
+    </style>
 
-<!-- 제목 -->
-<h2>재고관리</h2><br>
+   <title>상품 관리 게시판 </title>
+</head><body>
+
+
+<!-- 제목 --> <!-- 상품등록  -->   
+<h2 style="color:black;"><a href="${path}/inventory/list.shop">상품 관리</a>&nbsp;&nbsp;<a href="${path}/item/create.shop">상품등록</a></h2><br>
+
 
  
 <!-- 재고관리 리스트 -->
@@ -27,24 +26,25 @@
 
 
 <!-- 서치  -->
-<table>
- <tr><td colspan="5"><form action="InventoryManagement" method="post" name="searchform">
-     <input type="hidden" name="pageNum" value="1">
-     <div style="text-align:right"><select name="searchtype" float="left">
+<table> 
+<!-- 드랍바 -->
+<tr><td>
+<div class="col-xl-6 col-lg-5 centered"> 
+     <input type='text' name='word' value='' placeholder="특수문자는 사용할수 없습니다." style="text-align: center">
+     <button type='submit'>검색</button>   
+</div></td></tr>
+
+<table>   
+     <div style="text-align:left"><select name="searchtype">
        <option value="">선택하세요</option>
        <option value="#">그룹코드</option>
        <option value="#">아이템코드</option>
        <option value="#">국가별</option>
-     </select></div>
-
-      <input type='text' name='word' value='' placeholder="특수문자는 사용할수 없습니다.">
-      <button type='submit'>검색</button>
-      <input type="button" value="상세보기" onclick="location.href='InventoryManagementdetail.shop'">     
- </form></td></tr></table> 
+     </select></div>    
+</table> 
  
- <table>
-    
-        
+ 
+ <table>       
 <!-- 테이블 바 이름 -->        
         <tr>
             <th>제품이름</th>   
@@ -67,8 +67,11 @@
 
         <!-- 테이블 바 value-->   
         <tr>
-           <td>${item.name}</td> 
-           
+           <td>
+           <a href="../inventory/detail.shop?item_no=${item.item_no}" style="color:black">${item.name}</a>          
+           </td>
+
+
             <!-- 그룹명 -->
             <td>
 	            <c:forEach items="${CategoryGroupList}" var="CategoryGroup">
@@ -91,7 +94,7 @@
             
             <!--  가격   -->
             <td>
-            <fmt:formatNumber type="CURRENCY" pattern="###,###" value="${item.price}"/>\
+            <fmt:formatNumber type="CURRENCY" pattern="###,###" value="${item.price}"/>
             </td>
             
             <!-- 유통기한 -->
@@ -109,9 +112,11 @@
             <td>${item.remained_quantity}</td>
             
             <!-- 수량 추가 -->  
+          
             <td>
-            <form id="#" action="#">
-            <div><input type="number" id="usernumber" name="usernumber"><input type="submit" value="전송"></div>
+            <form id="itemUpdate" action="listsubmit.shop" method="post">
+            <div><input type="number" id="itemUpdate" name="itemUpdate"><input type="submit" value="추가"></div>
+            <input type="hidden" name="item_no" value="${item.item_no}">
             </form>
             </td>
             
@@ -122,30 +127,6 @@
      
 
 
-</table>  <!--  테이블 종료  -->
-  
-<!-- 페이지 넘기기 --> 
-<table>         
-<tr>
-   <td colspan="5">
-     <c:if test="${pageNum > 1}">
-        <a href="list.shop?pageNum=${pageNum - 1}">[이전]</a>
-     </c:if>
-     <c:if test="${pageNum <= 1}">[이전]</c:if>
-        <c:forEach var="a" begin="${startpage}" end="${endpage}">
-     <c:choose>
-     <c:when test="${a == pageNum}">[${a}]</c:when>
-     <c:otherwise><a href="list.shop?pageNum=${a}">[${a}]</a> </c:otherwise>
-     </c:choose>
-     </c:forEach>
-     <c:if test="${pageNum < maxpage}">
-     <a href="list.shop?pageNum=${pageNum + 1}">[다음]</a>
-     </c:if>
-     <c:if test="${pageNum >= maxpage}">[다음]</c:if>
-    </td>
-</tr>
-</table>        
-       
-        
+</table>  <!--  테이블 종료  -->        
 </form></body></html>
 
