@@ -4,8 +4,11 @@
     <select id="count" resultType="int" parameterType="map">
         select count(*) from item
         <where>
-            <if test="category_group != null and category_item != null">
-                and #{category_group} like #{category_item}
+            <if test="category_group != null">
+                and category_group_code = #{category_group}
+            </if>
+            <if test="category_item != null">
+                and category_item_code = #{category_item}
             </if>
             <if test="searchtype != null and searchcontent != null">
                 and ${searchtype} like '%${searchcontent}%'

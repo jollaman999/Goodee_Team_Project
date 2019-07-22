@@ -18,6 +18,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>상품 목록</title>
+
+    <script type="text/javascript">
+        function listcall(page) {
+            document.listform.pageNum.value = page;
+            document.listform.submit();
+        }
+    </script>
 </head>
 <body>
 <% WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext(); %>
@@ -35,6 +42,7 @@
             <c:if test="${!empty category_item}">
                 <a href="${path}/shop/list.shop?category_group=${category_group}&category_item=${category_item}"> / ${categoryItemName}</a>
             </c:if>
+            (${listcount})
         </div>
     </div>
 </div>
@@ -167,7 +175,24 @@
                     </c:forEach>
 
                     <div class="text-center w-100 pt-3">
-                        <button class="site-btn sb-line sb-dark">LOAD MORE</button>
+                        <form action="list.shop" method="post" name="listform">
+                            <input type="hidden" name="pageNum" value="1">
+
+                            <c:if test="${pageNum > 1}">
+                                <a href="javascript:listcall(${pageNum - 1})">[이전]</a>
+                            </c:if>
+                            <c:if test="${pageNum <= 1}">[이전]</c:if>
+                            <c:forEach var="a" begin="${startpage}" end="${endpage}">
+                                <c:choose>
+                                    <c:when test="${a == pageNum}">[${a}]</c:when>
+                                    <c:otherwise><a href="javascript:listcall(${a})">[${a}]</a> </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            <c:if test="${pageNum < maxpage}">
+                                <a href="javascript:listcall(${pageNum + 1})">[다음]</a>
+                            </c:if>
+                            <c:if test="${pageNum >= maxpage}">[다음]</c:if>
+                        </form>
                     </div>
                 </div>
             </div>
