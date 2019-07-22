@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>
-    	게시글 작성 - ${board_title}
+    	게시글 작성
     </title>
 </head>
 <body>
@@ -22,7 +22,7 @@
 			<td><input type="text" name="title" size="100"></td>
 		</tr>
 		<tr>
-			<td>첨부파일 1</td>
+			<td>첨부파일</td>
 			<td><input type="file" name="file1"></td>
 		</tr>
 
@@ -34,7 +34,10 @@
                </td>
 		</tr>
 		<tr>
-			<td colspan="2"><input type="submit" value="게시판 등록"></td>
+			<td colspan="2">
+				<input type="submit" value="게시판 등록">
+				<input type="button" onclick="location.href='list.shop?type=${param.type}'" value="게시글 목록">
+			</td>
 		</tr>
 	</table>
 </form>
