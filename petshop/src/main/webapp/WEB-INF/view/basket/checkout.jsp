@@ -139,14 +139,21 @@
                                         </td>
                                         <td class="quy-col">
                                             <div class="quantity">
-                                                <form name="f" method="post" action="update.shop">
-                                                    <div class="pro-qty">
-                                                        <input type="text" name="quantity" value="${basket.quantity}" onkeydown="onlyNumber()">
-                                                    </div>
-                                                    <input type="hidden" name="item_no" value="${item.item_no}">
-                                                    <input type="submit" class="site-btn sb-dark" value="변경"
-                                                           style="width: 50px; height: 20px; padding: 5px 0 20px; font-size: 12px; margin-left: 10px; margin-top: 6px">
-                                                </form>
+                                                <c:choose>
+                                                    <c:when test="${!empty items}">
+                                                        <form name="f" method="post" action="update.shop">
+                                                            <div class="pro-qty">
+                                                                <input type="text" name="quantity" value="${basket.quantity}" onkeydown="onlyNumber()">
+                                                            </div>
+                                                            <input type="hidden" name="item_no" value="${item.item_no}">
+                                                            <input type="submit" class="site-btn sb-dark" value="변경"
+                                                                   style="width: 50px; height: 20px; padding: 5px 0 20px; font-size: 12px; margin-left: 10px; margin-top: 6px">
+                                                        </form>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${basket.quantity}
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </td>
                                         <td class="total-col"><h4><fmt:formatNumber value="${item.price * basket.quantity}" pattern="###,###" /> 원</h4></td>
@@ -173,6 +180,9 @@
             <div class="col-lg-8 order-2 order-lg-1">
                 <form class="checkout-form" name="checkout" action="order.shop" method="post">
                     <input type="hidden" name="items" value="${items}">
+                    <input type="hidden" name="item_no" value="${param.item_no}">
+                    <input type="hidden" name="quantity" value="${param.quantity}">
+                    <input type="hidden" name="price_total" value="${total + 3000}">
 
                     <div class="cf-title">배송지 정보</div>
                     <div class="row address-inputs">

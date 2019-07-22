@@ -15,12 +15,12 @@ public interface OrdersMapper {
     int max_num();
     
     @Insert("insert into orders (num, member_id, name, phone, phone2, address, address_detail, postcode, " +
-            "deposit_bank_select, account_holder, account_bank, account_number, update_time) " +
-            "values (#{num}, #{member_id}, #{name}, #{phone}, #{phone2}, #{address}, #{address_detail}, #{postcode}, #{deposit_bank_select}, #{account_holder}, #{account_bank}, #{account_number}, now())")
+            "deposit_bank_select, account_holder, account_bank, account_number, price_total, update_time) " +
+            "values (#{num}, #{member_id}, #{name}, #{phone}, #{phone2}, #{address}, #{address_detail}, #{postcode}, #{deposit_bank_select}, #{account_holder}, #{account_bank}, #{account_number}, #{price_total}, now())")
     int insert(Orders order);
 
     @Update("update orders set name = #{name}, phone = #{phone}, phone2 = #{phone2}, address = #{address}, address_detail = #{address_detail}, postcode = #{postcode}, " +
-            "deposit_bank_select = #{deposit_bank_select}, status=#{status}, account_holder = #{account_holder}, account_bank = #{account_bank}, account_number = #{account_number}, update_time = now() " +
+            "deposit_bank_select = #{deposit_bank_select}, status=#{status}, account_holder = #{account_holder}, account_bank = #{account_bank}, account_number = #{account_number}, price_total = #{price_total}, update_time = now() " +
             "where num = #{num}")
     int update(Orders order);
 

@@ -162,17 +162,31 @@ public class BasketController {
     }
 
     @RequestMapping("checkout")
-    public ModelAndView checkout(HttpSession session, HttpServletRequest request, String items) {
+    public ModelAndView checkout(HttpSession session, HttpServletRequest request, String items, Integer item_no, Integer quantity) {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
         List<Basket> basketList = service.basketList(loginMember.getId());
         List<Basket> checkoutList = new ArrayList<>();
 
         ModelAndView mav = new ModelAndView("/alert");
         if (items == null || items.length() == 0) {
-            mav.addObject("msg", "주문할 상품이 선택되지 않았습니다!");
-            mav.addObject("url", "view.shop");
+            String url = request.getHeader("referer");
 
-            return mav;
+            if (item_no != null && quantity != null) {
+                Basket basket = new Basket();
+                basket.setItem_no(item_no);
+                basket.setQuantity(quantity);
+
+                checkoutList.add(basket);
+            } else {
+                if (url.contains("checkout")) {
+                    url = "../basket/view.shop";
+                }
+
+                mav.addObject("msg", "주문할 상품이 선택되지 않았습니다!");
+                mav.addObject("url", url);
+
+                return mav;
+            }
         } else {
             String[] items_selected = items.split(",");
 
@@ -184,7 +198,7 @@ public class BasketController {
                         }
                     } catch (NumberFormatException e) {
                         mav.addObject("msg", "주문할 상품 목록이 올바르게 선택되지 않았습니다!");
-                        mav.addObject("url", "view.shop");
+                        mav.addObject("url", request.getHeader("referer"));
 
                         return mav;
                     }
@@ -205,17 +219,32 @@ public class BasketController {
     }
 
     @PostMapping("order")
-    public ModelAndView order(HttpSession session, HttpServletRequest request, Orders order, String items) {
+    public ModelAndView order(HttpSession session, HttpServletRequest request, Orders order, String items, Integer item_no, Integer quantity) {
         Member loginMember = (Member)session.getAttribute(("loginMember"));
         List<Basket> basketList = service.basketList(loginMember.getId());
         List<Basket> orderList = new ArrayList<>();
+        boolean need_basket_delete = false;
 
         ModelAndView mav = new ModelAndView("/alert");
         if (items == null || items.length() == 0) {
-            mav.addObject("msg", "주문할 상품이 선택되지 않았습니다!");
-            mav.addObject("url", "view.shop");
+            String url = request.getHeader("referer");
 
-            return mav;
+            if (item_no != null && quantity != null) {
+                Basket basket = new Basket();
+                basket.setItem_no(item_no);
+                basket.setQuantity(quantity);
+
+                orderList.add(basket);
+            } else {
+                if (url.contains("order")) {
+                    url = "../basket/view.shop";
+                }
+
+                mav.addObject("msg", "주문할 상품이 선택되지 않았습니다!");
+                mav.addObject("url", url);
+
+                return mav;
+            }
         } else {
             String[] items_selected = items.split(",");
 
@@ -227,15 +256,17 @@ public class BasketController {
                         }
                     } catch (NumberFormatException e) {
                         mav.addObject("msg", "주문할 상품 목록이 올바르게 선택되지 않았습니다!");
-                        mav.addObject("url", "view.shop");
+                        mav.addObject("url", request.getHeader("referer"));
 
                         return mav;
                     }
                 }
             }
+
+            need_basket_delete = true;
         }
 
-        int result = service.ordersAdd(loginMember.getId(), order, orderList);
+        int result = service.ordersAdd(loginMember.getId(), order, orderList, need_basket_delete);
         if (result > 0) {
             mav.addObject("msg", "주문이 완료되었습니다.");
             mav.addObject("url", "end.shop");

@@ -22,6 +22,7 @@ public class Orders {
     private String account_holder;
     private String account_bank;
     private String account_number;
+    private int price_total;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date update_time;
 
@@ -127,6 +128,14 @@ public class Orders {
 
     public void setAccount_number(String account_number) {
         this.account_number = account_number;
+    }
+
+    public int getPrice_total() {
+        return price_total;
+    }
+
+    public void setPrice_total(int price_total) {
+        this.price_total = price_total;
     }
 
     public Date getUpdate_time() {

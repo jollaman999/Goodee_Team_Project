@@ -16,14 +16,35 @@
     <link rel="stylesheet" type="text/css" href="${path}/vendor/highslide/highslide.css" />
 
     <script type="text/javascript">
+
+        function check_quantity() {
+            var quantity = document.getElementById("quantity").value;
+
+            if (quantity > ${item.remained_quantity}) {
+                alert("입력 하신 수량이 주문 가능 수량 보다 많습니다!");
+                return false;
+            }
+
+            return true;
+        }
+
+
         function do_basket_add() {
-            var quantity = document.getElementById("quantity");
-            location.href = "${path}/basket/add.shop?item_no=${item.item_no}&" + "quantity=" + quantity.value;
+            if (!check_quantity())
+                return;
+
+            var quantity = document.getElementById("quantity").value;
+
+            location.href = "${path}/basket/add.shop?item_no=${item.item_no}&quantity=" + quantity;
         }
 
         function do_checkout() {
-            var quantity = document.getElementById("quantity");
-            location.href = "${path}/basket/checkout.shop?item_no=${item.item_no}&" + "quantity=" + quantity.value;
+            if (!check_quantity())
+                return;
+
+            var quantity = document.getElementById("quantity").value;
+
+            location.href = "${path}/basket/checkout.shop?item_no=${item.item_no}&quantity=" + quantity;
         }
     </script>
 </head>
@@ -81,7 +102,7 @@
                 </div>
                 <a href="javascript:do_basket_add()" class="site-btn" style="margin-right: 10px">장바구니 담기</a>
                 <a href="${path}/board/write.shop?type=1&item_no=${item.item_no}" class="site-btn sb-dark" style="margin-right: 10px">상품 문의</a>
-                <a href="javascript:do_checkout()" class="site-btn" style="margin-right: 10px">주문 하기</a>
+                <a href="javascript:do_checkout()" class="site-btn" style="margin-right: 10px">바로 구매</a>
                 <div id="accordion" class="accordion-area">
                     <div class="panel">
                         <div class="panel-header" id="headingOne">

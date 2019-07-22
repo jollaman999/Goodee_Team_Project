@@ -160,7 +160,7 @@ public class ShopService {
         return ordersDao.selectOne(num);
     }
 
-    public int ordersAdd(String member_id, Orders order, List<Basket> orderList) {
+    public int ordersAdd(String member_id, Orders order, List<Basket> orderList, boolean need_basket_delete) {
         int num = ordersDao.max_num();
         order.setMember_id(member_id);
         order.setNum(++num);
@@ -182,10 +182,12 @@ public class ShopService {
                 return result;
             }
 
-            result = basketDao.delete(member_id, item.getItem_no());
-            if (result <= 0) {
-                System.out.println("ordersAdd/basketDao.delete error!");
-                return result;
+            if (need_basket_delete) {
+                result = basketDao.delete(member_id, item.getItem_no());
+                if (result <= 0) {
+                    System.out.println("ordersAdd/basketDao.delete error!");
+                    return result;
+                }
             }
         }
 
