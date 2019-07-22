@@ -4,12 +4,17 @@ package controller;
 import logic.CategoryGroup;
 import logic.CategoryItem;
 import logic.Item;
+import logic.Orders;
 import logic.Orders_list;
 import logic.ShopService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import exception.ShopException;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -40,52 +45,77 @@ public class InventoryController {
         return mav;
     }
     
-    @RequestMapping("detail")
-    public ModelAndView inventoryManagementdetail(HttpSession session) {
-        List<Item> itemList  = service.getItemList();
+
+    //detail 페이지 넘기기  
+    @RequestMapping("*")
+    public ModelAndView detail(Integer item_no, HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        //받아올 테이블
+        List<Item> itemList  = service.getItemList();
+        List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
+        List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
+        List<Orders_list> Orders_listList = service.getOrders_listList();
+        
+        // 리스트 객체 생성 
         mav.addObject("itemList", itemList);
+        mav.addObject("CategoryGroupList",CategoryGroupList);
+        mav.addObject("CategoryItemList",CategoryItemList);
+        mav.addObject("Orders_listList",Orders_listList);
+
+        // item_no 기준으로 이것저것 가져오기.
+        Item item = service.getItemById(item_no);
+        mav.addObject("item", item);
+        return mav;
+    }
+    
+    // list -> submit
+    @PostMapping("listsubmit")
+    public ModelAndView itemUpdate(Integer item_no,Integer itemUpdate,HttpSession session) {
+    	Item item = service.getItemById(item_no);
+        
+    	//현 수량에 추가한 수량을 더해줌
+    	item.setQuantity(item.getQuantity() + itemUpdate);
+    	int result = service.itemUpdate(item);
+        
+    	/*  //에러 출력
+        if (result == item.getQuantity() || result == 0) {
+            throw new ShopException("수량을 정상적으로 입력해주세요.", "list.shop");
+        }  */
+        
+    	
+    	// 알러트 출력.
+    	ModelAndView mav = new ModelAndView("/alert");
+        if (result > 0) {
+            mav.addObject("msg", "수량이 증가하였습니다.");
+            mav.addObject("url", "list.shop");
+        } else {
+            mav.addObject("msg", "수량 증가가 실패 하였습니다.");
+            mav.addObject("url", "list.shop");
+        }
+
+        return mav;
+    }
+    
+    
+    @RequestMapping("selling")
+    public ModelAndView selling(HttpSession session) {
+
+        ModelAndView mav = new ModelAndView();
+        
+        //받아올 테이블
+        List<Item> itemList  = service.getItemList();
+        List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
+        List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
+        List<Orders_list> Orders_listList = service.getOrders_listList();
+        List<Orders> OrdersList = service.getOrdersList();
+        // 리스트 객체 생성 
+        mav.addObject("itemList", itemList);
+        mav.addObject("CategoryGroupList",CategoryGroupList);
+        mav.addObject("CategoryItemList",CategoryItemList);
+        mav.addObject("Orders_listList",Orders_listList);
+        mav.addObject("Orderslist",OrdersList);
+        
         return mav;
     }
 
-    /*
-    //페이징
-    @RequestMapping("InventoryManagement")
-    public ModelAndView list(HttpSession session, Integer pageNum, String searchtype, String searchcontent) {
-        ModelAndView mav = new ModelAndView();
-
-        if (pageNum == null || pageNum.toString().equals("")) {
-            pageNum = 1;
-        }
-
-        int limit = 10;
-        int listcount = service.boardcount(searchtype, searchcontent);
-        List<Board> boardlist = service.boardlist(pageNum, limit, searchtype, searchcontent);
-        int maxpage = listcount / limit;
-        if (listcount % limit != 0) {
-            maxpage++;
-        }
-
-        int startpage = pageNum / limit;
-        if (pageNum % limit != 0) {
-            startpage++;
-        }
-
-        int endpage = startpage + 9;
-        if (endpage > maxpage) {
-            endpage = maxpage;
-        }
-
-        int boardno = listcount - (pageNum - 1) * limit;
-
-        mav.addObject("pageNum", pageNum);
-        mav.addObject("maxpage", maxpage);
-        mav.addObject("startpage", startpage);
-        mav.addObject("endpage", endpage);
-        mav.addObject("listcount", listcount);
-        mav.addObject("boardlist", boardlist);
-        mav.addObject("boardno", boardno);
-
-        return mav;
-    }    */
 }

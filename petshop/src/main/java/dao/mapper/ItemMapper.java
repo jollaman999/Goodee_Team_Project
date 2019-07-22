@@ -27,4 +27,9 @@ public interface ItemMapper {
 
     @Select("select i.quantity - ifnull(sum(ol.quantity), 0) from item i, orders_list ol where i.item_no = #{item_no} and ol.item_no = #{item_no}")
     int remained_quantity(Integer item_no);
+    
+    /*//InventoryController [ list에서 submit ]
+    @Update("update item set quantity = #{quantity}  ")
+    @Select("select ifnull(sum(quantity), 0) from orders_list where item_no = #{item_no}") */ 
+    
 }
