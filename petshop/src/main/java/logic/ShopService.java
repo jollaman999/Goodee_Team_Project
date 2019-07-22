@@ -47,6 +47,8 @@ public class ShopService {
     private OrdersDao ordersDao;
     @Autowired
     private Orders_listDao orders_listDao;
+    @Autowired
+    private RecommendDao recommendDao;
 
     // list
     public List<CategoryItem> getCategoryItemList() {
@@ -405,5 +407,22 @@ public class ShopService {
 
     public int boardDelete(Integer num) {
         return boardDao.delete(num);
+    }
+
+    // recommend
+    public int recomGetCount(String type, Integer itemno) {
+        return recommendDao.getCount(type, itemno);
+    }
+
+    public int recomCheck(Recommend recommend) {
+        return recommendDao.recomCheck(recommend);
+    }
+
+    public int recomAdd(Recommend recommend) {
+        return recommendDao.recomAdd(recommend);
+    }
+
+    public int recomDelete(Recommend recommend) {
+        return recommendDao.recomDelete(recommend);
     }
 }

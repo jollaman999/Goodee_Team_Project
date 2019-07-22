@@ -11,6 +11,9 @@
 
     <title>상품 상세 정보</title>
 
+    <!-- https://fontawesome.com/v4.7.0/icons/ -->
+    <link rel="stylesheet" type="text/css" href="${path}/css/font-awesome-4.7.min.css">
+
     <!-- HighSlide -->
     <script type="text/javascript" src="${path}/vendor/highslide/highslide.js"></script>
     <link rel="stylesheet" type="text/css" href="${path}/vendor/highslide/highslide.css" />
@@ -89,7 +92,11 @@
                     </c:otherwise>
                 </c:choose>
                 <div style="margin-top: 20px; margin-bottom: 10px">
-                    [추천수 표시할 영역]
+                    <!-- Recommend -->
+                    <button id="rec_update">
+                        <i class="fa fa-heart" style="font-size:16px;color:red"></i>
+                        &nbsp;<span class="rec_count"></span>
+                    </button>
                 </div>
                 <div class="p-review">
                     <a href="">3 reviews</a>|<a href="">Add your review</a>
@@ -215,5 +222,50 @@
     </div>
 </section>
 <!-- RELATED PRODUCTS section end -->
+
+<script type="text/javascript">
+    (function ($) {
+        // 좋아요 버튼 클릭시(좋아요 반영 또는 취소)
+        $("#rec_update").click(function () {
+            <c:choose>
+            <c:when test="${sessionScope.loginMember == null}">
+                alert("좋아요를 반영 하시려면 로그인이 필요합니다!");
+            </c:when>
+            <c:otherwise>
+            $.ajax({
+                url: "${path}/recommend/update.shop",
+                type: "GET",
+                data: {
+                    type: "0",
+                    itemno: "${item.item_no}",
+                    member_id: "${sessionScope.loginMember.id}"
+                },
+                success: function (count) {
+                    $(".rec_count").html(count);
+                },
+            })
+            </c:otherwise>
+            </c:choose>
+        })
+
+        // 좋아요 수
+        function recCount() {
+            $.ajax({
+                url: "${path}/recommend/count.shop",
+                type: "GET",
+                data: {
+                    type: "0",
+                    itemno: "${item.item_no}",
+                    member_id: "${sessionScope.loginMember.id}"
+                },
+                success: function (count) {
+                    $(".rec_count").html(count);
+                },
+            })
+        };
+
+        recCount(); // 처음 시작했을 때 실행되도록 해당 함수 호출
+    })(jQuery);
+</script>
 </body>
 </html>

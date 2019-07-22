@@ -23,5 +23,6 @@
         <pattern>/member/*check*</pattern>
         <pattern>/board/imgupload*</pattern>
         <pattern>/admin/graph*</pattern>
+        <pattern>/recommend/*</pattern>
     </excludes>
 </decorators>
