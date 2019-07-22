@@ -36,7 +36,7 @@ public class RecommendController {
         System.out.println("itemno : " + itemno);
 
         if (type == null || itemno == null) {
-            out.println("<script type=\"text/javascript\">alert(\"좋아 정보를 가져올 수 없습니다!\");</script>");
+            out.println("<script type=\"text/javascript\">alert(\"좋아요 정보를 가져올 수 없습니다!\");</script>");
             out.close();
             return;
         }
