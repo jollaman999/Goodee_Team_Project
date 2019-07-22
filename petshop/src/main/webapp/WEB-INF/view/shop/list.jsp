@@ -179,6 +179,8 @@
                     <div class="text-center w-100 pt-3">
                         <form action="list.shop" method="post" name="listform">
                             <input type="hidden" name="pageNum" value="1">
+                            <input type="hidden" name="category_group" value="${category_group}">
+                            <input type="hidden" name="category_item" value="${category_item}">
 
                             <div class="w3-center" style="margin-top: 20px; margin-bottom: 20px">
                                 <div class="w3-bar">
