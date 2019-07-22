@@ -43,7 +43,7 @@ public class RecommendController {
 
         switch (type) {
             case "0": // 상품
-                if (shopService.getItemById(Integer.parseInt(itemno)) == null) {
+                if (shopService.getItemById(Integer.parseInt(itemno), false) == null) {
                     out.println("<script type=\"text/javascript\">alert(\"존재 하지 않는 상품 입니다!\");</script>");
                     return;
                 }
@@ -115,7 +115,7 @@ public class RecommendController {
 
         switch (type) {
             case "0": // 상품
-                if (shopService.getItemById(Integer.parseInt(itemno)) == null) {
+                if (shopService.getItemById(Integer.parseInt(itemno), false) == null) {
                     out.println("<script type=\"text/javascript\">alert(\"존재 하지 않는 상품 입니다!\");</script>");
                     out.close();
                     return;
@@ -164,7 +164,5 @@ public class RecommendController {
 
 
         out.close();
-
-        return;
     }
 }

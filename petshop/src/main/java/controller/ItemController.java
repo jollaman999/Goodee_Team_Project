@@ -29,7 +29,7 @@ public class ItemController {
 
     @RequestMapping("list")
     public ModelAndView list(HttpSession session) {
-        List<Item> itemList  = service.getItemList();
+        List<Item> itemList  = service.getItemList(false);
         // /WEB-INF/view/item/list.jsp 뷰로 지정
         ModelAndView mav = new ModelAndView();
         mav.addObject("itemList", itemList);
@@ -39,7 +39,7 @@ public class ItemController {
     @RequestMapping("*")
     public ModelAndView detail(Integer item_no, HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        Item item = service.getItemById(item_no);
+        Item item = service.getItemById(item_no, false);
         mav.addObject("item", item);
         return mav;
     }
@@ -72,7 +72,7 @@ public class ItemController {
             return mav;
         }
 
-        if (item != null && service.getItemByName(item.getName()) != null) {
+        if (item != null && service.getItemByName(item.getName(), false) != null) {
             bindingResult.reject("error.item.duplicated");
             return mav;
         }

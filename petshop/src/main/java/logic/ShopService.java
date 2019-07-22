@@ -59,13 +59,13 @@ public class ShopService {
         return categoryGroupDao.list();
     }
 
-    public List<Item> getItemList() {
-        return itemDao.list();
+    public List<Item> getItemList(boolean get_quantity_details) {
+        return itemDao.list(get_quantity_details);
     }
 
     public List<Item> getItemList(Integer category_group, Integer category_item,
-                                  Integer pageNum, int limit, String searchtype, String searchcontent) {
-        return itemDao.list(category_group, category_item, pageNum, limit, searchtype, searchcontent);
+                                  Integer pageNum, int limit, String searchtype, String searchcontent, boolean get_quantity_details) {
+        return itemDao.list(category_group, category_item, pageNum, limit, searchtype, searchcontent, get_quantity_details);
     }
 
     public List<Orders_list> getOrders_listList() {
@@ -136,12 +136,12 @@ public class ShopService {
         return itemDao.delete(item_no);
     }
 
-    public Item getItemById(Integer item_no) {
-        return itemDao.selectOne(item_no);
+    public Item getItemById(Integer item_no, boolean get_quantity_details) {
+        return itemDao.selectOne(item_no, get_quantity_details);
     }
 
-    public Item getItemByName(String name) {
-        return itemDao.selectOne(name);
+    public Item getItemByName(String name, boolean get_quantity_details) {
+        return itemDao.selectOne(name, get_quantity_details);
     }
 
     // basket

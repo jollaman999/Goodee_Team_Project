@@ -40,7 +40,7 @@ public class ShopController {
 
         int limit = 12;
         int listcount = service.itemcount(category_group, category_item, searchtype, searchcontent);
-        List<Item> itemList  = service.getItemList(category_group, category_item, pageNum, limit, searchcontent, searchtype);
+        List<Item> itemList  = service.getItemList(category_group, category_item, pageNum, limit, searchcontent, searchtype, false);
 
         int maxpage = listcount / limit;
         if (listcount % limit != 0) {
@@ -80,7 +80,7 @@ public class ShopController {
             return mav;
         }
 
-        Item item = service.getItemById(item_no);
+        Item item = service.getItemById(item_no, true);
         item.setDescription(item.getDescription().replaceAll(System.getProperty("line.separator"), "<br>"));
         item.setContent(item.getContent().replaceAll(System.getProperty("line.separator"), "<br>"));
 

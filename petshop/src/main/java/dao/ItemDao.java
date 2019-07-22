@@ -41,9 +41,9 @@ public class ItemDao {
         return sqlSessionTemplate.selectOne(NS + "count", param);
     }
 
-    public List<Item> list() {
+    public List<Item> list(boolean get_quantity_details) {
         List<Item> itemList =  sqlSessionTemplate.selectList(NS + "list");
-        if (itemList != null) {
+        if (itemList != null && get_quantity_details) {
             for (Item item : itemList) {
                 item.setSold_quantity(getSold_quantity(item.getItem_no()));
                 item.setRemained_quantity(getRemained_quantity(item.getItem_no()));
@@ -54,7 +54,8 @@ public class ItemDao {
     }
 
     public List<Item> list(Integer category_group, Integer category_item,
-                           Integer pageNum, int limit, String searchtype, String searchcontent) {
+                           Integer pageNum, int limit, String searchtype, String searchcontent,
+                           boolean get_quantity_details) {
         param.clear();
 
         param.put("startrow", (pageNum - 1) * limit);
@@ -75,7 +76,7 @@ public class ItemDao {
         }
 
         List<Item> itemList =  sqlSessionTemplate.selectList(NS + "list", param);
-        if (itemList != null) {
+        if (itemList != null && get_quantity_details) {
             for (Item item : itemList) {
                 item.setSold_quantity(getSold_quantity(item.getItem_no()));
                 item.setRemained_quantity(getRemained_quantity(item.getItem_no()));
@@ -104,12 +105,12 @@ public class ItemDao {
         return recent_item_list != null && !recent_item_list.isEmpty();
     }
 
-    public Item selectOne(Integer item_no) {
+    public Item selectOne(Integer item_no, boolean get_quantity_details) {
         param.clear();
         param.put("item_no", item_no);
 
         Item item =  sqlSessionTemplate.selectOne(NS + "list", param);
-        if (item != null) {
+        if (item != null && get_quantity_details) {
             item.setSold_quantity(getSold_quantity(item.getItem_no()));
             item.setRemained_quantity(getRemained_quantity(item.getItem_no()));
         }
@@ -117,12 +118,12 @@ public class ItemDao {
         return item;
     }
 
-    public Item selectOne(String name) {
+    public Item selectOne(String name, boolean get_quantity_details) {
         param.clear();
         param.put("name", name);
 
         Item item =  sqlSessionTemplate.selectOne(NS + "list", param);
-        if (item != null) {
+        if (item != null && get_quantity_details) {
             item.setSold_quantity(getSold_quantity(item.getItem_no()));
             item.setRemained_quantity(getRemained_quantity(item.getItem_no()));
         }

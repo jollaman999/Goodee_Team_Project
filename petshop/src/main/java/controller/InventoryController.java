@@ -27,11 +27,10 @@ public class InventoryController {
 
     @RequestMapping("list")
     public ModelAndView inventoryManagement(HttpSession session) {
-
         ModelAndView mav = new ModelAndView();
         
         //받아올 테이블
-        List<Item> itemList  = service.getItemList();
+        List<Item> itemList  = service.getItemList(true);
         List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
         List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
         List<Orders_list> Orders_listList = service.getOrders_listList();
@@ -50,8 +49,9 @@ public class InventoryController {
     @RequestMapping("*")
     public ModelAndView detail(Integer item_no, HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
         //받아올 테이블
-        List<Item> itemList  = service.getItemList();
+        List<Item> itemList  = service.getItemList(true);
         List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
         List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
         List<Orders_list> Orders_listList = service.getOrders_listList();
@@ -63,7 +63,7 @@ public class InventoryController {
         mav.addObject("Orders_listList",Orders_listList);
 
         // item_no 기준으로 이것저것 가져오기.
-        Item item = service.getItemById(item_no);
+        Item item = service.getItemById(item_no, true);
         mav.addObject("item", item);
         return mav;
     }
@@ -71,7 +71,7 @@ public class InventoryController {
     // list -> submit
     @PostMapping("listsubmit")
     public ModelAndView itemUpdate(Integer item_no,Integer itemUpdate,HttpSession session) {
-    	Item item = service.getItemById(item_no);
+        Item item = service.getItemById(item_no, true);
         
     	//현 수량에 추가한 수량을 더해줌
     	item.setQuantity(item.getQuantity() + itemUpdate);
@@ -99,15 +99,15 @@ public class InventoryController {
     
     @RequestMapping("selling")
     public ModelAndView selling(HttpSession session) {
-
         ModelAndView mav = new ModelAndView();
         
         //받아올 테이블
-        List<Item> itemList  = service.getItemList();
+        List<Item> itemList  = service.getItemList(true);
         List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
         List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
         List<Orders_list> Orders_listList = service.getOrders_listList();
         List<Orders> OrdersList = service.getOrdersList();
+
         // 리스트 객체 생성 
         mav.addObject("itemList", itemList);
         mav.addObject("CategoryGroupList",CategoryGroupList);
