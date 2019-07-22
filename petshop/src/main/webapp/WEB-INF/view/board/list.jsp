@@ -21,27 +21,19 @@
             <form action="list.shop" method="post" name="searcform">
                 <input type="hidden" name="type" value="${param.type}">
                 <input type="hidden" name="pageNum" value="1">
-                <table>
-                    <tr>
-                        <td>
-                            <select name="searchtype">
-                                <option value="">선택하세요</option>
-                                <option value="title">제목</option>
-                                <option value="name">작성자</option>
-                                <option value="content">내용</option>
-                            </select>
-                            <script>
-                                document.searcform.searchtype.value = "${param.searchtype}";
-                            </script>
-                        </td>
-                        <td width="100%">
-                            <input type="text" name="searchcontent" value="${param.searchcontent}">
-                        </td>
-                        <td>
-                            <input type="submit" value="검색">
-                        </td>
-                    </tr>
-                </table>
+                <select name="searchtype" style = "width:100px;">
+                    <option value="">선택하세요</option>
+                    <option value="title">제목</option>
+                    <option value="name">작성자</option>
+                    <option value="content">내용</option>
+                </select>
+                <script>
+                    document.searcform.searchtype.value = "${param.searchtype}";
+                </script>
+                <input type="text" name="searchcontent"
+                       value="${param.searchcontent }"
+                       style = "width:250px;">
+                <input type="submit" value="검색">
             </form>
         </td>
     </tr>
