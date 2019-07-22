@@ -19,6 +19,8 @@
 
     <title>상품 목록</title>
 
+    <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
+
     <script type="text/javascript">
         function listcall(page) {
             document.listform.pageNum.value = page;
@@ -178,20 +180,38 @@
                         <form action="list.shop" method="post" name="listform">
                             <input type="hidden" name="pageNum" value="1">
 
-                            <c:if test="${pageNum > 1}">
-                                <a href="javascript:listcall(${pageNum - 1})">[이전]</a>
-                            </c:if>
-                            <c:if test="${pageNum <= 1}">[이전]</c:if>
-                            <c:forEach var="a" begin="${startpage}" end="${endpage}">
-                                <c:choose>
-                                    <c:when test="${a == pageNum}">[${a}]</c:when>
-                                    <c:otherwise><a href="javascript:listcall(${a})">[${a}]</a> </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                            <c:if test="${pageNum < maxpage}">
-                                <a href="javascript:listcall(${pageNum + 1})">[다음]</a>
-                            </c:if>
-                            <c:if test="${pageNum >= maxpage}">[다음]</c:if>
+                            <div class="w3-center" style="margin-top: 20px; margin-bottom: 20px">
+                                <div class="w3-bar">
+                                    <c:choose>
+                                        <c:when test="${pageNum <= 1}">
+                                            <div class="w3-bar-item">«</div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="javascript:listcall(${pageNum - 1})" class="w3-bar-item w3-button w3-hover-deep-purple">«</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:forEach var="a" begin="${startpage}" end="${endpage}">
+                                        <c:choose>
+                                            <c:when test="${a == pageNum}">
+                                                <div class="w3-bar-item w3-deep-purple">
+                                                        ${a}
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="javascript:listcall(${a})" class="w3-bar-item w3-button w3-hover-deep-purple">${a}</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <c:choose>
+                                        <c:when test="${pageNum >= endpage}">
+                                            <div class="w3-bar-item">»</div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="javascript:listcall(${pageNum + 1})" class="w3-bar-item w3-button w3-hover-deep-purple">»</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
