@@ -103,17 +103,10 @@
             
             
             <!-- 판매량  -->                 
-                 <td>
-            	<c:forEach items="${Orders_listList}" var="Orders_list">
-	              		<c:out value="${Orders_listList.quantity}" />
-	            </c:forEach>
-            </td>
+            <td>${item.sold_quantity}</td>
             
-            <!-- 현재수량  = 등록량  - 판매량   -->
-            <c:set var="nowquantity" value="${item.quantity - saleItem.quantity}"/> 
-            
-            <!-- 현 수량 출력 -->
-            <td>${nowquantity}</td>
+            <!-- 남은수량 -->
+            <td>${item.remained_quantity}</td>
             
             <!-- 수량 추가 -->  
             <td>

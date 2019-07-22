@@ -40,7 +40,15 @@ public class ItemDao {
     }
 
     public List<Item> list() {
-        return sqlSessionTemplate.selectList(NS + "list");
+        List<Item> itemList =  sqlSessionTemplate.selectList(NS + "list");
+        if (itemList != null) {
+            for (Item item : itemList) {
+                item.setSold_quantity(getSold_quantity(item.getItem_no()));
+                item.setRemained_quantity(getRemained_quantity(item.getItem_no()));
+            }
+        }
+
+        return itemList;
     }
 
     public List<Item> list(Integer category_group, Integer category_item,
@@ -64,7 +72,15 @@ public class ItemDao {
             param.put("searchcontent", searchcontent);
         }
 
-        return sqlSessionTemplate.selectList(NS + "list", param);
+        List<Item> itemList =  sqlSessionTemplate.selectList(NS + "list", param);
+        if (itemList != null) {
+            for (Item item : itemList) {
+                item.setSold_quantity(getSold_quantity(item.getItem_no()));
+                item.setRemained_quantity(getRemained_quantity(item.getItem_no()));
+            }
+        }
+
+        return itemList;
     }
 
     public boolean check_new(Integer category_group, Integer category_item, Integer item_no) {
@@ -89,12 +105,26 @@ public class ItemDao {
     public Item selectOne(Integer item_no) {
         param.clear();
         param.put("item_no", item_no);
-        return sqlSessionTemplate.selectOne(NS + "list", param);
+
+        Item item =  sqlSessionTemplate.selectOne(NS + "list", param);
+        if (item != null) {
+            item.setSold_quantity(getSold_quantity(item.getItem_no()));
+            item.setRemained_quantity(getRemained_quantity(item.getItem_no()));
+        }
+
+        return item;
     }
 
     public Item selectOne(String name) {
         param.clear();
         param.put("name", name);
+
+        Item item =  sqlSessionTemplate.selectOne(NS + "list", param);
+        if (item != null) {
+            item.setSold_quantity(getSold_quantity(item.getItem_no()));
+            item.setRemained_quantity(getRemained_quantity(item.getItem_no()));
+        }
+
         return sqlSessionTemplate.selectOne(NS + "list", param);
     }
 
@@ -110,5 +140,13 @@ public class ItemDao {
 
     public int delete(Integer item_no) {
         return sqlSessionTemplate.getMapper(ItemMapper.class).delete(item_no);
+    }
+
+    private int getSold_quantity(Integer item_no) {
+        return sqlSessionTemplate.getMapper(ItemMapper.class).sold_quantity(item_no);
+    }
+
+    private int getRemained_quantity(Integer item_no) {
+        return sqlSessionTemplate.getMapper(ItemMapper.class).remained_quantity(item_no);
     }
 }
