@@ -68,8 +68,17 @@ public class ShopController {
     }
 
     @RequestMapping("*")
-    public ModelAndView detail(int item_no) {
+    public ModelAndView detail(Integer item_no) {
         ModelAndView mav = new ModelAndView();
+
+        if (item_no == null || item_no == 0) {
+            mav = new ModelAndView("/alert");
+
+            mav.addObject("msg","상품 정보를 가져올 수 없습니다!");
+            mav.addObject("url","list.shop");
+
+            return mav;
+        }
 
         Item item = service.getItemById(item_no);
         item.setDescription(item.getDescription().replaceAll(System.getProperty("line.separator"), "<br>"));
