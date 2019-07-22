@@ -32,6 +32,8 @@ public class Item {
     private Date expr_date; // 유통기한
     @NotNull(message = "상품 수량을 입력해 주세요.")
     private Integer quantity;
+    private int sold_quantity;
+    private int remained_quantity;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date update_time;
 
@@ -145,6 +147,22 @@ public class Item {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public int getSold_quantity() {
+        return sold_quantity;
+    }
+
+    public void setSold_quantity(int sold_quantity) {
+        this.sold_quantity = sold_quantity;
+    }
+
+    public int getRemained_quantity() {
+        return remained_quantity;
+    }
+
+    public void setRemained_quantity(int remained_quantity) {
+        this.remained_quantity = remained_quantity;
     }
 
     public Date getUpdate_time() {
