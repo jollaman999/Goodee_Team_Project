@@ -146,6 +146,7 @@ public class MemberController {
         }
 
         mav.setViewName("redirect:" + request.getParameter("back_url"));
+
         return mav;
     }
 
@@ -179,6 +180,31 @@ public class MemberController {
 //        }
         mav.addObject("member", member);
 //        mav.addObject("salelist", salelist);
+
+        return mav;
+    }
+
+    @RequestMapping("orderHistory")
+    public ModelAndView checkmypage(String id, HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+
+        Member loginMember = (Member)session.getAttribute(("loginMember"));
+        String member_id = loginMember.getId();
+
+        List<Orders> ordersList_all = service.getOrdersList(member_id, null);
+        List<Orders> ordersList_7 = service.getOrdersList(member_id, 7);
+        List<Orders> ordersList_30 = service.getOrdersList(member_id, 30);
+        List<Orders> ordersList_180 = service.getOrdersList(member_id, 180);
+
+        System.out.println(ordersList_all.toString());
+        System.out.println(ordersList_7.toString());
+        System.out.println(ordersList_30.toString());
+        System.out.println(ordersList_180.toString());
+
+        mav.addObject("ordersList_all", ordersList_all);
+        mav.addObject("ordersList_7", ordersList_7);
+        mav.addObject("ordersList_30", ordersList_30);
+        mav.addObject("ordersList_180", ordersList_180);
 
         return mav;
     }

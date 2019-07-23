@@ -3,9 +3,14 @@
 <mapper namespace="dao.mapper.OrdersMapper">
     <select id="list" resultType="Orders" parameterType="map">
         select * from orders
-        <if test="member_id != null">
-            where member_id = #{member_id;}
-        </if>
+        <where>
+            <if test="member_id != null">
+                and member_id = #{member_id}
+            </if>
+            <if test="day != null">
+                and update_time > (now() - interval ${day} day)
+            </if>
+        </where>
         order by member_id;
     </select>
 </mapper>

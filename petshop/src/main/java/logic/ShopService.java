@@ -70,12 +70,12 @@ public class ShopService {
         return itemDao.list(category_group, category_item, pageNum, limit, searchtype, searchcontent, get_quantity_details);
     }
 
-    public List<Orders_list> getOrders_listList() {
-        return orders_listDao.list();
+    public List<Orders_list> getOrders_listList(int order_num) {
+        return orders_listDao.list(order_num);
     }
 
-    public List<Orders> getOrdersList() {
-        return ordersDao.list();
+    public List<Orders> getOrdersList(String member_id, Integer day) {
+        return ordersDao.list(member_id, day);
     }
 
     public List<Member> memberList() {

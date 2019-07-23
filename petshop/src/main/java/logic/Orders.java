@@ -1,6 +1,8 @@
 package logic;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,6 +27,7 @@ public class Orders {
     private int price_total;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date update_time;
+    private List<Orders_list> orders_lists = new ArrayList<>();
 
     public int getNum() {
         return num;
@@ -144,5 +147,13 @@ public class Orders {
 
     public void setUpdate_time(Date update_time) {
         this.update_time = update_time;
+    }
+
+    public List<Orders_list> getOrders_lists() {
+        return orders_lists;
+    }
+
+    public void setOrders_lists(List<Orders_list> orders_lists) {
+        this.orders_lists = orders_lists;
     }
 }

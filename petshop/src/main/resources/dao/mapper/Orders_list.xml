@@ -4,7 +4,7 @@
     <select id="list" resultType="Orders_list" parameterType="map">
         select * from orders_list
         <if test="order_num != null">
-            where order_num = #{order_num;}
+            where order_num = #{order_num}
         </if>
         order by list_num;
     </select>

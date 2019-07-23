@@ -2,6 +2,7 @@ package dao;
 
 import dao.mapper.OrdersMapper;
 import logic.Orders;
+import logic.Orders_list;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -40,8 +41,31 @@ public class OrdersDao {
         return sqlSessionTemplate.getMapper(OrdersMapper.class).delete(num);
     }
     
-    public List<Orders> list() {
-        return sqlSessionTemplate.selectList(NS + "list");
+    public List<Orders> list(String member_id, Integer day) {
+        param.clear();
+
+        if (member_id != null && member_id.length() != 0) {
+            param.put("member_id", member_id);
+        }
+
+        if (day != null && day != 0) {
+            param.put("day", day);
+        }
+
+        List<Orders> ordersList =  sqlSessionTemplate.selectList(NS + "list", param);
+        if (ordersList != null) {
+            for(Orders order : ordersList) {
+                final String OrdersListMapper = "dao.mapper.Orders_listMapper.";
+
+                param.clear();
+                param.put("order_num", order.getNum());
+
+                List<Orders_list> orders_listList = sqlSessionTemplate.selectList(OrdersListMapper + "list", param);
+                order.setOrders_lists(orders_listList);
+            }
+        }
+
+        return ordersList;
     }
 	
 }

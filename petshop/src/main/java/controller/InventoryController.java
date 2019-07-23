@@ -33,13 +33,11 @@ public class InventoryController {
         List<Item> itemList  = service.getItemList(true);
         List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
         List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
-        List<Orders_list> Orders_listList = service.getOrders_listList();
     
         // 리스트 객체 생성 
         mav.addObject("itemList", itemList);
         mav.addObject("CategoryGroupList",CategoryGroupList);
         mav.addObject("CategoryItemList",CategoryItemList);
-        mav.addObject("Orders_listList",Orders_listList);
         
         return mav;
     }
@@ -54,13 +52,11 @@ public class InventoryController {
         List<Item> itemList  = service.getItemList(true);
         List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
         List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
-        List<Orders_list> Orders_listList = service.getOrders_listList();
         
         // 리스트 객체 생성 
         mav.addObject("itemList", itemList);
         mav.addObject("CategoryGroupList",CategoryGroupList);
         mav.addObject("CategoryItemList",CategoryItemList);
-        mav.addObject("Orders_listList",Orders_listList);
 
         // item_no 기준으로 이것저것 가져오기.
         Item item = service.getItemById(item_no, true);
@@ -105,14 +101,12 @@ public class InventoryController {
         List<Item> itemList  = service.getItemList(true);
         List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
         List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
-        List<Orders_list> Orders_listList = service.getOrders_listList();
-        List<Orders> OrdersList = service.getOrdersList();
+        List<Orders> OrdersList = service.getOrdersList(null, null);
 
         // 리스트 객체 생성 
         mav.addObject("itemList", itemList);
         mav.addObject("CategoryGroupList",CategoryGroupList);
         mav.addObject("CategoryItemList",CategoryItemList);
-        mav.addObject("Orders_listList",Orders_listList);
         mav.addObject("Orderslist",OrdersList);
         
         return mav;
