@@ -170,7 +170,7 @@ public class MemberController {
     }
 
     @RequestMapping("orderHistory")
-    public ModelAndView checkmypage(String id, HttpSession session) {
+    public ModelAndView orderHistory(HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
         Member loginMember = (Member)session.getAttribute(("loginMember"));
@@ -180,11 +180,6 @@ public class MemberController {
         List<Orders> ordersList_7 = service.getOrdersList(member_id, 7);
         List<Orders> ordersList_30 = service.getOrdersList(member_id, 30);
         List<Orders> ordersList_180 = service.getOrdersList(member_id, 180);
-
-        System.out.println(ordersList_all.toString());
-        System.out.println(ordersList_7.toString());
-        System.out.println(ordersList_30.toString());
-        System.out.println(ordersList_180.toString());
 
         mav.addObject("ordersList_all", ordersList_all);
         mav.addObject("ordersList_7", ordersList_7);

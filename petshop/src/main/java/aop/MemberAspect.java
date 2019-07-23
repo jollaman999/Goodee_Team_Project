@@ -33,9 +33,22 @@ public class MemberAspect {
         return joinPoint.proceed();
     }
 
+    @Around("execution(* controller.Member*.orderHistory(..)) && args(.., session)")
+    public Object userIdCheck(ProceedingJoinPoint joinPoint, HttpSession session) throws Throwable {
+        System.out.println("Member: orderHistory aop");
+
+        Member loginMember = (Member)session.getAttribute("loginMember");
+
+        if (loginMember == null) {
+            throw new ShopException("로그인 후 이용해주세요!", "login.shop");
+        }
+
+        return joinPoint.proceed();
+    }
+
     @Around("execution(* controller.Member*.update*(..)) && args(id, session, ..)")
     public Object userUpdateCheck(ProceedingJoinPoint joinPoint, String id, HttpSession session) throws Throwable {
-        System.out.println("Member: checkupdateForm aop");
+        System.out.println("Member: update* aop");
 
         Member loginMember = (Member)session.getAttribute("loginMember");
 
