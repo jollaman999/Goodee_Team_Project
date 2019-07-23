@@ -156,11 +156,6 @@ public class MemberController {
         return "redirect:login.shop";
     }
 
-    @RequestMapping("main")
-    public String checkmain() {
-        return "member/main";
-    }
-
     @RequestMapping("mypage")
     public ModelAndView mypage(String id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
