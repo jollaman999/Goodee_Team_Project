@@ -165,6 +165,18 @@ public class ShopService {
     }
 
     // orders
+    public List<Orders> ordersmonyList() {
+    	return ordersDao.moneyList();
+    }
+    
+    public List<Orders> ordersmonyList2() {
+    	return ordersDao.moneyList2();
+    }
+    
+    public List<Orders> ordersmonyList3() {
+    	return ordersDao.moneyList3();
+    }
+    
     public Orders ordersSelect(Integer num) {
         return ordersDao.selectOne(num);
     }

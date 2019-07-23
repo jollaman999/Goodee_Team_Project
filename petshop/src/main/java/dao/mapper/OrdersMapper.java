@@ -1,5 +1,7 @@
 package dao.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -26,5 +28,18 @@ public interface OrdersMapper {
 
     @Delete("delete from orders where num = #{num}")
     int delete(Integer num);
+    
+    
+    //날짜별 금액 토탈 가져오기.
+    @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time,'%Y-%m-%d') update_time from orders where status in (1,2,3) group by date_format(update_time,'%Y-%m-%d')")
+    List<Orders> moneyList();
+    
+    //월별 금액 토탈 가져오기
+    @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time,'%Y-%m-%d') update_time from orders where status in (1,2,3) group by date_format(update_time,'%m')")
+    List<Orders> moneyList2();
+    
+    //년별 금액 토탈 가져오기
+    @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time,'%Y-%m-%d') update_time from orders where status in (1,2,3) group by date_format(update_time,'%Y')")
+    List<Orders> moneyList3();
 
 }
