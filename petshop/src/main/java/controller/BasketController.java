@@ -126,8 +126,8 @@ public class BasketController {
         int limit = 6;
         List<Item> randomitemList = new ArrayList<>();
 
-        System.out.print("basket/view: randomList-item_no: [ ");
-        for (int i = 1; i < max_item_num; i++) {
+        System.out.print("basket/view: randomitemList-item_no: [ ");
+        for (int i = 1; i <= max_item_num; i++) {
             int random_item_no = (int) (Math.random() * max_item_num) + 1;
             Item item = service.getItemById(random_item_no, false);
 
