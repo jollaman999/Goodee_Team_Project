@@ -97,7 +97,7 @@
                                                                 <a href="${path}/shop/list.shop?category_group=<%= categoryGroup.getGroup_code() %>&category_item=<%= categoryItem.getCode() %>">
                                                                     <%= categoryItem.getName() %>
                                                                     <% if (itemDao.check_new(categoryGroup.getGroup_code(), categoryItem.getCode(), null)) { %>
-                                                                        <span class="new" style="margin-left: 65px; margin-top: 14px">New</span>
+                                                                        <span class="new">New</span>
                                                                     <% } %>
                                                                 </a>
                                                             </li>
