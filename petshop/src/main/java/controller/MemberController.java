@@ -164,17 +164,7 @@ public class MemberController {
             id = ((Member)session.getAttribute("loginMember")).getId();
         }
         Member member = service.memberSelect(id);
-//        List<Sale> salelist = service.salelist(id);
-//        for (Sale sa : salelist) {
-//            List<SaleItem> saleItemList = service.saleItemList(sa.getSaleId());
-//            for (SaleItem si : saleItemList) {
-//                Item item = service.getItemById(si.getItemno());
-//                si.setItem(item);
-//            }
-//            sa.setItemList(saleItemList);
-//        }
         mav.addObject("member", member);
-//        mav.addObject("salelist", salelist);
 
         return mav;
     }
