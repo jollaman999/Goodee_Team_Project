@@ -94,7 +94,7 @@
             
             <!--  가격   -->
             <td>
-            <fmt:formatNumber type="CURRENCY" pattern="###,###" value="${item.price}"/>
+            <fmt:formatNumber type="CURRENCY" pattern="###,###" value="${item.price}"/>\
             </td>
             
             <!-- 유통기한 -->
@@ -111,9 +111,10 @@
             <!-- 남은수량 -->
             <td>${item.remained_quantity}</td>
             
-            <!-- 수량 추가 -->  
-          
+            
+            <!-- 수량 추가 -->            
             <td>
+            <!-- submit 넘기기 히든값으로 컨트롤러 이름과 매칭되어있음.  -->
             <form id="itemUpdate" action="listsubmit.shop" method="post">
             <div><input type="number" id="itemUpdate" name="itemUpdate"><input type="submit" value="추가"></div>
             <input type="hidden" name="item_no" value="${item.item_no}">

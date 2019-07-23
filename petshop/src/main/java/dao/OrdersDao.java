@@ -68,4 +68,18 @@ public class OrdersDao {
         return ordersList;
     }
 	
+    //날짜별 금액 토탈 가져오기.
+    public List<Orders> moneyList() {
+        return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList();
+    }
+    
+    //월별 금액 토탈 가져오기.
+    public List<Orders> moneyList2() {
+        return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList2();
+    }
+    
+    //년별 금액 토탈 가져오기.
+    public List<Orders> moneyList3() {
+        return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList3();
+    }
 }

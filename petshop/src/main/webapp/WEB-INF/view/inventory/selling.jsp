@@ -11,16 +11,13 @@
     .centeringContainer { text-align: center; } 
     .centered { display: table; margin-left: auto; margin-right: auto; display: inline-block; } 
     </style>
-    
-    <!-- jQuery -->
-    <script type="text/javascript" src="${path}/js/phone_format.js"></script>
-
-   <title>판매 내역 </title>
+   
+   <title>주문 내역 </title>
 </head><body>
 
 
 <!-- 제목 -->   
-<h2>판매 내역</h2>
+<h2>주문 내역</h2>
 
  
 <!-- 재고관리 리스트 -->
@@ -60,10 +57,6 @@
             <th>입금상태</th>      
             <th>날짜</th>
                                     
-<!--  현재 수량   선언 -->
-<c:set var="nowquantity" value="${0}"/>  
-
-
 
 <!-- 아이템 리스트 가져오기 -->
 <c:forEach items="${Orderslist}" var="orders"> 
@@ -71,42 +64,42 @@
         <!-- 테이블 바 value-->           
          <tr>
          
-         <!-- 주문번호 -->
+         <!-- 주문번호 -->  
            <td>
-           <a href="#" style="color:black">${orders.num}</a>          
-           </td>
-                
+           <a href="../inventory/detail.shop?item_no=${orders.num}" style="color:black">${orders.num}</a>          
+           </td>        
           <!--이름 -->
            <td>${orders.name}</td>
-
            <td>${orders.phone}</td>
            <td>${orders.phone2}</td>
            <td>${orders.address}</td>
            <td>${orders.address_detail}</td>        
            <td>${orders.postcode}</td>
            <td>${orders.deposit_bank_select}</td>
-         <script> 
-           <!--  가격   -->
-          function phoneFomatter(num,type) {
-                alert(price_total);
-            } 
-         </script> 
-
+           <!-- 금액 -->         
            <td>
-           ${orders.price_total}
+           <fmt:formatNumber type="CURRENCY" pattern="###,###" value="${orders.price_total}"/>\
            </td>
-      
-           <td>${orders.status}</td>
-            
+           
+            <td>
+            <c:choose>
+            <c:when test="${orders.status==0}">입금대기중</c:when>
+            <c:when test="${orders.status==1}">입금확인</c:when>
+            <c:when test="${orders.status==2}">상품준비중</c:when>
+            <c:when test="${orders.status==3}">발송완료</c:when>
+            <c:when test="${orders.status==4}">취소접수</c:when>
+            <c:when test="${orders.status==5}">취소완료</c:when>
+            <c:when test="${orders.status==6}">환불접수</c:when>
+            <c:when test="${orders.status==7}">환불완료</c:when>
+            </c:choose></td>  
+     
+              
+          
             <!-- 주문일자 -->
             <td><fmt:formatDate value="${orders.update_time}" pattern="yyyy-MM-dd"/></td>           
      </c:forEach>                              
  </tr>
 
-            
-     
-
-
-</table>  <!--  테이블 종료  -->        
-</form></body></html>
+  <!--  테이블 종료  -->                                 
+</table></form></body></html>
 
