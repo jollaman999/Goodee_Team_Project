@@ -49,6 +49,8 @@ public class ShopService {
     private Orders_listDao orders_listDao;
     @Autowired
     private RecommendDao recommendDao;
+    @Autowired
+    private ReplyDao replyDao;
 
     // list
     public List<CategoryItem> getCategoryItemList() {
@@ -95,6 +97,11 @@ public class ShopService {
     public List<Deposit> depositList() {
         return depositDao.list();
     }
+
+    public List<Reply> replyList(String type, int itemno, int pageNum, int limit) {
+        return replyDao.list(type, itemno, pageNum, limit);
+    }
+
 
     // category
     public String getCategoryGroupName(Integer group_code) {
@@ -424,5 +431,30 @@ public class ShopService {
 
     public int recomDelete(Recommend recommend) {
         return recommendDao.recomDelete(recommend);
+    }
+
+    // reply
+    public int getReplyMaxNum() {
+        return replyDao.getMaxNum();
+    }
+
+    public Reply replySelect(int num) {
+        return replyDao.selectOne(num);
+    }
+
+    public int getReplyCount(String type, int itemno) {
+        return replyDao.getReplyCount(type, itemno);
+    }
+
+    public int replyInsert(Reply reply) {
+        return replyDao.insert(reply);
+    }
+
+    public int replyUpdate(int num, String content) {
+        return replyDao.update(num, content);
+    }
+
+    public int replyDelete(int num) {
+        return replyDao.delete(num);
     }
 }

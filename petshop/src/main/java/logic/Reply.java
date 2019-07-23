@@ -7,7 +7,6 @@ public class Reply {
     private int type;
     private int itemno;
     private String member_id;
-    private String title;
     private String content;
     private Date regdate;
 
@@ -41,14 +40,6 @@ public class Reply {
 
     public void setMember_id(String member_id) {
         this.member_id = member_id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getContent() {

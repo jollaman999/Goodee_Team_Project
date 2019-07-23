@@ -5,6 +5,13 @@
     alert("${msg}");
 
     <c:choose>
+        <c:when test="${close}">
+            self.close();
+        </c:when>
+        <c:when test="${reply_reload}">
+            opener.document.location.href = "list.shop?type=${type}&itemno=${itemno}&pageNum=${pageNum}";
+            self.close();
+        </c:when>
         <c:when test="${check_id}">
             opener.document.f.id.value="${param.id}";
             opener.document.f.checked_duplicate_id.value=1;

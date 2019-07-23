@@ -13,6 +13,7 @@
         <typeAlias type="logic.Orders_list" alias="Orders_list"/>
         <typeAlias type="logic.Deposit" alias="Deposit"/>
         <typeAlias type="logic.Recommend" alias="Recommend"/>
+        <typeAlias type="logic.Reply" alias="Reply"/>
     </typeAliases>
     <mappers>
         <mapper resource="dao/mapper/Item.xml"/>
@@ -26,5 +27,6 @@
         <mapper resource="dao/mapper/Orders_list.xml"/>
         <mapper resource="dao/mapper/Deposit.xml"/>
         <mapper resource="dao/mapper/Recommend.xml"/>
+        <mapper resource="dao/mapper/Reply.xml"/>
     </mappers>
 </configuration>
