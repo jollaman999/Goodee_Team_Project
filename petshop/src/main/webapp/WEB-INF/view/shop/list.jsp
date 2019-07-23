@@ -22,19 +22,32 @@
     <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 
     <script type="text/javascript">
+        function onlyNumber() {
+            if(((event.keyCode < 48)||(event.keyCode > 57)) && (event.keyCode != 8) && (event.keyCode != 35) && (event.keyCode != 36) && (event.keyCode != 37) && (event.keyCode != 39)) {
+                event.returnValue = false;
+                alert("숫자만 입력하세요!");
+            }
+        }
+
         function do_pricerange_search() {
-            if (document.pricerange_form.min_price.value < ${real_min_price}) {
-                alert("최소 범위를 " + ${real_min_price} + "원 이상으로 입력해 주세요!");
+            var min_price = parseInt(document.pricerange_form.min_price.value);
+            var max_price = parseInt(document.pricerange_form.max_price.value);
+
+            if (min_price < ${real_min_price}) {
+                alert("최소 금액를 " + ${real_min_price} + "원 이상으로 입력해 주세요!");
                 return;
             }
 
-            if (document.pricerange_form.max_price.value > ${real_max_price}) {
-                alert("최대 범위를 " + ${real_max_price} + "원 이하로 입력해 주세요!");
+            if (max_price > ${real_max_price}) {
+                alert("최대 금액를 " + ${real_max_price} + "원 이하로 입력해 주세요!");
                 return;
             }
 
-            if (document.pricerange_form.min_price.value > document.pricerange_form.max_price.value) {
-                alert("최소 범위가 최대 범위보다 큽니다!");
+            alert(min_price);
+            alert(max_price);
+
+            if (max_price < min_price) {
+                alert("최소 금액이 최대 금액 보다 큽니다!");
                 return;
             }
 
@@ -159,8 +172,10 @@
                                 <input type="hidden" name="category_item" value="${category_item}">
 
                                 <div style="text-align: center">
-                                    <input class="price-range" type="text" name="min_price" value="${min_price}" style="width: 60px; margin: 0">원~
-                                    <input class="price-range" type="text" name="max_price" value="${max_price}" style="width: 60px; margin: 0">원
+                                    <input class="price-range" type="text" name="min_price" value="${min_price}"
+                                           style="width: 60px; margin: 0" onkeydown="onlyNumber()">원~
+                                    <input class="price-range" type="text" name="max_price" value="${max_price}"
+                                           style="width: 60px; margin: 0" onkeydown="onlyNumber()">원
                                     <input class="w3-btn w3-pink w3-round" type="button" value="검색" onclick="do_pricerange_search()"
                                            style="width: 60px; height: 38px; padding-left: 0; padding-right: 1px; margin-left: 10px">
                                 </div>
@@ -213,8 +228,8 @@
                             <input type="hidden" name="pageNum" value="${pageNum}">
                             <input type="hidden" name="category_group" value="${category_group}">
                             <input type="hidden" name="category_item" value="${category_item}">
-                            <input type="hidden" name="min_price" value="${min_price}">
-                            <input type="hidden" name="max_price" value="${max_price}">
+                            <input type="text" name="min_price" value="${min_price}">
+                            <input type="text" name="max_price" value="${max_price}">
 
                             <div class="w3-center" style="margin-top: 20px; margin-bottom: 20px">
                                 <div class="w3-bar">
