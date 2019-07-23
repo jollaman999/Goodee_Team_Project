@@ -125,9 +125,9 @@ public class InventoryController {
         
      // orders money 멤버에서 호출
         
-        List<Orders> moneyList = service.ordersmonyList();
-        List<Orders> moneyList2 = service.ordersmonyList2();
-        List<Orders> moneyList3 = service.ordersmonyList3();
+        List<Orders> moneyListDay = service.ordersmonyList_by_day();
+        List<Orders> moneyListMonth = service.ordersmoneyList_by_month();
+        List<Orders> moneyListYear = service.ordersmoneyList_by_year();
         
 
         // 리스트 객체 생성 
@@ -135,9 +135,9 @@ public class InventoryController {
         mav.addObject("CategoryGroupList",CategoryGroupList);
         mav.addObject("CategoryItemList",CategoryItemList);
         mav.addObject("Orderslist",OrdersList);
-        mav.addObject("moneyList",moneyList);
-        mav.addObject("moneyList2",moneyList2);
-        mav.addObject("moneyList3",moneyList3);
+        mav.addObject("moneyListDay",moneyListDay);
+        mav.addObject("moneyListMonth",moneyListMonth);
+        mav.addObject("moneyListYear",moneyListYear);
        
         
         return mav;

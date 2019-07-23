@@ -80,6 +80,18 @@ public class ShopService {
         return ordersDao.list(member_id, day);
     }
 
+    public List<Orders> ordersmonyList_by_day() {
+        return ordersDao.moneyList_by_day();
+    }
+
+    public List<Orders> ordersmoneyList_by_month() {
+        return ordersDao.moneyList_by_month();
+    }
+
+    public List<Orders> ordersmoneyList_by_year() {
+        return ordersDao.moneyList_by_year();
+    }
+
     public List<Member> memberList() {
         return memberDao.list();
     }
@@ -175,18 +187,6 @@ public class ShopService {
     }
 
     // orders
-    public List<Orders> ordersmonyList() {
-        return ordersDao.moneyList();
-    }
-
-    public List<Orders> ordersmonyList2() {
-        return ordersDao.moneyList2();
-    }
-
-    public List<Orders> ordersmonyList3() {
-        return ordersDao.moneyList3();
-    }
-
     public Orders ordersSelect(Integer num) {
         return ordersDao.selectOne(num);
     }

@@ -30,16 +30,15 @@ public interface OrdersMapper {
     int delete(Integer num);
     
     
-    //날짜별 금액 토탈 가져오기.
-    @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time,'%Y-%m-%d') update_time from orders where status in (1,2,3) group by date_format(update_time,'%Y-%m-%d')")
-    List<Orders> moneyList();
+    // 날짜별 금액 토탈 가져오기
+    @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-%d') update_time from orders where status in (1, 2 ,3) group by date_format(update_time, '%Y-%m-%d')")
+    List<Orders> moneyList_by_day();
     
-    //월별 금액 토탈 가져오기
-    @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time,'%Y-%m-%d') update_time from orders where status in (1,2,3) group by date_format(update_time,'%m')")
-    List<Orders> moneyList2();
+    // 월별 금액 토탈 가져오기
+    @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-%d') update_time from orders where status in (1, 2, 3) group by date_format(update_time, '%m')")
+    List<Orders> moneyList_by_month();
     
-    //년별 금액 토탈 가져오기
-    @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time,'%Y-%m-%d') update_time from orders where status in (1,2,3) group by date_format(update_time,'%Y')")
-    List<Orders> moneyList3();
-
+    // 년별 금액 토탈 가져오기
+    @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-%d') update_time from orders where status in (1, 2, 3) group by date_format(update_time, '%Y')")
+    List<Orders> moneyList_by_year();
 }

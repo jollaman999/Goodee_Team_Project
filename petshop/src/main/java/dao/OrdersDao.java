@@ -68,18 +68,18 @@ public class OrdersDao {
         return ordersList;
     }
 	
-    //날짜별 금액 토탈 가져오기.
-    public List<Orders> moneyList() {
-        return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList();
+    // 날짜별 금액 토탈 가져오기
+    public List<Orders> moneyList_by_day() {
+        return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList_by_day();
     }
     
-    //월별 금액 토탈 가져오기.
-    public List<Orders> moneyList2() {
-        return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList2();
+    // 월별 금액 토탈 가져오기
+    public List<Orders> moneyList_by_month() {
+        return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList_by_month();
     }
     
-    //년별 금액 토탈 가져오기.
-    public List<Orders> moneyList3() {
-        return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList3();
+    // 년별 금액 토탈 가져오기
+    public List<Orders> moneyList_by_year() {
+        return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList_by_year();
     }
 }
