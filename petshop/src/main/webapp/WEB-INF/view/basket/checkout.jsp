@@ -122,7 +122,7 @@
                                     <c:set var="item_no" value="${basket.item_no}" />
                                     <%
                                         if (itemDao != null && pageContext.getAttribute("item_no") != null) {
-                                            pageContext.setAttribute("item", itemDao.selectOne((Integer)pageContext.getAttribute("item_no")));
+                                            pageContext.setAttribute("item", itemDao.selectOne((Integer)pageContext.getAttribute("item_no"), false));
                                         }
                                     %>
                                     <tr>
