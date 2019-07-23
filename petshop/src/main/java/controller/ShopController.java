@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -84,13 +85,55 @@ public class ShopController {
         item.setDescription(item.getDescription().replaceAll(System.getProperty("line.separator"), "<br>"));
         item.setContent(item.getContent().replaceAll(System.getProperty("line.separator"), "<br>"));
 
+        mav.addObject("item", item);
+
         String categoryGroupName = service.getCategoryGroupName(item.getCategory_group_code());
         String categoryItemName = service.getCategoryItemName(item.getCategory_group_code(), item.getCategory_item_code());
 
         mav.addObject("categoryGroupName", categoryGroupName);
         mav.addObject("categoryItemName", categoryItemName);
 
-        mav.addObject("item", item);
+        List<Item> categoryItemList = service.getItemList(item.getCategory_group_code(), item.getCategory_item_code(),
+                null, null, null, null, false);
+        List<Item> randomitemList = new ArrayList<>();
+
+        if (categoryItemList != null) {
+            int list_max_size = categoryItemList.size();
+            int limit = 12;
+
+            System.out.print("basket/*: randomitemList-item_no: [ ");
+            for (int i = 1; i <= list_max_size; i++) {
+                int random_item_index = (int) (Math.random() * list_max_size);
+                int random_item_no = categoryItemList.get(random_item_index).getItem_no();
+                Item randomItem = service.getItemById(random_item_no, false);
+
+                if (randomItem == null) {
+                    i--;
+                    continue;
+                } else {
+                    boolean random_dupicated = false;
+                    for (Item randomitem : randomitemList) {
+                        if (randomitem.getItem_no() == random_item_no) {
+                            i--;
+                            random_dupicated = true;
+                            break;
+                        }
+                    }
+                    if (random_dupicated) {
+                        continue;
+                    }
+
+                    randomitemList.add(randomItem);
+                    System.out.print(random_item_no + " ");
+                }
+
+                if (i + 1 > limit) {
+                    break;
+                }
+            }
+            System.out.println("]");
+            mav.addObject("randomitemList", randomitemList);
+        }
 
         return mav;
     }

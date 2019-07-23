@@ -1,4 +1,7 @@
 <%@ page import="org.springframework.web.context.ContextLoader" %>
+<%@ page import="org.springframework.web.context.WebApplicationContext" %>
+<%@ page import="dao.ItemDao" %>
+<%@ page import="logic.Item" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -52,6 +55,15 @@
     </script>
 </head>
 <body>
+<%
+    WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+
+    ItemDao itemDao = null;
+    if (context != null) {
+        itemDao = (ItemDao)context.getBean("ItemDao");
+    }
+%>
+
 <!-- Page info -->
 <div class="page-top-info">
     <div class="container">
@@ -65,7 +77,6 @@
     </div>
 </div>
 <!-- Page info end -->
-
 
 <!-- product section -->
 <section class="product-section">
@@ -152,72 +163,32 @@
             <h2>RELATED PRODUCTS</h2>
         </div>
         <div class="product-slider owl-carousel">
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="./img/product/1.jpg" alt="">
-                    <div class="pi-links">
-                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+            <c:forEach var="randomitem" items="${randomitemList}">
+                <div class="product-item">
+                    <div class="pi-pic">
+                        <%
+                            Item item = (Item) pageContext.getAttribute("item");
+                            if (itemDao != null && item != null && itemDao.check_new(null, null, item.getItem_no())) { %>
+                        <div class="tag-new">new</div>
+                        <%
+                            }
+                        %>
+                        <a href="${path}/shop/detail.shop?item_no=${randomitem.item_no}">
+                            <img src="${path}/item/img/${randomitem.item_no}/${randomitem.mainpicurl}" alt="">
+                        </a>
+                        <div class="pi-links">
+                            <a href="${path}/basket/add.shop?item_no=${randomitem.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                            <a href="#" class="wishlist-btn" id="rec_update_${randomitem.item_no}" style="width: 80px"><i class="flaticon-heart"></i><span style="font-size: 12pt" class="rec_count_${randomitem.item_no}"></span></a>
+                        </div>
+                    </div>
+                    <div class="pi-text">
+                        <h6>${randomitem.price}원</h6>
+                        <a href="detail.shop?item_no=${randomitem.item_no}">
+                            <p>${randomitem.name}</p>
+                        </a>
                     </div>
                 </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <div class="tag-new">New</div>
-                    <img src="./img/product/2.jpg" alt="">
-                    <div class="pi-links">
-                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Black and White Stripes Dress</p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="./img/product/3.jpg" alt="">
-                    <div class="pi-links">
-                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="./img/product/4.jpg" alt="">
-                    <div class="pi-links">
-                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="./img/product/6.jpg" alt="">
-                    <div class="pi-links">
-                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
+            </c:forEach>
         </div>
     </div>
 </section>
@@ -266,6 +237,53 @@
 
         recCount(); // 처음 시작했을 때 실행되도록 해당 함수 호출
     })(jQuery);
+</script>
+
+<script type="text/javascript">
+    <c:forEach var="randomitem" items="${randomitemList}">
+        (function ($) {
+            // 좋아요 버튼 클릭시(좋아요 반영 또는 취소)
+            $("#rec_update_${randomitem.item_no}").click(function () {
+                <c:choose>
+                    <c:when test="${sessionScope.loginMember == null}">
+                        alert("좋아요를 반영 하시려면 로그인이 필요합니다!");
+                    </c:when>
+                    <c:otherwise>
+                        $.ajax({
+                            url: "${path}/recommend/update.shop",
+                            type: "GET",
+                            data: {
+                                type: "0",
+                                itemno: "${randomitem.item_no}",
+                                member_id: "${sessionScope.loginMember.id}"
+                            },
+                            success: function (count) {
+                                $(".rec_count_${randomitem.item_no}").html(count);
+                            },
+                        });
+                    </c:otherwise>
+                </c:choose>
+            });
+
+            // 좋아요 수
+            function recCount_${randomitem.item_no}() {
+                $.ajax({
+                    url: "${path}/recommend/count.shop",
+                    type: "GET",
+                    data: {
+                        type: "0",
+                        itemno: "${randomitem.item_no}",
+                        member_id: "${sessionScope.loginMember.id}"
+                    },
+                    success: function (count) {
+                        $(".rec_count_${randomitem.item_no}").html(" " + count);
+                    },
+                })
+            }
+
+            recCount_${randomitem.item_no}(); // 처음 시작했을 때 실행되도록 해당 함수 호출
+        })(jQuery);
+    </c:forEach>
 </script>
 </body>
 </html>

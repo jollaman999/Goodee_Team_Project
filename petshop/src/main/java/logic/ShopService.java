@@ -64,7 +64,7 @@ public class ShopService {
     }
 
     public List<Item> getItemList(Integer category_group, Integer category_item,
-                                  Integer pageNum, int limit, String searchtype, String searchcontent, boolean get_quantity_details) {
+                                  Integer pageNum, Integer limit, String searchtype, String searchcontent, boolean get_quantity_details) {
         return itemDao.list(category_group, category_item, pageNum, limit, searchtype, searchcontent, get_quantity_details);
     }
 

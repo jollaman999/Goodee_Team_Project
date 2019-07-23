@@ -54,12 +54,14 @@ public class ItemDao {
     }
 
     public List<Item> list(Integer category_group, Integer category_item,
-                           Integer pageNum, int limit, String searchtype, String searchcontent,
+                           Integer pageNum, Integer limit, String searchtype, String searchcontent,
                            boolean get_quantity_details) {
         param.clear();
 
-        param.put("startrow", (pageNum - 1) * limit);
-        param.put("limit", limit);
+        if (pageNum != null && pageNum != 0 && limit != null && limit != 0) {
+            param.put("startrow", (pageNum - 1) * limit);
+            param.put("limit", limit);
+        }
 
         if (category_group != null && category_group != 0) {
             param.put("category_group", category_group);
