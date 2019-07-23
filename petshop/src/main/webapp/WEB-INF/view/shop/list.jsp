@@ -228,8 +228,8 @@
                             <input type="hidden" name="pageNum" value="${pageNum}">
                             <input type="hidden" name="category_group" value="${category_group}">
                             <input type="hidden" name="category_item" value="${category_item}">
-                            <input type="text" name="min_price" value="${min_price}">
-                            <input type="text" name="max_price" value="${max_price}">
+                            <input type="hidden" name="min_price" value="${min_price}">
+                            <input type="hidden" name="max_price" value="${max_price}">
 
                             <div class="w3-center" style="margin-top: 20px; margin-bottom: 20px">
                                 <div class="w3-bar">
