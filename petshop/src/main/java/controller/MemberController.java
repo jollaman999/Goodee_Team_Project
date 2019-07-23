@@ -210,7 +210,7 @@ public class MemberController {
     }
 
     @GetMapping(value = {"update", "delete"})
-    public ModelAndView checkupdateForm(String id, HttpSession session) {
+    public ModelAndView updateForm(String id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
         if (id == null || id.length() == 0) {
@@ -223,7 +223,7 @@ public class MemberController {
     }
 
     @PostMapping("update")
-    public ModelAndView doupdate(@Valid Member member, BindingResult bindingResult, HttpSession session) {
+    public ModelAndView update(@Valid Member member, BindingResult bindingResult, HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
         if (bindingResult.hasErrors()) {

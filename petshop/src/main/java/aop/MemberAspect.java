@@ -33,7 +33,7 @@ public class MemberAspect {
         return joinPoint.proceed();
     }
 
-    @Around("execution(* controller.Member*.checkupdateForm(..)) && args(id, session, ..)")
+    @Around("execution(* controller.Member*.update*(..)) && args(id, session, ..)")
     public Object userUpdateCheck(ProceedingJoinPoint joinPoint, String id, HttpSession session) throws Throwable {
         System.out.println("Member: checkupdateForm aop");
 
