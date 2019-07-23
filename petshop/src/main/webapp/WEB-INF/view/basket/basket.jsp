@@ -156,18 +156,18 @@
                                                 </td>
                                                 <td class="quy-col">
                                                     <div class="quantity">
-                                                        <form name="f" method="post" action="update.shop">
+                                                        <form name="quantity_form_${basket.item_no}" method="post" action="update.shop">
                                                             <div class="pro-qty">
-                                                                <input type="text" name="quantity" value="${basket.quantity}" onkeydown="onlyNumber()">
+                                                                <input type="text" id="quantity_${basket.item_no}" name="quantity" value="${basket.quantity}" onkeydown="onlyNumber()">
                                                             </div>
                                                             <input type="hidden" name="item_no" value="${item.item_no}">
-                                                            <input type="submit" class="site-btn sb-dark" value="변경"
+                                                            <input type="button" class="site-btn sb-dark" value="변경" onclick="check_quantity_${basket.item_no}()"
                                                                    style="width: 50px; height: 20px; padding: 5px 0 20px; font-size: 12px; margin-left: 10px; margin-top: 6px">
                                                         </form>
                                                     </div>
                                                 </td>
                                                 <td class="size-col">
-                                                    <form name="f" method="post" action="delete.shop">
+                                                    <form name="delete_form_${basket.item_no}" method="post" action="delete.shop">
                                                         <input type="hidden" name="item_no" value="${item.item_no}">
                                                         <input type="submit" class="site-btn" value="삭제"
                                                                style="width: 50px; height: 20px; padding: 5px 0 20px; font-size: 12px;
@@ -252,6 +252,30 @@
     </div>
 </section>
 <!-- Related product section end -->
+
+<c:if test="${basketList != null && !basketList.isEmpty()}">
+    <script type="text/javascript">
+        <c:forEach items="${basketList}" var="basket">
+            <c:set var="item_no" value="${basket.item_no}" />
+            <%
+                if (itemDao != null && pageContext.getAttribute("item_no") != null) {
+                    pageContext.setAttribute("item", itemDao.selectOne((Integer)pageContext.getAttribute("item_no"), true));
+                }
+            %>
+
+            function check_quantity_${basket.item_no}() {
+                var quantity = parseInt(document.getElementById("quantity_${basket.item_no}").value);
+
+                if (quantity > ${item.remained_quantity}) {
+                    alert("입력 하신 수량이 주문 가능 수량 보다 많습니다!");
+                    return;
+                }
+
+                document.quantity_form_${basket.item_no}.submit();
+            }
+        </c:forEach>
+    </script>
+</c:if>
 
 <script type="text/javascript">
     <c:forEach var="item" items="${randomitemList}">
