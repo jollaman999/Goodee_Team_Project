@@ -237,51 +237,6 @@
                             <div class="pi-links">
                                 <a href="${path}/basket/add.shop?item_no=${item.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                                 <a href="#" class="wishlist-btn" id="rec_update_${item.item_no}" style="width: 80px"><i class="flaticon-heart"></i><span style="font-size: 12pt" class="rec_count_${item.item_no}"></span></a>
-
-                                <script type="text/javascript">
-                                    (function ($) {
-                                        // 좋아요 버튼 클릭시(좋아요 반영 또는 취소)
-                                        $("#rec_update_${item.item_no}").click(function () {
-                                            <c:choose>
-                                                <c:when test="${sessionScope.loginMember == null}">
-                                                    alert("좋아요를 반영 하시려면 로그인이 필요합니다!");
-                                                </c:when>
-                                                <c:otherwise>
-                                                    $.ajax({
-                                                        url: "${path}/recommend/update.shop",
-                                                        type: "GET",
-                                                        data: {
-                                                            type: "0",
-                                                            itemno: "${item.item_no}",
-                                                            member_id: "${sessionScope.loginMember.id}"
-                                                        },
-                                                        success: function (count) {
-                                                            $(".rec_count_${item.item_no}").html(count);
-                                                        },
-                                                    });
-                                                </c:otherwise>
-                                            </c:choose>
-                                        });
-
-                                        // 좋아요 수
-                                        function recCount_${item.item_no}() {
-                                            $.ajax({
-                                                url: "${path}/recommend/count.shop",
-                                                type: "GET",
-                                                data: {
-                                                    type: "0",
-                                                    itemno: "${item.item_no}",
-                                                    member_id: "${sessionScope.loginMember.id}"
-                                                },
-                                                success: function (count) {
-                                                    $(".rec_count_${item.item_no}").html(" " + count);
-                                                },
-                                            })
-                                        }
-
-                                        recCount_${item.item_no}(); // 처음 시작했을 때 실행되도록 해당 함수 호출
-                                    })(jQuery);
-                                </script>
                             </div>
                         </div>
                         <div class="pi-text">
@@ -297,5 +252,52 @@
     </div>
 </section>
 <!-- Related product section end -->
+
+<script type="text/javascript">
+    <c:forEach var="item" items="${randomitemList}">
+        (function ($) {
+            // 좋아요 버튼 클릭시(좋아요 반영 또는 취소)
+            $("#rec_update_${item.item_no}").click(function () {
+                <c:choose>
+                    <c:when test="${sessionScope.loginMember == null}">
+                        alert("좋아요를 반영 하시려면 로그인이 필요합니다!");
+                    </c:when>
+                    <c:otherwise>
+                        $.ajax({
+                            url: "${path}/recommend/update.shop",
+                            type: "GET",
+                            data: {
+                                type: "0",
+                                itemno: "${item.item_no}",
+                                member_id: "${sessionScope.loginMember.id}"
+                            },
+                            success: function (count) {
+                                $(".rec_count_${item.item_no}").html(count);
+                            },
+                        });
+                    </c:otherwise>
+                </c:choose>
+            });
+
+            // 좋아요 수
+            function recCount_${item.item_no}() {
+                $.ajax({
+                    url: "${path}/recommend/count.shop",
+                    type: "GET",
+                    data: {
+                        type: "0",
+                        itemno: "${item.item_no}",
+                        member_id: "${sessionScope.loginMember.id}"
+                    },
+                    success: function (count) {
+                        $(".rec_count_${item.item_no}").html(" " + count);
+                    },
+                })
+            }
+
+            recCount_${item.item_no}(); // 처음 시작했을 때 실행되도록 해당 함수 호출
+        })(jQuery);
+    </c:forEach>
+</script>
 </body>
 </html>
