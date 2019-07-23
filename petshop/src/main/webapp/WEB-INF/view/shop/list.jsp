@@ -174,51 +174,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <script type="text/javascript">
-                            (function ($) {
-                                // 좋아요 버튼 클릭시(좋아요 반영 또는 취소)
-                                $("#rec_update_${item.item_no}").click(function () {
-                                    <c:choose>
-                                        <c:when test="${sessionScope.loginMember == null}">
-                                            alert("좋아요를 반영 하시려면 로그인이 필요합니다!");
-                                        </c:when>
-                                        <c:otherwise>
-                                            $.ajax({
-                                                url: "${path}/recommend/update.shop",
-                                                type: "GET",
-                                                data: {
-                                                    type: "0",
-                                                    itemno: "${item.item_no}",
-                                                    member_id: "${sessionScope.loginMember.id}"
-                                                },
-                                                success: function (count) {
-                                                    $(".rec_count_${item.item_no}").html(count);
-                                                },
-                                            });
-                                        </c:otherwise>
-                                    </c:choose>
-                                });
-
-                                // 좋아요 수
-                                function recCount_${item.item_no}() {
-                                    $.ajax({
-                                        url: "${path}/recommend/count.shop",
-                                        type: "GET",
-                                        data: {
-                                            type: "0",
-                                            itemno: "${item.item_no}",
-                                            member_id: "${sessionScope.loginMember.id}"
-                                        },
-                                        success: function (count) {
-                                            $(".rec_count_${item.item_no}").html(" " + count);
-                                        },
-                                    })
-                                }
-
-                                recCount_${item.item_no}(); // 처음 시작했을 때 실행되도록 해당 함수 호출
-                            })(jQuery);
-                        </script>
                     </c:forEach>
 
                     <div class="text-center w-100 pt-3">
@@ -267,5 +222,52 @@
     </div>
 </section>
 <!-- Category section end -->
+
+<script type="text/javascript">
+    <c:forEach var="item" items="${itemList}">
+    (function ($) {
+        // 좋아요 버튼 클릭시(좋아요 반영 또는 취소)
+        $("#rec_update_${item.item_no}").click(function () {
+            <c:choose>
+            <c:when test="${sessionScope.loginMember == null}">
+            alert("좋아요를 반영 하시려면 로그인이 필요합니다!");
+            </c:when>
+            <c:otherwise>
+            $.ajax({
+                url: "${path}/recommend/update.shop",
+                type: "GET",
+                data: {
+                    type: "0",
+                    itemno: "${item.item_no}",
+                    member_id: "${sessionScope.loginMember.id}"
+                },
+                success: function (count) {
+                    $(".rec_count_${item.item_no}").html(count);
+                },
+            });
+            </c:otherwise>
+            </c:choose>
+        });
+
+        // 좋아요 수
+        function recCount_${item.item_no}() {
+            $.ajax({
+                url: "${path}/recommend/count.shop",
+                type: "GET",
+                data: {
+                    type: "0",
+                    itemno: "${item.item_no}",
+                    member_id: "${sessionScope.loginMember.id}"
+                },
+                success: function (count) {
+                    $(".rec_count_${item.item_no}").html(" " + count);
+                },
+            })
+        }
+
+        recCount_${item.item_no}(); // 처음 시작했을 때 실행되도록 해당 함수 호출
+    })(jQuery);
+    </c:forEach>
+</script>
 </body>
 </html>
