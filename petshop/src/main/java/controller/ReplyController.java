@@ -152,10 +152,11 @@ public class ReplyController {
             return mav;
         }
 
+        mav = new ModelAndView();
         mav.addObject("num", Integer.parseInt(num));
         mav.addObject("reply", reply);
 
-        return new ModelAndView();
+        return mav;
     }
 
     @RequestMapping("update")
