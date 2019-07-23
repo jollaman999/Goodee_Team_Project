@@ -25,7 +25,7 @@
 
     <script type="text/javascript">
         function check_quantity() {
-            var quantity = document.getElementById("quantity").value;
+            var quantity = parseInt(document.getElementById("quantity").value);
 
             if (quantity > ${item.remained_quantity}) {
                 alert("입력 하신 수량이 주문 가능 수량 보다 많습니다!");
