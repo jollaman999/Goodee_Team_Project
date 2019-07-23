@@ -13,6 +13,32 @@
             <if test="searchtype != null and searchcontent != null">
                 and ${searchtype} like '%${searchcontent}%'
             </if>
+            <if test="min_price != null and max_price != null">
+                and price >= #{min_price} and #{max_price} >= price
+            </if>
+        </where>
+    </select>
+
+    <select id="max_price" resultType="int" parameterType="map">
+        select ifnull(max(price), 0) from item
+        <where>
+            <if test="category_group != null">
+                and category_group_code = #{category_group}
+            </if>
+            <if test="category_item != null">
+                and category_item_code = #{category_item}
+            </if>
+        </where>
+    </select>
+    <select id="min_price" resultType="int" parameterType="map">
+        select ifnull(min(price), 0) from item
+        <where>
+            <if test="category_group != null">
+                and category_group_code = #{category_group}
+            </if>
+            <if test="category_item != null">
+                and category_item_code = #{category_item}
+            </if>
         </where>
     </select>
 
@@ -33,6 +59,9 @@
             </if>
             <if test="searchtype != null and searchcontent != null">
                 and ${searchtype} like '%${searchcontent}%'
+            </if>
+            <if test="min_price != null and max_price != null">
+                and price >= #{min_price} and #{max_price} >= price
             </if>
         </where>
         order by item_no desc

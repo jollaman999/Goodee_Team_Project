@@ -21,7 +21,8 @@ public class ItemDao {
         return sqlSessionTemplate.getMapper(ItemMapper.class).max_item_no();
     }
 
-    public int count(Integer category_group, Integer category_item, String searchtype, String searchcontent) {
+    public int count(Integer category_group, Integer category_item, String searchtype, String searchcontent,
+                     Integer min_price, Integer max_price) {
         param.clear();
 
         if (category_group != null && category_group != 0) {
@@ -38,7 +39,40 @@ public class ItemDao {
             param.put("searchcontent", searchcontent);
         }
 
+        if (min_price != null && max_price != null) {
+            param.put("min_price", min_price);
+            param.put("max_price", max_price);
+        }
+
         return sqlSessionTemplate.selectOne(NS + "count", param);
+    }
+
+    public int min_price(Integer category_group, Integer category_item) {
+        param.clear();
+
+        if (category_group != null && category_group != 0) {
+            param.put("category_group", category_group);
+        }
+
+        if (category_item != null && category_item != 0) {
+            param.put("category_item", category_item);
+        }
+
+        return sqlSessionTemplate.selectOne(NS + "min_price", param);
+    }
+
+    public int max_price(Integer category_group, Integer category_item) {
+        param.clear();
+
+        if (category_group != null && category_group != 0) {
+            param.put("category_group", category_group);
+        }
+
+        if (category_item != null && category_item != 0) {
+            param.put("category_item", category_item);
+        }
+
+        return sqlSessionTemplate.selectOne(NS + "max_price", param);
     }
 
     public List<Item> list(boolean get_quantity_details) {
@@ -55,7 +89,7 @@ public class ItemDao {
 
     public List<Item> list(Integer category_group, Integer category_item,
                            Integer pageNum, Integer limit, String searchtype, String searchcontent,
-                           boolean get_quantity_details) {
+                           Integer min_price, Integer max_price, boolean get_quantity_details) {
         param.clear();
 
         if (pageNum != null && pageNum != 0 && limit != null && limit != 0) {
@@ -75,6 +109,11 @@ public class ItemDao {
                 searchcontent != null && searchcontent.length() != 0) {
             param.put("searchtype", searchtype);
             param.put("searchcontent", searchcontent);
+        }
+
+        if (min_price != null && max_price != null) {
+            param.put("min_price", min_price);
+            param.put("max_price", max_price);
         }
 
         List<Item> itemList =  sqlSessionTemplate.selectList(NS + "list", param);

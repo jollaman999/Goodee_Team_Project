@@ -1,6 +1,5 @@
 package controller;
 
-import logic.CategoryGroup;
 import logic.Item;
 import logic.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,8 @@ public class ShopController {
 
     @RequestMapping("list")
     public ModelAndView list(Integer category_group, Integer category_item,
-                             Integer pageNum, String searchtype, String searchcontent) {
+                             Integer pageNum, String searchtype, String searchcontent,
+                             Integer min_price, Integer max_price) {
         ModelAndView mav = new ModelAndView();
 
         mav.addObject("category_group", category_group);
@@ -35,13 +34,30 @@ public class ShopController {
             }
         }
 
+        int real_min_price = service.item_min_price(category_group, category_item);
+        int real_max_price = service.item_max_price(category_group, category_item);
+
+        if (min_price == null || min_price.toString().equals("")) {
+            min_price = real_min_price;
+        }
+
+        if (max_price == null || max_price.toString().equals("")) {
+            max_price = real_max_price;
+        }
+
+        mav.addObject("min_price", min_price);
+        mav.addObject("max_price", max_price);
+        mav.addObject("real_min_price", real_min_price);
+        mav.addObject("real_max_price", real_max_price);
+
         if (pageNum == null || pageNum.toString().equals("")) {
             pageNum = 1;
         }
 
         int limit = 12;
-        int listcount = service.itemcount(category_group, category_item, searchtype, searchcontent);
-        List<Item> itemList  = service.getItemList(category_group, category_item, pageNum, limit, searchcontent, searchtype, false);
+        int listcount = service.itemcount(category_group, category_item, searchtype, searchcontent, min_price, max_price);
+        List<Item> itemList  = service.getItemList(category_group, category_item, pageNum, limit, searchcontent, searchtype,
+                min_price, max_price, false);
 
         int maxpage = listcount / limit;
         if (listcount % limit != 0) {
@@ -94,7 +110,7 @@ public class ShopController {
         mav.addObject("categoryItemName", categoryItemName);
 
         List<Item> categoryItemList = service.getItemList(item.getCategory_group_code(), item.getCategory_item_code(),
-                null, null, null, null, false);
+                null, null, null, null, null, null, false);
         List<Item> randomitemList = new ArrayList<>();
 
         if (categoryItemList != null) {

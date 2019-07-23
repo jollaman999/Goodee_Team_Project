@@ -66,8 +66,10 @@ public class ShopService {
     }
 
     public List<Item> getItemList(Integer category_group, Integer category_item,
-                                  Integer pageNum, Integer limit, String searchtype, String searchcontent, boolean get_quantity_details) {
-        return itemDao.list(category_group, category_item, pageNum, limit, searchtype, searchcontent, get_quantity_details);
+                                  Integer pageNum, Integer limit, String searchtype, String searchcontent,
+                                  Integer min_price, Integer max_price, boolean get_quantity_details) {
+        return itemDao.list(category_group, category_item, pageNum, limit, searchtype, searchcontent,
+                min_price, max_price, get_quantity_details);
     }
 
     public List<Orders_list> getOrders_listList(int order_num) {
@@ -123,12 +125,20 @@ public class ShopService {
     }
 
     // item
-    public int itemcount(Integer category_group, Integer category_item, String searchtype, String searchcontent) {
-        return itemDao.count(category_group, category_item, searchtype, searchcontent);
+    public int itemcount(Integer category_group, Integer category_item, String searchtype, String searchcontent, Integer min_price, Integer max_price) {
+        return itemDao.count(category_group, category_item, searchtype, searchcontent, min_price, max_price);
     }
 
     public int item_max_item_no() {
         return itemDao.max_item_no();
+    }
+
+    public int item_min_price(Integer category_group, Integer category_item) {
+        return itemDao.min_price(category_group, category_item);
+    }
+
+    public int item_max_price(Integer category_group, Integer category_item) {
+        return itemDao.max_price(category_group, category_item);
     }
 
     public int itemAdd(Item item) {
@@ -166,17 +176,17 @@ public class ShopService {
 
     // orders
     public List<Orders> ordersmonyList() {
-    	return ordersDao.moneyList();
+        return ordersDao.moneyList();
     }
-    
+
     public List<Orders> ordersmonyList2() {
-    	return ordersDao.moneyList2();
+        return ordersDao.moneyList2();
     }
-    
+
     public List<Orders> ordersmonyList3() {
-    	return ordersDao.moneyList3();
+        return ordersDao.moneyList3();
     }
-    
+
     public Orders ordersSelect(Integer num) {
         return ordersDao.selectOne(num);
     }

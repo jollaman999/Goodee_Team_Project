@@ -22,11 +22,42 @@
     <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 
     <script type="text/javascript">
+        function do_pricerange_search() {
+            if (document.pricerange_form.min_price.value < ${real_min_price}) {
+                alert("최소 범위를 " + ${real_min_price} + "원 이상으로 입력해 주세요!");
+                return;
+            }
+
+            if (document.pricerange_form.max_price.value > ${real_max_price}) {
+                alert("최대 범위를 " + ${real_max_price} + "원 이하로 입력해 주세요!");
+                return;
+            }
+
+            if (document.pricerange_form.min_price.value > document.pricerange_form.max_price.value) {
+                alert("최소 범위가 최대 범위보다 큽니다!");
+                return;
+            }
+
+            document.pricerange_form.submit();
+        }
+
         function listcall(page) {
             document.listform.pageNum.value = page;
             document.listform.submit();
         }
     </script>
+
+    <style type="text/css">
+        .price-range {
+            height: 36px;
+            border: 1px solid #ddd;
+            border-radius: 40px;
+            padding: 0;
+            font-size: 13px;
+            text-align: center;
+            background-color: transparent;
+        }
+    </style>
 </head>
 <body>
 <% WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext(); %>
@@ -118,21 +149,22 @@
                     </ul>
                 </div>
                 <div class="filter-widget mb-0">
-                    <h2 class="fw-title">refine by</h2>
+                    <h2 class="fw-title">검색 옵션</h2>
                     <div class="price-range-wrap">
-                        <h4>Price</h4>
-                        <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="10" data-max="270">
-                            <div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 0%; width: 100%;"></div>
-                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;">
-								</span>
-                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;">
-								</span>
-                        </div>
-                        <div class="range-slider">
-                            <div class="price-input">
-                                <input type="text" id="minamount">
-                                <input type="text" id="maxamount">
-                            </div>
+                        <h4>가격 범위</h4>
+                        <div class="price-input" style="margin-top: -20px">
+                            <form action="list.shop" method="post" name="pricerange_form">
+                                <input type="hidden" name="pageNum" value="${pageNum}">
+                                <input type="hidden" name="category_group" value="${category_group}">
+                                <input type="hidden" name="category_item" value="${category_item}">
+
+                                <div style="text-align: center">
+                                    <input class="price-range" type="text" name="min_price" value="${min_price}" style="width: 60px; margin: 0">원~
+                                    <input class="price-range" type="text" name="max_price" value="${max_price}" style="width: 60px; margin: 0">원
+                                    <input class="w3-btn w3-pink w3-round" type="button" value="검색" onclick="do_pricerange_search()"
+                                           style="width: 60px; height: 38px; padding-left: 0; padding-right: 1px; margin-left: 10px">
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -178,9 +210,11 @@
 
                     <div class="text-center w-100 pt-3">
                         <form action="list.shop" method="post" name="listform">
-                            <input type="hidden" name="pageNum" value="1">
+                            <input type="hidden" name="pageNum" value="${pageNum}">
                             <input type="hidden" name="category_group" value="${category_group}">
                             <input type="hidden" name="category_item" value="${category_item}">
+                            <input type="hidden" name="min_price" value="${min_price}">
+                            <input type="hidden" name="max_price" value="${max_price}">
 
                             <div class="w3-center" style="margin-top: 20px; margin-bottom: 20px">
                                 <div class="w3-bar">
