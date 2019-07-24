@@ -31,11 +31,7 @@ public class MemberController {
     public String form(Model model, HttpServletRequest request) {
         if (request.getRequestURI().contains("login") || request.getRequestURI().contains("memberEntry")) {
             if (request.getSession().getAttribute("loginMember") != null) {
-                String url = request.getParameter("back_url");
-                if (url == null || url.length() == 0 || url.contains("login") || url.contains("memberEntry") || url.contains("basket")) {
-                    url = "../index.jsp";
-                }
-                throw new ShopException( "이미 로그인 중입니다!", url);
+                throw new ShopException( "이미 로그인 중입니다!", "../index.jsp");
             }
         }
         model.addAttribute(new Member());
