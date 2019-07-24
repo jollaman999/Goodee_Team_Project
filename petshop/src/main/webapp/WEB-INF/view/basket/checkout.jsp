@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="EUC-KR">
+    <meta charset="UTF-8">
     <title>주문 하기</title>
 
     <script type="text/javascript">
