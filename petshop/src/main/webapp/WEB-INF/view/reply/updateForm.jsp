@@ -28,14 +28,7 @@
     <script type="text/javascript">
         function do_submit() {
             if (!f.content.value || f.content.value === " ") {
-                <c:choose>
-                    <c:when test="${param.type eq '0'}">
-                        alert("후기 내용을 입력하세요");
-                    </c:when>
-                    <c:otherwise>
-                        alert("댓글 내용을 입력하세요");
-                    </c:otherwise>
-                </c:choose>
+                alert("댓글 내용을 입력하세요");
                 f.content.focus();
                 return;
             }
@@ -45,9 +38,13 @@
     </script>
 
     <style type="text/css">
-        tbody tr:hover {
+        table {
+            width: 90%;
+            margin-top: 15px;
+        }
+
+        table * {
             background-color: #ffffff;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -62,24 +59,10 @@
             <table style="height: 100px; background-color: #f5f5f5;">
                 <tr>
                     <td style="width: 80%; padding-top: 10px; padding-bottom: 10px">
-                        <c:choose>
-                            <c:when test="${param.type eq '0'}">
-                                <textarea rows="20" name="content" style="width: 100%">${reply.content}</textarea>
-                            </c:when>
-                            <c:otherwise>
-                                <textarea rows="7" name="content" style="width: 100%">${reply.content}</textarea>
-                            </c:otherwise>
-                        </c:choose>
+                        <textarea rows="7" name="content" style="width: 100%">${reply.content}</textarea>
                     </td>
                     <td>
-                        <c:choose>
-                            <c:when test="${param.type eq '0'}">
-                                <input type="button" value="후기 수정" class="w3-button w3-bar-item w3-deep-purple" onclick="do_submit()()">
-                            </c:when>
-                            <c:otherwise>
-                                <input type="button" value="댓글 수정" class="w3-button w3-bar-item w3-deep-purple" onclick="do_submit()()">
-                            </c:otherwise>
-                        </c:choose>
+                        <input type="button" value="댓글 수정" class="w3-button w3-bar-item w3-deep-purple" onclick="do_submit()()">
                     </td>
                 </tr>
             </table>

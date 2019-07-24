@@ -35,28 +35,23 @@
         var reply_update_form;
         var reply_delete_form;
 
-        function win_reply_update(num) {
-            if (reply_update_form != null)
-                reply_update_form.close();
+        <c:if test="${not param.type eq '0'}">
+            function win_reply_update(num) {
+                if (reply_update_form != null)
+                    reply_update_form.close();
 
-            <c:choose>
-                <c:when test="${param.type eq '0'}">
-                    var op = "width=750, height=356, left=50, top=150";
-                </c:when>
-                <c:otherwise>
-                    var op = "width=750, height=182, left=50, top=150";
-                </c:otherwise>
-            </c:choose>
-            reply_update_form = open("../reply/updateForm.shop?num=" + num + "&type=${param.type}&itemno=${param.itemno}&pageNum=${param.pageNum}", "", op);
-        }
+                var op = "width=750, height=182, left=50, top=150";
+                reply_update_form = open("../reply/updateForm.shop?num=" + num + "&type=${param.type}&itemno=${param.itemno}&pageNum=${param.pageNum}", "", op);
+            }
 
-        function win_reply_delete(num) {
-            if (reply_delete_form != null)
-                reply_delete_form.close();
+            function win_reply_delete(num) {
+                if (reply_delete_form != null)
+                    reply_delete_form.close();
 
-            var op = "width=600, height=129, left=50, top=150";
-            reply_delete_form = open("../reply/deleteForm.shop?num=" + num + "&type=${param.type}&itemno=${param.itemno}&pageNum=${param.pageNum}", "", op);
-        }
+                var op = "width=600, height=129, left=50, top=150";
+                reply_delete_form = open("../reply/deleteForm.shop?num=" + num + "&type=${param.type}&itemno=${param.itemno}&pageNum=${param.pageNum}", "", op);
+            }
+        </c:if>
 
         function listcall(page) {
             document.f2.pageNum.value = page;
@@ -67,7 +62,7 @@
             document.f2.submit();
         }
 
-        <c:if test="${param.type eq '1'}">
+        <c:if test="${not param.type eq '0'}">
             function do_write() {
                 if (!f1.content.value || f1.content.value === " ") {
                     alert("댓글 내용을 입력하세요!");
@@ -102,7 +97,7 @@
     }
 %>
 
-<c:if test="${param.type eq '1'}">
+<c:if test="${not param.type eq '0'}">
     <c:choose>
         <c:when test="${!empty sessionScope.loginMember}">
             <form action="write.shop" method="post" name="f1">
@@ -137,7 +132,18 @@
     <input type="hidden" name="itemno" value="${param.itemno}">
     <c:choose>
         <c:when test="${reply_count == 0}">
-            <div style="text-align: center; margin-bottom: 50px"><h5>등록된 댓글이 없습니다!</h5></div>
+            <div style="text-align: center; margin-bottom: 50px">
+                <h5>
+                    <c:choose>
+                        <c:when test="${param.type eq '0'}">
+                            등록된 후기가 없습니다!
+                        </c:when>
+                        <c:otherwise>
+                            등록된 댓글이 없습니다!
+                        </c:otherwise>
+                    </c:choose>
+                </h5>
+            </div>
         </c:when>
         <c:otherwise>
             <div style="text-align: right; margin-bottom: 15px">
@@ -214,15 +220,17 @@
                                             </c:if>
                                         </div>
                                     </div><br><br>
-                                    <div style="position: absolute; right: 0; bottom: 0">
-                                        <c:set var="num" value="${reply.num}" />
-                                        <c:if test="${sessionScope.loginMember.id eq reply.member_id}">
-                                            <input type="button" class="w3-button w3-bar-item w3-deep-purple" value="수정" onclick="win_reply_update(${num})">
-                                        </c:if>
-                                        <c:if test="${sessionScope.loginMember.id eq admin || sessionScope.loginMember.id eq reply.member_id}">
-                                            <input type="button" class="w3-button w3-bar-item w3-deep-purple" value="삭제" onclick="win_reply_delete(${num})")>
-                                        </c:if>
-                                    </div>
+                                    <c:if test="${not param.type eq '0'}">
+                                        <div style="position: absolute; right: 0; bottom: 0">
+                                            <c:set var="num" value="${reply.num}" />
+                                            <c:if test="${sessionScope.loginMember.id eq reply.member_id}">
+                                                <input type="button" class="w3-button w3-bar-item w3-deep-purple" value="수정" onclick="win_reply_update(${num})">
+                                            </c:if>
+                                            <c:if test="${sessionScope.loginMember.id eq admin || sessionScope.loginMember.id eq reply.member_id}">
+                                                <input type="button" class="w3-button w3-bar-item w3-deep-purple" value="삭제" onclick="win_reply_delete(${num})")>
+                                            </c:if>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </td>
                             <fmt:formatDate value="${day}" pattern="yyyyMMdd" var="today"/>

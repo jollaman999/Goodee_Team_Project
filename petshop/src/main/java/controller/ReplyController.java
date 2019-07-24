@@ -180,6 +180,14 @@ public class ReplyController {
             return mav;
         }
 
+        // 후기 수정 불가
+        if (reply.getType() == 0) {
+            mav.addObject("msg", "수정할 수 없습니다!");
+            mav.addObject("close", true);
+
+            return mav;
+        }
+
         mav = new ModelAndView();
         mav.addObject("num", Integer.parseInt(num));
         mav.addObject("reply", reply);
@@ -198,7 +206,8 @@ public class ReplyController {
 
         if (num == null || num.length() == 0 ||
                 type == null || type.length() == 0 ||
-                itemno == null || itemno.length() == 0) {
+                itemno == null || itemno.length() == 0 ||
+                Integer.parseInt(type) == 0) { // 후기 수정 불가
             mav.addObject("msg", "수정할 수 없습니다!");
             mav.addObject("close", true);
 
@@ -212,8 +221,18 @@ public class ReplyController {
             return mav;
         }
 
+        Reply reply = service.replySelect(Integer.parseInt(num));
+
+        // 후기 수정 불가
+        if (reply.getType() == 0) {
+            mav.addObject("msg", "수정할 수 없습니다!");
+            mav.addObject("close", true);
+
+            return mav;
+        }
+
         String id = loginMember.getId();
-        if (!service.replySelect(Integer.parseInt(num)).getMember_id().equals(id)) {
+        if (!reply.getMember_id().equals(id)) {
             mav.addObject("msg", "본인이 작성하신 것만 수정 가능합니다!");
             mav.addObject("close", true);
 
@@ -227,7 +246,6 @@ public class ReplyController {
             return mav;
         }
 
-        Reply reply = service.replySelect(Integer.parseInt(num));
         reply.setContent(content);
 
         if (service.replyUpdate(Integer.parseInt(num), content) > 0) {
@@ -271,8 +289,18 @@ public class ReplyController {
             return mav;
         }
 
+        Reply reply = service.replySelect(Integer.parseInt(num));
+
+        // 후기 삭제 불가
+        if (reply.getType() == 0) {
+            mav.addObject("msg", "삭제할 수 없습니다!");
+            mav.addObject("close", true);
+
+            return mav;
+        }
+
         String id = loginMember.getId();
-        if (!service.replySelect(Integer.parseInt(num)).getMember_id().equals(id)) {
+        if (!reply.getMember_id().equals(id)) {
             mav.addObject("msg", "본인이 작성하신 것만 삭제 가능합니다!");
             mav.addObject("close", true);
 
@@ -292,7 +320,8 @@ public class ReplyController {
 
         if (num == null || num.length() == 0 ||
                 type == null || type.length() == 0 ||
-                itemno == null || itemno.length() == 0) {
+                itemno == null || itemno.length() == 0 ||
+                Integer.parseInt(type) == 0) { // 후기 삭제 불가
             mav.addObject("msg", "삭제할 수 없습니다!");
             mav.addObject("close", true);
 
@@ -306,8 +335,18 @@ public class ReplyController {
             return mav;
         }
 
+        Reply reply = service.replySelect(Integer.parseInt(num));
+
+        // 후기 삭제 불가
+        if (reply.getType() == 0) {
+            mav.addObject("msg", "삭제할 수 없습니다!");
+            mav.addObject("close", true);
+
+            return mav;
+        }
+
         String id = loginMember.getId();
-        if (!service.replySelect(Integer.parseInt(num)).getMember_id().equals(id)) {
+        if (!reply.getMember_id().equals(id)) {
             mav.addObject("msg", "본인이 작성하신 것만 삭제 가능합니다!");
             mav.addObject("close", true);
 
