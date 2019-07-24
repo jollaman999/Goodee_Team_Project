@@ -10,6 +10,9 @@
             <if test="searchtype != null and searchcontent != null">
                 and ${searchtype} like '%${searchcontent}%'
             </if>
+            <if test="id != null and id != 'admin'">
+                and member_id = #{id}
+            </if>
         </where>
     </select>
     <select id="list" resultType="Board" parameterType="map">
@@ -23,6 +26,9 @@
             </if>
             <if test="searchtype != null and searchcontent != null">
                 and ${searchtype} like '%${searchcontent}%'
+            </if>
+            <if test="id != null and id != 'admin'">
+                and member_id = #{id}
             </if>
         </where>
         order by num desc

@@ -100,9 +100,9 @@ public class ShopService {
         return memberDao.list(idchks);
     }
 
-    public List<Board> boardlist(int type, int pageNum, int limit, String searchtype, String searchcontent) {
-        return boardDao.list(type, pageNum, limit, searchtype, searchcontent);
-    }
+	public List<Board> boardlist(int type, int pageNum, int limit, String searchtype, String searchcontent, String id) {
+		return boardDao.list(type, pageNum, limit, searchtype, searchcontent, id);
+	}
 
     public List<Basket> basketList(String member_id) {
         return basketDao.list(member_id);
@@ -414,9 +414,9 @@ public class ShopService {
     }
 
     // board
-    public int boardcount(int type, String searchtype, String searchcontent) {
-        return boardDao.count(type, searchtype, searchcontent);
-    }
+	public int boardcount(int type, String searchtype, String searchcontent, String id) {
+		return boardDao.count(type, searchtype, searchcontent, id);
+	}
 
     public int boardmaxnum() {
         return boardDao.maxnum();
