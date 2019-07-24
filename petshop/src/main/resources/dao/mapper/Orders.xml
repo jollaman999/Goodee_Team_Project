@@ -11,6 +11,6 @@
                 and update_time > (now() - interval ${day} day)
             </if>
         </where>
-        order by member_id;
+        order by member_id, update_time desc
     </select>
 </mapper>
