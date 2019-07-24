@@ -5,11 +5,15 @@ import logic.Reply;
 import logic.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.List;
 
 @Controller
@@ -28,7 +32,7 @@ public class ReplyController {
                 itemno == null || itemno.length() == 0) {
             mav = new ModelAndView("/alert");
 
-            mav.addObject("msg","댓글을 불러 올 수 없습니다!");
+            mav.addObject("msg","올바르지 않은 접근입니다!");
             mav.addObject("url","blank.shop");
 
             return mav;
@@ -65,6 +69,26 @@ public class ReplyController {
         return mav;
     }
 
+    @RequestMapping("writeForm")
+    public ModelAndView writeForm(HttpServletRequest request, HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        Member loginMember = (Member)session.getAttribute("loginMember");
+        String type = request.getParameter("type");
+        String itemno = request.getParameter("itemno");
+
+        if (loginMember == null || type == null || type.length() == 0 ||
+                itemno == null || itemno.length() == 0) {
+            mav = new ModelAndView("/alert");
+
+            mav.addObject("msg","작성할 수 없습니다!");
+            mav.addObject("close", true);
+
+            return mav;
+        }
+
+        return mav;
+    }
+
     @RequestMapping("write")
     public ModelAndView write(HttpServletRequest request, HttpSession session) {
         ModelAndView mav = new ModelAndView("/alert");
@@ -75,21 +99,21 @@ public class ReplyController {
 
         if (type == null || type.length() == 0 ||
                 itemno == null || itemno.length() == 0) {
-            mav.addObject("msg", "댓글을 등록할 수 없습니다!");
+            mav.addObject("msg", "등록할 수 없습니다!");
             mav.addObject("url", "blank.shop");
 
             return mav;
         }
 
         if (loginMember == null) {
-            mav.addObject("msg","댓글은 로그인 중에만 등록 가능합니다!");
+            mav.addObject("msg","게시물은 로그인 중에만 등록 가능합니다!");
             mav.addObject("close", true);
 
             return mav;
         }
 
         if (content == null || content.length() == 0) {
-            mav.addObject("msg", "댓글 내용이 비어있습니다!");
+            mav.addObject("msg", "게시물 내용이 비어있습니다!");
             mav.addObject("url", "list.shop?type=" + type + "&itemno=" + itemno);
 
             return mav;
@@ -105,11 +129,15 @@ public class ReplyController {
         reply.setContent(content);
 
         if (service.replyInsert(reply) > 0) {
-            mav.addObject("msg", "댓글이 등록 되었습니다.");
+            mav.addObject("msg", "등록 되었습니다.");
+            // 후기 작성란을 닫음
+            if (Integer.parseInt(type) == 0) {
+                mav.addObject("close", true);
+            }
             mav.addObject("url", "list.shop?type=" + type + "&itemno=" + itemno);
 
         } else {
-            mav.addObject("msg", "댓글을 등록 하는 중 오류가 발생하였습니다!");
+            mav.addObject("msg", "등록 하는 중 오류가 발생하였습니다!");
             mav.addObject("url", "list.shop?type=" + type + "&itemno=" + itemno);
         }
 
@@ -123,7 +151,7 @@ public class ReplyController {
         String num = request.getParameter("num");
 
         if (num == null || num.length() == 0) {
-            mav.addObject("msg", "댓글을 수정할 수 없습니다!");
+            mav.addObject("msg", "수정할 수 없습니다!");
             mav.addObject("close", true);
 
             return mav;
@@ -138,7 +166,7 @@ public class ReplyController {
 
         String id = loginMember.getId();
         if (!service.replySelect(Integer.parseInt(num)).getMember_id().equals(id)) {
-            mav.addObject("msg", "본인 댓글만 수정 가능합니다!");
+            mav.addObject("msg", "본인이 작성하신 것만 수정 가능합니다!");
             mav.addObject("close", true);
 
             return mav;
@@ -146,7 +174,7 @@ public class ReplyController {
 
         Reply reply = service.replySelect(Integer.parseInt(num));
         if (reply == null) {
-            mav.addObject("msg", "댓글을 가져올 수 없습니다!");
+            mav.addObject("msg", "가져올 수 없습니다!");
             mav.addObject("close", true);
 
             return mav;
@@ -171,7 +199,7 @@ public class ReplyController {
         if (num == null || num.length() == 0 ||
                 type == null || type.length() == 0 ||
                 itemno == null || itemno.length() == 0) {
-            mav.addObject("msg", "댓글을 수정할 수 없습니다!");
+            mav.addObject("msg", "수정할 수 없습니다!");
             mav.addObject("close", true);
 
             return mav;
@@ -186,14 +214,14 @@ public class ReplyController {
 
         String id = loginMember.getId();
         if (!service.replySelect(Integer.parseInt(num)).getMember_id().equals(id)) {
-            mav.addObject("msg", "본인 댓글만 수정 가능합니다!");
+            mav.addObject("msg", "본인이 작성하신 것만 수정 가능합니다!");
             mav.addObject("close", true);
 
             return mav;
         }
 
         if (content == null || content.length() == 0) {
-            mav.addObject("msg", "댓글 내용이 비어있습니다!");
+            mav.addObject("msg", "게시물 내용이 비어있습니다!");
             mav.addObject("url", "updateForm.shop?num=" + Integer.parseInt(num));
 
             return mav;
@@ -203,10 +231,10 @@ public class ReplyController {
         reply.setContent(content);
 
         if (service.replyUpdate(Integer.parseInt(num), content) > 0) {
-            mav.addObject("msg","댓글이 수정 되었습니다.");
+            mav.addObject("msg","수정 되었습니다.");
             mav.addObject("reply_reload", true);
         } else {
-            mav.addObject("msg", "댓글을 수정 하는 중 오류가 발생하였습니다!");
+            mav.addObject("msg", "수정 하는 중 오류가 발생하였습니다!");
             mav.addObject("url", "updateForm.shop?num=" + Integer.parseInt(num));
         }
 
@@ -230,7 +258,7 @@ public class ReplyController {
         String num = request.getParameter("num");
 
         if (num == null || num.length() == 0) {
-            mav.addObject("msg", "댓글을 삭제할 수 없습니다!");
+            mav.addObject("msg", "삭제할 수 없습니다!");
             mav.addObject("close", true);
 
             return mav;
@@ -245,7 +273,7 @@ public class ReplyController {
 
         String id = loginMember.getId();
         if (!service.replySelect(Integer.parseInt(num)).getMember_id().equals(id)) {
-            mav.addObject("msg", "본인 댓글만 삭제 가능합니다!");
+            mav.addObject("msg", "본인이 작성하신 것만 삭제 가능합니다!");
             mav.addObject("close", true);
 
             return mav;
@@ -265,7 +293,7 @@ public class ReplyController {
         if (num == null || num.length() == 0 ||
                 type == null || type.length() == 0 ||
                 itemno == null || itemno.length() == 0) {
-            mav.addObject("msg", "댓글을 삭제할 수 없습니다!");
+            mav.addObject("msg", "삭제할 수 없습니다!");
             mav.addObject("close", true);
 
             return mav;
@@ -280,17 +308,17 @@ public class ReplyController {
 
         String id = loginMember.getId();
         if (!service.replySelect(Integer.parseInt(num)).getMember_id().equals(id)) {
-            mav.addObject("msg", "본인 댓글만 삭제 가능합니다!");
+            mav.addObject("msg", "본인이 작성하신 것만 삭제 가능합니다!");
             mav.addObject("close", true);
 
             return mav;
         }
 
         if (service.replyDelete(Integer.parseInt(num)) > 0) {
-            mav.addObject("msg","댓글이 삭제 되었습니다.");
+            mav.addObject("msg","삭제 되었습니다.");
             mav.addObject("reply_reload", true);
         } else {
-            mav.addObject("msg", "댓글을 삭제 하는 중 오류가 발생하였습니다!");
+            mav.addObject("msg", "삭제 하는 중 오류가 발생하였습니다!");
             mav.addObject("url", "deleteForm.shop?num=" + Integer.parseInt(num));
         }
 
@@ -310,5 +338,40 @@ public class ReplyController {
     @RequestMapping("*")
     public ModelAndView blank() {
         return new ModelAndView();
+    }
+
+    @RequestMapping("imgupload")
+    public String imgupload(HttpSession session, Integer itemno, MultipartHttpServletRequest request, MultipartFile upload, String CKEditorFuncNum, Model model) {
+        Member loginMember = (Member)session.getAttribute("loginMember");
+        String member_id = loginMember.getId();
+
+        String path = request.getServletContext().getRealPath("/") + "reply/imgfile/" + member_id + "/" + itemno + "/";
+
+        File folder_path = new File(path);
+        if (!folder_path.exists()) {
+            if (!folder_path.mkdirs()) {
+                return null;
+            }
+        }
+
+        if (!upload.isEmpty()) {
+            if (upload.getOriginalFilename() == null) {
+                return null;
+            }
+
+            File file = new File(path, upload.getOriginalFilename());
+            try {
+                upload.transferTo(file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        String project = request.getContextPath();
+        String fileName = project + "/reply/imgfile/" + member_id + "/" + itemno + "/" + upload.getOriginalFilename();
+        model.addAttribute("fileName", fileName);
+        model.addAttribute("CKEditorFuncNum", CKEditorFuncNum);
+
+        return "ckeditor";
     }
 }

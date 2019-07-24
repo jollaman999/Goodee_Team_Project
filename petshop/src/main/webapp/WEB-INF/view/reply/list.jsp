@@ -67,22 +67,17 @@
             document.f2.submit();
         }
 
-        function do_write() {
-            if (!f1.content.value || f1.content.value === " ") {
-                <c:choose>
-                    <c:when test="${param.type eq '0'}">
-                        alert("후기 내용을 입력하세요");
-                    </c:when>
-                    <c:otherwise>
-                        alert("댓글 내용을 입력하세요");
-                    </c:otherwise>
-                </c:choose>
-                f1.content.focus();
-                return;
-            }
+        <c:if test="${param.type eq '1'}">
+            function do_write() {
+                if (!f1.content.value || f1.content.value === " ") {
+                    alert("댓글 내용을 입력하세요!");
+                    f1.content.focus();
+                    return;
+                }
 
-            f1.submit();
-        }
+                f1.submit();
+            }
+        </c:if>
     </script>
 
     <style type="text/css">
@@ -107,46 +102,34 @@
     }
 %>
 
-<c:choose>
-    <c:when test="${!empty sessionScope.loginMember}">
-        <form action="write.shop" method="post" name="f1">
-            <input type="hidden" name="pageNum" value="1">
-            <input type="hidden" name="type" value="${param.type}">
-            <input type="hidden" name="itemno" value="${param.itemno}">
-            <div style="margin-bottom: 45px">
-                <table style="height: 100px; background-color: #f5f5f5;">
-                    <tr>
-                        <td style="width: 80%; padding-top: 10px; padding-bottom: 10px">
-                            <c:choose>
-                                <c:when test="${param.type eq '0'}">
-                                    <textarea rows="20" name="content" style="width: 100%"></textarea>
-                                </c:when>
-                                <c:otherwise>
-                                    <textarea rows="7" name="content" style="width: 100%"></textarea>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${param.type eq '0'}">
-                                    <input type="button" value="후기 남기기" class="w3-button w3-bar-item w3-deep-purple" onclick="do_write()">
-                                </c:when>
-                                <c:otherwise>
-                                    <input type="button" value="댓글 달기" class="w3-button w3-bar-item w3-deep-purple" onclick="do_write()">
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                    </tr>
-                </table>
+<c:if test="${param.type eq '1'}">
+    <c:choose>
+        <c:when test="${!empty sessionScope.loginMember}">
+            <form action="write.shop" method="post" name="f1">
+                <input type="hidden" name="pageNum" value="1">
+                <input type="hidden" name="type" value="${param.type}">
+                <input type="hidden" name="itemno" value="${param.itemno}">
+                <div style="margin-bottom: 45px">
+                    <table style="height: 100px; background-color: #f5f5f5;">
+                        <tr>
+                            <td style="width: 80%; padding-top: 10px; padding-bottom: 10px">
+                                <textarea rows="7" name="content" style="width: 100%"></textarea>
+                            </td>
+                            <td>
+                                <input type="button" value="댓글 남기기" class="w3-button w3-bar-item w3-deep-purple" onclick="do_write()">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </c:when>
+        <c:otherwise>
+            <div style="text-align: center; margin-bottom: 50px">
+                <h5>로그인을 하시면 댓글을 남기실 수 있습니다.</h5>
             </div>
-        </form>
-    </c:when>
-    <c:otherwise>
-        <div style="text-align: center; margin-bottom: 50px">
-            <h5>로그인을 하시면 댓글을 남기실 수 있습니다.</h5>
-        </div>
-    </c:otherwise>
-</c:choose>
+        </c:otherwise>
+    </c:choose>
+</c:if>
 
 <form action="list.shop" method="post" name="f2">
     <input type="hidden" name="pageNum" value="1">
@@ -158,7 +141,14 @@
         </c:when>
         <c:otherwise>
             <div style="text-align: right; margin-bottom: 15px">
-                표시할 댓글 갯수&nbsp;&nbsp;
+                <c:choose>
+                    <c:when test="${param.type eq '0'}">
+                        표시할 후기 갯수&nbsp;&nbsp;
+                    </c:when>
+                    <c:otherwise>
+                        표시할 댓글 갯수&nbsp;&nbsp;
+                    </c:otherwise>
+                </c:choose>
                 <select name="limit" onchange="limitcall(${limit})">
                     <option value="5">5</option>
                     <option value="10">10</option>
@@ -168,7 +158,16 @@
                         document.f2.limit.value = "${limit}";
                     </script>
                 </select>
-                &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;댓글 갯수 : ${reply_count}
+                &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
+                <c:choose>
+                    <c:when test="${param.type eq '0'}">
+                        후기 갯수
+                    </c:when>
+                    <c:otherwise>
+                        댓글 갯수
+                    </c:otherwise>
+                </c:choose>
+                : ${reply_count}
             </div>
 
             <table>
