@@ -140,7 +140,7 @@
                     <c:if test="${stat2.index eq 0}">
                         <!-- 상품명 -->
                         <td style="padding-bottom: 0">
-                            <div class="row" style="position: relative">
+                            <div class="row">
                                 <c:set var="itemno" value="${orders_lists.item_no}" />
                                 <%
                                     Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
@@ -154,14 +154,14 @@
                                         }
                                     }
                                 %>
-                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px; width: 80%">
                                     <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
                                         <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
                                         <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
                                     </div>
                                 </a>
                                 <c:if test="${order.status eq '3'}">
-                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                    <div style="text-align: right; margin-top: 16px; padding-right: 20px; padding-left: 20px; width: 20%">
                                         <a href="javascript:win_reply_write(${itemno})">후기작성</a>
                                     </div>
                                 </c:if>
@@ -234,7 +234,7 @@
                     <tr>
                         <!-- 상품명 -->
                         <td style="padding-bottom: 0">
-                            <div class="row" style="position: relative">
+                            <div class="row">
                                 <c:set var="itemno" value="${orders_lists.item_no}" />
                                 <%
                                     Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
@@ -248,14 +248,14 @@
                                         }
                                     }
                                 %>
-                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px; width: 80%">
                                     <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
                                         <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
                                         <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
                                     </div>
                                 </a>
                                 <c:if test="${order.status eq '3'}">
-                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                    <div style="text-align: right; margin-top: 16px; padding-right: 20px; padding-left: 20px; width: 20%">
                                         <a href="javascript:win_reply_write(${itemno})">후기작성</a>
                                     </div>
                                 </c:if>
@@ -304,7 +304,7 @@
                     <c:if test="${stat2.index eq 0}">
                         <!-- 상품명 -->
                         <td style="padding-bottom: 0">
-                            <div class="row" style="position: relative">
+                            <div class="row">
                                 <c:set var="itemno" value="${orders_lists.item_no}" />
                                 <%
                                     Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
@@ -318,14 +318,14 @@
                                         }
                                     }
                                 %>
-                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px; width: 80%">
                                     <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
                                         <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
                                         <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
                                     </div>
                                 </a>
                                 <c:if test="${order.status eq '3'}">
-                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                    <div style="text-align: right; margin-top: 16px; padding-right: 20px; padding-left: 20px; width: 20%">
                                         <a href="javascript:win_reply_write(${itemno})">후기작성</a>
                                     </div>
                                 </c:if>
@@ -398,7 +398,7 @@
                     <tr>
                         <!-- 상품명 -->
                         <td style="padding-bottom: 0">
-                            <div class="row" style="position: relative">
+                            <div class="row">
                                 <c:set var="itemno" value="${orders_lists.item_no}" />
                                 <%
                                     Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
@@ -412,14 +412,14 @@
                                         }
                                     }
                                 %>
-                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px; width: 80%">
                                     <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
                                         <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
                                         <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
                                     </div>
                                 </a>
                                 <c:if test="${order.status eq '3'}">
-                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                    <div style="text-align: right; margin-top: 16px; padding-right: 20px; padding-left: 20px; width: 20%">
                                         <a href="javascript:win_reply_write(${itemno})">후기작성</a>
                                     </div>
                                 </c:if>
@@ -467,7 +467,7 @@
                     <c:if test="${stat2.index eq 0}">
                         <!-- 상품명 -->
                         <td style="padding-bottom: 0">
-                            <div class="row" style="position: relative">
+                            <div class="row">
                                 <c:set var="itemno" value="${orders_lists.item_no}" />
                                 <%
                                     Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
@@ -481,14 +481,14 @@
                                         }
                                     }
                                 %>
-                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px; width: 80%">
                                     <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
                                         <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
                                         <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
                                     </div>
                                 </a>
                                 <c:if test="${order.status eq '3'}">
-                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                    <div style="text-align: right; margin-top: 16px; padding-right: 20px; padding-left: 20px; width: 20%">
                                         <a href="javascript:win_reply_write(${itemno})">후기작성</a>
                                     </div>
                                 </c:if>
@@ -561,7 +561,7 @@
                     <tr>
                         <!-- 상품명 -->
                         <td style="padding-bottom: 0">
-                            <div class="row" style="position: relative">
+                            <div class="row">
                                 <c:set var="itemno" value="${orders_lists.item_no}" />
                                 <%
                                     Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
@@ -575,14 +575,14 @@
                                         }
                                     }
                                 %>
-                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px; width: 80%">
                                     <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
                                         <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
                                         <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
                                     </div>
                                 </a>
                                 <c:if test="${order.status eq '3'}">
-                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                    <div style="text-align: right; margin-top: 16px; padding-right: 20px; padding-left: 20px; width: 20%">
                                         <a href="javascript:win_reply_write(${itemno})">후기작성</a>
                                     </div>
                                 </c:if>
@@ -631,7 +631,7 @@
                     <c:if test="${stat2.index eq 0}">
                         <!-- 상품명 -->
                         <td style="padding-bottom: 0">
-                            <div class="row" style="position: relative">
+                            <div class="row">
                                 <c:set var="itemno" value="${orders_lists.item_no}" />
                                 <%
                                     Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
@@ -645,14 +645,14 @@
                                         }
                                     }
                                 %>
-                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px; width: 80%">
                                     <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
                                         <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
                                         <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
                                     </div>
                                 </a>
                                 <c:if test="${order.status eq '3'}">
-                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                    <div style="text-align: right; margin-top: 16px; padding-right: 20px; padding-left: 20px; width: 20%">
                                         <a href="javascript:win_reply_write(${itemno})">후기작성</a>
                                     </div>
                                 </c:if>
@@ -725,7 +725,7 @@
                     <tr>
                         <!-- 상품명 -->
                         <td style="padding-bottom: 0">
-                            <div class="row" style="position: relative">
+                            <div class="row">
                                 <c:set var="itemno" value="${orders_lists.item_no}" />
                                 <%
                                     Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
@@ -739,14 +739,14 @@
                                         }
                                     }
                                 %>
-                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px; width: 80%">
                                     <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
                                         <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
                                         <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
                                     </div>
                                 </a>
                                 <c:if test="${order.status eq '3'}">
-                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                    <div style="text-align: right; margin-top: 16px; padding-right: 20px; padding-left: 20px; width: 20%">
                                         <a href="javascript:win_reply_write(${itemno})">후기작성</a>
                                     </div>
                                 </c:if>
