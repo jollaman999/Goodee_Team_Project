@@ -103,7 +103,7 @@
         </tr>
 
             <c:forEach items="${ordersList_7}" var="order" varStatus="stat">
-                <tr>
+                <tr rowspan="${order.orders_lists.size()}">
 
                     <!-- 주문번호 -->
                     <td align="center">
@@ -132,7 +132,7 @@
                                  width="50" height="50" align="left">
                             <a href="${path}/shop/detail.shop?item_no=${itemno}" >
                                 <h5 align="left"><%= itemname %></h5>
-                            </a>
+                            </a><br><br>
                         </c:forEach>
                     </td>
 
@@ -203,7 +203,7 @@
         </tr>
 
         <c:forEach items="${ordersList_30}" var="order" varStatus="stat">
-            <tr>
+            <tr rowspan="${order.orders_lists.size()}">
 
                 <!-- 주문번호 -->
                 <td align="center">
@@ -232,7 +232,7 @@
                              width="50" height="50" align="left">
                        <a href="${path}/shop/detail.shop?item_no=${itemno}" >
                             <h5 align="left"><%= itemname %></h5>
-                        </a>
+                        </a><br><br>
                     </c:forEach>
                 </td>
 
@@ -300,7 +300,7 @@
         </tr>
 
         <c:forEach items="${ordersList_180}" var="order" varStatus="stat">
-            <tr>
+            <tr rowspan="${order.orders_lists.size()}">
 
                 <!-- 주문번호 -->
                 <td align="center">
@@ -329,7 +329,7 @@
                              width="50" height="50" align="left">
                         <a href="${path}/shop/detail.shop?item_no=${itemno}" >
                             <h5 align="left"><%= itemname %></h5>
-                        </a>
+                        </a><br><br>
                     </c:forEach>
                 </td>
 
@@ -398,7 +398,7 @@
         </tr>
 
         <c:forEach items="${ordersList_all}" var="order" varStatus="stat">
-            <tr>
+            <tr rowspan="${order.orders_lists.size()}">
 
                 <!-- 주문번호 -->
                 <td align="center">
@@ -410,6 +410,7 @@
                 <!-- 상품명 -->
                 <td align="left">
                     <c:forEach items="${order.orders_lists}" var="orders_lists">
+                     
                         <c:set var="itemno" value="${orders_lists.item_no}" />
                         <%
                             Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
@@ -423,11 +424,13 @@
                                 }
                             }
                         %>
+  						
+
                         <img src="${path}/item/img/${itemno}/<%= mainpic %>"
                              width="50" height="50" align="left">
                          <a href="${path}/shop/detail.shop?item_no=${itemno}" >
                             <h5 align="left"><%= itemname %></h5>
-                        </a>
+                        </a><br><br>
                     </c:forEach>
                 </td>
 
