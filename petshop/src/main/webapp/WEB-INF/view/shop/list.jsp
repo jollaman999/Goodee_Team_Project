@@ -27,6 +27,10 @@
                 (event.keyCode != 8) && (event.keyCode != 35) && (event.keyCode != 36) && (event.keyCode != 37) && (event.keyCode != 39) && (event.keyCode != 46) &&
                 (event.keyCode != 116))  {
                 event.returnValue = false;
+                if (event.keyCode == 13) {
+                    do_pricerange_search();
+                    return;
+                }
                 alert("숫자만 입력하세요!");
             }
         }
