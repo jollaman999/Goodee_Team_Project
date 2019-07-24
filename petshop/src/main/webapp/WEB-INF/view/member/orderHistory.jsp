@@ -2,6 +2,8 @@
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="dao.ItemDao" %>
 <%@ page import="logic.Item" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
@@ -13,7 +15,6 @@
     <title>주문 정보</title>
 
     <script type="text/javascript">
-
         // 주문 날짜 탭
         $(document).ready(function(){
             $("#weekinfo").show();
@@ -23,29 +24,40 @@
 
             $(".saleLine").each(function() {  //주문상품 목록 숨김.
                 $(this).hide();
-            })
+            });
             $("#tab1").addClass("select"); //class 속성에 select 값을 추가.
-        })
+        });
+
         function disp_div(id,tab) {
             $(".info").each(function() {
                 $(this).hide();
-            })
+            });
             $(".tab").each(function() {
                 $(this).removeClass("select");
-            })
+            });
             $("#"+id).show();
             $("#" + tab).addClass("select");
         }
+
         function list_disp(id) {
             $("#"+id).toggle(); //
         }
-    </script>
-    <style type="text/css">
 
+        var reply_write_form;
+
+        function win_reply_write(itemno) {
+            if (reply_write_form != null)
+                reply_write_form.close();
+
+            var op = "width=750, height=820, left=50, top=150";
+            reply_write_form = open("../reply/writeForm.shop?type=0&itemno=" + itemno, "", op);
+        }
+    </script>
+
+    <style type="text/css">
         .select
         {
-            padding:3px;
-            background-color: #0000ff;
+            background-color: #007bff;
         }
 
         .select > a
@@ -54,6 +66,19 @@
             font-weight: bold;
         }
 
+        tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .order_list:hover {
+            color: #555555;
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -68,17 +93,17 @@
 
 <table>
     <tr>
-        <td id="tab1" class="tab">
-            <a href="javascript:disp_div('weekinfo','tab1')">7일</a>
+        <td id="tab1" class="tab" onclick="disp_div('weekinfo','tab1')">
+            <a href="#">7일</a>
         </td>
-        <td id="tab2" class="tab">
-            <a href="javascript:disp_div('monthinfo','tab2')">30일</a>
+        <td id="tab2" class="tab" onclick="disp_div('monthinfo','tab2')">
+            <a href="#">30일</a>
         </td>
-        <td id="tab3" class="tab">
-            <a href="javascript:disp_div('halfinfo','tab3')">180일</a>
+        <td id="tab3" class="tab" onclick="disp_div('halfinfo','tab3')">
+            <a href="#">180일</a>
         </td>
-        <td id="tab4" class="tab">
-            <a href="javascript:disp_div('allinfo','tab4')">모든</a>
+        <td id="tab4" class="tab" onclick="disp_div('allinfo','tab4')">
+            <a href="#">모든</a>
         </td>
     </tr>
 </table>
@@ -95,91 +120,155 @@
 
         <tr>
             <th style="width: 8%">주문번호</th>
-            <th>상품명</th>
+            <th style="width: auto">상품명</th>
+            <th style="width: 8%">수량</th>
             <th style="width: 15%">금액(총)</th>
-            <th style="width: 10%">수량</th>
             <th style="width: 12%">주문상태</th>
             <th style="width: 12%">주문날짜</th>
         </tr>
 
-            <c:forEach items="${ordersList_7}" var="order" varStatus="stat">
-                <tr rowspan="${order.orders_lists.size()}">
+        <c:forEach items="${ordersList_7}" var="order" varStatus="stat1">
+            <tr>
+                <!-- 주문번호 -->
+                <td rowspan="${order.orders_lists.size()}">
+                    <a href="javascript:list_disp('saleLine${stat1.index}')">
+                        ${order.num}
+                    </a>
+                </td>
 
-                    <!-- 주문번호 -->
-                    <td align="center">
-                        <a href="javascript:list_disp('saleLine${stat.index}')">
-                                ${order.num}
-                        </a>
-                    </td>
-
-                    <!-- 상품명 -->
-                    <td align="left">
-                        <c:forEach items="${order.orders_lists}" var="orders_lists">
-                            <c:set var="itemno" value="${orders_lists.item_no}" />
-                            <%
-                                Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
-                                String mainpic = "";
-                                String itemname = "";
-                                if (itemDao != null && itemno != null) {
-                                    Item item = itemDao.selectOne(itemno, false);
-                                    if (item != null) {
-                                        mainpic = item.getMainpicurl();
-                                        itemname = item.getName();
+                <c:forEach items="${order.orders_lists}" var="orders_lists" varStatus="stat2">
+                    <c:if test="${stat2.index eq 0}">
+                        <!-- 상품명 -->
+                        <td style="padding-bottom: 0">
+                            <div class="row" style="position: relative">
+                                <c:set var="itemno" value="${orders_lists.item_no}" />
+                                <%
+                                    Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
+                                    String mainpic = "";
+                                    String itemname = "";
+                                    if (itemDao != null && itemno != null) {
+                                        Item item = itemDao.selectOne(itemno, false);
+                                        if (item != null) {
+                                            mainpic = item.getMainpicurl();
+                                            itemname = item.getName();
+                                        }
                                     }
-                                }
-                            %>
-                            <img src="${path}/item/img/${itemno}/<%= mainpic %>"
-                                 width="50" height="50" align="left">
-                            <a href="${path}/shop/detail.shop?item_no=${itemno}" >
-                                <h5 align="left"><%= itemname %></h5>
-                            </a><br><br>
-                        </c:forEach>
-                    </td>
+                                %>
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                    <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
+                                        <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
+                                        <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
+                                    </div>
+                                </a>
+                                <c:if test="${order.status eq '3'}">
+                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                        <a href="javascript:win_reply_write(${itemno})">후기작성</a>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </td>
 
-                    <!-- 단가 -->
-                    <td align="right">${order.price_total} 원</td>
-
-                    <!-- 수량 -->
-                    <td>
-                        <c:forEach items="${order.orders_lists}" var="orders_lists">
+                        <!-- 수량 -->
+                        <td>
                             ${orders_lists.quantity}개
-                        </c:forEach>
-                    </td>
+                        </td>
+                    </c:if>
+                </c:forEach>
 
-                    <!-- 주문상태 -->
-                    <td>
-                    	<c:choose>
-	                    	<c:when test="${order.status eq '0'}">
-	                    		입금대기중
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '1'}">
-	                    		입금확인
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '2'}">
-	                    		입금대기중
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '3'}">
-	                    		발송완료
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '4'}">
-	                    		취소접수
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '5'}">
-	                    		취소완료
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '6'}">
-	                    		환불접수
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '7'}">
-	                    		환불완료
-	                    	</c:when>
-                    	</c:choose>
-                    </td>
+                <!-- 금액(총) -->
+                <td rowspan="${order.orders_lists.size()}">
+                    ${order.price_total} 원
+                </td>
 
-                    <!-- 주문날짜 -->
-                    <td>${order.update_time}</td>
-                </tr>
+                <!-- 주문상태 -->
+                <td rowspan="${order.orders_lists.size()}">
+                    <c:choose>
+                        <c:when test="${order.status eq '0'}">
+                            입금대기중
+                        </c:when>
+                        <c:when test="${order.status eq '1'}">
+                            입금확인
+                        </c:when>
+                        <c:when test="${order.status eq '2'}">
+                            입금대기중
+                        </c:when>
+                        <c:when test="${order.status eq '3'}">
+                            <div style="margin-bottom: 8px">발송완료</div>
+                            <div><a href="#">배송조회</a></div>
+                        </c:when>
+                        <c:when test="${order.status eq '4'}">
+                            취소접수
+                        </c:when>
+                        <c:when test="${order.status eq '5'}">
+                            취소완료
+                        </c:when>
+                        <c:when test="${order.status eq '6'}">
+                            환불접수
+                        </c:when>
+                        <c:when test="${order.status eq '7'}">
+                            환불완료
+                        </c:when>
+                    </c:choose>
+                </td>
+
+                <!-- 주문날짜 -->
+                <td rowspan="${order.orders_lists.size()}">
+                    <c:set var="update_time" value="${order.update_time}" />
+                    <%
+                        Date date = (Date)pageContext.getAttribute("update_time");
+                        String datestr = "";
+
+                        if (date != null) {
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                            datestr = simpleDateFormat.format(date);
+                        }
+                    %>
+                    <%= datestr  %>
+                </td>
+            </tr>
+
+            <!-- 주문한 상품이 2개 이상 있을때 -->
+            <c:forEach items="${order.orders_lists}" var="orders_lists" varStatus="stat3">
+                <c:if test="${stat3.index gt 0}">
+                    <tr>
+                        <!-- 상품명 -->
+                        <td style="padding-bottom: 0">
+                            <div class="row" style="position: relative">
+                                <c:set var="itemno" value="${orders_lists.item_no}" />
+                                <%
+                                    Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
+                                    String mainpic = "";
+                                    String itemname = "";
+                                    if (itemDao != null && itemno != null) {
+                                        Item item = itemDao.selectOne(itemno, false);
+                                        if (item != null) {
+                                            mainpic = item.getMainpicurl();
+                                            itemname = item.getName();
+                                        }
+                                    }
+                                %>
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                    <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
+                                        <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
+                                        <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
+                                    </div>
+                                </a>
+                                <c:if test="${order.status eq '3'}">
+                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                        <a href="javascript:win_reply_write(${itemno})">후기작성</a>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </td>
+                        <!-- 수량 -->
+                        <td>
+                            ${orders_lists.quantity}개
+                        </td>
+                    </tr>
+                </c:if>
             </c:forEach>
+        </c:forEach>
     </table>
 </div>
 
@@ -195,90 +284,154 @@
 
         <tr>
             <th style="width: 8%">주문번호</th>
-            <th>상품명</th>
+            <th style="width: auto">상품명</th>
+            <th style="width: 8%">수량</th>
             <th style="width: 15%">금액(총)</th>
-            <th style="width: 10%">수량</th>
             <th style="width: 12%">주문상태</th>
             <th style="width: 12%">주문날짜</th>
         </tr>
 
-        <c:forEach items="${ordersList_30}" var="order" varStatus="stat">
-            <tr rowspan="${order.orders_lists.size()}">
-
+        <c:forEach items="${ordersList_30}" var="order" varStatus="stat1">
+            <tr>
                 <!-- 주문번호 -->
-                <td align="center">
-                    <a href="javascript:list_disp('saleLine${stat.index}')">
+                <td rowspan="${order.orders_lists.size()}">
+                    <a href="javascript:list_disp('saleLine${stat1.index}')">
                             ${order.num}
                     </a>
                 </td>
 
-                <!-- 상품명 -->
-                <td align="left">
-                    <c:forEach items="${order.orders_lists}" var="orders_lists">
-                        <c:set var="itemno" value="${orders_lists.item_no}" />
-                        <%
-                            Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
-                            String mainpic = "";
-                            String itemname = "";
-                            if (itemDao != null && itemno != null) {
-                                Item item = itemDao.selectOne(itemno, false);
-                                if (item != null) {
-                                    mainpic = item.getMainpicurl();
-                                    itemname = item.getName();
-                                }
-                            }
-                        %>
-                        <img src="${path}/item/img/${itemno}/<%= mainpic %>"
-                             width="50" height="50" align="left">
-                       <a href="${path}/shop/detail.shop?item_no=${itemno}" >
-                            <h5 align="left"><%= itemname %></h5>
-                        </a><br><br>
-                    </c:forEach>
-                </td>
+                <c:forEach items="${order.orders_lists}" var="orders_lists" varStatus="stat2">
+                    <c:if test="${stat2.index eq 0}">
+                        <!-- 상품명 -->
+                        <td style="padding-bottom: 0">
+                            <div class="row" style="position: relative">
+                                <c:set var="itemno" value="${orders_lists.item_no}" />
+                                <%
+                                    Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
+                                    String mainpic = "";
+                                    String itemname = "";
+                                    if (itemDao != null && itemno != null) {
+                                        Item item = itemDao.selectOne(itemno, false);
+                                        if (item != null) {
+                                            mainpic = item.getMainpicurl();
+                                            itemname = item.getName();
+                                        }
+                                    }
+                                %>
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                    <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
+                                        <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
+                                        <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
+                                    </div>
+                                </a>
+                                <c:if test="${order.status eq '3'}">
+                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                        <a href="javascript:win_reply_write(${itemno})">후기작성</a>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </td>
 
-                <!-- 단가 -->
-                <td align="right">${order.price_total} 원</td>
+                        <!-- 수량 -->
+                        <td>
+                                ${orders_lists.quantity}개
+                        </td>
+                    </c:if>
+                </c:forEach>
 
-                <!-- 수량 -->
-                <td>
-                    <c:forEach items="${order.orders_lists}" var="orders_lists">
-                        ${orders_lists.quantity}개
-                    </c:forEach>
+                <!-- 금액(총) -->
+                <td rowspan="${order.orders_lists.size()}">
+                        ${order.price_total} 원
                 </td>
 
                 <!-- 주문상태 -->
-                 <td>
-                    	<c:choose>
-	                    	<c:when test="${order.status eq '0'}">
-	                    		입금대기중
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '1'}">
-	                    		입금확인
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '2'}">
-	                    		입금대기중
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '3'}">
-	                    		발송완료
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '4'}">
-	                    		취소접수
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '5'}">
-	                    		취소완료
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '6'}">
-	                    		환불접수
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '7'}">
-	                    		환불완료
-	                    	</c:when>
-                    	</c:choose>
-                    </td>
+                <td rowspan="${order.orders_lists.size()}">
+                    <c:choose>
+                        <c:when test="${order.status eq '0'}">
+                            입금대기중
+                        </c:when>
+                        <c:when test="${order.status eq '1'}">
+                            입금확인
+                        </c:when>
+                        <c:when test="${order.status eq '2'}">
+                            입금대기중
+                        </c:when>
+                        <c:when test="${order.status eq '3'}">
+                            <div style="margin-bottom: 8px">발송완료</div>
+                            <div><a href="#">배송조회</a></div>
+                        </c:when>
+                        <c:when test="${order.status eq '4'}">
+                            취소접수
+                        </c:when>
+                        <c:when test="${order.status eq '5'}">
+                            취소완료
+                        </c:when>
+                        <c:when test="${order.status eq '6'}">
+                            환불접수
+                        </c:when>
+                        <c:when test="${order.status eq '7'}">
+                            환불완료
+                        </c:when>
+                    </c:choose>
+                </td>
 
                 <!-- 주문날짜 -->
-                <td>${order.update_time}</td>
+                <td rowspan="${order.orders_lists.size()}">
+                    <c:set var="update_time" value="${order.update_time}" />
+                    <%
+                        Date date = (Date)pageContext.getAttribute("update_time");
+                        String datestr = "";
+
+                        if (date != null) {
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                            datestr = simpleDateFormat.format(date);
+                        }
+                    %>
+                    <%= datestr  %>
+                </td>
             </tr>
+
+            <!-- 주문한 상품이 2개 이상 있을때 -->
+            <c:forEach items="${order.orders_lists}" var="orders_lists" varStatus="stat3">
+                <c:if test="${stat3.index gt 0}">
+                    <tr>
+                        <!-- 상품명 -->
+                        <td style="padding-bottom: 0">
+                            <div class="row" style="position: relative">
+                                <c:set var="itemno" value="${orders_lists.item_no}" />
+                                <%
+                                    Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
+                                    String mainpic = "";
+                                    String itemname = "";
+                                    if (itemDao != null && itemno != null) {
+                                        Item item = itemDao.selectOne(itemno, false);
+                                        if (item != null) {
+                                            mainpic = item.getMainpicurl();
+                                            itemname = item.getName();
+                                        }
+                                    }
+                                %>
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                    <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
+                                        <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
+                                        <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
+                                    </div>
+                                </a>
+                                <c:if test="${order.status eq '3'}">
+                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                        <a href="javascript:win_reply_write(${itemno})">후기작성</a>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </td>
+                        <!-- 수량 -->
+                        <td>
+                                ${orders_lists.quantity}개
+                        </td>
+                    </tr>
+                </c:if>
+            </c:forEach>
         </c:forEach>
     </table>
 </div>
@@ -290,92 +443,158 @@
             <td colspan="6" align="center">
                 <h3>180일 주문 내역</h3>
             </td>
+        </tr>
+
         <tr>
             <th style="width: 8%">주문번호</th>
-            <th>상품명</th>
+            <th style="width: auto">상품명</th>
+            <th style="width: 8%">수량</th>
             <th style="width: 15%">금액(총)</th>
-            <th style="width: 10%">수량</th>
             <th style="width: 12%">주문상태</th>
             <th style="width: 12%">주문날짜</th>
         </tr>
 
-        <c:forEach items="${ordersList_180}" var="order" varStatus="stat">
-            <tr rowspan="${order.orders_lists.size()}">
-
+        <c:forEach items="${ordersList_180}" var="order" varStatus="stat1">
+            <tr>
                 <!-- 주문번호 -->
-                <td align="center">
-                    <a href="javascript:list_disp('saleLine${stat.index}')">
+                <td rowspan="${order.orders_lists.size()}">
+                    <a href="javascript:list_disp('saleLine${stat1.index}')">
                             ${order.num}
                     </a>
                 </td>
 
-                <!-- 상품명 -->
-                <td align="left">
-                    <c:forEach items="${order.orders_lists}" var="orders_lists">
-                        <c:set var="itemno" value="${orders_lists.item_no}" />
-                        <%
-                            Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
-                            String mainpic = "";
-                            String itemname = "";
-                            if (itemDao != null && itemno != null) {
-                                Item item = itemDao.selectOne(itemno, false);
-                                if (item != null) {
-                                    mainpic = item.getMainpicurl();
-                                    itemname = item.getName();
-                                }
-                            }
-                        %>
-                        <img src="${path}/item/img/${itemno}/<%= mainpic %>"
-                             width="50" height="50" align="left">
-                        <a href="${path}/shop/detail.shop?item_no=${itemno}" >
-                            <h5 align="left"><%= itemname %></h5>
-                        </a><br><br>
-                    </c:forEach>
-                </td>
+                <c:forEach items="${order.orders_lists}" var="orders_lists" varStatus="stat2">
+                    <c:if test="${stat2.index eq 0}">
+                        <!-- 상품명 -->
+                        <td style="padding-bottom: 0">
+                            <div class="row" style="position: relative">
+                                <c:set var="itemno" value="${orders_lists.item_no}" />
+                                <%
+                                    Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
+                                    String mainpic = "";
+                                    String itemname = "";
+                                    if (itemDao != null && itemno != null) {
+                                        Item item = itemDao.selectOne(itemno, false);
+                                        if (item != null) {
+                                            mainpic = item.getMainpicurl();
+                                            itemname = item.getName();
+                                        }
+                                    }
+                                %>
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                    <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
+                                        <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
+                                        <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
+                                    </div>
+                                </a>
+                                <c:if test="${order.status eq '3'}">
+                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                        <a href="javascript:win_reply_write(${itemno})">후기작성</a>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </td>
 
-                <!-- 단가 -->
-                <td align="right">${order.price_total} 원</td>
+                        <!-- 수량 -->
+                        <td>
+                                ${orders_lists.quantity}개
+                        </td>
+                    </c:if>
+                </c:forEach>
 
-                <!-- 수량 -->
-                <td>
-                    <c:forEach items="${order.orders_lists}" var="orders_lists">
-                        ${orders_lists.quantity}개
-                    </c:forEach>
+                <!-- 금액(총) -->
+                <td rowspan="${order.orders_lists.size()}">
+                        ${order.price_total} 원
                 </td>
 
                 <!-- 주문상태 -->
-                <td>
-                    	<c:choose>
-	                    	<c:when test="${order.status eq '0'}">
-	                    		입금대기중
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '1'}">
-	                    		입금확인
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '2'}">
-	                    		입금대기중
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '3'}">
-	                    		발송완료
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '4'}">
-	                    		취소접수
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '5'}">
-	                    		취소완료
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '6'}">
-	                    		환불접수
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '7'}">
-	                    		환불완료
-	                    	</c:when>
-                    	</c:choose>
-                    </td>
+                <td rowspan="${order.orders_lists.size()}">
+                    <c:choose>
+                        <c:when test="${order.status eq '0'}">
+                            입금대기중
+                        </c:when>
+                        <c:when test="${order.status eq '1'}">
+                            입금확인
+                        </c:when>
+                        <c:when test="${order.status eq '2'}">
+                            입금대기중
+                        </c:when>
+                        <c:when test="${order.status eq '3'}">
+                            <div style="margin-bottom: 8px">발송완료</div>
+                            <div><a href="#">배송조회</a></div>
+                        </c:when>
+                        <c:when test="${order.status eq '4'}">
+                            취소접수
+                        </c:when>
+                        <c:when test="${order.status eq '5'}">
+                            취소완료
+                        </c:when>
+                        <c:when test="${order.status eq '6'}">
+                            환불접수
+                        </c:when>
+                        <c:when test="${order.status eq '7'}">
+                            환불완료
+                        </c:when>
+                    </c:choose>
+                </td>
 
                 <!-- 주문날짜 -->
-                <td>${order.update_time}</td>
+                <td rowspan="${order.orders_lists.size()}">
+                    <c:set var="update_time" value="${order.update_time}" />
+                    <%
+                        Date date = (Date)pageContext.getAttribute("update_time");
+                        String datestr = "";
+
+                        if (date != null) {
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                            datestr = simpleDateFormat.format(date);
+                        }
+                    %>
+                    <%= datestr  %>
+                </td>
             </tr>
+
+            <!-- 주문한 상품이 2개 이상 있을때 -->
+            <c:forEach items="${order.orders_lists}" var="orders_lists" varStatus="stat3">
+                <c:if test="${stat3.index gt 0}">
+                    <tr>
+                        <!-- 상품명 -->
+                        <td style="padding-bottom: 0">
+                            <div class="row" style="position: relative">
+                                <c:set var="itemno" value="${orders_lists.item_no}" />
+                                <%
+                                    Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
+                                    String mainpic = "";
+                                    String itemname = "";
+                                    if (itemDao != null && itemno != null) {
+                                        Item item = itemDao.selectOne(itemno, false);
+                                        if (item != null) {
+                                            mainpic = item.getMainpicurl();
+                                            itemname = item.getName();
+                                        }
+                                    }
+                                %>
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                    <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
+                                        <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
+                                        <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
+                                    </div>
+                                </a>
+                                <c:if test="${order.status eq '3'}">
+                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                        <a href="javascript:win_reply_write(${itemno})">후기작성</a>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </td>
+                        <!-- 수량 -->
+                        <td>
+                                ${orders_lists.quantity}개
+                        </td>
+                    </tr>
+                </c:if>
+            </c:forEach>
         </c:forEach>
     </table>
 </div>
@@ -388,95 +607,158 @@
             <td colspan="6" align="center">
                 <h3>모든 주문 내역</h3>
             </td>
+        </tr>
+
         <tr>
             <th style="width: 8%">주문번호</th>
-            <th>상품명</th>
+            <th style="width: auto">상품명</th>
+            <th style="width: 8%">수량</th>
             <th style="width: 15%">금액(총)</th>
-            <th style="width: 10%">수량</th>
             <th style="width: 12%">주문상태</th>
             <th style="width: 12%">주문날짜</th>
         </tr>
 
-        <c:forEach items="${ordersList_all}" var="order" varStatus="stat">
-            <tr rowspan="${order.orders_lists.size()}">
-
+        <c:forEach items="${ordersList_all}" var="order" varStatus="stat1">
+            <tr>
                 <!-- 주문번호 -->
-                <td align="center">
-                    <a href="javascript:list_disp('saleLine${stat.index}')">
+                <td rowspan="${order.orders_lists.size()}">
+                    <a href="javascript:list_disp('saleLine${stat1.index}')">
                             ${order.num}
                     </a>
                 </td>
 
-                <!-- 상품명 -->
-                <td align="left">
-                    <c:forEach items="${order.orders_lists}" var="orders_lists">
-                     
-                        <c:set var="itemno" value="${orders_lists.item_no}" />
-                        <%
-                            Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
-                            String mainpic = "";
-                            String itemname = "";
-                            if (itemDao != null && itemno != null) {
-                                Item item = itemDao.selectOne(itemno, false);
-                                if (item != null) {
-                                    mainpic = item.getMainpicurl();
-                                    itemname = item.getName();
-                                }
-                            }
-                        %>
-  						
+                <c:forEach items="${order.orders_lists}" var="orders_lists" varStatus="stat2">
+                    <c:if test="${stat2.index eq 0}">
+                        <!-- 상품명 -->
+                        <td style="padding-bottom: 0">
+                            <div class="row" style="position: relative">
+                                <c:set var="itemno" value="${orders_lists.item_no}" />
+                                <%
+                                    Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
+                                    String mainpic = "";
+                                    String itemname = "";
+                                    if (itemDao != null && itemno != null) {
+                                        Item item = itemDao.selectOne(itemno, false);
+                                        if (item != null) {
+                                            mainpic = item.getMainpicurl();
+                                            itemname = item.getName();
+                                        }
+                                    }
+                                %>
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                    <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
+                                        <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
+                                        <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
+                                    </div>
+                                </a>
+                                <c:if test="${order.status eq '3'}">
+                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                        <a href="javascript:win_reply_write(${itemno})">후기작성</a>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </td>
 
-                        <img src="${path}/item/img/${itemno}/<%= mainpic %>"
-                             width="50" height="50" align="left">
-                         <a href="${path}/shop/detail.shop?item_no=${itemno}" >
-                            <h5 align="left"><%= itemname %></h5>
-                        </a><br><br>
-                    </c:forEach>
-                </td>
+                        <!-- 수량 -->
+                        <td>
+                                ${orders_lists.quantity}개
+                        </td>
+                    </c:if>
+                </c:forEach>
 
-                <!-- 단가 -->
-                <td align="right">${order.price_total} 원</td>
-
-                <!-- 수량 -->
-                <td>
-                    <c:forEach items="${order.orders_lists}" var="orders_lists">
-                        ${orders_lists.quantity}개
-                    </c:forEach>
+                <!-- 금액(총) -->
+                <td rowspan="${order.orders_lists.size()}">
+                        ${order.price_total} 원
                 </td>
 
                 <!-- 주문상태 -->
-                 <td>
-                    	<c:choose>
-	                    	<c:when test="${order.status eq '0'}">
-	                    		입금대기중
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '1'}">
-	                    		입금확인
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '2'}">
-	                    		입금대기중
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '3'}">
-	                    		발송완료
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '4'}">
-	                    		취소접수
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '5'}">
-	                    		취소완료
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '6'}">
-	                    		환불접수
-	                    	</c:when>
-	                    	<c:when test="${order.status eq '7'}">
-	                    		환불완료
-	                    	</c:when>
-                    	</c:choose>
-                    </td>
+                <td rowspan="${order.orders_lists.size()}">
+                    <c:choose>
+                        <c:when test="${order.status eq '0'}">
+                            입금대기중
+                        </c:when>
+                        <c:when test="${order.status eq '1'}">
+                            입금확인
+                        </c:when>
+                        <c:when test="${order.status eq '2'}">
+                            입금대기중
+                        </c:when>
+                        <c:when test="${order.status eq '3'}">
+                            <div style="margin-bottom: 8px">발송완료</div>
+                            <div><a href="#">배송조회</a></div>
+                        </c:when>
+                        <c:when test="${order.status eq '4'}">
+                            취소접수
+                        </c:when>
+                        <c:when test="${order.status eq '5'}">
+                            취소완료
+                        </c:when>
+                        <c:when test="${order.status eq '6'}">
+                            환불접수
+                        </c:when>
+                        <c:when test="${order.status eq '7'}">
+                            환불완료
+                        </c:when>
+                    </c:choose>
+                </td>
 
                 <!-- 주문날짜 -->
-                <td>${order.update_time}</td>
+                <td rowspan="${order.orders_lists.size()}">
+                    <c:set var="update_time" value="${order.update_time}" />
+                    <%
+                        Date date = (Date)pageContext.getAttribute("update_time");
+                        String datestr = "";
+
+                        if (date != null) {
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                            datestr = simpleDateFormat.format(date);
+                        }
+                    %>
+                    <%= datestr  %>
+                </td>
             </tr>
+
+            <!-- 주문한 상품이 2개 이상 있을때 -->
+            <c:forEach items="${order.orders_lists}" var="orders_lists" varStatus="stat3">
+                <c:if test="${stat3.index gt 0}">
+                    <tr>
+                        <!-- 상품명 -->
+                        <td style="padding-bottom: 0">
+                            <div class="row" style="position: relative">
+                                <c:set var="itemno" value="${orders_lists.item_no}" />
+                                <%
+                                    Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
+                                    String mainpic = "";
+                                    String itemname = "";
+                                    if (itemDao != null && itemno != null) {
+                                        Item item = itemDao.selectOne(itemno, false);
+                                        if (item != null) {
+                                            mainpic = item.getMainpicurl();
+                                            itemname = item.getName();
+                                        }
+                                    }
+                                %>
+                                <a href="${path}/shop/detail.shop?item_no=${itemno}" style="margin-bottom: 15px">
+                                    <div class="row" style="text-align: left; margin-left: 10px; margin-right: 100px">
+                                        <div><img src="${path}/item/img/${itemno}/<%= mainpic %>" style="width: 50px; height: 50px"></div>
+                                        <div style="margin-left: 10px; margin-top: 12px"><h6><%= itemname %></h6></div>
+                                    </div>
+                                </a>
+                                <c:if test="${order.status eq '3'}">
+                                    <div style="position: absolute; text-align: right; margin-top: 16px; width: 100%; padding-right: 20px">
+                                        <a href="javascript:win_reply_write(${itemno})">후기작성</a>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </td>
+                        <!-- 수량 -->
+                        <td>
+                                ${orders_lists.quantity}개
+                        </td>
+                    </tr>
+                </c:if>
+            </c:forEach>
         </c:forEach>
     </table>
 </div>
