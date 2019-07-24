@@ -33,9 +33,11 @@
         }
 
         function validateCKEDITORforBlank(field) {
-            var vArray = new Array();
+            var vArray;
+
             vArray = field.split("&nbsp;");
             var vFlag = 0;
+
             for (var i = 0; i < vArray.length; i++) {
                 if (vArray[i] == '' || vArray[i] == "") {
                     continue;
@@ -44,11 +46,8 @@
                     break;
                 }
             }
-            if (vFlag == 0) {
-                return true;
-            } else {
-                return false;
-            }
+
+            return vFlag == 0;
         }
 
         function do_write() {
