@@ -87,10 +87,13 @@
 
     <style type="text/css">
         table th {
-            height: 35px;
-            font-size: 12pt;
             background: #5722a9;
             color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #ffffff;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -172,9 +175,9 @@
                 <thead>
                     <tr class="table100-head">
                         <th width="8%">번호</th>
-                        <th width="20%">작성자</th>
-                        <th width="57%">내용</th>
-                        <th width="15">등록일</th>
+                        <th width="12%">작성자</th>
+                        <th>내용</th>
+                        <th width="15%">등록일</th>
                     </tr>
                 </thead>
                 <tbody>

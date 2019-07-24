@@ -43,6 +43,13 @@
             f.submit();
         }
     </script>
+
+    <style type="text/css">
+        tbody tr:hover {
+            background-color: #ffffff;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div style="margin: 15px">
