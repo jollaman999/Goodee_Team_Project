@@ -24,7 +24,8 @@
     <script type="text/javascript">
         function onlyNumber() {
             if(((event.keyCode < 48)||(event.keyCode > 57)) && ((event.keyCode < 96)||(event.keyCode > 105)) &&
-                (event.keyCode != 8) && (event.keyCode != 35) && (event.keyCode != 36) && (event.keyCode != 37) && (event.keyCode != 39) && (event.keyCode != 46)) {
+                (event.keyCode != 8) && (event.keyCode != 35) && (event.keyCode != 36) && (event.keyCode != 37) && (event.keyCode != 39) && (event.keyCode != 46) &&
+                (event.keyCode != 116))  {
                 event.returnValue = false;
                 alert("숫자만 입력하세요!");
             }
@@ -43,9 +44,6 @@
                 alert("최대 금액를 " + ${real_max_price} + "원 이하로 입력해 주세요!");
                 return;
             }
-
-            alert(min_price);
-            alert(max_price);
 
             if (max_price < min_price) {
                 alert("최소 금액이 최대 금액 보다 큽니다!");
