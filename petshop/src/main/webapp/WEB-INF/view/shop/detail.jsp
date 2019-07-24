@@ -61,6 +61,13 @@
 
             location.href = "${path}/basket/checkout.shop?item_no=${item.item_no}&quantity=" + quantity;
         }
+
+        function iframe_autoResize(iframe)
+        {
+            var iframeHeight = (iframe).contentWindow.document.body.scrollHeight;
+
+            (iframe).height = iframeHeight;
+        }
     </script>
 </head>
 <body>
@@ -202,6 +209,13 @@
     </div>
 </section>
 <!-- RELATED PRODUCTS section end -->
+
+<!-- Reply Area Start -->
+<div style="text-align: center; margin-top: 50px">
+    <iframe src="${path}/reply/list.shop?type=0&itemno=${item.item_no}"
+            onload="iframe_autoResize(this)" scrolling="no" style="width: 90%; border: 0"></iframe>
+</div>
+<!-- Reply Area End -->
 
 <script type="text/javascript">
     (function ($) {
