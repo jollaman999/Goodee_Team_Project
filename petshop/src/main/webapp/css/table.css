@@ -141,7 +141,7 @@ tbody tr:nth-child(even) {
 tbody tr {
   font-family: "Malgun Gothic";
   font-size: 15px;
-  color: #808080;
+  color: #2a2a2a;
   line-height: 1;
   font-weight: unset;
 }
@@ -188,40 +188,18 @@ tbody tr:hover {
   }
 }
 
-table a:link {
-	color: #666;
-	font-weight: bold;
-	text-decoration: none;
-}
-table a:visited {
-	color: #999999;
-	font-weight: bold;
-	text-decoration: none;
-}
-table a:active,
-
-table a:hover {
-	color: #bd5a35;
-	text-decoration: underline;
-}
-
  table {
   border-spacing: 1;
   border-collapse: collapse;
-  background: white;
   border-radius: 10px;
   overflow: hidden;
   width: 100%;
   margin: 0 auto;
   position: relative;
-  color: #666;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
   background: #eaebec;
-  margin: 20px;
-  border: #ccc 1px solid;	
-  border-radius: 10px;
-  font-weight : bold;
+  border: #ccc 1px solid;
 }
 
 table * {
@@ -231,9 +209,6 @@ table * {
 table th {
     background: #c0c0c0; 
     color: white;
-}
-table td, table th {
-  padding-left: 8px;
 }
 
 table tbody tr {
@@ -254,13 +229,13 @@ table td.c, table th.c {
 table td.r, table th.r {
   text-align: center;
 }
-/* 여기서부터 내가 넣은 css 임*/
+
 table > tbody > tr > td {
-	padding:18px;
 	border-top: 1px solid #ffffff;
 	border-bottom: 1px solid #e0e0e0;
 	border-left: 1px solid #e0e0e0;
 }
+
 table > tbody > tr:nth-child(even) > td{
 	background: #f8f8f8; /* Old browsers */
 	background: -moz-linear-gradient(top,  #f8f8f8 0%, #f6f6f6 100%); /* FF3.6+ */
@@ -271,17 +246,21 @@ table > tbody > tr:nth-child(even) > td{
 	background: linear-gradient(to bottom,  #f8f8f8 0%,#f6f6f6 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
 }
+
 table > tbody > tr:last-child > td{
 	border-bottom: 0;
 }
+
 table > tbody > tr:last-child > td:first-child {
 	-webkit-border-bottom-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 }
+
 table > tbody > tr:last-child > td:last-child {
 	-webkit-border-bottom-right-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
+
 table > tbody > tr:hover > td {
 	background: #f2f2f2; /* Old browsers */
 	background: -moz-linear-gradient(top,  #f2f2f2 0%, #f0f0f0 100%); /* FF3.6+ */
