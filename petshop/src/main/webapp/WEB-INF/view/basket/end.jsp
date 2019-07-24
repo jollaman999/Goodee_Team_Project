@@ -1,47 +1,41 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set value="${pageContext.request.contextPath}" var="path" />
 <!DOCTYPE html>
 <html>
 <head>
-<style type="text/css">
-div.links  {
-	  margin: auto;
-   	  width: 100%;
-   	  text-align: center;
-   	  margin-top : 80px	
-}
-div.deliveryInfo{
-	margin-top: 50px
-}
+    <meta charset="UTF-8">
+    <title>ì£¼ë¬¸ í™•ì •</title>
 
-</style>
-<meta charset="EUC-KR">
-<title>ÁÖ¹® È®Á¤</title>
+    <style type="text/css">
+        div.links {
+            width: 100%;
+            text-align: center;
+            margin: 50px auto auto;
+        }
+
+        div.deliveryInfo {
+            margin-top: 50px
+        }
+    </style>
 </head>
 <body>
-	<div id="container">
-		<div class="main">
-			<div class="completeState">
-				<h1>ÁÖ¹®ÀÌ Á¤»óÀûÀ¸·Î ¿Ï·á µÇ¾ú½À´Ï´Ù.</h1>
-				<div class="deliveryInfo" style="text-align: center;">
-					
-   						 <h3>ÀÚ¼¼ÇÑ ÁÖ¹®³»¿ªÀº ¸¶ÀÌÆäÀÌÁö > ÁÖ¹®/¹è¼Û ¸Þ´º¸¦ ÀÌ¿ëÇØ ÁÖ¼¼¿ä.</h3>
-   										
-				</div>
-				<div class="links">
-					<ul>
-						<a class="site-btn" style="margin-right :10px" href="../shop/list.shop">¼îÇÎ°è¼ÓÇÏ±â</a>
-						<a class="site-btn" style="margin-right :10px" href="../basket/end1.shop">ÁÖ¹® ³»¿ª º¸±â</a>
-						<a class="site-btn" style="margin-right :10px" href="http://www.gdu.co.kr">Å¸¼îÇÎ¸ô</a><br><br>
-						<img src="${path}/img/k.png" width="150" height="150" alt="">	
-  	
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+<div id="container">
+    <div class="main">
+        <div class="completeState" style="text-align: center">
+            <h2>ì£¼ë¬¸ì´ ì •ìƒì ìœ¼ë¡œ ì™„ë£Œ ë˜ì—ˆìŠµë‹ˆë‹¤.</h2>
+            <div class="deliveryInfo" style="text-align: center;">
+                <h4>ìžì„¸í•œ ì£¼ë¬¸ë‚´ì—­ì€ ì‚¬ì´ë“œë°”ì˜ ì£¼ë¬¸ë‚´ì—­ ë©”ë‰´ë¥¼ ì´ìš©í•´ ì£¼ì„¸ìš”.</h4>
+            </div>
+            <div class="links">
+                <a class="site-btn" style="margin-right :10px" href="${path}/shop/list.shop">ì‡¼í•‘ê³„ì†í•˜ê¸°</a>
+                <a class="site-btn" style="margin-right :10px" href="${path}/member/orderHistory.shop">ì£¼ë¬¸ ë‚´ì—­ ë³´ê¸°</a>
+                <a class="site-btn" style="margin-right :10px" href="http://www.gdu.co.kr">íƒ€ì‡¼í•‘ëª°</a><br><br>
+                <img src="${path}/img/k.png" width="150" height="150" alt="" style="margin-top: 30px">
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
