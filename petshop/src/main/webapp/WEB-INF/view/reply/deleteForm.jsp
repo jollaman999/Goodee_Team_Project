@@ -8,7 +8,14 @@
 
     <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 
-    <title>댓글 삭제 확인</title>
+    <c:choose>
+        <c:when test="${param.type eq '0'}">
+            <title>후기 삭제 확인</title>
+        </c:when>
+        <c:otherwise>
+            <title>댓글 삭제 확인</title>
+        </c:otherwise>
+    </c:choose>
 
     <style type="text/css">
         table {
@@ -33,7 +40,14 @@
         <input type="hidden" name="pageNum" value="${param.pageNum}">
 
         <div style="margin-top: 20px">
-            <h3>댓글을 삭제하시겠습니까?</h3>
+            <c:choose>
+                <c:when test="${param.type eq '0'}">
+                    <h3>후기를 삭제 하시겠습니까?</h3>
+                </c:when>
+                <c:otherwise>
+                    <h3>댓글을 삭제 하시겠습니까?</h3>
+                </c:otherwise>
+            </c:choose>
         </div>
         <div>
             <input type="submit" value="삭제" class="w3-button w3-bar-item w3-deep-purple">&nbsp;&nbsp;&nbsp;

@@ -1,3 +1,7 @@
+<%@ page import="org.springframework.web.context.ContextLoader" %>
+<%@ page import="org.springframework.web.context.WebApplicationContext" %>
+<%@ page import="dao.MemberDao" %>
+<%@ page import="logic.Member" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -18,14 +22,14 @@
 
     <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 
-    <title>댓글 목록</title>
-
-    <style type="text/css">
-        th {
-            background: #5722a9;
-            color: white;
-        }
-    </style>
+    <c:choose>
+        <c:when test="${param.type eq '0'}">
+            <title>후기 목록</title>
+        </c:when>
+        <c:otherwise>
+            <title>댓글 목록</title>
+        </c:otherwise>
+    </c:choose>
 
     <script type="text/javascript">
         var reply_update_form;
@@ -35,7 +39,14 @@
             if (reply_update_form != null)
                 reply_update_form.close();
 
-            var op = "width=750, height=182, left=50, top=150";
+            <c:choose>
+                <c:when test="${param.type eq '0'}">
+                    var op = "width=750, height=356, left=50, top=150";
+                </c:when>
+                <c:otherwise>
+                    var op = "width=750, height=182, left=50, top=150";
+                </c:otherwise>
+            </c:choose>
             reply_update_form = open("../reply/updateForm.shop?num=" + num + "&type=${param.type}&itemno=${param.itemno}&pageNum=${param.pageNum}", "", op);
         }
 
@@ -58,7 +69,14 @@
 
         function do_write() {
             if (!f1.content.value || f1.content.value === " ") {
-                alert("댓글 내용을 입력하세요");
+                <c:choose>
+                    <c:when test="${param.type eq '0'}">
+                        alert("후기 내용을 입력하세요");
+                    </c:when>
+                    <c:otherwise>
+                        alert("댓글 내용을 입력하세요");
+                    </c:otherwise>
+                </c:choose>
                 f1.content.focus();
                 return;
             }
@@ -66,8 +84,26 @@
             f1.submit();
         }
     </script>
+
+    <style type="text/css">
+        table th {
+            height: 35px;
+            font-size: 12pt;
+            background: #5722a9;
+            color: white;
+        }
+    </style>
 </head>
 <body>
+<%
+    WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+
+    MemberDao memberDao = null;
+    if (context != null) {
+        memberDao = (MemberDao) context.getBean("MemberDao");
+    }
+%>
+
 <c:choose>
     <c:when test="${!empty sessionScope.loginMember}">
         <form action="write.shop" method="post" name="f1">
@@ -78,10 +114,24 @@
                 <table style="height: 100px; background-color: #f5f5f5;">
                     <tr>
                         <td style="width: 80%; padding-top: 10px; padding-bottom: 10px">
-                            <textarea rows="7" name="content" style="width: 100%"></textarea>
+                            <c:choose>
+                                <c:when test="${param.type eq '0'}">
+                                    <textarea rows="20" name="content" style="width: 100%"></textarea>
+                                </c:when>
+                                <c:otherwise>
+                                    <textarea rows="7" name="content" style="width: 100%"></textarea>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                         <td>
-                            <input type="button" value="댓글 달기" class="w3-button w3-bar-item w3-deep-purple" onclick="do_write()">
+                            <c:choose>
+                                <c:when test="${param.type eq '0'}">
+                                    <input type="button" value="후기 남기기" class="w3-button w3-bar-item w3-deep-purple" onclick="do_write()">
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="button" value="댓글 달기" class="w3-button w3-bar-item w3-deep-purple" onclick="do_write()">
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                     </tr>
                 </table>
@@ -136,7 +186,18 @@
                             <td>
                                 <div style="margin-top: 10px">
                                     <div style="margin-top: 10px; margin-bottom: 10px">
-                                        ${sessionScope.loginMember.name}
+                                        <c:set var="member_id" value="${reply.member_id}" />
+                                        <%
+                                            String reply_member_name = "";
+                                            String member_id = (String)pageContext.getAttribute("member_id");
+                                            if (memberDao != null) {
+                                                Member member = memberDao.selectOne(member_id);
+                                                if (member != null) {
+                                                    reply_member_name = member.getName();
+                                                }
+                                            }
+                                        %>
+                                        <%= reply_member_name %>
                                     </div>
                                 </div>
                             </td>
