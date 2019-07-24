@@ -94,11 +94,12 @@
         </tr>
 
         <tr>
-            <th>주문번호</th>
+            <th style="width: 8%">주문번호</th>
             <th>상품명</th>
-            <th>금액(총)</th>
-            <th>수량</th>
-            <th>주문상태</th>
+            <th style="width: 15%">금액(총)</th>
+            <th style="width: 10%">수량</th>
+            <th style="width: 12%">주문상태</th>
+            <th style="width: 12%">주문날짜</th>
         </tr>
 
             <c:forEach items="${ordersList_7}" var="order" varStatus="stat">
@@ -106,8 +107,6 @@
 
                     <!-- 주문번호 -->
                     <td align="center">
-                        ${order.update_time}
-                        <br>
                         <a href="javascript:list_disp('saleLine${stat.index}')">
                                 ${order.num}
                         </a>
@@ -143,25 +142,15 @@
                     <!-- 수량 -->
                     <td>
                         <c:forEach items="${order.orders_lists}" var="orders_lists">
-                            <%
-                                Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
-                                String itemname = "";
-                                if (itemDao != null && itemno != null) {
-                                    Item item = itemDao.selectOne(itemno, false);
-                                    if (item != null) {
-                                        itemname = item.getName();
-                                    }
-                                }
-                            %>
-                            <%= itemname %>:${orders_lists.quantity}개
+                            ${orders_lists.quantity}개
                         </c:forEach>
                     </td>
 
                     <!-- 주문상태 -->
-                    <td>
-                        배송중
-                    </td>
+                    <td>배송중</td>
 
+                    <!-- 주문날짜 -->
+                    <td>${order.update_time}</td>
                 </tr>
             </c:forEach>
     </table>
@@ -178,11 +167,12 @@
         </tr>
 
         <tr>
-            <th>주문번호</th>
+            <th style="width: 8%">주문번호</th>
             <th>상품명</th>
-            <th>금액(총)</th>
-            <th>수량</th>
-            <th>주문상태</th>
+            <th style="width: 15%">금액(총)</th>
+            <th style="width: 10%">수량</th>
+            <th style="width: 12%">주문상태</th>
+            <th style="width: 12%">주문날짜</th>
         </tr>
 
         <c:forEach items="${ordersList_30}" var="order" varStatus="stat">
@@ -190,8 +180,6 @@
 
                 <!-- 주문번호 -->
                 <td align="center">
-                        ${order.update_time}
-                    <br>
                     <a href="javascript:list_disp('saleLine${stat.index}')">
                             ${order.num}
                     </a>
@@ -227,25 +215,15 @@
                 <!-- 수량 -->
                 <td>
                     <c:forEach items="${order.orders_lists}" var="orders_lists">
-                        <%
-                            Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
-                            String itemname = "";
-                            if (itemDao != null && itemno != null) {
-                                Item item = itemDao.selectOne(itemno, false);
-                                if (item != null) {
-                                    itemname = item.getName();
-                                }
-                            }
-                        %>
-                        <%= itemname %>:${orders_lists.quantity}개
+                        ${orders_lists.quantity}개
                     </c:forEach>
                 </td>
 
                 <!-- 주문상태 -->
-                <td>
-                    배송중
-                </td>
+                <td>배송중</td>
 
+                <!-- 주문날짜 -->
+                <td>${order.update_time}</td>
             </tr>
         </c:forEach>
     </table>
@@ -258,14 +236,13 @@
             <td colspan="5" align="center">
                 <h1>180일 주문 내역</h1>
             </td>
-        </tr>
-
         <tr>
-            <th>주문번호</th>
+            <th style="width: 8%">주문번호</th>
             <th>상품명</th>
-            <th>금액(총)</th>
-            <th>수량</th>
-            <th>주문상태</th>
+            <th style="width: 15%">금액(총)</th>
+            <th style="width: 10%">수량</th>
+            <th style="width: 12%">주문상태</th>
+            <th style="width: 12%">주문날짜</th>
         </tr>
 
         <c:forEach items="${ordersList_180}" var="order" varStatus="stat">
@@ -273,8 +250,6 @@
 
                 <!-- 주문번호 -->
                 <td align="center">
-                    ${order.update_time}
-                    <br>
                     <a href="javascript:list_disp('saleLine${stat.index}')">
                             ${order.num}
                     </a>
@@ -310,25 +285,15 @@
                 <!-- 수량 -->
                 <td>
                     <c:forEach items="${order.orders_lists}" var="orders_lists">
-                        <%
-                            Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
-                            String itemname = "";
-                            if (itemDao != null && itemno != null) {
-                                Item item = itemDao.selectOne(itemno, false);
-                                if (item != null) {
-                                    itemname = item.getName();
-                                }
-                            }
-                        %>
-                        <%= itemname %>:${orders_lists.quantity}개
+                        ${orders_lists.quantity}개
                     </c:forEach>
                 </td>
 
                 <!-- 주문상태 -->
-                <td>
-                    배송중
-                </td>
+                <td>배송중</td>
 
+                <!-- 주문날짜 -->
+                <td>${order.update_time}</td>
             </tr>
         </c:forEach>
     </table>
@@ -342,14 +307,13 @@
             <td colspan="5" align="center">
                 <h1>모든 주문 내역</h1>
             </td>
-        </tr>
-
         <tr>
-            <th>주문번호</th>
+            <th style="width: 8%">주문번호</th>
             <th>상품명</th>
-            <th>금액(총)</th>
-            <th>수량</th>
-            <th>주문상태</th>
+            <th style="width: 15%">금액(총)</th>
+            <th style="width: 10%">수량</th>
+            <th style="width: 12%">주문상태</th>
+            <th style="width: 12%">주문날짜</th>
         </tr>
 
         <c:forEach items="${ordersList_all}" var="order" varStatus="stat">
@@ -357,8 +321,6 @@
 
                 <!-- 주문번호 -->
                 <td align="center">
-                        ${order.update_time}
-                    <br>
                     <a href="javascript:list_disp('saleLine${stat.index}')">
                             ${order.num}
                     </a>
@@ -394,25 +356,15 @@
                 <!-- 수량 -->
                 <td>
                     <c:forEach items="${order.orders_lists}" var="orders_lists">
-                        <%
-                            Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
-                            String itemname = "";
-                            if (itemDao != null && itemno != null) {
-                                Item item = itemDao.selectOne(itemno, false);
-                                if (item != null) {
-                                    itemname = item.getName();
-                                }
-                            }
-                        %>
-                        <%= itemname %>:${orders_lists.quantity}개
+                        ${orders_lists.quantity}개
                     </c:forEach>
                 </td>
 
                 <!-- 주문상태 -->
-                <td>
-                    배송중
-                </td>
+                <td>배송중</td>
 
+                <!-- 주문날짜 -->
+                <td>${order.update_time}</td>
             </tr>
         </c:forEach>
     </table>
