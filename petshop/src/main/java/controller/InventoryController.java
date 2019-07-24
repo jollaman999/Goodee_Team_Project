@@ -123,11 +123,8 @@ public class InventoryController {
         List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
         List<Orders> OrdersList = service.getOrdersList(null, null);
         
-     // orders money 멤버에서 호출
-        
+        // orders money 멤버에서 호출
         List<Orders> moneyListDay = service.ordersmonyList_by_day();
-        List<Orders> moneyListMonth = service.ordersmoneyList_by_month();
-        List<Orders> moneyListYear = service.ordersmoneyList_by_year();
         
 
         // 리스트 객체 생성 
@@ -136,13 +133,82 @@ public class InventoryController {
         mav.addObject("CategoryItemList",CategoryItemList);
         mav.addObject("Orderslist",OrdersList);
         mav.addObject("moneyListDay",moneyListDay);
-        mav.addObject("moneyListMonth",moneyListMonth);
-        mav.addObject("moneyListYear",moneyListYear);
-       
         
         return mav;
     }
     
-    
+	@RequestMapping("money2")
+	public ModelAndView money2(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
 
+		// 받아올 테이블
+		List<Item> itemList = service.getItemList(true);
+		List<CategoryGroup> CategoryGroupList = service.getCategoryGroupList();
+		List<CategoryItem> CategoryItemList = service.getCategoryItemList();
+		List<Orders> OrdersList = service.getOrdersList(null, null);
+
+		// orders money 멤버에서 호출
+		List<Orders> moneyListMonth = service.ordersmoneyList_by_month();
+
+		// 리스트 객체 생성
+		mav.addObject("itemList", itemList);
+		mav.addObject("CategoryGroupList", CategoryGroupList);
+		mav.addObject("CategoryItemList", CategoryItemList);
+		mav.addObject("Orderslist", OrdersList);
+		mav.addObject("moneyListMonth", moneyListMonth);
+
+		return mav;
+	}
+
+	@RequestMapping("money3")
+	public ModelAndView money3(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+
+		// 받아올 테이블
+		List<Item> itemList = service.getItemList(true);
+		List<CategoryGroup> CategoryGroupList = service.getCategoryGroupList();
+		List<CategoryItem> CategoryItemList = service.getCategoryItemList();
+		List<Orders> OrdersList = service.getOrdersList(null, null);
+
+		// orders money 멤버에서 호출
+
+		List<Orders> moneyListYear = service.ordersmoneyList_by_year();
+
+		// 리스트 객체 생성
+		mav.addObject("itemList", itemList);
+		mav.addObject("CategoryGroupList", CategoryGroupList);
+		mav.addObject("CategoryItemList", CategoryItemList);
+		mav.addObject("Orderslist", OrdersList);
+		mav.addObject("moneyListYear", moneyListYear);
+
+		return mav;
+	}
+
+	@RequestMapping("money4")
+	public ModelAndView money4(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+
+		// 받아올 테이블
+		List<Item> itemList = service.getItemList(true);
+		List<CategoryGroup> CategoryGroupList = service.getCategoryGroupList();
+		List<CategoryItem> CategoryItemList = service.getCategoryItemList();
+		List<Orders> OrdersList = service.getOrdersList(null, null);
+
+		// orders money 멤버에서 호출
+
+		List<Orders> moneyList = service.ordersmonyList_by_day();
+		List<Orders> moneyList2 = service.ordersmoneyList_by_month();
+		List<Orders> moneyList3 = service.ordersmoneyList_by_year();
+
+		// 리스트 객체 생성
+		mav.addObject("itemList", itemList);
+		mav.addObject("CategoryGroupList", CategoryGroupList);
+		mav.addObject("CategoryItemList", CategoryItemList);
+		mav.addObject("Orderslist", OrdersList);
+		mav.addObject("moneyList", moneyList);
+		mav.addObject("moneyList2", moneyList2);
+		mav.addObject("moneyList3", moneyList3);
+
+		return mav;
+	}
 }
