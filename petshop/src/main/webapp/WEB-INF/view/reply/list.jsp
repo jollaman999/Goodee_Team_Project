@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="${path}/vendor/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" type="text/css" href="${path}/css/submitform.css">
     <link rel="stylesheet" type="text/css" href="${path}/css/table-util.css">
-    <link rel="stylesheet" type="text/css" href="${path}/css/table-reply.css">
+    <link rel="stylesheet" type="text/css" href="${path}/css/table.css">
 
     <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 
