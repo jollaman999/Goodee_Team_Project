@@ -189,86 +189,95 @@
             </div>
 
             <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
-                <div class="row">
-                    <%
-                        ItemDao itemDao = null;
+                <c:choose>
+                    <c:when test="${!empty itemList && itemList.size() != 0}">
+                        <div class="row">
+                            <%
+                                ItemDao itemDao = null;
 
-                        if (context != null) {
-                            itemDao = (ItemDao) context.getBean("ItemDao");
-                        }
-                    %>
-                    <c:forEach var="item" items="${itemList}">
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <%
-                                        Item item = (Item) pageContext.getAttribute("item");
-                                        if (itemDao != null && item != null && itemDao.check_new(null, null, item.getItem_no())) { %>
-                                            <div class="tag-new">new</div>
-                                    <%
-                                        }
-                                    %>
-                                    <a href="detail.shop?item_no=${item.item_no}">
-                                        <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
-                                    </a>
-                                    <div class="pi-links">
-                                        <a href="${path}/basket/add.shop?item_no=${item.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                                        <a href="#" class="wishlist-btn" id="rec_update_${item.item_no}" style="width: 80px"><i class="flaticon-heart"></i><span style="font-size: 12pt" class="rec_count_${item.item_no}"></span></a>
+                                if (context != null) {
+                                    itemDao = (ItemDao) context.getBean("ItemDao");
+                                }
+                            %>
+                            <c:forEach var="item" items="${itemList}">
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <%
+                                                Item item = (Item) pageContext.getAttribute("item");
+                                                if (itemDao != null && item != null && itemDao.check_new(null, null, item.getItem_no())) { %>
+                                                    <div class="tag-new">new</div>
+                                            <%
+                                                }
+                                            %>
+                                            <a href="detail.shop?item_no=${item.item_no}">
+                                                <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                                            </a>
+                                            <div class="pi-links">
+                                                <a href="${path}/basket/add.shop?item_no=${item.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                                <a href="#" class="wishlist-btn" id="rec_update_${item.item_no}" style="width: 80px"><i class="flaticon-heart"></i><span style="font-size: 12pt" class="rec_count_${item.item_no}"></span></a>
+                                            </div>
+                                        </div>
+                                        <div class="pi-text">
+                                            <h6>${item.price}원</h6>
+                                            <a href="detail.shop?item_no=${item.item_no}">
+                                                <p>${item.name}</p>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="pi-text">
-                                    <h6>${item.price}원</h6>
-                                    <a href="detail.shop?item_no=${item.item_no}">
-                                        <p>${item.name}</p>
-                                    </a>
-                                </div>
+                            </c:forEach>
+
+                            <div class="text-center w-100 pt-3">
+                                <form action="list.shop" method="post" name="listform">
+                                    <input type="hidden" name="pageNum" value="${pageNum}">
+                                    <input type="hidden" name="category_group" value="${category_group}">
+                                    <input type="hidden" name="category_item" value="${category_item}">
+                                    <input type="hidden" name="min_price" value="${min_price}">
+                                    <input type="hidden" name="max_price" value="${max_price}">
+
+                                    <div class="w3-center" style="margin-top: 20px; margin-bottom: 20px">
+                                        <div class="w3-bar">
+                                            <c:choose>
+                                                <c:when test="${pageNum <= 1}">
+                                                    <div class="w3-bar-item">«</div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="javascript:listcall(${pageNum - 1})" class="w3-bar-item w3-button w3-hover-deep-purple">«</a>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <c:forEach var="a" begin="${startpage}" end="${endpage}">
+                                                <c:choose>
+                                                    <c:when test="${a == pageNum}">
+                                                        <div class="w3-bar-item w3-deep-purple">
+                                                            ${a}
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="javascript:listcall(${a})" class="w3-bar-item w3-button w3-hover-deep-purple">${a}</a>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                            <c:choose>
+                                                <c:when test="${pageNum >= endpage}">
+                                                    <div class="w3-bar-item">»</div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="javascript:listcall(${pageNum + 1})" class="w3-bar-item w3-button w3-hover-deep-purple">»</a>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    </c:forEach>
-
-                    <div class="text-center w-100 pt-3">
-                        <form action="list.shop" method="post" name="listform">
-                            <input type="hidden" name="pageNum" value="${pageNum}">
-                            <input type="hidden" name="category_group" value="${category_group}">
-                            <input type="hidden" name="category_item" value="${category_item}">
-                            <input type="hidden" name="min_price" value="${min_price}">
-                            <input type="hidden" name="max_price" value="${max_price}">
-
-                            <div class="w3-center" style="margin-top: 20px; margin-bottom: 20px">
-                                <div class="w3-bar">
-                                    <c:choose>
-                                        <c:when test="${pageNum <= 1}">
-                                            <div class="w3-bar-item">«</div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="javascript:listcall(${pageNum - 1})" class="w3-bar-item w3-button w3-hover-deep-purple">«</a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <c:forEach var="a" begin="${startpage}" end="${endpage}">
-                                        <c:choose>
-                                            <c:when test="${a == pageNum}">
-                                                <div class="w3-bar-item w3-deep-purple">
-                                                        ${a}
-                                                </div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a href="javascript:listcall(${a})" class="w3-bar-item w3-button w3-hover-deep-purple">${a}</a>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:forEach>
-                                    <c:choose>
-                                        <c:when test="${pageNum >= endpage}">
-                                            <div class="w3-bar-item">»</div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="javascript:listcall(${pageNum + 1})" class="w3-bar-item w3-button w3-hover-deep-purple">»</a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div style="text-align: center">
+                            <h4>해당 조건을 만족하는 상품이 존재하지 않습니다.</h4>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>
