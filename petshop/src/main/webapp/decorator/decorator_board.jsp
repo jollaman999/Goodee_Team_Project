@@ -29,7 +29,39 @@
     
     <script type="text/javascript" src="https://cdn.ckeditor.com/4.5.7/full-all/ckeditor.js"></script>
 
-    <decorator:head />
+	<style type="text/css">
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		
+		th, td {
+			padding: 8px;
+			text-align: center;
+			border-bottom: 1px solid #ddd;
+		}
+		
+		th {
+			background-color: #f4f4f4;
+			color: #000000;
+		}
+		
+		td {
+			background-color: #ffffff;
+		}
+		
+		tr:hover {
+			background-color: #f5f5f5;
+		}
+		
+		caption {
+			color: #111111;
+			font-size: 20px;
+			background-color: #FFFFFF;
+		}
+	</style>
+
+<decorator:head />
 </head>
 <body>
  

@@ -19,7 +19,7 @@
 <body>
 
 <!-- 서치  -->
-<table>
+<!-- <table>
     <tr>
         <td colspan="5">
             <form action="list.shop" method="post" name="searchform">
@@ -38,8 +38,25 @@
             </form>
         </td>
     </tr>
-</table>
+</table> -->
 
+	<div style="">
+    
+            <form action="list.shop" method="post" name="searchform">
+                <input type="hidden" name="pageNum" value="1">
+                <select name="searchtype">
+                    <option value="">선택하세요</option>
+                    <option value="subject">Id</option>
+                    <option value="name">Name</option>
+                    <option value="content">Phone</option>
+                    <option value="content">Email</option>
+                    <option value="content">Postcode</option>
+                </select>
+                <input type='text' name='word' value='' placeholder="특수문자는 사용할수 없습니다.">
+                <button type='submit'>검색</button>
+
+            </form>
+ 	</div> 
 <!-- 테이블 -->
 <form action="mailForm.shop" method="post">
     <table>

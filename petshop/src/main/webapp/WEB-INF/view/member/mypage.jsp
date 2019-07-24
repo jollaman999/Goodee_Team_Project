@@ -50,7 +50,7 @@
 } 
    		
  */
-
+/* 
 table a:link {
 	color: #666;
 	font-weight: bold;
@@ -140,7 +140,7 @@ table > tbody > tr:hover > td {
 	background: linear-gradient(to bottom,  #f2f2f2 0%,#f0f0f0 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
 }
-
+ */
 
 </style>
 
