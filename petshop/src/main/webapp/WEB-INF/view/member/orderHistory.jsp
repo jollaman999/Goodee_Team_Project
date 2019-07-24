@@ -89,7 +89,7 @@
     <table>
         <tr>
             <td colspan="5" align="center">
-                <h1>7일 주문 내역</h1>
+                <h3>7일 주문 내역</h3>
             </td>
         </tr>
 
@@ -131,7 +131,7 @@
                             <img src="${path}/item/img/${itemno}/<%= mainpic %>"
                                  width="50" height="50" align="left">
                             <a href="#" >
-                                <h4 align="left"><%= itemname %></h4>
+                                <h5 align="left"><%= itemname %></h5>
                             </a>
                         </c:forEach>
                     </td>
@@ -162,7 +162,7 @@
     <table>
         <tr>
             <td colspan="5" align="center">
-                <h1>30일 주문 내역</h1>
+                <h3>30일 주문 내역</h3>
             </td>
         </tr>
 
@@ -204,7 +204,7 @@
                         <img src="${path}/item/img/${itemno}/<%= mainpic %>"
                              width="50" height="50" align="left">
                         <a href="#" >
-                            <h4 align="left"><%= itemname %></h4>
+                            <h5 align="left"><%= itemname %></h5>
                         </a>
                     </c:forEach>
                 </td>
@@ -234,7 +234,7 @@
     <table>
         <tr>
             <td colspan="5" align="center">
-                <h1>180일 주문 내역</h1>
+                <h3>180일 주문 내역</h3>
             </td>
         <tr>
             <th style="width: 8%">주문번호</th>
@@ -274,7 +274,7 @@
                         <img src="${path}/item/img/${itemno}/<%= mainpic %>"
                              width="50" height="50" align="left">
                         <a href="#" >
-                            <h4 align="left"><%= itemname %></h4>
+                            <h5 align="left"><%= itemname %></h5>
                         </a>
                     </c:forEach>
                 </td>
@@ -305,7 +305,7 @@
     <table>
         <tr>
             <td colspan="5" align="center">
-                <h1>모든 주문 내역</h1>
+                <h3>모든 주문 내역</h3>
             </td>
         <tr>
             <th style="width: 8%">주문번호</th>
@@ -345,7 +345,7 @@
                         <img src="${path}/item/img/${itemno}/<%= mainpic %>"
                              width="50" height="50" align="left">
                         <a href="#" >
-                            <h4 align="left"><%= itemname %></h4>
+                            <h5 align="left"><%= itemname %></h5>
                         </a>
                     </c:forEach>
                 </td>
