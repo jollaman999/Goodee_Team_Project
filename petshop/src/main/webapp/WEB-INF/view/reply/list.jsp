@@ -83,7 +83,6 @@
 
         tbody tr:hover {
             background-color: #ffffff;
-            cursor: pointer;
         }
     </style>
 </head>
