@@ -25,9 +25,9 @@
     <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30" style="margin-top: 80px; margin-bottom: 80px">
         <form:form modelAttribute="member" method="post" action="login.shop" class="login100-form validate-form">
             <%
-                String back_url = request.getParameter("back_url");
+                String back_url = request.getHeader("referer");
 
-                if (back_url == null) {
+                if (back_url == null || back_url.contains("login") || back_url.contains("memberEntry")) {
                     back_url = "../index.jsp";
                 }
             %>
