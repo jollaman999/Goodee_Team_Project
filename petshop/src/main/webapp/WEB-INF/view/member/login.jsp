@@ -27,7 +27,8 @@
             <%
                 String back_url = request.getHeader("referer");
 
-                if (back_url == null || back_url.contains("login") || back_url.contains("memberEntry")) {
+                if (back_url == null || back_url.contains("login") || back_url.contains("memberEntry") ||
+                        (back_url.contains("member") && back_url.contains("find"))) {
                     back_url = "../index.jsp";
                 }
             %>
