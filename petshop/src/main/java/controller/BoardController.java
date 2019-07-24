@@ -3,6 +3,7 @@ package controller;
 import logic.Board;
 import logic.Member;
 import logic.ShopService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,9 +36,10 @@ public class BoardController {
             pageNum = 1;
         }
 
+        Member loginMember = (Member)session.getAttribute(("loginMember"));
         int limit = 10;
-        int listcount = service.boardcount(type, searchtype, searchcontent);
-        List<Board> boardlist = service.boardlist(type, pageNum, limit, searchtype, searchcontent);
+        int listcount = service.boardcount(type, searchtype, searchcontent,loginMember.getId());
+        List<Board> boardlist = service.boardlist(type, pageNum, limit, searchtype, searchcontent,loginMember.getId());
         if (boardlist != null) {
             for (Board board : boardlist) {
                 Member member = service.memberSelect(board.getMember_id());

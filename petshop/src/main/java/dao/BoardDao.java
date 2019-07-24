@@ -17,9 +17,10 @@ public class BoardDao {
     private final String NS = "dao.mapper.BoardMapper.";
     private Map<String, Object> param = new HashMap<>();
 
-    public int count(int type, String searchtype, String searchcontent) {
+    public int count(int type, String searchtype, String searchcontent, String id) {
         param.clear();
         param.put("type", type);
+        param.put("id", id);
 
         if (searchtype != null && searchtype.length() != 0 &&
                 searchcontent != null && searchcontent.length() != 0) {
@@ -40,11 +41,12 @@ public class BoardDao {
         return sqlSessionTemplate.getMapper(BoardMapper.class).maxnum();
     }
 
-    public List<Board> list(int type, int pageNum, int limit, String searchtype, String searchcontent) {
+    public List<Board> list(int type, int pageNum, int limit, String searchtype, String searchcontent, String id) {
         param.clear();
         param.put("type", type);
         param.put("startrow", (pageNum - 1) * limit);
         param.put("limit", limit);
+        param.put("id", id);
 
         if (searchtype != null && searchtype.length() != 0 &&
                 searchcontent != null && searchcontent.length() != 0) {

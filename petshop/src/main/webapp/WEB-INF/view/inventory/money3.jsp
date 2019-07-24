@@ -9,62 +9,59 @@
 <html>
 <head>
    <meta charset="UTF-8">
-
+   
    <style> <!-- 검색창 가운데 정렬 -->
-    .centeringContainer { text-align: center; }
-    .centered { display: table; margin-left: auto; margin-right: auto; display: inline-block; }
+    .centeringContainer { text-align: center; } 
+    .centered { display: table; margin-left: auto; margin-right: auto; display: inline-block; } 
     </style>
 
-
+  
 <title>판매 내역 </title>
 </head><body>
-
 
 <h2 style="color:black;"><a href="${path}/inventory/money.shop">요일별</a>&nbsp;&nbsp;
                          <a href="${path}/inventory/money2.shop">월별</a>&nbsp;&nbsp;
                          <a href="${path}/inventory/money3.shop">년별</a>&nbsp;&nbsp;
                          <a href="${path}/inventory/money4.shop">상품별</a>                         
-                         </h2><br><br><br>
-
+                         </h2><br><br><br> 
 <!-- 재고관리 리스트 -->
 <form action="selling" method="post">
 
 <!-- 서치  -->
-<table>
+<table> 
 <!-- 드랍바 -->
 <tr><td>
-<div class="col-xl-6 col-lg-5 centered">
+<div class="col-xl-6 col-lg-5 centered"> 
      <input type='text' name='word' value='' placeholder="특수문자는 사용할수 없습니다." style="text-align: center">
-     <button type='submit'>검색</button>
+     <button type='submit'>검색</button>   
 </div></td></tr>
 
-<table>
+
+
+<table> 
      <div style="text-align:left"><select name="searchtype">
        <option value="">선택하세요</option>
        <option value="#">그룹코드</option>
        <option value="#">아이템코드</option>
        <option value="#">국가별</option>
-     </select></div>
+     </select></div>    
 </table><br><br><br><br><br><br>
 
 
-<!-- orders 테이블에 status=1(입금확인) 만 가져옴.orders mapper 에서 확인  -->
-<!-- 요일별 판매현황 -->
-<h2>요일별 수익</h2><br>
-<table>
-<!-- 테이블 바 이름 -->
+
+<!-- 년별 판매현황 -->
+<h2>년별 수익</h2><br>
+<table>       
+<!-- 테이블 바 이름 -->        
         <tr>
-            <th>요일</th>
+            <th>년도</th>
             <th>총판매금</th>
 <!-- 아이템 리스트 가져오기 -->
-<c:forEach items="${moneyListDay}" var="moneyDay">
-     <tr>
-     <td><fmt:formatDate value="${moneyDay.update_time}" pattern="yyyy-MM-dd"/></td>
-     <td><fmt:formatNumber type="CURRENCY" pattern="###,###" value="${moneyDay.price_total}"/>\</td>
-
-    </tr></c:forEach>
-</table>  <!--  테이블 종료  -->
-
-
+<c:forEach items="${moneyListYear}" var="moneyYear">
+     <tr>   
+     <td><fmt:formatDate value="${moneyYear.update_time}" pattern="yyyy"/>년</td>       
+     <td><fmt:formatNumber type="CURRENCY" pattern="###,###" value="${moneyYear.price_total}"/>\</td>
+    </tr></c:forEach></tr>                         
+</table>
 </form></body></html>
 

@@ -35,7 +35,7 @@ public interface OrdersMapper {
     List<Orders> moneyList_by_day();
     
     // 월별 금액 토탈 가져오기
-    @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-%d') update_time from orders where status in (1, 2, 3) group by date_format(update_time, '%m')")
+    @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-%d') update_time from orders where status in (1, 2 ,3) group by date_format(update_time, '%Y-%m')")
     List<Orders> moneyList_by_month();
     
     // 년별 금액 토탈 가져오기
