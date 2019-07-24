@@ -50,7 +50,7 @@ public class ItemController {
         List<CategoryGroup> categoryGroupList = service.getCategoryGroupList();
         List<CategoryItem> categoryItemList = service.getCategoryItemList();
 
-        mav.addObject("categoryGroupList",JSONArray.fromObject(categoryGroupList));
+        mav.addObject("categoryGroupList", JSONArray.fromObject(categoryGroupList));
         mav.addObject("categoryItemList", JSONArray.fromObject(categoryItemList));
         mav.addObject(new Item());
         return mav;
@@ -63,7 +63,7 @@ public class ItemController {
         List<CategoryGroup> categoryGroupList = service.getCategoryGroupList();
         List<CategoryItem> categoryItemList = service.getCategoryItemList();
 
-        mav.addObject("categoryGroupList",JSONArray.fromObject(categoryGroupList));
+        mav.addObject("categoryGroupList", JSONArray.fromObject(categoryGroupList));
         mav.addObject("categoryItemList", JSONArray.fromObject(categoryItemList));
 
         System.out.println(bindingResult);
