@@ -88,8 +88,8 @@
 <div id="weekinfo" class="info" style="display: none; width:100%;">
     <table>
         <tr>
-            <td colspan="5" align="center">
-                <h1>7일 주문 내역</h1>
+            <td colspan="6" align="center">
+                <h3>7일 주문 내역</h3>
             </td>
         </tr>
 
@@ -103,7 +103,7 @@
         </tr>
 
             <c:forEach items="${ordersList_7}" var="order" varStatus="stat">
-                <tr>
+                <tr rowspan="${order.orders_lists.size()}">
 
                     <!-- 주문번호 -->
                     <td align="center">
@@ -130,9 +130,9 @@
                             %>
                             <img src="${path}/item/img/${itemno}/<%= mainpic %>"
                                  width="50" height="50" align="left">
-                            <a href="#" >
-                                <h4 align="left"><%= itemname %></h4>
-                            </a>
+                            <a href="${path}/shop/detail.shop?item_no=${itemno}" >
+                                <h5 align="left"><%= itemname %></h5>
+                            </a><br><br>
                         </c:forEach>
                     </td>
 
@@ -147,7 +147,34 @@
                     </td>
 
                     <!-- 주문상태 -->
-                    <td>배송중</td>
+                    <td>
+                    	<c:choose>
+	                    	<c:when test="${order.status eq '0'}">
+	                    		입금대기중
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '1'}">
+	                    		입금확인
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '2'}">
+	                    		입금대기중
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '3'}">
+	                    		발송완료
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '4'}">
+	                    		취소접수
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '5'}">
+	                    		취소완료
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '6'}">
+	                    		환불접수
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '7'}">
+	                    		환불완료
+	                    	</c:when>
+                    	</c:choose>
+                    </td>
 
                     <!-- 주문날짜 -->
                     <td>${order.update_time}</td>
@@ -161,8 +188,8 @@
 <div id="monthinfo" class="info">
     <table>
         <tr>
-            <td colspan="5" align="center">
-                <h1>30일 주문 내역</h1>
+            <td colspan="6" align="center">
+                <h3>30일 주문 내역</h3>
             </td>
         </tr>
 
@@ -176,7 +203,7 @@
         </tr>
 
         <c:forEach items="${ordersList_30}" var="order" varStatus="stat">
-            <tr>
+            <tr rowspan="${order.orders_lists.size()}">
 
                 <!-- 주문번호 -->
                 <td align="center">
@@ -203,9 +230,9 @@
                         %>
                         <img src="${path}/item/img/${itemno}/<%= mainpic %>"
                              width="50" height="50" align="left">
-                        <a href="#" >
-                            <h4 align="left"><%= itemname %></h4>
-                        </a>
+                       <a href="${path}/shop/detail.shop?item_no=${itemno}" >
+                            <h5 align="left"><%= itemname %></h5>
+                        </a><br><br>
                     </c:forEach>
                 </td>
 
@@ -220,7 +247,34 @@
                 </td>
 
                 <!-- 주문상태 -->
-                <td>배송중</td>
+                 <td>
+                    	<c:choose>
+	                    	<c:when test="${order.status eq '0'}">
+	                    		입금대기중
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '1'}">
+	                    		입금확인
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '2'}">
+	                    		입금대기중
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '3'}">
+	                    		발송완료
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '4'}">
+	                    		취소접수
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '5'}">
+	                    		취소완료
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '6'}">
+	                    		환불접수
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '7'}">
+	                    		환불완료
+	                    	</c:when>
+                    	</c:choose>
+                    </td>
 
                 <!-- 주문날짜 -->
                 <td>${order.update_time}</td>
@@ -233,8 +287,8 @@
 <div id="halfinfo" class="info">
     <table>
         <tr>
-            <td colspan="5" align="center">
-                <h1>180일 주문 내역</h1>
+            <td colspan="6" align="center">
+                <h3>180일 주문 내역</h3>
             </td>
         <tr>
             <th style="width: 8%">주문번호</th>
@@ -246,7 +300,7 @@
         </tr>
 
         <c:forEach items="${ordersList_180}" var="order" varStatus="stat">
-            <tr>
+            <tr rowspan="${order.orders_lists.size()}">
 
                 <!-- 주문번호 -->
                 <td align="center">
@@ -273,9 +327,9 @@
                         %>
                         <img src="${path}/item/img/${itemno}/<%= mainpic %>"
                              width="50" height="50" align="left">
-                        <a href="#" >
-                            <h4 align="left"><%= itemname %></h4>
-                        </a>
+                        <a href="${path}/shop/detail.shop?item_no=${itemno}" >
+                            <h5 align="left"><%= itemname %></h5>
+                        </a><br><br>
                     </c:forEach>
                 </td>
 
@@ -290,7 +344,34 @@
                 </td>
 
                 <!-- 주문상태 -->
-                <td>배송중</td>
+                <td>
+                    	<c:choose>
+	                    	<c:when test="${order.status eq '0'}">
+	                    		입금대기중
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '1'}">
+	                    		입금확인
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '2'}">
+	                    		입금대기중
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '3'}">
+	                    		발송완료
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '4'}">
+	                    		취소접수
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '5'}">
+	                    		취소완료
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '6'}">
+	                    		환불접수
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '7'}">
+	                    		환불완료
+	                    	</c:when>
+                    	</c:choose>
+                    </td>
 
                 <!-- 주문날짜 -->
                 <td>${order.update_time}</td>
@@ -304,8 +385,8 @@
 <div id="allinfo" class="info">
     <table>
         <tr>
-            <td colspan="5" align="center">
-                <h1>모든 주문 내역</h1>
+            <td colspan="6" align="center">
+                <h3>모든 주문 내역</h3>
             </td>
         <tr>
             <th style="width: 8%">주문번호</th>
@@ -317,7 +398,7 @@
         </tr>
 
         <c:forEach items="${ordersList_all}" var="order" varStatus="stat">
-            <tr>
+            <tr rowspan="${order.orders_lists.size()}">
 
                 <!-- 주문번호 -->
                 <td align="center">
@@ -329,6 +410,7 @@
                 <!-- 상품명 -->
                 <td align="left">
                     <c:forEach items="${order.orders_lists}" var="orders_lists">
+                     
                         <c:set var="itemno" value="${orders_lists.item_no}" />
                         <%
                             Integer itemno = (Integer)pageContext.getAttribute("itemno") ;
@@ -342,11 +424,13 @@
                                 }
                             }
                         %>
+  						
+
                         <img src="${path}/item/img/${itemno}/<%= mainpic %>"
                              width="50" height="50" align="left">
-                        <a href="#" >
-                            <h4 align="left"><%= itemname %></h4>
-                        </a>
+                         <a href="${path}/shop/detail.shop?item_no=${itemno}" >
+                            <h5 align="left"><%= itemname %></h5>
+                        </a><br><br>
                     </c:forEach>
                 </td>
 
@@ -361,7 +445,34 @@
                 </td>
 
                 <!-- 주문상태 -->
-                <td>배송중</td>
+                 <td>
+                    	<c:choose>
+	                    	<c:when test="${order.status eq '0'}">
+	                    		입금대기중
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '1'}">
+	                    		입금확인
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '2'}">
+	                    		입금대기중
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '3'}">
+	                    		발송완료
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '4'}">
+	                    		취소접수
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '5'}">
+	                    		취소완료
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '6'}">
+	                    		환불접수
+	                    	</c:when>
+	                    	<c:when test="${order.status eq '7'}">
+	                    		환불완료
+	                    	</c:when>
+                    	</c:choose>
+                    </td>
 
                 <!-- 주문날짜 -->
                 <td>${order.update_time}</td>
