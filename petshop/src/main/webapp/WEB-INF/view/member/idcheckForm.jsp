@@ -17,7 +17,7 @@
             const id = document.getElementById("id");
 
             if (!id.value || id.value === "") {
-                alert("아이디를 입력하세요!")
+                alert("아이디를 입력하세요!");
                 id.focus();
                 return;
             }
