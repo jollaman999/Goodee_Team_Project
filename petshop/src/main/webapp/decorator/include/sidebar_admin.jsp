@@ -4,7 +4,7 @@
 <c:set value="${pageContext.request.contextPath}" var="path"/>
 
 <!-- css -->
-<link rel="stylesheet" href="${path}/css/sidebar.css">
+<link rel="stylesheet" href="${path}/css/sidebar.min.css">
 
 <!-- JS -->
 <script src="${path}/js/sidebar.min.js"></script>
