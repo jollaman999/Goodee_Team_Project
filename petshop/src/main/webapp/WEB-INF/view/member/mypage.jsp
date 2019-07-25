@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
+    <link rel="stylesheet" type="text/css" href="${path}/css/submitform.css">
 
     <title>마이페이지</title>
 </head>
@@ -46,13 +46,13 @@
         <tbody>
     </table>
     <br>
-    <div style="text-align: center">
-        <a href="update.shop?id=${member.id}" class="w3-btn w3-purple">회원 정보 수정</a>&nbsp;&nbsp;
+    <div class="container-contact100-form-btn">
+        <a href="update.shop?id=${member.id}" class="submit-btn contact100-form-btn">회원 정보 수정</a>
         <c:if test="${member.id != 'admin'}">
-            <a href="delete.shop?id=${member.id}" class="w3-btn w3-purple">회원 탈퇴</a>
+            <a href="delete.shop?id=${member.id}" class="submit-btn contact100-form-btn" style="margin-left: 30px">회원 탈퇴</a>
         </c:if>
         <c:if test="${loginMember.id == 'admin'}">
-            &nbsp;&nbsp;<a href="${path}/admin/list.shop" class="w3-btn w3-purple">회원 목록</a>
+            <a href="${path}/admin/list.shop" class="submit-btn contact100-form-btn" style="margin-left: 30px">회원 목록</a>
         </c:if>
     </div>
 </body>
