@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="${path}/css/sidebar.css">
 
 <!-- JS -->
-<script src="${path}/js/sidebar.js"></script>
+<script src="${path}/js/sidebar.min.js"></script>
 
 <div class="sidebar user">
     <a href="${path}/index.jsp">

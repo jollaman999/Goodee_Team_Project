@@ -50,6 +50,6 @@
 <script src="${path}/vendor/daterangepicker/moment.min.js"></script>
 <script src="${path}/vendor/daterangepicker/daterangepicker.js"></script>
 <script src="${path}/vendor/countdowntime/countdowntime.js"></script>
-<script src="${path}/js/loginform/loginform.js"></script>
+<script src="${path}/js/loginform/loginform.min.js"></script>
 </body>
 </html>

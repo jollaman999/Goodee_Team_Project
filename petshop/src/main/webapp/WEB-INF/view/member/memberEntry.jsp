@@ -257,6 +257,6 @@
 <script src="${path}/vendor/daterangepicker/moment.min.js"></script>
 <script src="${path}/vendor/daterangepicker/daterangepicker.js"></script>
 <script src="${path}/vendor/countdowntime/countdowntime.js"></script>
-<script src="${path}/js/submitform/submitform.js"></script>
+<script src="${path}/js/submitform/submitform.min.js"></script>
 </body>
 </html>
