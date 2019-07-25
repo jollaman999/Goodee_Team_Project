@@ -95,18 +95,6 @@
                 return;
             }
 
-            if (!f.pass.value) {
-                alert("비밀번호를 입력해주세요!");
-                f.pass.focus();
-                return;
-            }
-
-            if (f.pass.value.length < 5 || f.pass.value.length > 100) {
-                alert("비밀번호를 5자 이상 100자 이하로 입력 해주세요!");
-                f.id.focus();
-                return;
-            }
-
             if (!f.email.value) {
                 alert("이메일을 입력해주세요!");
                 f.email.focus();
@@ -251,7 +239,6 @@
             <input class="input100" type="text" name="postcode" id="postcode" placeholder="POSTCODE" onkeydown="onlyNumber()">
             <span class="focus-input100"></span>
         </div>
-
 
         <div class="container-contact100-form-btn">
             <a href="javascript:join_submit()" class="contact100-form-btn">회원가입</a>
