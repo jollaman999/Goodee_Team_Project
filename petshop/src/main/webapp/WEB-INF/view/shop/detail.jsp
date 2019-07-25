@@ -126,7 +126,7 @@
                     </button>
                 </div>
                 <div class="p-review">
-                    <a href="">3 reviews</a>|<a href="">Add your review</a>
+                    <a href="#reply_area">${review_count} reviews</a>
                 </div>
                 <div class="quantity" style="margin-top: -10px">
                     <c:if test="${item.remained_quantity > 0}">
@@ -211,7 +211,7 @@
 <!-- RELATED PRODUCTS section end -->
 
 <!-- Reply Area Start -->
-<div style="text-align: center; margin-top: 50px">
+<div id="reply_area" style="text-align: center; margin-top: 50px">
     <section class="related-product-section">
     <div class="container">
         <div class="section-title">

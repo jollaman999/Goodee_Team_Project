@@ -103,6 +103,9 @@ public class ShopController {
 
         mav.addObject("item", item);
 
+        int review_count = service.getReplyCount("0", item_no);
+        mav.addObject("review_count", review_count);
+
         String categoryGroupName = service.getCategoryGroupName(item.getCategory_group_code());
         String categoryItemName = service.getCategoryItemName(item.getCategory_group_code(), item.getCategory_item_code());
 
