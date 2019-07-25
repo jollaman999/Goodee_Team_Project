@@ -212,6 +212,7 @@
 
 <!-- Reply Area Start -->
 <div style="text-align: center; margin-top: 50px">
+    <section class="related-product-section">
     <div class="container">
         <div class="section-title">
             <h2>USER REVIEWS</h2>
@@ -219,6 +220,7 @@
     </div>
     <iframe src="${path}/reply/list.shop?type=0&itemno=${item.item_no}"
             onload="iframe_autoResize(this)" scrolling="no" style="width: 90%; border: 0"></iframe>
+    </section>
 </div>
 <!-- Reply Area End -->
 
