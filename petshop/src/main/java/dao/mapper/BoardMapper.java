@@ -16,11 +16,11 @@ public interface BoardMapper {
     @Select("select count(*) from board b, member m where type = #{type} and b.member_id = m.id and m.name like '%${name}%'")
     int search_by_name_count(Map map);
 
-    @Select("select b.num, b.member_id, m.name, b.title, b.content, b.file1 fileurl, b.regdate from board b, member m " +
+    @Select("select b.num, b.item_no, b.member_id, m.name, b.title, b.content, b.file1 fileurl, b.regdate from board b, member m " +
             "where type = #{type} and b.member_id = m.id and m.name like '%${name}%' order by num desc limit #{startrow}, #{limit}")
     List<Board> search_by_name(Map map);
 
-    @Insert("insert into board (num, type, member_id, title, content, file1, regdate) " +
+    @Insert("insert into board (num, item_no, type, member_id, title, content, file1, regdate) " +
                             "values (#{num}, #{type}, #{member_id}, #{title}, #{content}, #{fileurl}, now())")
     int insert(Board board);
 

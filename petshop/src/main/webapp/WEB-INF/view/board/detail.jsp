@@ -1,50 +1,55 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<c:set value="${pageContext.request.contextPath}" var="path" />
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>게시글 상세 보기</title>
+<meta charset="UTF-8">
+<title>게시글 상세 보기</title>
 </head>
 <body>
-<br>
-<table>
-    <tr>
-        <td colspan="2">게시글 상세 보기</td>
-    </tr>
-    <tr>
-        <td>글쓴이</td>
-        <td>${board.name}</td>
-    </tr>
-    <tr>
-        <td>제목</td>
-        <td>${board.title}</td>
-    </tr>
-    <tr>
-        <td>내용</td>
-        <td>
-            <table width="100%" height="250">
-                <tr>
-                    <td>${board.content}</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td>첨부 파일</td>
-        <td>
-            <c:if test="${!empty board.fileurl}">
-                <a href="file/${board.num}/${board.fileurl}" target="_blank">${board.fileurl}</a>
-            </c:if>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <a href="update.shop?type=${param.type}&num=${board.num}">[수정]</a>
-            <a href="delete.shop?type=${param.type}&num=${board.num}">[삭제]</a>
-            <a href="list.shop?type=${param.type}">[게시물 목록]</a>
-        </td>
-    </tr>
-</table>
+	<br>
+	<table>
+		<tr>
+			<td colspan="2">게시글 상세 보기</td>
+		</tr>
+		<tr>
+			<td>글쓴이</td>
+			<td>${board.name}</td>
+		</tr>
+		<tr>
+			<td>제목</td>
+			<td>${board.title}</td>
+		</tr>
+		<tr>
+			<td>상품 이름</td>
+			<td>${board.item_name}</td>
+		</tr>
+		<tr>
+			<td>내용</td>
+			<td>
+				<table width="100%" height="250">
+					<tr>
+						<td>${board.content}</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>첨부 파일</td>
+			<td><c:if test="${!empty board.fileurl}">
+					<a href="file/${board.num}/${board.fileurl}" target="_blank">${board.fileurl}</a>
+				</c:if></td>
+		</tr>
+		<tr>
+			<td colspan="2"><a
+				href="update.shop?type=${param.type}&num=${board.num}">[수정]</a> <a
+				href="delete.shop?type=${param.type}&num=${board.num}">[삭제]</a> <a
+				href="list.shop?type=${param.type}">[게시물 목록]</a></td>
+		</tr>
+	</table>
 </body>
 </html>

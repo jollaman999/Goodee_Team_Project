@@ -2,6 +2,8 @@ package dao;
 
 import dao.mapper.BoardMapper;
 import logic.Board;
+import logic.Item;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -60,14 +62,41 @@ public class BoardDao {
             param.put("searchcontent", searchcontent);
         }
 
-        return sqlSessionTemplate.selectList(NS + "list", param);
+        List<Board> boardList = sqlSessionTemplate.selectList(NS + "list", param);
+        if (boardList != null) {
+            final String ItemMapper = "dao.mapper.ItemMapper.";
+
+            for (Board board : boardList) {
+            	param.clear();
+                param.put("item_no", board.getItem_no());
+                
+                Item item = sqlSessionTemplate.selectOne(ItemMapper + "list", param);
+                if (item != null) {
+                    board.setItem_name(item.getName());
+                }
+            }
+        }
+
+        return boardList;
     }
 
     public Board selectOne(int num) {
         param.clear();
         param.put("num", num);
 
-        return sqlSessionTemplate.selectOne(NS + "list", param);
+        Board board = sqlSessionTemplate.selectOne(NS + "list", param);
+        if (board != null) {
+        	param.clear();
+            param.put("item_no", board.getItem_no());
+            
+            final String ItemMapper = "dao.mapper.ItemMapper.";
+            Item item = sqlSessionTemplate.selectOne(ItemMapper + "list", param);
+            if (item != null) {
+                board.setItem_name(item.getName());
+            }
+        }
+
+        return board;
     }
 
     public int insert(Board board) {
