@@ -5,10 +5,6 @@
 
 <!-- css -->
 <link rel="stylesheet" href="${path}/css/sidebar.css">
-<link rel="stylesheet" href="${path}/css/regular.css">
-<link rel="stylesheet" href="${path}/css/regular.min.css">
-<link rel="stylesheet" href="${path}/css/solid.min.css">
-<link rel="stylesheet" href="${path}/css/solid.css">
 
 <!-- JS -->
 <script src="${path}/js/sidebar.js"></script>
@@ -19,13 +15,13 @@
     </a>
     <ul>
         <!-- admin 사이드메뉴 -->
-        <li><a href="${path}/admin/list.shop"><i class="far fa-address-book sidebaricon"></i>&nbsp;&nbsp;회원관리test</a></li>
-        <li><a href="${path}/inventory/money.shop"><i class="far fa-chart-bar sidebaricon"></i>&nbsp;&nbsp;판매분석test</a></li>
-        <li><a href="${path}/inventory/selling.shop"><i class="fas fa-archive sidebaricon"></i>&nbsp;&nbsp;주문내역test</a></li>
-        <li><a href="${path}/inventory/list.shop"><i class="fas fa-boxes sidebaricon"></i>&nbsp;&nbsp;상품관리&등록</a></li>
-        <li><a href="${path}/board/list.shop?type=0"><i class="fas fa-chalkboard-teacher sidebaricon"></i>&nbsp;&nbsp;공지사항(x)</a></li>
-        <li><a href="${path}/board/list.shop?type=1"><i class="far fa-comment-dots sidebaricon"></i>&nbsp;&nbsp;1:1문의(X)</a></li>
-        <li><a href="${path}/member/logout.shop"><i class="fas fa-sign-out-alt sidebaricon"></i>&nbsp;&nbsp;로그아웃(o)</a></li>    
+        <li><a href="${path}/admin/list.shop"><i class="fa fa-address-book-o sidebaricon"></i>&nbsp;&nbsp;회원관리test</a></li>
+        <li><a href="${path}/inventory/money.shop"><i class="fa fa-line-chart sidebaricon"></i>&nbsp;&nbsp;판매분석test</a></li>
+        <li><a href="${path}/inventory/selling.shop"><i class="fa fa-archive sidebaricon"></i>&nbsp;&nbsp;주문내역test</a></li>
+        <li><a href="${path}/inventory/list.shop"><i class="fa fa-cubes sidebaricon"></i>&nbsp;&nbsp;상품관리&등록</a></li>
+        <li><a href="${path}/board/list.shop?type=0"><i class="fa fa-bell-o sidebaricon"></i>&nbsp;&nbsp;공지사항(x)</a></li>
+        <li><a href="${path}/board/list.shop?type=1"><i class="fa fa-commenting-o sidebaricon"></i>&nbsp;&nbsp;1:1문의(X)</a></li>
+        <li><a href="${path}/member/logout.shop"><i class="fa fa-sign-out sidebaricon"></i>&nbsp;&nbsp;로그아웃(o)</a></li>
 
          
     </ul>

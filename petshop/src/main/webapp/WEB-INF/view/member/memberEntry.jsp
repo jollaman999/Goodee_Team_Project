@@ -20,7 +20,6 @@
     <!-- https://fontawesome.com/v4.7.0/icons/ -->
     <link rel="stylesheet" type="text/css" href="${path}/css/font-awesome-4.7.min.css">
 
-
     <!-- submit check -->
     <script type="text/javascript">
         var idcheckForm;

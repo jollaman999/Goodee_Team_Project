@@ -14,9 +14,6 @@
 
     <title>상품 상세 정보</title>
 
-    <!-- https://fontawesome.com/v4.7.0/icons/ -->
-    <link rel="stylesheet" type="text/css" href="${path}/css/font-awesome-4.7.min.css">
-
     <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 
     <!-- HighSlide -->

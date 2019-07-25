@@ -12,14 +12,15 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="${path}/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="${path}/css/fontawesome.css"/>
-    <link rel="stylesheet" href="${path}/css/brands.css"/>
     <link rel="stylesheet" href="${path}/css/flaticon.css"/>
     <link rel="stylesheet" href="${path}/css/slicknav.min.css"/>
     <link rel="stylesheet" href="${path}/css/jquery-ui.min.css"/>
     <link rel="stylesheet" href="${path}/css/owl.carousel.min.css"/>
     <link rel="stylesheet" href="${path}/css/animate.css"/>
     <link rel="stylesheet" href="${path}/css/style.css"/>
+
+    <!-- https://fontawesome.com/v4.7.0/icons/ -->
+    <link rel="stylesheet" type="text/css" href="${path}/css/font-awesome-4.7.min.css">
 
     <!-- jQuery -->
     <script type="text/javascript" src="${path}/js/jquery-3.2.1.min.js"></script>
