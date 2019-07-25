@@ -368,7 +368,7 @@ public class ShopService {
     public void find_pw(PrintWriter out, Member member) throws Exception {
         StringBuilder pw = new StringBuilder();
         for (int i = 0; i < 10; i++) {
-            pw.append((char)((Math.random() * 26) + 97));
+            pw.append((char)((Math.random() * 94) + 33));
         }
 
         Member dbMember = memberDao.selectOne(member.getId());
