@@ -251,6 +251,10 @@ public class ShopService {
         memberDao.update(member);
     }
 
+    public int memberUpdatePass(Member member) {
+        return memberDao.update_pass(member);
+    }
+
     public void memberDelete(Member member) {
         memberDao.delete(member);
     }

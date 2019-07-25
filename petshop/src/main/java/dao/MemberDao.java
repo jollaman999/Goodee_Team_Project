@@ -47,8 +47,10 @@ public class MemberDao {
         setEncryptedEmail(member);
         sqlSessionTemplate.getMapper(MemberMapper.class).update(member);
     }
-    public void update_pass(Member member) {
-        sqlSessionTemplate.getMapper(MemberMapper.class).update_pass(member);
+
+    public int update_pass(Member member) {
+        setEncryptedEmail(member);
+        return sqlSessionTemplate.getMapper(MemberMapper.class).update_pass(member);
     }
 
     public void delete(Member member) {

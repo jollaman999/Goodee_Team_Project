@@ -199,7 +199,7 @@ public class MemberController {
     }
 
     @PostMapping("update")
-    public ModelAndView update(@Valid Member member, BindingResult bindingResult, HttpSession session) {
+    public ModelAndView update(String id, HttpSession session, @Valid Member member, BindingResult bindingResult) {
         ModelAndView mav = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
@@ -223,6 +223,62 @@ public class MemberController {
         } catch (Exception e) {
             e.printStackTrace();
             bindingResult.reject("error.member.update");
+        }
+
+        return mav;
+    }
+
+    @RequestMapping("update_pw")
+    public String update_pw_form(String id, HttpSession session) {
+        return null;
+    }
+
+    @PostMapping("update_pw")
+    public ModelAndView update_pw(String id, HttpSession session, String pass, String previous_password) {
+        ModelAndView mav = new ModelAndView("/alert");
+
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        if (previous_password == null || previous_password.length() == 0) {
+            mav.addObject("msg", "이전 비밀번호를 입력해 주세요!");
+            mav.addObject("url", "update_pw.shop?id=" + loginMember.getId());
+
+            return mav;
+        }
+
+        if (!loginMember.getPass().equals(securityUtil.encryptSHA256(previous_password))) {
+            mav.addObject("msg", "이전 비밀번호가 일치하지 않습니다!");
+            mav.addObject("url", "update_pw.shop?id=" + loginMember.getId());
+
+            return mav;
+        }
+
+        if (loginMember.getPass().equals(securityUtil.encryptSHA256(pass))) {
+            mav.addObject("msg", "새 비밀번호가 이전 비밀번호와 동일합니다!");
+            mav.addObject("url", "update_pw.shop?id=" + loginMember.getId());
+
+            return mav;
+        }
+
+        Member dbMember = service.memberSelect(loginMember.getId());
+        if (dbMember == null) {
+            mav.addObject("msg", "회원 정보를 조회할 수 없습니다!");
+            mav.addObject("url", "update_pw.shop?id=" + loginMember.getId());
+
+            return mav;
+        }
+
+        Member member = new Member();
+        member.setId(loginMember.getId());
+        member.setPass(securityUtil.encryptSHA256(pass));
+        member.setEmail(dbMember.getEmail());
+
+        if (service.memberUpdatePass(member) > 0) {
+            mav.addObject("msg", "비밀번호가 변경 되었습니다.");
+            mav.addObject("url", "mypage.shop");
+        } else {
+            mav.addObject("msg", "비밀번호 변경을 실패하였습니다!");
+            mav.addObject("url", "update_pw.shop?id=" + member.getId());
         }
 
         return mav;

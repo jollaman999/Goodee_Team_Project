@@ -251,7 +251,7 @@
 </div>
 
 <script src="${path}/vendor/animsition/js/animsition.min.js"></script>
-<script src="${path}/js/popper.js"></script>
+<script src="${path}/js/popper.min.js"></script>
 <script src="${path}/js/bootstrap.min.js"></script>
 <script src="${path}/vendor/select2/select2.min.js"></script>
 <script src="${path}/vendor/daterangepicker/moment.min.js"></script>
