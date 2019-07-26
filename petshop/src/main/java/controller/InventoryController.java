@@ -27,19 +27,52 @@ public class InventoryController {
     private ShopService service;
 
     @RequestMapping("list")
-    public ModelAndView inventoryManagement(HttpSession session) {
+    public ModelAndView inventoryManagement(HttpSession session, Integer type, Integer pageNum, Integer limit,
+                                            String searchtype, String searchcontent) {
         ModelAndView mav = new ModelAndView();
-        
-        //받아올 테이블
-        List<Item> itemList  = service.getItemList(true);
+
         List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
         List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
-    
-        // 리스트 객체 생성 
-        mav.addObject("itemList", itemList);
+
         mav.addObject("CategoryGroupList",CategoryGroupList);
         mav.addObject("CategoryItemList",CategoryItemList);
-        
+
+        if (pageNum == null || pageNum.toString().equals("")) {
+            pageNum = 1;
+        }
+
+        if (limit == null || limit.toString().equals("")) {
+            limit = 20;
+        }
+
+        List<Item> itemList  = service.getItemList(null, null,
+                pageNum, limit, searchtype, searchcontent, null, null,
+                true);
+        mav.addObject("itemList", itemList);
+
+        int listcount = service.itemcount(null, null, searchtype, searchcontent, null, null);
+        int maxpage = listcount / limit;
+        if (listcount % limit != 0) {
+            maxpage++;
+        }
+
+        int startpage = pageNum / limit;
+        if (pageNum % limit != 0) {
+            startpage++;
+        }
+
+        int endpage = startpage + 9;
+        if (endpage > maxpage) {
+            endpage = maxpage;
+        }
+
+        mav.addObject("limit", limit);
+        mav.addObject("pageNum", pageNum);
+        mav.addObject("maxpage", maxpage);
+        mav.addObject("startpage", startpage);
+        mav.addObject("endpage", endpage);
+        mav.addObject("listcount", listcount);
+
         return mav;
     }
     
@@ -50,7 +83,9 @@ public class InventoryController {
         ModelAndView mav = new ModelAndView();
 
         //받아올 테이블
-        List<Item> itemList  = service.getItemList(true);
+        List<Item> itemList  = service.getItemList(null, null,
+                null, null, null, null, null, null,
+                true);
         List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
         List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
         
@@ -99,7 +134,9 @@ public class InventoryController {
         ModelAndView mav = new ModelAndView();
         
         //받아올 테이블
-        List<Item> itemList  = service.getItemList(true);
+        List<Item> itemList  = service.getItemList(null, null,
+                null, null, null, null, null, null,
+                true);
         List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
         List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
         List<Orders> OrdersList = service.getOrdersList(null, null);
@@ -119,11 +156,13 @@ public class InventoryController {
         ModelAndView mav = new ModelAndView();
       
         //받아올 테이블
-        List<Item> itemList  = service.getItemList(true);
+        List<Item> itemList  = service.getItemList(null, null,
+                null, null, null, null, null, null,
+                true);
         List<CategoryGroup> CategoryGroupList  = service.getCategoryGroupList();
         List<CategoryItem> CategoryItemList  = service.getCategoryItemList();
         List<Orders> OrdersList = service.getOrdersList(null, null);
-        
+
         // orders money 멤버에서 호출
         List<Orders> moneyListDay = service.ordersmonyList_by_day();
         List<Orders> day_profit = service.day_profit();
@@ -150,7 +189,9 @@ public class InventoryController {
 		ModelAndView mav = new ModelAndView();
 
 		// 받아올 테이블
-		List<Item> itemList = service.getItemList(true);
+        List<Item> itemList  = service.getItemList(null, null,
+                null, null, null, null, null, null,
+                true);
 		List<CategoryGroup> CategoryGroupList = service.getCategoryGroupList();
 		List<CategoryItem> CategoryItemList = service.getCategoryItemList();
 		List<Orders> OrdersList = service.getOrdersList(null, null);
@@ -176,7 +217,9 @@ public class InventoryController {
 		ModelAndView mav = new ModelAndView();
 
 		// 받아올 테이블
-		List<Item> itemList = service.getItemList(true);
+        List<Item> itemList  = service.getItemList(null, null,
+                null, null, null, null, null, null,
+                true);
 		List<CategoryGroup> CategoryGroupList = service.getCategoryGroupList();
 		List<CategoryItem> CategoryItemList = service.getCategoryItemList();
 		List<Orders> OrdersList = service.getOrdersList(null, null);
@@ -202,7 +245,9 @@ public class InventoryController {
 		ModelAndView mav = new ModelAndView();
 
 		// 받아올 테이블
-		List<Item> itemList = service.getItemList(true);
+        List<Item> itemList  = service.getItemList(null, null,
+                null, null, null, null, null, null,
+                true);
 		List<CategoryGroup> CategoryGroupList = service.getCategoryGroupList();
 		List<CategoryItem> CategoryItemList = service.getCategoryItemList();
 		List<Orders> OrdersList = service.getOrdersList(null, null);

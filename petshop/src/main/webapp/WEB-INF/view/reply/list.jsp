@@ -154,7 +154,7 @@
                         표시할 댓글 갯수&nbsp;&nbsp;
                     </c:otherwise>
                 </c:choose>
-                <select name="limit" onchange="limitcall(${limit})">
+                <select name="limit" onchange="limitcall()">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>

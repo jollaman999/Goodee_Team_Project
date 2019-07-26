@@ -61,10 +61,6 @@ public class ShopService {
         return categoryGroupDao.list();
     }
 
-    public List<Item> getItemList(boolean get_quantity_details) {
-        return itemDao.list(get_quantity_details);
-    }
-
     public List<Item> getItemList(Integer category_group, Integer category_item,
                                   Integer pageNum, Integer limit, String searchtype, String searchcontent,
                                   Integer min_price, Integer max_price, boolean get_quantity_details) {
