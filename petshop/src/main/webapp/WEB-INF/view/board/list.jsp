@@ -12,8 +12,8 @@
 
     <script type="text/javascript">
         function listcall(page) {
-            document.searcform.pageNum.value = page;
-            document.searcform.submit();
+            document.searchform.pageNum.value = page;
+            document.searchform.submit();
         }
     </script>
 
@@ -24,7 +24,7 @@
 <table>
     <tr>
         <td colspan="5">
-            <form action="list.shop" method="post" name="searcform">
+            <form action="list.shop" method="post" name="searchform">
                 <input type="hidden" name="type" value="${param.type}">
                 <input type="hidden" name="pageNum" value="1">
                 <select name="searchtype" style="width: 120px;">
@@ -38,11 +38,11 @@
                     <!-- 상품이름 value 바꾸기 -->
                 </select>
                 <script>
-                    document.searcform.searchtype.value = "${param.searchtype}";
+                    document.searchform.searchtype.value = "${param.searchtype}";
                 </script>
                 <input type="text" name="searchcontent"
-                       value="${param.searchcontent}" style="width: 250px;"> <input
-                    type="submit" value="검색">
+                       value="${param.searchcontent}" style="width: 250px;">
+                <input type="submit" value="검색">
             </form>
         </td>
     </tr>
@@ -53,7 +53,7 @@
         </tr>
         <tr>
             <th width="10%">번호</th>
-            <th width="10%">상품이름</th>
+            <th width="35%">상품이름</th>
             <th>제목</th>
             <th width="12%">글쓴이</th>
             <th width="15%">날짜</th>
