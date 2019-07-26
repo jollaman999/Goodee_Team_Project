@@ -11,7 +11,8 @@
    
     <!-- 프린트 -->
     <script type="text/javascript" src="${path}/js/jquery.techbytarun.excelexportjs.min.js"></script>
-    
+    <!-- 구글 차트  -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- 검색창 가운데 정렬 -->
     <style>
     .centeringContainer { text-align: center; }
@@ -156,5 +157,54 @@ function printIt(printThis)
 </tr></table></div></table>  <!--  테이블 종료  -->
 
 
+
+<!-- 시각 화 시작 -->
+<br><br><br><br><br><table>
+
+<script type="text/javascript">
+
+google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+      
+  	
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'X');
+      data.addColumn('number', '총만매금');
+
+      var list1 = new Array();
+      <c:forEach items="${moneyListDay}" var="moneyDay" varStatus="stat">
+      list1.push("${moneyDay.update_time}"); 
+      </c:forEach>
+      
+      var list2 = new Array();
+      <c:forEach items="${day_profit}" var="dayprofit" varStatus="stat" >
+      list2.push("${dayprofit.totaldiff}"); 
+      </c:forEach>
+      
+
+      for(var i = 0; i<list1.length; i++){
+      data.addRows([list1[i], list2[i]);
+      } 
+      
+      var options = {
+        hAxis: {
+          title: '날짜'
+        },
+        vAxis: {
+          title: ''
+        }
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+</script>
+<div id="chart_div" style="width: 1200px; height: 500px;"></div>
+<!--  https://jsfiddle.net/api/post/library/pure/  
+https://private.tistory.com/66 --> 
+</table>
 </form></body></html>
 
