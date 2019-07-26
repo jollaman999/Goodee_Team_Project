@@ -34,6 +34,10 @@
             </td>
         </tr>
         <tr>
+	        <td>상품이름</td>
+	        <td>${board.item_name}</td>
+        </tr>
+        <tr>
             <td>내용</td>
             <td>
                 <form:textarea path="content" rows="15" cols="80" />

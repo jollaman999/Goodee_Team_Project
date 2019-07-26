@@ -7,17 +7,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>게시글 작성</title>
+<meta charset="UTF-8">
+<title>게시글 작성</title>
 
-	<link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
+<link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 </head>
 <body>
 	<form name="f" method="post" action="write.shop"
 		enctype="multipart/form-data">
+		<input type="hidden" name="item_no" value="${param.item_no}"> 
+		<input type="hidden" name="item_name" value="${param.item_name}"> 
 		<input type="hidden" name="type" value="${param.type}"> 
 		<input type="hidden" name="member_id" value="${sessionScope.loginMember.id}">
-		<input type="hidden" name="item_no" value="${param.item_no}">
 		<br>
 		<table>
 			<tr>
@@ -26,15 +27,7 @@
 			</tr>
 			<tr>
 				<td>상품 이름</td>
-				<td>
-				<c:forEach items="${param.item_no}" var="item_no">
-				<c:forEach items="${itemList}" var="itemList">
-				<c:if test="${itemList.item_no eq board.item_no}">
-				<c:out value="${item.name}"/>
-				</c:if>                
-                </c:forEach>
-                </c:forEach>
-				</td>
+				<td>${param.item_no}</td>
 				<!-- <input type="text" name="item_no" value="${param.item_no}"> -->
 			</tr>
 			<tr>
@@ -53,11 +46,12 @@
 					</script></td>
 			</tr>
 			<tr>
-				<td colspan="2" style="border: 0; padding-top: 20px">
-					<input class="w3-button w3-bar-item w3-deep-purple" type="submit" value="게시판 등록"
-						   style="margin-right: 10px">
-					<input class="w3-button w3-bar-item w3-deep-purple" type="button" onclick="location.href='list.shop?type=${param.type}'" value="게시글 목록">
-				</td>
+				<td colspan="2" style="border: 0; padding-top: 20px"><input
+					class="w3-button w3-bar-item w3-deep-purple" type="submit"
+					value="게시판 등록" style="margin-right: 10px"> <input
+					class="w3-button w3-bar-item w3-deep-purple" type="button"
+					onclick="location.href='list.shop?type=${param.type}'"
+					value="게시글 목록"></td>
 			</tr>
 		</table>
 	</form>
