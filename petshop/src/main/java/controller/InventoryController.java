@@ -5,16 +5,17 @@ import logic.CategoryGroup;
 import logic.CategoryItem;
 import logic.Item;
 import logic.Orders;
-import logic.Orders_list;
 import logic.ShopService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import exception.ShopException;
+
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -125,6 +126,7 @@ public class InventoryController {
         
         // orders money 멤버에서 호출
         List<Orders> moneyListDay = service.ordersmonyList_by_day();
+        List<Orders> day_profit = service.day_profit();
         
 
         // 리스트 객체 생성 
@@ -133,10 +135,16 @@ public class InventoryController {
         mav.addObject("CategoryItemList",CategoryItemList);
         mav.addObject("Orderslist",OrdersList);
         mav.addObject("moneyListDay",moneyListDay);
+        mav.addObject("day_profit",day_profit);
+        
+        
+        ///
+        
         
         return mav;
     }
     
+    // 월별
 	@RequestMapping("money2")
 	public ModelAndView money2(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -146,9 +154,10 @@ public class InventoryController {
 		List<CategoryGroup> CategoryGroupList = service.getCategoryGroupList();
 		List<CategoryItem> CategoryItemList = service.getCategoryItemList();
 		List<Orders> OrdersList = service.getOrdersList(null, null);
-
 		// orders money 멤버에서 호출
 		List<Orders> moneyListMonth = service.ordersmoneyList_by_month();
+		List<Orders> month_profit = service.month_profit();
+		
 
 		// 리스트 객체 생성
 		mav.addObject("itemList", itemList);
@@ -156,6 +165,8 @@ public class InventoryController {
 		mav.addObject("CategoryItemList", CategoryItemList);
 		mav.addObject("Orderslist", OrdersList);
 		mav.addObject("moneyListMonth", moneyListMonth);
+		mav.addObject("month_profit", month_profit);
+		
 
 		return mav;
 	}
@@ -169,6 +180,7 @@ public class InventoryController {
 		List<CategoryGroup> CategoryGroupList = service.getCategoryGroupList();
 		List<CategoryItem> CategoryItemList = service.getCategoryItemList();
 		List<Orders> OrdersList = service.getOrdersList(null, null);
+		List<Orders> year_profit = service.year_profit();
 
 		// orders money 멤버에서 호출
 
@@ -180,6 +192,7 @@ public class InventoryController {
 		mav.addObject("CategoryItemList", CategoryItemList);
 		mav.addObject("Orderslist", OrdersList);
 		mav.addObject("moneyListYear", moneyListYear);
+		mav.addObject("year_profit", year_profit);
 
 		return mav;
 	}
@@ -208,7 +221,10 @@ public class InventoryController {
 		mav.addObject("moneyList", moneyList);
 		mav.addObject("moneyList2", moneyList2);
 		mav.addObject("moneyList3", moneyList3);
-
+  
 		return mav;
+	
 	}
+	
+
 }

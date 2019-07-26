@@ -82,4 +82,18 @@ public class OrdersDao {
     public List<Orders> moneyList_by_year() {
         return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList_by_year();
     }
+    
+    // 월별 기준 비교이익
+    public List<Orders> month_profit() {
+        return sqlSessionTemplate.getMapper(OrdersMapper.class).month_profit();
+    }
+    
+    // 년별 기준 비교이익
+    public List<Orders> year_profit() {
+        return sqlSessionTemplate.getMapper(OrdersMapper.class).year_profit();
+    }
+    // 전일 기준 비교이익
+    public List<Orders> day_profit() {
+        return sqlSessionTemplate.getMapper(OrdersMapper.class).day_profit();
+    }
 }
