@@ -16,7 +16,7 @@ public interface MemberMapper {
     void update(Member member);
 
     @Update("update member set pass = #{pass}, email = #{email} where id = #{id}")
-    void update_pass(Member member);
+    int update_pass(Member member);
 
     @Delete("delete from member where id = #{id}")
     void delete(Member member);

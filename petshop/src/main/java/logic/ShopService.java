@@ -61,10 +61,6 @@ public class ShopService {
         return categoryGroupDao.list();
     }
 
-    public List<Item> getItemList(boolean get_quantity_details) {
-        return itemDao.list(get_quantity_details);
-    }
-
     public List<Item> getItemList(Integer category_group, Integer category_item,
                                   Integer pageNum, Integer limit, String searchtype, String searchcontent,
                                   Integer min_price, Integer max_price, boolean get_quantity_details) {
@@ -79,6 +75,18 @@ public class ShopService {
     public List<Orders> getOrdersList(String member_id, Integer day) {
         return ordersDao.list(member_id, day);
     }
+
+	public List<Orders> month_profit() {
+		return ordersDao.month_profit();
+	}
+
+	public List<Orders> year_profit() {
+		return ordersDao.year_profit();
+	}
+
+	public List<Orders> day_profit() {
+		return ordersDao.day_profit();
+	}
 
     public List<Orders> ordersmonyList_by_day() {
         return ordersDao.moneyList_by_day();
@@ -251,6 +259,10 @@ public class ShopService {
         memberDao.update(member);
     }
 
+    public int memberUpdatePass(Member member) {
+        return memberDao.update_pass(member);
+    }
+
     public void memberDelete(Member member) {
         memberDao.delete(member);
     }
@@ -368,7 +380,7 @@ public class ShopService {
     public void find_pw(PrintWriter out, Member member) throws Exception {
         StringBuilder pw = new StringBuilder();
         for (int i = 0; i < 10; i++) {
-            pw.append((char)((Math.random() * 26) + 97));
+            pw.append((char)((Math.random() * 94) + 33));
         }
 
         Member dbMember = memberDao.selectOne(member.getId());

@@ -32,7 +32,11 @@ public class BasketController {
 
         ModelAndView mav = new ModelAndView("/alert");
         if (result > 0) {
-            mav.addObject("msg", "장바구니에 상품이 추가되었습니다.");
+            if (request.getHeader("referer").contains("basket") && request.getHeader("referer").contains("view")) {
+                mav.addObject("msg", "장바구니에 상품이 추가되었습니다.");
+            } else {
+                mav.addObject("basket_ok", true);
+            }
             mav.addObject("url", request.getHeader("referer"));
         } else {
             mav.addObject("msg", "장바구니 상품 추가 실패!");

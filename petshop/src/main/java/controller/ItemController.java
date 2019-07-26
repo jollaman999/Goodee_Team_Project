@@ -29,7 +29,9 @@ public class ItemController {
 
     @RequestMapping("list")
     public ModelAndView list(HttpSession session) {
-        List<Item> itemList  = service.getItemList(false);
+        List<Item> itemList  = service.getItemList(null, null,
+                null, null, null, null, null, null,
+                false);
         // /WEB-INF/view/item/list.jsp 뷰로 지정
         ModelAndView mav = new ModelAndView();
         mav.addObject("itemList", itemList);

@@ -2,6 +2,8 @@ package dao;
 
 import dao.mapper.BoardMapper;
 import logic.Board;
+import logic.Item;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,9 +27,13 @@ public class BoardDao {
         if (searchtype != null && searchtype.length() != 0 &&
                 searchcontent != null && searchcontent.length() != 0) {
             if (searchtype.equals("name")) {
-                param.put("name", searchcontent);
+                if (id != null && id.equals("admin")) {
+                    param.put("name", searchcontent);
 
-                return sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name_count(param);
+                    return sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name_count(param);
+                }
+
+                return 0;
             }
 
             param.put("searchtype", searchtype);
@@ -41,6 +47,24 @@ public class BoardDao {
         return sqlSessionTemplate.getMapper(BoardMapper.class).maxnum();
     }
 
+    private List<Board> get_boardList(List<Board> boardList) {
+        if (boardList != null) {
+            final String ItemMapper = "dao.mapper.ItemMapper.";
+
+            for (Board board : boardList) {
+                param.clear();
+                param.put("item_no", board.getItem_no());
+
+                Item item = sqlSessionTemplate.selectOne(ItemMapper + "list", param);
+                if (item != null) {
+                    board.setItem_name(item.getName());
+                }
+            }
+        }
+
+        return boardList;
+    }
+
     public List<Board> list(int type, int pageNum, int limit, String searchtype, String searchcontent, String id) {
         param.clear();
         param.put("type", type);
@@ -51,23 +75,41 @@ public class BoardDao {
         if (searchtype != null && searchtype.length() != 0 &&
                 searchcontent != null && searchcontent.length() != 0) {
             if (searchtype.equals("name")) {
-                param.put("name", searchcontent);
+                if (id != null && id.equals("admin")) {
+                    param.put("name", searchcontent);
 
-                return sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name(param);
+                    List<Board> boardList = sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name(param);
+                    return get_boardList(boardList);
+                }
+
+                return null;
             }
 
             param.put("searchtype", searchtype);
             param.put("searchcontent", searchcontent);
         }
 
-        return sqlSessionTemplate.selectList(NS + "list", param);
+        List<Board> boardList = sqlSessionTemplate.selectList(NS + "list", param);
+        return get_boardList(boardList);
     }
 
     public Board selectOne(int num) {
         param.clear();
         param.put("num", num);
 
-        return sqlSessionTemplate.selectOne(NS + "list", param);
+        Board board = sqlSessionTemplate.selectOne(NS + "list", param);
+        if (board != null) {
+        	param.clear();
+            param.put("item_no", board.getItem_no());
+            
+            final String ItemMapper = "dao.mapper.ItemMapper.";
+            Item item = sqlSessionTemplate.selectOne(ItemMapper + "list", param);
+            if (item != null) {
+                board.setItem_name(item.getName());
+            }
+        }
+
+        return board;
     }
 
     public int insert(Board board) {

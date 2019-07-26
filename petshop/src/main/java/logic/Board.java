@@ -7,6 +7,8 @@ import java.util.Date;
 
 public class Board {
     private int num;
+    private int item_no;
+    private String item_name;
     private int type;
     @NotEmpty(message = "회원 정보를 가져올 수 없습니다.")
     private String member_id;
@@ -25,6 +27,22 @@ public class Board {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public int getItem_no() {
+        return item_no;
+    }
+
+    public void setItem_no(int item_no) {
+        this.item_no = item_no;
+    }
+
+    public String getItem_name() {
+        return item_name;
+    }
+
+    public void setItem_name(String item_name) {
+        this.item_name = item_name;
     }
 
     public int getType() {

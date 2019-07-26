@@ -8,4 +8,4 @@
 <script src="${path}/js/jquery.nicescroll.min.js"></script>
 <script src="${path}/js/jquery.zoom.min.js"></script>
 <script src="${path}/js/jquery-ui.min.js"></script>
-<script src="${path}/js/main.js"></script>
+<script src="${path}/js/main.min.js"></script>

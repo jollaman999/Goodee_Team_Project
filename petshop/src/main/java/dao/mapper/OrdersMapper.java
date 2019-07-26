@@ -41,4 +41,48 @@ public interface OrdersMapper {
     // 년별 금액 토탈 가져오기
     @Select("select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-%d') update_time from orders where status in (1, 2, 3) group by date_format(update_time, '%Y')")
     List<Orders> moneyList_by_year();
+
+    // 전월대비 이득
+    @Select("SELECT " + 
+    		"DATE_FORMAT(a._month, '%Y-%m-%d') _month,ifnull(sum(a.price_total),0) total, " + 
+    		"(ifnull(" + 
+    		"ifnull(sum(a.price_total),0) - (" + 
+    		"SELECT SUM(b.price_total) " + 
+    		"FROM ( select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-01') _month " + 
+    		"from orders where status in (1, 2 ,3) group by _month) b WHERE " + 
+    		"	  b._month = (a._month - INTERVAL 1 month)), null)) totaldiff " + 
+    		"FROM (select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-01') _month " + 
+    		"from orders where status in (1, 2 ,3) group by _month) a GROUP BY DATE_FORMAT(a._month, '%Y-%m')")
+    List<Orders> month_profit(); 
+    
+    // 전년대비 이득
+    @Select("SELECT " + 
+    		"DATE_FORMAT(a._month, '%Y-%m-%d') _month,ifnull(sum(a.price_total),0) total, " + 
+    		"(ifnull(" + 
+    		"ifnull(sum(a.price_total),0) - (" + 
+    		"SELECT SUM(b.price_total) " + 
+    		"FROM ( select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-01-01') _month " + 
+    		"from orders where status in (1, 2 ,3) group by _month) b WHERE " + 
+    		"	  b._month = (a._month - INTERVAL 1 year)), null)) totaldiff " + 
+    		"FROM (select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-01-01') _month " + 
+    		"from orders where status in (1, 2 ,3) group by _month) a GROUP BY DATE_FORMAT(a._month, '%Y')")
+    List<Orders> year_profit(); 
+    
+    // 전날대비 이득
+    @Select("SELECT " + 
+    		"DATE_FORMAT(a._month, '%Y-%m-%d') _month,ifnull(sum(a.price_total),0) total, " + 
+    		"(ifnull(" + 
+    		"ifnull(sum(a.price_total),0) - (" + 
+    		"SELECT SUM(b.price_total) " + 
+    		"FROM ( select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-%d') _month " + 
+    		"from orders where status in (1, 2 ,3) group by _month) b WHERE " + 
+    		"	  b._month = (a._month - INTERVAL 1 DAY)), null)) totaldiff " + 
+    		"FROM (select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-%d') _month " + 
+    		"from orders where status in (1, 2 ,3) group by _month) a GROUP BY DATE_FORMAT(a._month, '%Y-%m-%d')")
+    List<Orders> day_profit(); 
+    
+    
 }
+
+
+

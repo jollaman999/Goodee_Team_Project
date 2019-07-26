@@ -14,9 +14,6 @@
 
     <title>상품 상세 정보</title>
 
-    <!-- https://fontawesome.com/v4.7.0/icons/ -->
-    <link rel="stylesheet" type="text/css" href="${path}/css/font-awesome-4.7.min.css">
-
     <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 
     <!-- HighSlide -->
@@ -126,7 +123,7 @@
                     </button>
                 </div>
                 <div class="p-review">
-                    <a href="">3 reviews</a>|<a href="">Add your review</a>
+                    <a href="#reply_area">${review_count} reviews</a>
                 </div>
                 <div class="quantity" style="margin-top: -10px">
                     <c:if test="${item.remained_quantity > 0}">
@@ -211,7 +208,8 @@
 <!-- RELATED PRODUCTS section end -->
 
 <!-- Reply Area Start -->
-<div style="text-align: center; margin-top: 50px">
+<div id="reply_area" style="text-align: center; margin-top: 50px">
+    <section class="related-product-section">
     <div class="container">
         <div class="section-title">
             <h2>USER REVIEWS</h2>
@@ -219,6 +217,7 @@
     </div>
     <iframe src="${path}/reply/list.shop?type=0&itemno=${item.item_no}"
             onload="iframe_autoResize(this)" scrolling="no" style="width: 90%; border: 0"></iframe>
+    </section>
 </div>
 <!-- Reply Area End -->
 

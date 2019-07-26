@@ -75,18 +75,6 @@ public class ItemDao {
         return sqlSessionTemplate.selectOne(NS + "max_price", param);
     }
 
-    public List<Item> list(boolean get_quantity_details) {
-        List<Item> itemList =  sqlSessionTemplate.selectList(NS + "list");
-        if (itemList != null && get_quantity_details) {
-            for (Item item : itemList) {
-                item.setSold_quantity(getSold_quantity(item.getItem_no()));
-                item.setRemained_quantity(getRemained_quantity(item.getItem_no()));
-            }
-        }
-
-        return itemList;
-    }
-
     public List<Item> list(Integer category_group, Integer category_item,
                            Integer pageNum, Integer limit, String searchtype, String searchcontent,
                            Integer min_price, Integer max_price, boolean get_quantity_details) {
