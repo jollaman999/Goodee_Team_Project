@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@ page import="org.springframework.web.context.ContextLoader" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="dao.ItemDao" %>
@@ -113,7 +114,7 @@
 <div id="weekinfo" class="info" style="display: none; width:100%;">
     <table>
         <tr>
-            <td colspan="6" align="center">
+            <td colspan="7" align="center">
                 <h3>7일 주문 내역</h3>
             </td>
         </tr>
@@ -125,6 +126,7 @@
             <th style="width: 15%">금액(총)</th>
             <th style="width: 12%">주문상태</th>
             <th style="width: 12%">주문날짜</th>
+            <th style="width: 12%">취소/환불</th>
         </tr>
 
         <c:forEach items="${ordersList_7}" var="order" varStatus="stat1">
@@ -177,7 +179,16 @@
 
                 <!-- 금액(총) -->
                 <td rowspan="${order.orders_lists.size()}">
-                    ${order.price_total} 원
+
+				<c:set var="price_total" value="${order.price_total}" />
+				<%
+					Integer price_total = (Integer) pageContext.getAttribute("price_total");
+					if (price_total != null) {
+						DecimalFormat dc = new DecimalFormat("###,###,###,###");   
+				        String str_price_total = dc.format(price_total);
+				%>
+					<%= str_price_total %>
+				<% } %>
                 </td>
 
                 <!-- 주문상태 -->
@@ -190,11 +201,16 @@
                             입금확인
                         </c:when>
                         <c:when test="${order.status eq '2'}">
-                            입금대기중
+                            상품준비중
                         </c:when>
                         <c:when test="${order.status eq '3'}">
                             <div style="margin-bottom: 8px">발송완료</div>
-                            <div><a href="#">배송조회</a></div>
+                            
+                            <c:if test="${delivery.courier eq '1'}">
+                            	<div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회<br> (ex우체국택배)</a></div>
+                            </c:if> 
+                           
+                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회<br> (ex우체국택배)</a></div>                          
                         </c:when>
                         <c:when test="${order.status eq '4'}">
                             취소접수
@@ -226,6 +242,36 @@
                     %>
                     <%= datestr  %>
                 </td>
+                
+                 <td rowspan="${order.orders_lists.size()}">
+                    <c:choose>
+                        <c:when test="${order.status eq '0'}">
+                             <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '1'}">
+                          <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '2'}">
+                             <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '3'}">
+                             <button onclick="">환불하기</button>
+                        </c:when>
+                        <c:when test="${order.status eq '4'}">
+                           <button onclick="">취소 철회</button>
+                        </c:when>
+                        <c:when test="${order.status eq '5'}">
+                            취소완료
+                        </c:when>
+                        <c:when test="${order.status eq '6'}">
+                             <button onclick="">환불 철회</button>
+                        </c:when>
+                        <c:when test="${order.status eq '7'}">
+                            환불완료
+                        </c:when>
+                    </c:choose>
+                </td>
+                
             </tr>
 
             <!-- 주문한 상품이 2개 이상 있을때 -->
@@ -277,7 +323,7 @@
 <div id="monthinfo" class="info">
     <table>
         <tr>
-            <td colspan="6" align="center">
+            <td colspan="7" align="center">
                 <h3>30일 주문 내역</h3>
             </td>
         </tr>
@@ -289,6 +335,7 @@
             <th style="width: 15%">금액(총)</th>
             <th style="width: 12%">주문상태</th>
             <th style="width: 12%">주문날짜</th>
+            <th style="width: 12%">취소/환불</th>
         </tr>
 
         <c:forEach items="${ordersList_30}" var="order" varStatus="stat1">
@@ -341,7 +388,16 @@
 
                 <!-- 금액(총) -->
                 <td rowspan="${order.orders_lists.size()}">
-                        ${order.price_total} 원
+
+				<c:set var="price_total" value="${order.price_total}" />
+				<%
+					Integer price_total = (Integer) pageContext.getAttribute("price_total");
+					if (price_total != null) {
+						DecimalFormat dc = new DecimalFormat("###,###,###,###");   
+				        String str_price_total = dc.format(price_total);
+				%>
+					<%= str_price_total %>
+				<% } %>
                 </td>
 
                 <!-- 주문상태 -->
@@ -354,11 +410,11 @@
                             입금확인
                         </c:when>
                         <c:when test="${order.status eq '2'}">
-                            입금대기중
+                            상품준비중
                         </c:when>
                         <c:when test="${order.status eq '3'}">
                             <div style="margin-bottom: 8px">발송완료</div>
-                            <div><a href="#">배송조회</a></div>
+                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회<br> (ex우체국택배)</a></div>
                         </c:when>
                         <c:when test="${order.status eq '4'}">
                             취소접수
@@ -388,8 +444,40 @@
                             datestr = simpleDateFormat.format(date);
                         }
                     %>
-                    <%= datestr  %>
+                    <%= datestr  %>          
                 </td>
+                
+                  </td>
+                
+                 <td rowspan="${order.orders_lists.size()}">
+                    <c:choose>
+                        <c:when test="${order.status eq '0'}">
+                             <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '1'}">
+                          <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '2'}">
+                             <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '3'}">
+                             <button onclick="">환불하기</button>
+                        </c:when>
+                        <c:when test="${order.status eq '4'}">
+                           <button onclick="">취소 철회</button>
+                        </c:when>
+                        <c:when test="${order.status eq '5'}">
+                            취소완료
+                        </c:when>
+                        <c:when test="${order.status eq '6'}">
+                             <button onclick="">환불 철회</button>
+                        </c:when>
+                        <c:when test="${order.status eq '7'}">
+                            환불완료
+                        </c:when>
+                    </c:choose>
+                </td>
+                
             </tr>
 
             <!-- 주문한 상품이 2개 이상 있을때 -->
@@ -437,10 +525,11 @@
 </div>
 
 <!-- half -->
+<!-- ------------------------------------------------------------------------------------------------------- -->
 <div id="halfinfo" class="info">
     <table>
         <tr>
-            <td colspan="6" align="center">
+            <td colspan="7" align="center">
                 <h3>180일 주문 내역</h3>
             </td>
         </tr>
@@ -452,6 +541,7 @@
             <th style="width: 15%">금액(총)</th>
             <th style="width: 12%">주문상태</th>
             <th style="width: 12%">주문날짜</th>
+            <th style="width: 12%">취소/환불</th>
         </tr>
 
         <c:forEach items="${ordersList_180}" var="order" varStatus="stat1">
@@ -503,8 +593,17 @@
                 </c:forEach>
 
                 <!-- 금액(총) -->
-                <td rowspan="${order.orders_lists.size()}">
-                        ${order.price_total} 원
+                 <td rowspan="${order.orders_lists.size()}">
+
+				<c:set var="price_total" value="${order.price_total}" />
+				<%
+					Integer price_total = (Integer) pageContext.getAttribute("price_total");
+					if (price_total != null) {
+						DecimalFormat dc = new DecimalFormat("###,###,###,###");   
+				        String str_price_total = dc.format(price_total);
+				%>
+					<%= str_price_total %>
+				<% } %>
                 </td>
 
                 <!-- 주문상태 -->
@@ -517,11 +616,11 @@
                             입금확인
                         </c:when>
                         <c:when test="${order.status eq '2'}">
-                            입금대기중
+                            상품준비중
                         </c:when>
                         <c:when test="${order.status eq '3'}">
                             <div style="margin-bottom: 8px">발송완료</div>
-                            <div><a href="#">배송조회</a></div>
+                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회<br> (ex우체국택배)</a></div>
                         </c:when>
                         <c:when test="${order.status eq '4'}">
                             취소접수
@@ -553,6 +652,38 @@
                     %>
                     <%= datestr  %>
                 </td>
+                
+
+                
+                 <td rowspan="${order.orders_lists.size()}">
+                    <c:choose>
+                        <c:when test="${order.status eq '0'}">
+                             <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '1'}">
+                          <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '2'}">
+                             <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '3'}">
+                             <button onclick="">환불하기</button>
+                        </c:when>
+                        <c:when test="${order.status eq '4'}">
+                           <button onclick="">취소 철회</button>
+                        </c:when>
+                        <c:when test="${order.status eq '5'}">
+                            취소완료
+                        </c:when>
+                        <c:when test="${order.status eq '6'}">
+                             <button onclick="">환불 철회</button>
+                        </c:when>
+                        <c:when test="${order.status eq '7'}">
+                            환불완료
+                        </c:when>
+                    </c:choose>
+                </td>
+                
             </tr>
 
             <!-- 주문한 상품이 2개 이상 있을때 -->
@@ -604,7 +735,7 @@
 <div id="allinfo" class="info">
     <table>
         <tr>
-            <td colspan="6" align="center">
+            <td colspan="7" align="center">
                 <h3>모든 주문 내역</h3>
             </td>
         </tr>
@@ -616,6 +747,7 @@
             <th style="width: 15%">금액(총)</th>
             <th style="width: 12%">주문상태</th>
             <th style="width: 12%">주문날짜</th>
+            <th style="width: 12%">취소/환불</th>
         </tr>
 
         <c:forEach items="${ordersList_all}" var="order" varStatus="stat1">
@@ -667,8 +799,17 @@
                 </c:forEach>
 
                 <!-- 금액(총) -->
-                <td rowspan="${order.orders_lists.size()}">
-                        ${order.price_total} 원
+               <td rowspan="${order.orders_lists.size()}">
+
+				<c:set var="price_total" value="${order.price_total}" />
+				<%
+					Integer price_total = (Integer) pageContext.getAttribute("price_total");
+					if (price_total != null) {
+						DecimalFormat dc = new DecimalFormat("###,###,###,###");   
+				        String str_price_total = dc.format(price_total);
+				%>
+					<%= str_price_total %>
+				<% } %>
                 </td>
 
                 <!-- 주문상태 -->
@@ -681,11 +822,11 @@
                             입금확인
                         </c:when>
                         <c:when test="${order.status eq '2'}">
-                            입금대기중
+                            상품준비중
                         </c:when>
                         <c:when test="${order.status eq '3'}">
                             <div style="margin-bottom: 8px">발송완료</div>
-                            <div><a href="#">배송조회</a></div>
+                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회<br> (ex우체국택배)</a></div>
                         </c:when>
                         <c:when test="${order.status eq '4'}">
                             취소접수
@@ -717,6 +858,38 @@
                     %>
                     <%= datestr  %>
                 </td>
+                
+                  </td>
+                
+                 <td rowspan="${order.orders_lists.size()}">
+                    <c:choose>
+                        <c:when test="${order.status eq '0'}">
+                             <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '1'}">
+                          <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '2'}">
+                             <button onclick="">상품취소</button>
+                        </c:when>
+                        <c:when test="${order.status eq '3'}">
+                             <button onclick="">환불하기</button>
+                        </c:when>
+                        <c:when test="${order.status eq '4'}">
+                           <button onclick="">취소 철회</button>
+                        </c:when>
+                        <c:when test="${order.status eq '5'}">
+                            취소완료
+                        </c:when>
+                        <c:when test="${order.status eq '6'}">
+                             <button onclick="">환불 철회</button>
+                        </c:when>
+                        <c:when test="${order.status eq '7'}">
+                            환불완료
+                        </c:when>
+                    </c:choose>
+                </td>
+                
             </tr>
 
             <!-- 주문한 상품이 2개 이상 있을때 -->
