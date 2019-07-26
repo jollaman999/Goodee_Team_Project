@@ -23,12 +23,14 @@
 		<tr>
 			<td colspan="5">
 				<form action="list.shop" method="post" name="searcform">
-					<input type="hidden" name="type" value="${param.type}"> <input
-						type="hidden" name="pageNum" value="1"> <select
-						name="searchtype" style="width: 120px;">
+					<input type="hidden" name="type" value="${param.type}">
+					<input type="hidden" name="pageNum" value="1">
+					<select name="searchtype" style="width: 120px;">
 						<option value="">선택하세요</option>
 						<option value="title">제목</option>
-						<option value="name">글쓴이</option>
+						<c:if test="${sessionScope.loginMember.id == 'admin'}">
+							<option value="name">글쓴이</option>
+						</c:if>
 						<option value="content">내용</option>
 						<option value="item_name">상품이름</option>
 						<!-- 상품이름 value 바꾸기 -->
@@ -37,7 +39,7 @@
 						document.searcform.searchtype.value = "${param.searchtype}";
 					</script>
 					<input type="text" name="searchcontent"
-						value="${param.searchcontent }" style="width: 250px;"> <input
+						value="${param.searchcontent}" style="width: 250px;"> <input
 						type="submit" value="검색">
 				</form>
 			</td>
@@ -58,8 +60,6 @@
 				<tr>
 					<td>${boardno}</td>
 					<td>${board.item_name}</td>
-					<!-- <c:forEach var="itemList" items="${itemList}">${itemList.item_no}                 
-                </c:forEach> -->
 					<c:set var="boardno" value="${boardno - 1}" />
 					<td style="text-align: left"><c:choose>
 							<c:when test="${!empty board.fileurl}">

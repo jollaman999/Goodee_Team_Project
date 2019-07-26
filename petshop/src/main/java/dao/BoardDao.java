@@ -27,9 +27,13 @@ public class BoardDao {
         if (searchtype != null && searchtype.length() != 0 &&
                 searchcontent != null && searchcontent.length() != 0) {
             if (searchtype.equals("name")) {
-                param.put("name", searchcontent);
+                if (id != null && id.equals("admin")) {
+                    param.put("name", searchcontent);
 
-                return sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name_count(param);
+                    return sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name_count(param);
+                }
+
+                return 0;
             }
 
             param.put("searchtype", searchtype);
@@ -43,6 +47,24 @@ public class BoardDao {
         return sqlSessionTemplate.getMapper(BoardMapper.class).maxnum();
     }
 
+    private List<Board> get_boardList(List<Board> boardList) {
+        if (boardList != null) {
+            final String ItemMapper = "dao.mapper.ItemMapper.";
+
+            for (Board board : boardList) {
+                param.clear();
+                param.put("item_no", board.getItem_no());
+
+                Item item = sqlSessionTemplate.selectOne(ItemMapper + "list", param);
+                if (item != null) {
+                    board.setItem_name(item.getName());
+                }
+            }
+        }
+
+        return boardList;
+    }
+
     public List<Board> list(int type, int pageNum, int limit, String searchtype, String searchcontent, String id) {
         param.clear();
         param.put("type", type);
@@ -53,9 +75,14 @@ public class BoardDao {
         if (searchtype != null && searchtype.length() != 0 &&
                 searchcontent != null && searchcontent.length() != 0) {
             if (searchtype.equals("name")) {
-                param.put("name", searchcontent);
+                if (id != null && id.equals("admin")) {
+                    param.put("name", searchcontent);
 
-                return sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name(param);
+                    List<Board> boardList = sqlSessionTemplate.getMapper(BoardMapper.class).search_by_name(param);
+                    return get_boardList(boardList);
+                }
+
+                return null;
             }
 
             param.put("searchtype", searchtype);
@@ -63,21 +90,7 @@ public class BoardDao {
         }
 
         List<Board> boardList = sqlSessionTemplate.selectList(NS + "list", param);
-        if (boardList != null) {
-            final String ItemMapper = "dao.mapper.ItemMapper.";
-
-            for (Board board : boardList) {
-            	param.clear();
-                param.put("item_no", board.getItem_no());
-                
-                Item item = sqlSessionTemplate.selectOne(ItemMapper + "list", param);
-                if (item != null) {
-                    board.setItem_name(item.getName());
-                }
-            }
-        }
-
-        return boardList;
+        return get_boardList(boardList);
     }
 
     public Board selectOne(int num) {
