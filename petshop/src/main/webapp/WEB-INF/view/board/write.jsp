@@ -7,8 +7,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>게시글 작성</title>
+	<meta charset="UTF-8">
+	<title>게시글 작성</title>
+
+	<link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 </head>
 <body>
 	<form name="f" method="post" action="write.shop"
@@ -51,10 +53,11 @@
 					</script></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="게시판 등록"> <input
-					type="button"
-					onclick="location.href='list.shop?type=${param.type}'"
-					value="게시글 목록"></td>
+				<td colspan="2" style="border: 0; padding-top: 20px">
+					<input class="w3-button w3-bar-item w3-deep-purple" type="submit" value="게시판 등록"
+						   style="margin-right: 10px">
+					<input class="w3-button w3-bar-item w3-deep-purple" type="button" onclick="location.href='list.shop?type=${param.type}'" value="게시글 목록">
+				</td>
 			</tr>
 		</table>
 	</form>

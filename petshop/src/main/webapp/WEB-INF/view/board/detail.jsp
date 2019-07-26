@@ -7,15 +7,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>게시글 상세 보기</title>
+	<meta charset="UTF-8">
+	<title>게시글 상세 보기</title>
+
+	<link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 </head>
 <body>
 	<br>
 	<table>
-		<tr>
-			<td colspan="2">게시글 상세 보기</td>
-		</tr>
 		<tr>
 			<td>글쓴이</td>
 			<td>${board.name}</td>
@@ -45,10 +44,12 @@
 				</c:if></td>
 		</tr>
 		<tr>
-			<td colspan="2"><a
-				href="update.shop?type=${param.type}&num=${board.num}">[수정]</a> <a
-				href="delete.shop?type=${param.type}&num=${board.num}">[삭제]</a> <a
-				href="list.shop?type=${param.type}">[게시물 목록]</a></td>
+			<td colspan="2" style="border: 0; padding-top: 20px">
+				<a class="w3-button w3-bar-item w3-deep-purple" href="update.shop?type=${param.type}&num=${board.num}"
+				   style="margin-right: 10px">수정</a>
+				<a class="w3-button w3-bar-item w3-deep-purple" href="delete.shop?type=${param.type}&num=${board.num}"
+				   style="margin-right: 10px">삭제</a>
+				<a class="w3-button w3-bar-item w3-deep-purple" href="list.shop?type=${param.type}">게시물 목록</a></td>
 		</tr>
 	</table>
 </body>
