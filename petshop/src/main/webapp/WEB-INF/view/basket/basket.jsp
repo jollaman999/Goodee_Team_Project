@@ -13,15 +13,6 @@
     <title>장바구니</title>
 
     <script type="text/javascript">
-        function onlyNumber() {
-            if(((event.keyCode < 48)||(event.keyCode > 57)) && ((event.keyCode < 96)||(event.keyCode > 105)) &&
-                (event.keyCode != 8) && (event.keyCode != 35) && (event.keyCode != 36) && (event.keyCode != 37) && (event.keyCode != 39) && (event.keyCode != 46) &&
-                (event.keyCode != 116))  {
-                event.returnValue = false;
-                alert("숫자만 입력하세요!");
-            }
-        }
-
         Number.prototype.format = function(){
             if(this == 0) return 0;
 
@@ -160,7 +151,8 @@
                                                     <div class="quantity">
                                                         <form name="quantity_form_${basket.item_no}" method="post" action="update.shop">
                                                             <div class="pro-qty">
-                                                                <input type="text" id="quantity_${basket.item_no}" name="quantity" value="${basket.quantity}" onkeydown="onlyNumber()">
+                                                                <input type="number" id="quantity_${basket.item_no}" name="quantity" value="${basket.quantity}"
+                                                                        min="0" pattern="[0-9]*">
                                                             </div>
                                                             <input type="hidden" name="item_no" value="${item.item_no}">
                                                             <input type="button" class="site-btn sb-dark" value="변경" onclick="check_quantity_${basket.item_no}()"

@@ -22,19 +22,6 @@
     <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 
     <script type="text/javascript">
-        function onlyNumber() {
-            if(((event.keyCode < 48)||(event.keyCode > 57)) && ((event.keyCode < 96)||(event.keyCode > 105)) &&
-                (event.keyCode != 8) && (event.keyCode != 35) && (event.keyCode != 36) && (event.keyCode != 37) && (event.keyCode != 39) && (event.keyCode != 46) &&
-                (event.keyCode != 116))  {
-                event.returnValue = false;
-                if (event.keyCode == 13) {
-                    do_pricerange_search();
-                    return;
-                }
-                alert("숫자만 입력하세요!");
-            }
-        }
-
         function do_pricerange_search() {
             var min_price = parseInt(document.pricerange_form.min_price.value);
             var max_price = parseInt(document.pricerange_form.max_price.value);
@@ -175,10 +162,10 @@
                                 <input type="hidden" name="category_item" value="${category_item}">
 
                                 <div style="text-align: center">
-                                    <input class="price-range" type="text" name="min_price" value="${min_price}"
-                                           style="width: 60px; margin: 0" onkeydown="onlyNumber()">원~
-                                    <input class="price-range" type="text" name="max_price" value="${max_price}"
-                                           style="width: 60px; margin: 0" onkeydown="onlyNumber()">원
+                                    <input class="price-range" type="number" name="min_price" value="${min_price}"
+                                           min="${min_price}" max="${max_price}" pattern="[0-9]*" style="width: 60px; margin: 0">원~
+                                    <input class="price-range" type="number" name="max_price" value="${max_price}"
+                                           min="${min_price}" max="${max_price}" pattern="[0-9]*"style="width: 60px; margin: 0">원
                                     <input class="w3-btn w3-pink w3-round" type="button" value="검색" onclick="do_pricerange_search()"
                                            style="width: 60px; height: 38px; padding-left: 0; padding-right: 1px; margin-left: 10px">
                                 </div>
