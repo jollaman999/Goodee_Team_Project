@@ -67,22 +67,27 @@ public class OrdersDao {
 
         return ordersList;
     }
-	
+
     // 날짜별 금액 토탈 가져오기
     public List<Orders> moneyList_by_day() {
         return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList_by_day();
     }
-    
+
     // 월별 금액 토탈 가져오기
     public List<Orders> moneyList_by_month() {
         return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList_by_month();
     }
-    
+
     // 년별 금액 토탈 가져오기
     public List<Orders> moneyList_by_year() {
         return sqlSessionTemplate.getMapper(OrdersMapper.class).moneyList_by_year();
     }
-    
+
+    // 전일 기준 비교이익
+    public List<Orders> day_profit() {
+        return sqlSessionTemplate.getMapper(OrdersMapper.class).day_profit();
+    }
+
     // 월별 기준 비교이익
     public List<Orders> month_profit() {
         return sqlSessionTemplate.getMapper(OrdersMapper.class).month_profit();
@@ -91,9 +96,5 @@ public class OrdersDao {
     // 년별 기준 비교이익
     public List<Orders> year_profit() {
         return sqlSessionTemplate.getMapper(OrdersMapper.class).year_profit();
-    }
-    // 전일 기준 비교이익
-    public List<Orders> day_profit() {
-        return sqlSessionTemplate.getMapper(OrdersMapper.class).day_profit();
     }
 }
