@@ -38,7 +38,7 @@
 </head>
 <body>
 
-<!-- 제목 --> <!-- 상품등록  -->   
+<!-- 제목 -->
 <h2>
     <a href="${path}/inventory/list.shop">상품 관리</a>&nbsp;&nbsp;<a href="${path}/item/create.shop">상품등록</a>
 </h2><br>
@@ -88,7 +88,7 @@
             <th>등록량</th><!-- 현재고 -->
             <th>판매량</th>
             <th>현재수량</th>
-            <th style="width: 15%">수량추가</th>
+            <th style="width: 9%">수량 추가</th>
         </tr>
 
     <!--  현재 수량   선언 -->
@@ -145,12 +145,9 @@
                     <form id="itemUpdate_${item.item_no}" action="listsubmit.shop" method="post">
                         <input type="hidden" name="item_no" value="${item.item_no}">
 
-                        <div class="row" style="width: 150px; height:auto; text-align: center; margin-left: 20px; ">
-
-                                <input type="number" id="itemUpdate" name="itemUpdate" style="width: 70px; font-size: 15px; margin-right: 5px">
-
+                        <div class="row" style="width: 150px; height:auto; text-align: center; margin-left: 22px">
+                                <input type="number" id="itemUpdate" name="itemUpdate" style="width: 50px; font-size: 15px; margin-right: 10px">
                                 <input type="submit" value="적용" style="font-size: 15px; ">
-
                         </div>
                     </form>
                 </td>

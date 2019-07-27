@@ -25,47 +25,14 @@ public class Orders {
     private String account_bank;
     private String account_number;
     private int price_total;
+    private Integer totaldiff;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date update_time;
     private List<Orders_list> orders_lists = new ArrayList<>();
-    
-    
-    //테스트
-    private Integer totaldiff;
-    private Date _month;
 
-    //테스트
-    
-
-
-	public Date get_month() {
-		return _month;
-	}
-
-	public Integer getTotaldiff() {
-		return totaldiff;
-	}
-
-	public void setTotaldiff(Integer totaldiff) {
-		this.totaldiff = totaldiff;
-	}
-
-	public void set_month(Date _month) {
-		this._month = _month;
-	}
-
-
-    
-    //
-	
-	
-	
-	
-	
 	public int getNum() {
         return num;
     }
-
 
 	public void setNum(int num) {
         this.num = num;
@@ -173,6 +140,14 @@ public class Orders {
 
     public void setPrice_total(int price_total) {
         this.price_total = price_total;
+    }
+
+    public Integer getTotaldiff() {
+        return totaldiff;
+    }
+
+    public void setTotaldiff(Integer totaldiff) {
+        this.totaldiff = totaldiff;
     }
 
     public Date getUpdate_time() {

@@ -42,7 +42,7 @@ public interface OrdersMapper {
 
     // 전날대비 이득
     @Select("select " +
-            "date_format(a._day, '%Y-%m-%d') _day, ifnull(sum(a.price_total), 0) total, " +
+            "date_format(a._day, '%Y-%m-%d') update_time, ifnull(sum(a.price_total), 0) price_total, " +
             "(ifnull(" +
             "ifnull(sum(a.price_total), 0) - (" +
             "select sum(b.price_total) " +
@@ -50,12 +50,12 @@ public interface OrdersMapper {
             "from orders where status in (1, 2 ,3) group by _day) b where " +
             "b._day = (a._day - interval 1 day)), null)) totaldiff " +
             "from (select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-%d') _day " +
-            "from orders where status in (1, 2 ,3) group by _day) a group by date_format(a._day, '%Y-%m-%d') order by _day desc")
+            "from orders where status in (1, 2 ,3) group by _day) a group by date_format(a._day, '%Y-%m-%d') order by update_time desc")
     List<Orders> day_profit();
 
     // 전월대비 이득
     @Select("select " +
-            "date_format(a._month, '%Y-%m-%d') _month, ifnull(sum(a.price_total), 0) total, " +
+            "date_format(a._month, '%Y-%m-%d') update_time, ifnull(sum(a.price_total), 0) price_total, " +
             "(ifnull(" +
             "ifnull(sum(a.price_total), 0) - (" +
             "select sum(b.price_total) " +
@@ -63,12 +63,12 @@ public interface OrdersMapper {
             "from orders where status in (1, 2 ,3) group by _month) b where " +
             "b._month = (a._month - interval 1 month)), null)) totaldiff " +
             "from (select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-%m-01') _month " +
-            "from orders where status in (1, 2 ,3) group by _month) a group by date_format(a._month, '%Y-%m-%d') order by _month desc")
+            "from orders where status in (1, 2 ,3) group by _month) a group by date_format(a._month, '%Y-%m-%d') order by update_time desc")
     List<Orders> month_profit();
 
     // 전년대비 이득
     @Select("select " +
-            "date_format(a._year, '%Y-%m-%d') _year, ifnull(sum(a.price_total), 0) total, " +
+            "date_format(a._year, '%Y-%m-%d') update_time, ifnull(sum(a.price_total), 0) price_total, " +
             "(ifnull(" +
             "ifnull(sum(a.price_total), 0) - (" +
             "select sum(b.price_total) " +
@@ -76,7 +76,7 @@ public interface OrdersMapper {
             "from orders where status in (1, 2 ,3) group by _year) b where " +
             "b._year = (a._year - interval 1 year)), null)) totaldiff " +
             "from (select ifnull(sum(price_total), 0) price_total, date_format(update_time, '%Y-01-01') _year " +
-            "from orders where status in (1, 2 ,3) group by _year) a group by date_format(a._year, '%Y-%m-%d') order by _year desc")
+            "from orders where status in (1, 2 ,3) group by _year) a group by date_format(a._year, '%Y-%m-%d') order by update_time desc")
     List<Orders> year_profit();
 }
 
