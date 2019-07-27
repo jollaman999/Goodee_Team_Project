@@ -20,7 +20,7 @@ tbody tr:hover {
 
 table {
     font-family: "Malgun Gothic", sans-serif;
-    border-spacing: 1;
+    border-spacing: 1px;
     border-collapse: collapse;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
