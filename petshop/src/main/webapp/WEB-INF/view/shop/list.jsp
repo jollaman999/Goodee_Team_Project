@@ -206,7 +206,7 @@
                                             </div>
                                         </div>
                                         <div class="pi-text">
-                                            <h6>${item.price}원</h6>
+                                            <h6><fmt:formatNumber value="${item.price}" pattern="###,###" />원</h6>
                                             <a href="detail.shop?item_no=${item.item_no}">
                                                 <p>${item.name}</p>
                                             </a>

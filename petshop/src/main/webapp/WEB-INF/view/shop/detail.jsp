@@ -188,7 +188,7 @@
                         </div>
                     </div>
                     <div class="pi-text">
-                        <h6>${randomitem.price}원</h6>
+                        <h6><fmt:formatNumber value="${randomitem.price}" pattern="###,###" />원</h6>
                         <a href="detail.shop?item_no=${randomitem.item_no}">
                             <p>${randomitem.name}</p>
                         </a>
