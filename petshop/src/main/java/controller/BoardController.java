@@ -252,7 +252,7 @@ public class BoardController {
             throw new ShopException("잘못된 접근입니다!", "list.shop?type=" + type);
         }
 
-        if (type == 1 && request.getParameter("item_no") == null) {
+        if (request.getRequestURI().contains("write") && type == 1 && request.getParameter("item_no") == null) {
             throw new ShopException("상품 정보를 가져올 수 없습니다!", "list.shop?type=" + type);
         }
 
