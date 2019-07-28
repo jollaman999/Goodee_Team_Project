@@ -1,5 +1,6 @@
 package controller;
 
+import exception.ShopException;
 import logic.Board;
 import logic.Member;
 import logic.ShopService;
@@ -79,6 +80,12 @@ public class BoardController {
 
     @PostMapping("write")
     public ModelAndView writeBoard(HttpSession session, Integer type, String member_id, String item_name, MultipartHttpServletRequest request, @Valid Board board) {
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        if (type == 0 && !loginMember.getId().equals("admin")) {
+            throw new ShopException("잘못된 접근입니다!", "list.shop?type=" + type);
+        }
+
         board.setType(type);
         board.setMember_id(member_id);
         board.setItem_name(item_name);
@@ -109,6 +116,11 @@ public class BoardController {
     @PostMapping("update")
     public ModelAndView updateBoard(HttpSession session, Integer type, MultipartHttpServletRequest request, @Valid Board board) {
         ModelAndView mav = new ModelAndView("/alert");
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        if (type == 0 && !loginMember.getId().equals("admin")) {
+            throw new ShopException("잘못된 접근입니다!", "list.shop?type=" + type);
+        }
 
         if (request.getParameter("num") == null) {
             mav.addObject("msg","게시글 정보를 가져올 수 없습니다!");
@@ -139,6 +151,11 @@ public class BoardController {
     @PostMapping("delete")
     public ModelAndView deleteBoardPost(HttpSession session, Integer type, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("/alert");
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        if (type == 0 && !loginMember.getId().equals("admin")) {
+            throw new ShopException("잘못된 접근입니다!", "list.shop?type=" + type);
+        }
 
         if (request.getParameter("num") == null) {
             mav.addObject("msg","게시글 정보를 가져올 수 없습니다!");
@@ -203,8 +220,14 @@ public class BoardController {
     @RequestMapping("*")
     public ModelAndView getBoard(HttpSession session, Integer type, HttpServletRequest request, Integer num) {
         ModelAndView mav = new ModelAndView();
-        Board board = new Board();
         Member loginMember = (Member) session.getAttribute("loginMember");
+
+        if ((request.getRequestURI().contains("write") || request.getRequestURI().contains("update") || request.getRequestURI().contains("delete")) &&
+                type == 0 && !loginMember.getId().equals("admin")) {
+            throw new ShopException("잘못된 접근입니다!", "list.shop?type=" + type);
+        }
+
+        Board board = new Board();
 
         if (num != null) {
             board = service.getBoard(num);

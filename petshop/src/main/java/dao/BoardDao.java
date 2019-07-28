@@ -22,7 +22,9 @@ public class BoardDao {
 	public int count(int type, String searchtype, String searchcontent, String id) {
 		param.clear();
 		param.put("type", type);
-		param.put("id", id);
+		if (type != 0) {
+			param.put("id", id);
+		}
 
 		if (searchtype != null && searchtype.length() != 0 && searchcontent != null && searchcontent.length() != 0) {
 			if (searchtype.equals("name")) {
@@ -77,7 +79,9 @@ public class BoardDao {
 		param.put("type", type);
 		param.put("startrow", (pageNum - 1) * limit);
 		param.put("limit", limit);
-		param.put("id", id);
+		if (type != 0) {
+			param.put("id", id);
+		}
 
 		if (searchtype != null && searchtype.length() != 0 && searchcontent != null && searchcontent.length() != 0) {
 			if (searchtype.equals("name")) {

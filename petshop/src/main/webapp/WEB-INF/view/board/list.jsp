@@ -34,7 +34,9 @@
                         <option value="name">글쓴이</option>
                     </c:if>
                     <option value="content">내용</option>
-                    <option value="item_name">상품이름</option>
+                    <c:if test="${param.type == 1}">
+                        <option value="item_name">상품이름</option>
+                    </c:if>
                     <!-- 상품이름 value 바꾸기 -->
                 </select>
                 <script>
@@ -46,79 +48,100 @@
             </form>
         </td>
     </tr>
-    <c:if test="${listcount > 0}">
-        <tr>
-            <td colspan="4">Spring 게시판</td>
-            <td>글개수 : ${listcount}</td>
-        </tr>
-        <tr>
-            <th width="10%">번호</th>
-            <th width="35%">상품이름</th>
-            <th>제목</th>
-            <th width="12%">글쓴이</th>
-            <th width="15%">날짜</th>
-        </tr>
-        <c:forEach var="board" items="${boardlist}">
+    <c:choose>
+        <c:when test="${listcount > 0}">
             <tr>
-                <td>${boardno}</td>
-                <td>${board.item_name}</td>
-                <c:set var="boardno" value="${boardno - 1}"/>
-                <td style="text-align: left"><c:choose>
-                    <c:when test="${!empty board.fileurl}">
-                        <a href="file/${board.num}/${board.fileurl}"><img
-                                src="../img/file.png" width="15px"></a>
-                    </c:when>
-                    <c:otherwise>
-                        &nbsp;&nbsp;&nbsp;
-                    </c:otherwise>
-                </c:choose> <a href="detail.shop?type=${param.type}&num=${board.num}">${board.title}</a>
-                </td>
-                <td>${board.name}</td>
-                <td><fmt:formatDate value="${board.regdate}"
-                                    pattern="yyyy-MM-dd"/></td>
+            <c:choose>
+                <c:when test="${param.type == 0}">
+                    <td colspan="3">공지사항 목록</td>
+                </c:when>
+                <c:when test="${param.type == 1}">
+                    <td colspan="4">1:1문의 목록</td>
+                </c:when>
+            </c:choose>
+
+                <td>글 갯수 : ${listcount}</td>
             </tr>
-        </c:forEach>
+            <tr>
+                <th width="10%">번호</th>
+                <c:if test="${param.type == 1}">
+                    <th width="35%">상품이름</th>
+                </c:if>
+                <th>제목</th>
+                <th width="12%">글쓴이</th>
+                <th width="15%">날짜</th>
+            </tr>
+            <c:forEach var="board" items="${boardlist}">
+                <tr>
+                    <td>${boardno}</td>
+                    <c:if test="${param.type == 1}">
+                        <td>${board.item_name}</td>
+                    </c:if>
+                    <c:set var="boardno" value="${boardno - 1}"/>
+                    <td style="text-align: left"><c:choose>
+                        <c:when test="${!empty board.fileurl}">
+                            <a href="file/${board.num}/${board.fileurl}"><img
+                                    src="../img/file.png" width="15px"></a>
+                        </c:when>
+                        <c:otherwise>
+                            &nbsp;&nbsp;&nbsp;
+                        </c:otherwise>
+                    </c:choose> <a href="detail.shop?type=${param.type}&num=${board.num}">${board.title}</a>
+                    </td>
+                    <td>${board.name}</td>
+                    <td><fmt:formatDate value="${board.regdate}"
+                                        pattern="yyyy-MM-dd"/></td>
+                </tr>
+            </c:forEach>
+            <tr>
+                <td colspan="5" style="border-bottom: 0">
+                    <%-- 페이지 처리 부분 --%>
+                    <div class="w3-center" style="margin-top: 6px">
+                        <div class="w3-bar">
+                            <c:choose>
+                                <c:when test="${pageNum <= 1}">
+                                    <div class="w3-bar-item">«</div>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="javascript:listcall(${pageNum - 1})" class="w3-bar-item w3-button w3-hover-deep-purple">«</a>
+                                </c:otherwise>
+                            </c:choose>
+                            <c:forEach var="a" begin="${startpage}" end="${endpage}">
+                                <c:choose>
+                                    <c:when test="${a == pageNum}">
+                                        <div class="w3-bar-item w3-deep-purple">
+                                                ${a}
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="javascript:listcall(${a})" class="w3-bar-item w3-button w3-hover-deep-purple">${a}</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            <c:choose>
+                                <c:when test="${pageNum >= endpage}">
+                                    <div class="w3-bar-item">»</div>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="javascript:listcall(${pageNum + 1})" class="w3-bar-item w3-button w3-hover-deep-purple">»</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </c:when>
+        <c:otherwise>
+            <tr>
+                <td colspan="5">등록된 게시물이 없습니다!</td>
+            </tr>
+        </c:otherwise>
+    </c:choose>
+    <c:if test="${param.type == 0 and sessionScope.loginMember.id == 'admin'}">
         <tr>
-            <td colspan="5" style="border-bottom: 0">
-				<%-- 페이지 처리 부분 --%>
-				<div class="w3-center" style="margin-top: 6px">
-					<div class="w3-bar">
-						<c:choose>
-							<c:when test="${pageNum <= 1}">
-								<div class="w3-bar-item">«</div>
-							</c:when>
-							<c:otherwise>
-								<a href="javascript:listcall(${pageNum - 1})" class="w3-bar-item w3-button w3-hover-deep-purple">«</a>
-							</c:otherwise>
-						</c:choose>
-						<c:forEach var="a" begin="${startpage}" end="${endpage}">
-							<c:choose>
-								<c:when test="${a == pageNum}">
-									<div class="w3-bar-item w3-deep-purple">
-											${a}
-									</div>
-								</c:when>
-								<c:otherwise>
-									<a href="javascript:listcall(${a})" class="w3-bar-item w3-button w3-hover-deep-purple">${a}</a>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<c:choose>
-							<c:when test="${pageNum >= endpage}">
-								<div class="w3-bar-item">»</div>
-							</c:when>
-							<c:otherwise>
-								<a href="javascript:listcall(${pageNum + 1})" class="w3-bar-item w3-button w3-hover-deep-purple">»</a>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-			</td>
-        </tr>
-    </c:if>
-    <c:if test="${listcount == 0}">
-        <tr>
-            <td colspan="5">등록된 게시물이 없습니다!</td>
+            <td colspan="5" style="text-align: right; padding: 10px">
+                <a class="w3-button w3-deep-purple" href="write.shop?type=${param.type}">글쓰기</a>
+            </td>
         </tr>
     </c:if>
 </table>

@@ -1,3 +1,7 @@
+<%@ page import="dao.ItemDao" %>
+<%@ page import="org.springframework.web.context.ContextLoader" %>
+<%@ page import="org.springframework.web.context.WebApplicationContext" %>
+<%@ page import="logic.Item" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -13,8 +17,28 @@
 <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
 </head>
 <body>
-	<form name="f" method="post" action="write.shop"
-		enctype="multipart/form-data">
+<%
+	WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+
+	ItemDao itemDao = null;
+	Item item = null;
+
+	if (context != null) {
+		itemDao = (ItemDao)context.getBean("ItemDao");
+	}
+%>
+<c:set var="item_no" value="${param.item_no}" />
+<%
+	if (itemDao != null && pageContext.getAttribute("item_no") != null) {
+		item = itemDao.selectOne(Integer.parseInt((String)pageContext.getAttribute("item_no")), false);
+	}
+
+	String item_name = "";
+	if (item != null) {
+		item_name = item.getName();
+	}
+%>
+	<form name="f" method="post" action="write.shop" enctype="multipart/form-data">
 		<input type="hidden" name="item_no" value="${param.item_no}"> 
 		<input type="hidden" name="item_name" value="${param.item_name}"> 
 		<input type="hidden" name="type" value="${param.type}"> 
@@ -25,11 +49,12 @@
 				<td>제목</td>
 				<td><input type="text" name="title" size="100"></td>
 			</tr>
-			<tr>
-				<td>상품 이름</td>
-				<td>${param.item_no}</td>
-				<!-- <input type="text" name="item_no" value="${param.item_no}"> -->
-			</tr>
+			<c:if test="${param.type != 0}">
+				<tr>
+					<td>상품 이름</td>
+					<td><%= item_name %></td>
+				</tr>
+			</c:if>
 			<tr>
 				<td>첨부파일</td>
 				<td><input type="file" name="file1"></td>
@@ -46,12 +71,11 @@
 					</script></td>
 			</tr>
 			<tr>
-				<td colspan="2" style="border: 0; padding-top: 20px"><input
-					class="w3-button w3-bar-item w3-deep-purple" type="submit"
-					value="게시판 등록" style="margin-right: 10px"> <input
-					class="w3-button w3-bar-item w3-deep-purple" type="button"
-					onclick="location.href='list.shop?type=${param.type}'"
-					value="게시글 목록"></td>
+				<td colspan="2" style="border: 0; padding-top: 20px">
+					<input class="w3-button w3-bar-item w3-deep-purple"
+						   type="submit" value="게시판 등록" style="margin-right: 10px">
+					<input class="w3-button w3-bar-item w3-deep-purple"
+						   type="button" onclick="location.href='list.shop?type=${param.type}'" value="게시글 목록"></td>
 			</tr>
 		</table>
 	</form>
