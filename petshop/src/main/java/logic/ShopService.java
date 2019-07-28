@@ -434,8 +434,8 @@ public class ShopService {
         return boardDao.maxnum();
     }
 
-    public Board getBoard(int num) {
-        return boardDao.selectOne(num);
+    public Board getBoard(int num, int type) {
+        return boardDao.selectOne(num, type);
     }
 
     public int boardInsert(Board board) {

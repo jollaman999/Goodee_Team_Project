@@ -23,10 +23,12 @@
 			<td>제목</td>
 			<td>${board.title}</td>
 		</tr>
-		<tr>
-			<td>상품 이름</td>
-			<td>${board.item_name}</td>
-		</tr>
+		<c:if test="${param.type != 0}">
+			<tr>
+				<td>상품 이름</td>
+				<td>${board.item_name}</td>
+			</tr>
+		</c:if>
 		<tr>
 			<td>내용</td>
 			<td>

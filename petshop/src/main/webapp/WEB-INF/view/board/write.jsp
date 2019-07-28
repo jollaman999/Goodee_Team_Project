@@ -67,6 +67,33 @@
             return 0;
         }
 
+        function validate() {
+            if (validateCKEDITORforBlank($.trim(CKEDITOR.instances.content.getData().replace(/<[^>]*>|\s/g, '')))) {
+                CKEDITOR.instances.content.setData("");
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateCKEDITORforBlank(field) {
+            var vArray;
+
+            vArray = field.split("&nbsp;");
+            var vFlag = 0;
+
+            for (var i = 0; i < vArray.length; i++) {
+                if (vArray[i] == '' || vArray[i] == "") {
+                    continue;
+                } else {
+                    vFlag = 1;
+                    break;
+                }
+            }
+
+            return vFlag == 0;
+        }
+
 		function board_submit() {
 			f = document.f;
 
@@ -76,13 +103,13 @@
 				return;
 			}
 
-			if (!f.content.value) {
+			if (!validate()) {
 				alert("내용을 입력하세요!");
 				f.content.focus();
 				return;
 			}
 
-            if (f.file1.value && fileCheck(f.file1) != 0) {
+            if (f.file1 != null && f.file1.value && fileCheck(f.file1) != 0) {
                 return;
             }
 
@@ -113,7 +140,9 @@
     }
 %>
 <form name="f" method="post" action="write.shop" enctype="multipart/form-data">
-    <input type="hidden" name="item_no" value="${param.item_no}">
+    <c:if test="${param.type != 0}">
+        <input type="hidden" name="item_no" value="${param.item_no}">
+    </c:if>
     <input type="hidden" name="item_name" value="${param.item_name}">
     <input type="hidden" name="type" value="${param.type}">
     <input type="hidden" name="member_id" value="${sessionScope.loginMember.id}">

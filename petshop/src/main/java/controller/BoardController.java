@@ -2,6 +2,7 @@ package controller;
 
 import exception.ShopException;
 import logic.Board;
+import logic.Item;
 import logic.Member;
 import logic.ShopService;
 
@@ -79,16 +80,24 @@ public class BoardController {
     }
 
     @PostMapping("write")
-    public ModelAndView writeBoard(HttpSession session, Integer type, String member_id, String item_name, MultipartHttpServletRequest request, @Valid Board board) {
+    public ModelAndView writeBoard(HttpSession session, Integer type, String member_id, MultipartHttpServletRequest request, @Valid Board board) {
         Member loginMember = (Member) session.getAttribute("loginMember");
 
         if (type == 0 && !loginMember.getId().equals("admin")) {
             throw new ShopException("잘못된 접근입니다!", "list.shop?type=" + type);
         }
 
+        if (type == 1 && request.getParameter("item_no") == null) {
+            throw new ShopException("상품 정보를 가져올 수 없습니다!", "list.shop?type=" + type);
+        }
+
         board.setType(type);
         board.setMember_id(member_id);
-        board.setItem_name(item_name);
+        if (type == 0) {
+            board.setItem_no(null);
+        } else {
+            board.setItem_no(Integer.parseInt(request.getParameter("item_no")));
+        }
 
         ModelAndView mav = new ModelAndView("/alert");
 
@@ -131,8 +140,24 @@ public class BoardController {
 
         int num = Integer.parseInt(request.getParameter("num"));
 
-        if (!fileUtil.FileUpload(num, service, board, mav, request, "update.shop?type=" + type + "&num=" + num)) {
+        Board dbBoard = service.getBoard(num, 0);
+        if (dbBoard == null) {
+            mav.addObject("msg","게시글 정보를 가져올 수 없습니다!");
+            mav.addObject("url","list.shop?type=" + type);
+
             return mav;
+        }
+
+        if (board.getFile1() != null) {
+            if (!fileUtil.DeleteAllFiles(num, new Board(), mav, request)) {
+                return mav;
+            }
+
+            if (!fileUtil.FileUpload(num, service, board, mav, request, "update.shop?type=" + type + "&num=" + num)) {
+                return mav;
+            }
+        } else {
+            board.setFileurl(dbBoard.getFileurl());
         }
 
         int result = service.boardUpdate(board);
@@ -227,10 +252,14 @@ public class BoardController {
             throw new ShopException("잘못된 접근입니다!", "list.shop?type=" + type);
         }
 
+        if (type == 1 && request.getParameter("item_no") == null) {
+            throw new ShopException("상품 정보를 가져올 수 없습니다!", "list.shop?type=" + type);
+        }
+
         Board board = new Board();
 
         if (num != null) {
-            board = service.getBoard(num);
+            board = service.getBoard(num, type);
         }
 
         if (request.getRequestURI().contains("detail")) {

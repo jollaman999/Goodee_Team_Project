@@ -57,7 +57,7 @@ public class FileUtil {
             Board board = (Board) logic;
             if ((board.getFile1() == null || board.getFile1().getOriginalFilename() == null ||
                     board.getFile1().getOriginalFilename().length() == 0)) {
-                Board dbBoard = shopService.getBoard(num);
+                Board dbBoard = shopService.getBoard(num, 0);
 
                 if (dbBoard.getFileurl() != null && dbBoard.getFileurl().length() != 0) {
                     String filepath = request.getServletContext().getRealPath("/") + "board/file/" + num + "/";
