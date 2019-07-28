@@ -23,21 +23,25 @@
     </spring:hasBindErrors>
     <br><br>
 
-    <label>1차 분류</label>
-    <form:select class="category1" path="category_group_code">
-        <option value="0">전체</option>
-    </form:select>
-    <font color="red"><form:errors path="category_group_code"/></font>
-
-    <br>
-
-    <label>2차 분류</label>
-    <form:select class="category2" path="category_item_code">
-        <option value="0">전체</option>
-    </form:select>
-    <font color="red"><form:errors path="category_item_code"/></font>
-
     <table>
+        <tr>
+            <td>1차 분류</td>
+            <td>
+                <form:select class="category1" path="category_group_code" cssStyle="width: 100%">
+                    <option value="0">전체</option>
+                </form:select>
+                <font color="red"><form:errors path="category_group_code"/></font>
+            </td>
+        </tr>
+        <tr>
+            <td>2차 분류</td>
+            <td>
+                <form:select class="category2" path="category_item_code" cssStyle="width: 100%">
+                    <option value="0">전체</option>
+                </form:select>
+                <font color="red"><form:errors path="category_item_code"/></font>
+            </td>
+        </tr>
         <tr>
             <td>상품명</td>
             <td>
@@ -108,9 +112,10 @@
             </td>
         </tr>
         <tr>
-            <td colspan="3"><input type="submit" value="상품 등록">&nbsp;
-                <input type="button" value="상품 목록"
-                       onclick="location.href='${path}/inventory/list.shop'"></td>
+            <td colspan="3">
+                <input type="submit" value="상품 등록">&nbsp;
+                <input type="button" value="리스트로 가기" onclick="location.href='${path}/inventory/list.shop?pageNum=${param.pageNum}'">
+            </td>
         </tr>
     </table>
 </form:form>

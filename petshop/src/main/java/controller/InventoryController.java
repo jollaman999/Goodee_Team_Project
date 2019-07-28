@@ -22,8 +22,8 @@ public class InventoryController {
     private ShopService service;
 
     @RequestMapping("list")
-    public ModelAndView inventoryManagement(HttpSession session, Integer type, Integer pageNum, Integer limit,
-                                            String searchtype, String searchcontent) {
+    public ModelAndView inventoryManagement(Integer type, Integer pageNum, Integer limit,
+                                            String searchtype, String searchcontent, HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
         List<CategoryGroup> CategoryGroupList = service.getCategoryGroupList();
@@ -71,24 +71,25 @@ public class InventoryController {
         return mav;
     }
 
-    //detail 페이지 넘기기
     @RequestMapping("detail")
     public ModelAndView detail(Integer item_no, HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
-        //받아올 테이블
-        List<Item> itemList = service.getItemList(null, null,
-                null, null, null, null, null, null,
-                true);
-        List<CategoryGroup> CategoryGroupList = service.getCategoryGroupList();
-        List<CategoryItem> CategoryItemList = service.getCategoryItemList();
+        if (item_no == null || item_no.toString().length() == 0) {
+            mav = new ModelAndView("/alert");
 
-        // 리스트 객체 생성
-        mav.addObject("itemList", itemList);
-        mav.addObject("CategoryGroupList", CategoryGroupList);
-        mav.addObject("CategoryItemList", CategoryItemList);
+            mav.addObject("msg","상품 정보를 가져올 수 없습니다!");
+            mav.addObject("url","../inventory/list.shop");
 
-        // item_no 기준으로 이것저것 가져오기.
+            return mav;
+        }
+
+        List<CategoryGroup> categoryGroupList = service.getCategoryGroupList();
+        List<CategoryItem> categoryItemList = service.getCategoryItemList();
+
+        mav.addObject("categoryGroupList", categoryGroupList);
+        mav.addObject("categoryItemList", categoryItemList);
+
         Item item = service.getItemById(item_no, true);
         mav.addObject("item", item);
         return mav;

@@ -16,7 +16,6 @@ public class Item {
     private Integer category_item_code;
     @NotEmpty(message = "상품명을 입력해주세요.")
     private String name;
-    @NotNull(message = "상품 이미지를 등록 해주세요.")
     private MultipartFile mainpic;
     private String mainpicurl;
     @NotNull(message = "상품 가격을 입력해 주세요.")

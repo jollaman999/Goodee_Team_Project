@@ -34,13 +34,13 @@
         }
     </style>
 
-   <title>상품 관리 게시판 </title>
+   <title>상품 관리&등록 </title>
 </head>
 <body>
 
 <!-- 제목 -->
 <h2>
-    <a href="${path}/inventory/list.shop">상품 관리</a>&nbsp;&nbsp;<a href="${path}/item/create.shop">상품등록</a>
+    <a href="${path}/inventory/list.shop">상품 관리</a>&nbsp;&nbsp;<a href="${path}/item/create.shop?pageNum=${param.pageNum}">상품등록</a>
 </h2><br>
 
 <!-- 재고관리 리스트 -->
@@ -48,7 +48,7 @@
     <table>
         <tr class="header">
             <td colspan="9">
-                <input type="hidden" name="pageNum" value="1">
+                <input type="hidden" name="pageNum" value="${pageNum}">
                 <div style="width: 100%">
                     <select name="searchtype" style="height: 30px; margin-right: 5px">
                         <option value="">선택하세요</option>
@@ -99,7 +99,7 @@
             <!-- 테이블 바 value-->
             <tr>
                <td>
-                <a href="../inventory/detail.shop?item_no=${item.item_no}" style="color:black">${item.name}</a>
+                <a href="../inventory/detail.shop?item_no=${item.item_no}&pageNum=${pageNum}">${item.name}</a>
                </td>
 
                 <!-- 그룹명 -->
