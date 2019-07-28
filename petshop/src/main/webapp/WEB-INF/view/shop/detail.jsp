@@ -91,7 +91,8 @@
         <div class="row">
             <div class="col-lg-6">
                 <a href="${path}/item/img/${item.item_no}/${item.mainpicurl}" class="highslide" onclick="return hs.expand(this)">
-                    <img class="product-big-img" src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                    <img class="product-big-img" src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt=""
+                         onerror="this.src='${path}/img/noimg.png'">
                 </a>
             </div>
             <div class="col-lg-6 product-details">
@@ -180,7 +181,8 @@
                             }
                         %>
                         <a href="${path}/shop/detail.shop?item_no=${randomitem.item_no}">
-                            <img src="${path}/item/img/${randomitem.item_no}/${randomitem.mainpicurl}" alt="">
+                            <img src="${path}/item/img/${randomitem.item_no}/${randomitem.mainpicurl}" alt=""
+                                 onerror="this.src='${path}/img/noimg.png'">
                         </a>
                         <div class="pi-links">
                             <a href="${path}/basket/add.shop?item_no=${randomitem.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>

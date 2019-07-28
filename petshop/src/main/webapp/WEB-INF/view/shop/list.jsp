@@ -198,7 +198,8 @@
                                                 }
                                             %>
                                             <a href="detail.shop?item_no=${item.item_no}">
-                                                <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt="">
+                                                <img src="${path}/item/img/${item.item_no}/${item.mainpicurl}" alt=""
+                                                    onerror="this.src='${path}/img/noimg.png'">
                                             </a>
                                             <div class="pi-links">
                                                 <a href="${path}/basket/add.shop?item_no=${item.item_no}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
