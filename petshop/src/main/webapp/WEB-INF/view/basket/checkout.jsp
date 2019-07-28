@@ -28,28 +28,42 @@
                 alert("이름을 입력해주세요!");
                 f.name.focus();
                 return;
-
             }
 
             if (!f.phone.value) {
                 alert("전화번호를 입력해주세요!");
                 f.phone.focus();
                 return;
-
             }
 
             if (!f.address.value) {
                 alert("주소를 입력해주세요!");
                 f.address.focus();
                 return;
-
             }
 
             if (f.deposit_bank_select.value == 0) {
                 alert("입금하실 은행을 선택해 주세요!");
                 f.deposit_bank_select.focus();
                 return;
+            }
 
+            if (!f.account_holder.value) {
+                alert("입금하시는 분 성함을 입력해주세요!");
+                f.account_holder.focus();
+                return;
+            }
+
+            if (!f.account_bank.value) {
+                alert("입금하시는 분 은행명을 입력해주세요!");
+                f.account_bank.focus();
+                return;
+            }
+
+            if (!f.account_number.value) {
+                alert("입금하시는 분 계좌번호를 입력해주세요!");
+                f.account_number.focus();
+                return;
             }
 
             f.submit();
@@ -212,8 +226,8 @@
                     <div class="cf-title">결제 정보</div>
                     <ul class="payment-list" style="margin-left: 20px">
                         <div style="margin-bottom: 30px">
-                            <li>입금할 은행 선택</li>
-                            <select name="deposit_bank_select" style="width: 400px">
+                            <li>입금하실 은행 선택</li>
+                            <select name="deposit_bank_select" style="width: 400px; margin-bottom: 10px">
                                 <option value="0">입금하실 은행을 선택해 주세요.</option>
                                 <c:forEach items="${depositList}" var="deposit">
                                     <option value="${deposit.num}">${deposit.account_bank} : ${deposit.account_number}</option>
@@ -221,16 +235,16 @@
                             </select>
                         </div>
                         <li>
-                            입급하시는 분 성함
-                            <input type="text" name="account_holder" placeholder="성함">
+                            입급하시는 분 성함<br>
+                            <input type="text" name="account_holder" placeholder="성함" style="margin-top: 10px; width: 350px">
                         </li>
                         <li>
-                            입금하시는 분 계좌 번호
-                            <input type="text" name="account_bank" placeholder="은행 명">
-                            <input type="text" name="account_number" placeholder="계좌 번호">
+                            입금하시는 분 계좌 번호<br>
+                            <input type="text" name="account_bank" placeholder="은행 명" style="margin-top: 10px; width: 350px"><br>
+                            <input type="text" name="account_number" placeholder="계좌 번호" style="width: 350px">
                         </li>
 
-                        <div style="color: red; font-size: 10pt">입금하시는 분 성함과 계좌번호는 환불요청시 해당 계좌로 입금해 드리는데 사용됩니다.</div>
+                        <div style="color: red; font-size: 10pt">* 입금하시는 분 성함과 계좌번호는 환불요청시 해당 계좌로 입금해 드리는데 사용됩니다.</div>
                     </ul>
                     <a href="javascript:checkout_submit()" class="site-btn submit-order-btn">주문 하기</a>
                 </form>
