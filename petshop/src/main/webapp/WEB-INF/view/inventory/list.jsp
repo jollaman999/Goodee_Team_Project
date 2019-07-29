@@ -40,7 +40,9 @@
 
 <!-- 제목 -->
 <h2>
-    <a href="${path}/inventory/list.shop">상품 관리</a>&nbsp;&nbsp;<a href="${path}/item/create.shop?pageNum=${param.pageNum}">상품등록</a>
+    <a href="${path}/inventory/list.shop">상품 관리</a>&nbsp;&nbsp;
+    <a href="${path}/item/create.shop?pageNum=${param.pageNum}">상품등록</a>&nbsp;&nbsp;
+    <a href="${path}/inventory/map.shop">지역 관리</a></h2><br>
 </h2><br>
 
 <!-- 재고관리 리스트 -->

@@ -136,43 +136,31 @@
             win.close();
         }
 
-        //  구글 차트
-        <%--
-        google.charts.load('current', {packages: ['corechart', 'line']});
-        google.charts.setOnLoadCallback(drawBasic);
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
 
-        function drawBasic() {
-
-            var data = new google.visualization.DataTable();
-            data.addColumn('number', 'X');
-            data.addColumn('number', '총만매금');
-
-            var list1 = [];
-            var list2 = [];
-            <c:forEach items="${day_profit}" var="dayprofit">
-                list1.push("${dayprofit.update_time}");
-                list2.push("${dayprofit.totaldiff}");
-            </c:forEach>
-
-
-            for (var i = 0; i < list1.length; i++) {
-                data.addRows([list1[i], list2[i]);
-            }
-
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Item', 'Sold Quantity'],
+                <c:forEach items="${itemList}" var="item">
+                ['${item.name}', ${item.sold_quantity}],
+                </c:forEach>
+            ]);
             var options = {
-                hAxis: {
-                    title: '날짜'
-                },
-                vAxis: {
-                    title: ''
-                }
+                title: '상품별 판매 비율',
+                width: 0,
+                height: 900
             };
-
-            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
             chart.draw(data, options);
+
+            $(window).resize(function(){
+                var container = document.getElementById("piechart").firstChild.firstChild;
+                container.style.width = "100%";
+
+                chart.draw(data, options);
+            });
         }
-        --%>
     </script>
 
     <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
@@ -262,13 +250,8 @@
     </table>
 </div>
 
-<!-- 시각 화 시작 -->
-<br><br><br><br><br>
-<table>
-    <div id="chart_div" style="width: 1200px; height: 500px;"></div>
-    <!--  https://jsfiddle.net/api/post/library/pure/
-    https://private.tistory.com/66 -->
-</table>
+<!-- 구글 차트 출력  -->
+<div id="piechart"></div>
 
 <script type="text/javascript">
     // 엑셀

@@ -137,42 +137,47 @@
         }
 
         //  구글 차트
-        <%--
         google.charts.load('current', {packages: ['corechart', 'line']});
         google.charts.setOnLoadCallback(drawBasic);
 
         function drawBasic() {
-
             var data = new google.visualization.DataTable();
-            data.addColumn('number', 'X');
-            data.addColumn('number', '총만매금');
 
-            var list1 = [];
-            var list2 = [];
-            <c:forEach items="${day_profit}" var="dayprofit">
-                list1.push("${dayprofit.update_time}");
-                list2.push("${dayprofit.totaldiff}");
-            </c:forEach>
+            //오른쪽 인덱스 표기
+            data.addColumn('string', '월');
+            data.addColumn('number', '월별 총판매금');
 
 
-            for (var i = 0; i < list1.length; i++) {
-                data.addRows([list1[i], list2[i]);
-            }
+            // [시간(YY,MM,DD),총판매가격]
+            data.addRows([
+                <c:forEach items="${month_profit}" var="monthprofit">
 
+                ["<fmt:formatDate value="${monthprofit.update_time}" pattern="yyyy"/>년 <fmt:formatDate value="${monthprofit.update_time}" pattern="MM"/>월", ${monthprofit.price_total}],
+                </c:forEach>
+            ]);
+
+            // 차트 옵션
             var options = {
+                title: '',
+                width: 0,
+                height: 900,
+
                 hAxis: {
-                    title: '날짜'
-                },
-                vAxis: {
-                    title: ''
+                    slantedText:true,
+                    slantedTextAngle:90 // here you can even use 180
                 }
             };
 
             var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
             chart.draw(data, options);
+
+            $(window).resize(function(){
+                var container = document.getElementById("chart_div").firstChild.firstChild;
+                container.style.width = "100%";
+
+                chart.draw(data, options);
+            });
         }
-        --%>
     </script>
 
     <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
@@ -231,7 +236,7 @@
                             전월 수익 비교 모델이 없습니다.
                         </c:when>
                         <c:otherwise>
-                            <fmt:formatNumber type="currency" pattern="###,###" value="${monthprofit.totaldiff}"/> \
+                            <fmt:formatNumber type="currency" pattern="###,###" value="${monthprofit.totaldiff}"/>\
                         </c:otherwise>
                     </c:choose>
                 </td>
@@ -240,13 +245,10 @@
     </table>
 </div>
 
-<!-- 시각 화 시작 -->
-<br><br><br><br><br>
-<table>
-    <div id="chart_div" style="width: 1200px; height: 500px;"></div>
-    <!--  https://jsfiddle.net/api/post/library/pure/
-    https://private.tistory.com/66 -->
-</table>
+<!-- 구글 차트 출력  -->
+<div id="chart_div" style="text-align: center"></div>
+<!--  https://jsfiddle.net/api/post/library/pure/
+      https://private.tistory.com/66 -->
 
 <script type="text/javascript">
     // 엑셀
