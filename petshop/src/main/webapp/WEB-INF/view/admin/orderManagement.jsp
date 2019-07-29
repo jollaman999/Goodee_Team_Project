@@ -129,7 +129,7 @@
 <div id="0" class="info" style="display: none; width:100%;">
     <table>
         <tr>
-            <td colspan="7" align="center">
+            <td colspan="8" align="center">
                 <h3>입금대기중</h3>
             </td>
         </tr>
@@ -142,11 +142,13 @@
             <th style="width: 12%">주문상태</th>
             <th style="width: 12%">주문날짜</th>
             <th style="width: 12%">상태변경</th>
+            <th style="width: 12%">계좌번호</th>
         </tr>
 
         <c:forEach items="${ordersList_7}" var="order" varStatus="stat1">
             <tr>
                 <!-- 주문번호 -->
+                
                 <td rowspan="${order.orders_lists.size()}">
                     <a href="javascript:list_disp('saleLine${stat1.index}')">
                         ${order.num}
@@ -155,7 +157,9 @@
 
                 <c:forEach items="${order.orders_lists}" var="orders_lists" varStatus="stat2">
                     <c:if test="${stat2.index eq 0}">
+                    
                         <!-- 상품명 -->
+                        
                         <td style="padding-bottom: 0">
                             <div class="row">
                                 <c:set var="itemno" value="${orders_lists.item_no}" />
@@ -189,6 +193,7 @@
                         <td>
                             ${orders_lists.quantity}개
                         </td>
+                        
                     </c:if>
                 </c:forEach>
 
@@ -253,7 +258,9 @@
                      <td rowspan="${order.orders_lists.size()}">
                            <button onclick="">입금확인</button>
                      </td>   
+                     
                 
+                    
             </tr>
 
             <!-- 주문한 상품이 2개 이상 있을때 -->

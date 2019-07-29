@@ -23,26 +23,29 @@
             $("#halfinfo").hide();
             $("#allinfo").hide();
 
-            $(".saleLine").each(function() {  //주문상품 목록 숨김.
-                $(this).hide();
-            });
-            $("#tab1").addClass("select"); //class 속성에 select 값을 추가.
-        });
-
-        function disp_div(id,tab) {
-            $(".info").each(function() {
-                $(this).hide();
-            });
-            $(".tab").each(function() {
-                $(this).removeClass("select");
-            });
-            $("#"+id).show();
-            $("#" + tab).addClass("select");
-        }
-
-        function list_disp(id) {
-            $("#"+id).toggle(); //
-        }
+            $(".saleLine").each(function() { //주문상품 목록 숨김.
+    			$(this).hide();
+    		})
+    		$("#tab1").addClass("select"); //class 속성에 select 값을 추가.
+    	})
+    	function disp_div(id, tab) {
+    		$(".info").each(function() {
+    			$(this).hide();
+    		})
+    		$(".tab").each(function() {
+    			$(this).removeClass("select");
+    		})
+    		$("#" + id).show();
+    		$("#" + tab).addClass("select");
+    		
+    		$(".saleLine").each(function() { //주문상품 목록 숨김.
+    			$(this).hide();
+    		})
+    	}
+        
+    	function list_disp(id) {
+    		$("#" + id).toggle();
+    	}
 
         var reply_write_form;
 
@@ -114,7 +117,7 @@
 <div id="weekinfo" class="info" style="display: none; width:100%;">
     <table>
         <tr>
-            <td colspan="7" align="center">
+            <td colspan="15" align="center">
                 <h3>7일 주문 내역</h3>
             </td>
         </tr>
@@ -127,13 +130,14 @@
             <th style="width: 12%">주문상태</th>
             <th style="width: 12%">주문날짜</th>
             <th style="width: 12%">취소/환불</th>
+        
         </tr>
 
         <c:forEach items="${ordersList_7}" var="order" varStatus="stat1">
             <tr>
                 <!-- 주문번호 -->
                 <td rowspan="${order.orders_lists.size()}">
-                    <a href="javascript:list_disp('saleLine${stat1.index}')">
+                    <a href="javascript:list_disp('saleLine0_${stat1.index}')">
                         ${order.num}
                     </a>
                 </td>
@@ -270,9 +274,14 @@
                             환불완료
                         </c:when>
                     </c:choose>
-                </td>
-                
+               
             </tr>
+
+
+			
+			
+
+
 
             <!-- 주문한 상품이 2개 이상 있을때 -->
             <c:forEach items="${order.orders_lists}" var="orders_lists" varStatus="stat3">
@@ -314,10 +323,36 @@
                     </tr>
                 </c:if>
             </c:forEach>
+            
+            
+            <!-- 주 주문정보 테이블 -->
+            <tr class="saleLine" id="saleLine0_${stat1.index}" style="display: none;">
+					<td colspan="7">
+						<table>
+
+							<tr>
+								<th width="25%">결제방식</th>
+								<th width="25%">은행명</th>
+								<th width="25%">계좌번호</th>
+								<th width="25%">계좌주</th>
+							</tr>
+							
+								<tr>
+									<td> 무통장입금</td>
+									<td> ${order.account_bank}</td>
+									<td> ${order.account_number}</td>
+									<td> ${order.account_holder}</td>
+								</tr>
+							
+						</table>
+					</td>
+				</tr>
+				
         </c:forEach>
+	
     </table>
 </div>
-
+    
 <%-- month --%>
 <!-- ------------------------------------------------------------------------------------------------------- -->
 <div id="monthinfo" class="info">
@@ -342,7 +377,7 @@
             <tr>
                 <!-- 주문번호 -->
                 <td rowspan="${order.orders_lists.size()}">
-                    <a href="javascript:list_disp('saleLine${stat1.index}')">
+                    <a href="javascript:list_disp('saleLine1_${stat1.index}')">
                             ${order.num}
                     </a>
                 </td>
@@ -479,7 +514,10 @@
                 </td>
                 
             </tr>
-
+			
+			
+			
+			
             <!-- 주문한 상품이 2개 이상 있을때 -->
             <c:forEach items="${order.orders_lists}" var="orders_lists" varStatus="stat3">
                 <c:if test="${stat3.index gt 0}">
@@ -519,7 +557,37 @@
                         </td>
                     </tr>
                 </c:if>
+                 
+				
             </c:forEach>
+                 
+                 
+                  <!-- 월 주문정보 테이블 출력 -->
+                  <tr class="saleLine" id="saleLine1_${stat1.index}" style="display: none;">
+					<td colspan="7">
+						<table>
+
+							<tr>
+								<th width="25%">결제방식</th>
+								<th width="25%">은행명</th>
+								<th width="25%">계좌번호</th>
+								<th width="25%">계좌주</th>
+								
+								
+
+							</tr>
+							
+								<tr>
+									<td> 무통장입금</td>
+									<td> ${order.account_bank}</td>
+									<td> ${order.account_number}</td>
+									<td> ${order.account_holder}</td>
+								</tr>
+							
+						</table>
+					</td>
+				</tr>
+				
         </c:forEach>
     </table>
 </div>
@@ -548,7 +616,7 @@
             <tr>
                 <!-- 주문번호 -->
                 <td rowspan="${order.orders_lists.size()}">
-                    <a href="javascript:list_disp('saleLine${stat1.index}')">
+                    <a href="javascript:list_disp('saleLine2_${stat1.index}')">
                             ${order.num}
                     </a>
                 </td>
@@ -726,6 +794,34 @@
                     </tr>
                 </c:if>
             </c:forEach>
+             
+             <!-- 반년 주문정보 테이블 출력 -->
+                  <tr class="saleLine" id="saleLine2_${stat1.index}" style="display: none;">
+					<td colspan="7">
+						<table>
+
+							<tr>
+								<th width="25%">결제방식</th>
+								<th width="25%">은행명</th>
+								<th width="25%">계좌번호</th>
+								<th width="25%">계좌주</th>
+								
+								
+
+							</tr>
+							
+								<tr>
+									<td> 무통장입금</td>
+									<td> ${order.account_bank}</td>
+									<td> ${order.account_number}</td>
+									<td> ${order.account_holder}</td>
+								</tr>
+							
+						</table>
+					</td>
+				</tr>
+				
+				
         </c:forEach>
     </table>
 </div>
@@ -754,7 +850,7 @@
             <tr>
                 <!-- 주문번호 -->
                 <td rowspan="${order.orders_lists.size()}">
-                    <a href="javascript:list_disp('saleLine${stat1.index}')">
+                    <a href="javascript:list_disp('saleLine3_${stat1.index}')">
                             ${order.num}
                     </a>
                 </td>
@@ -932,8 +1028,37 @@
                     </tr>
                 </c:if>
             </c:forEach>
+            
+             <!-- 모든 주문정보 테이블 출력 -->
+                  <tr class="saleLine" id="saleLine3_${stat1.index}" style="display: none;">
+					<td colspan="7">
+						<table>
+
+							<tr>
+								<th width="25%">결제방식</th>
+								<th width="25%">은행명</th>
+								<th width="25%">계좌번호</th>
+								<th width="25%">계좌주</th>
+								
+								
+
+							</tr>
+							
+								<tr>
+									<td> 무통장입금</td>
+									<td> ${order.account_bank}</td>
+									<td> ${order.account_number}</td>
+									<td> ${order.account_holder}</td>
+								</tr>
+							
+						</table>
+					</td>
+				</tr>
+            
         </c:forEach>
     </table>
 </div>
+
+
 </body>
 </html>
