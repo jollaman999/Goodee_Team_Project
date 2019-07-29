@@ -17,35 +17,36 @@
 
     <script type="text/javascript">
         // 주문 날짜 탭
-        $(document).ready(function(){
+        $(document).ready(function () {
             $("#weekinfo").show();
             $("#monthinfo").hide();
             $("#halfinfo").hide();
             $("#allinfo").hide();
 
-            $(".saleLine").each(function() { //주문상품 목록 숨김.
-    			$(this).hide();
-    		})
-    		$("#tab1").addClass("select"); //class 속성에 select 값을 추가.
-    	})
-    	function disp_div(id, tab) {
-    		$(".info").each(function() {
-    			$(this).hide();
-    		})
-    		$(".tab").each(function() {
-    			$(this).removeClass("select");
-    		})
-    		$("#" + id).show();
-    		$("#" + tab).addClass("select");
-    		
-    		$(".saleLine").each(function() { //주문상품 목록 숨김.
-    			$(this).hide();
-    		})
-    	}
-        
-    	function list_disp(id) {
-    		$("#" + id).toggle();
-    	}
+            $(".saleLine").each(function () { //주문상품 목록 숨김.
+                $(this).hide();
+            });
+            $("#tab1").addClass("select"); //class 속성에 select 값을 추가.
+        });
+
+        function disp_div(id, tab) {
+            $(".info").each(function () {
+                $(this).hide();
+            });
+            $(".tab").each(function () {
+                $(this).removeClass("select");
+            });
+            $("#" + id).show();
+            $("#" + tab).addClass("select");
+
+            $(".saleLine").each(function () { //주문상품 목록 숨김.
+                $(this).hide();
+            })
+        }
+
+        function list_disp(id) {
+            $("#" + id).toggle();
+        }
 
         var reply_write_form;
 
@@ -324,9 +325,8 @@
                 </c:if>
             </c:forEach>
             
-            
             <!-- 주 주문정보 테이블 -->
-            <tr class="saleLine" id="saleLine0_${stat1.index}" style="display: none;">
+            <tr class="saleLine" id="saleLine0_${stat1.index}">
 					<td colspan="7">
 						<table>
 
@@ -563,7 +563,7 @@
                  
                  
                   <!-- 월 주문정보 테이블 출력 -->
-                  <tr class="saleLine" id="saleLine1_${stat1.index}" style="display: none;">
+                  <tr class="saleLine" id="saleLine1_${stat1.index}">
 					<td colspan="7">
 						<table>
 
@@ -796,7 +796,7 @@
             </c:forEach>
              
              <!-- 반년 주문정보 테이블 출력 -->
-                  <tr class="saleLine" id="saleLine2_${stat1.index}" style="display: none;">
+                  <tr class="saleLine" id="saleLine2_${stat1.index}">
 					<td colspan="7">
 						<table>
 
@@ -1030,7 +1030,7 @@
             </c:forEach>
             
              <!-- 모든 주문정보 테이블 출력 -->
-                  <tr class="saleLine" id="saleLine3_${stat1.index}" style="display: none;">
+                  <tr class="saleLine" id="saleLine3_${stat1.index}">
 					<td colspan="7">
 						<table>
 
