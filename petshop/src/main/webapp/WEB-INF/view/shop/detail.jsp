@@ -22,6 +22,12 @@
 
     <script type="text/javascript">
         function check_quantity() {
+            if (document.getElementById("quantity") == null ||
+                parseInt(document.getElementById("quantity").value) == 0) {
+                alert("해당 상품의 재고가 없습니다!");
+                return false;
+            }
+
             var quantity = parseInt(document.getElementById("quantity").value);
 
             if (quantity > ${item.remained_quantity}) {
