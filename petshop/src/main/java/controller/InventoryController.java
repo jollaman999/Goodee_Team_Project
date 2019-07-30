@@ -97,7 +97,11 @@ public class InventoryController {
 
     // list -> submit
     @PostMapping("listsubmit")
-    public ModelAndView itemUpdate(Integer item_no, Integer itemUpdate, HttpSession session) {
+    public ModelAndView itemUpdate(Integer pageNum, Integer item_no, Integer itemUpdate, HttpSession session) {
+        if (pageNum == null || pageNum.toString().equals("")) {
+            pageNum = 1;
+        }
+
         Item item = service.getItemById(item_no, true);
 
         // 현 수량에 추가한 수량을 더해줌
@@ -113,10 +117,10 @@ public class InventoryController {
         ModelAndView mav = new ModelAndView("/alert");
         if (result > 0) {
             mav.addObject("msg", "수량이 증가하였습니다.");
-            mav.addObject("url", "list.shop");
+            mav.addObject("url", "list.shop?pageNum=" + pageNum);
         } else {
             mav.addObject("msg", "수량 증가가 실패 하였습니다.");
-            mav.addObject("url", "list.shop");
+            mav.addObject("url", "list.shop?pageNum=" + pageNum);
         }
 
         return mav;

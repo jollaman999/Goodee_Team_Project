@@ -144,7 +144,7 @@
                 <!-- 수량 추가 -->
                 <td style="padding: 2px">
                     <!-- submit 넘기기 히든값으로 컨트롤러 이름과 매칭되어있음.  -->
-                    <form id="itemUpdate_${item.item_no}" action="listsubmit.shop" method="post">
+                    <form id="itemUpdate_${item.item_no}" action="listsubmit.shop?pageNum=${param.pageNum}" method="post">
                         <input type="hidden" name="item_no" value="${item.item_no}">
 
                         <div class="row" style="width: 150px; height:auto; text-align: center; margin-left: 22px">
