@@ -98,8 +98,17 @@ public class InventoryController {
     // list -> submit
     @PostMapping("listsubmit")
     public ModelAndView itemUpdate(Integer pageNum, Integer item_no, Integer itemUpdate, HttpSession session) {
+        ModelAndView mav = new ModelAndView("/alert");
+
         if (pageNum == null || pageNum.toString().equals("")) {
             pageNum = 1;
+        }
+
+        if (itemUpdate == null || itemUpdate.toString().equals("")) {
+            mav.addObject("msg", "추가하실 수량을 입력해주세요!");
+            mav.addObject("url", "list.shop?pageNum=" + pageNum);
+
+            return mav;
         }
 
         Item item = service.getItemById(item_no, true);
@@ -107,14 +116,7 @@ public class InventoryController {
         // 현 수량에 추가한 수량을 더해줌
         item.setQuantity(item.getQuantity() + itemUpdate);
         int result = service.itemUpdate(item);
-        
-    	/*  //에러 출력
-        if (result == item.getQuantity() || result == 0) {
-            throw new ShopException("수량을 정상적으로 입력해주세요.", "list.shop");
-        }  */
 
-        // 알러트 출력.
-        ModelAndView mav = new ModelAndView("/alert");
         if (result > 0) {
             mav.addObject("msg", "수량이 증가하였습니다.");
             mav.addObject("url", "list.shop?pageNum=" + pageNum);
