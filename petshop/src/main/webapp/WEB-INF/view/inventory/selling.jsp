@@ -7,10 +7,6 @@
 <html>
 <head>
    <meta charset="UTF-8">
-   <style> <!-- 검색창 가운데 정렬 -->
-    .centeringContainer { text-align: center; } 
-    .centered { display: table; margin-left: auto; margin-right: auto; display: inline-block; } 
-    </style>
    
    <title>주문 내역 </title>
 </head><body>
@@ -23,23 +19,16 @@
 <!-- 재고관리 리스트 -->
 <form action="selling" method="post">
 
-<!-- 서치  -->
-<table> 
-<!-- 드랍바 -->
-<tr><td>
-<div class="col-xl-6 col-lg-5 centered"> 
-     <input type='text' name='word' value='' placeholder="특수문자는 사용할수 없습니다." style="text-align: center">
-     <button type='submit'>검색</button>   
-</div></td></tr>
-
-<table> 
-     <div style="text-align:left"><select name="searchtype">
-       <option value="">선택하세요</option>
-       <option value="#">그룹코드</option>
-       <option value="#">아이템코드</option>
-       <option value="#">국가별</option>
-     </select></div>    
-</table> 
+<div style="width: 100%; text-align: center; margin-bottom: 15px; margin-top: 30px">
+    <select name="searchtype" style="height: 30px; margin-right: 5px">
+        <option value="">선택하세요</option>
+        <option value="#">그룹코드</option>
+        <option value="#">아이템코드</option>
+        <option value="#">국가별</option>
+    </select>
+    <input type='text' name='word' value='' placeholder="특수문자는 사용할수 없습니다." style="width: 50%; height: 30px; margin-right: 5px">
+    <button type='submit' class="w3-button w3-dark-gray" style="font-size: 14px; margin-bottom: 4px">검색</button>
+</div>
  
  
 <table>       
