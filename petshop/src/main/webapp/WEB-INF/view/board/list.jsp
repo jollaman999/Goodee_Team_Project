@@ -51,14 +51,14 @@
     <c:choose>
         <c:when test="${listcount > 0}">
             <tr>
-            <c:choose>
-                <c:when test="${param.type == 0}">
-                    <td colspan="3">공지사항 목록</td>
-                </c:when>
-                <c:when test="${param.type == 1}">
-                    <td colspan="4">1:1문의 목록</td>
-                </c:when>
-            </c:choose>
+                <c:choose>
+                    <c:when test="${param.type == 0}">
+                        <td colspan="3">공지사항 목록</td>
+                    </c:when>
+                    <c:when test="${param.type == 1}">
+                        <td colspan="4">1:1문의 목록</td>
+                    </c:when>
+                </c:choose>
 
                 <td>글 갯수 : ${listcount}</td>
             </tr>
@@ -78,15 +78,26 @@
                         <td>${board.item_name}</td>
                     </c:if>
                     <c:set var="boardno" value="${boardno - 1}"/>
-                    <td style="text-align: left"><c:choose>
-                        <c:when test="${!empty board.fileurl}">
-                            <a href="file/${board.num}/${board.fileurl}"><img
-                                    src="../img/file.png" width="15px"></a>
-                        </c:when>
-                        <c:otherwise>
-                            &nbsp;&nbsp;&nbsp;
-                        </c:otherwise>
-                    </c:choose> <a href="detail.shop?type=${param.type}&num=${board.num}">${board.title}</a>
+                    <td style="text-align: left">
+                        <c:choose>
+                            <c:when test="${!empty board.fileurl}">
+                                <a href="file/${board.num}/${board.fileurl}"><img
+                                        src="../img/file.png" width="15px"></a>
+                            </c:when>
+                            <c:otherwise>
+                                &nbsp;&nbsp;&nbsp;
+                            </c:otherwise>
+                        </c:choose>
+                        <a href="detail.shop?type=${param.type}&num=${board.num}">
+                            <c:choose>
+                                <c:when test="${board.refstep == 1}">
+                                    └ ${board.title}
+                                </c:when>
+                                <c:otherwise>
+                                    ${board.title}
+                                </c:otherwise>
+                            </c:choose>
+                        </a>
                     </td>
                     <td>${board.name}</td>
                     <td><fmt:formatDate value="${board.regdate}"
@@ -95,7 +106,7 @@
             </c:forEach>
             <tr>
                 <td colspan="5" style="border-bottom: 0">
-                    <%-- 페이지 처리 부분 --%>
+                        <%-- 페이지 처리 부분 --%>
                     <div class="w3-center" style="margin-top: 6px">
                         <div class="w3-bar">
                             <c:choose>
@@ -103,18 +114,20 @@
                                     <div class="w3-bar-item">«</div>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="javascript:listcall(${pageNum - 1})" class="w3-bar-item w3-button w3-hover-deep-purple">«</a>
+                                    <a href="javascript:listcall(${pageNum - 1})"
+                                       class="w3-bar-item w3-button w3-hover-deep-purple">«</a>
                                 </c:otherwise>
                             </c:choose>
                             <c:forEach var="a" begin="${startpage}" end="${endpage}">
                                 <c:choose>
                                     <c:when test="${a == pageNum}">
                                         <div class="w3-bar-item w3-deep-purple">
-                                                ${a}
+                                            ${a}
                                         </div>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="javascript:listcall(${a})" class="w3-bar-item w3-button w3-hover-deep-purple">${a}</a>
+                                        <a href="javascript:listcall(${a})"
+                                           class="w3-bar-item w3-button w3-hover-deep-purple">${a}</a>
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
@@ -123,7 +136,8 @@
                                     <div class="w3-bar-item">»</div>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="javascript:listcall(${pageNum + 1})" class="w3-bar-item w3-button w3-hover-deep-purple">»</a>
+                                    <a href="javascript:listcall(${pageNum + 1})"
+                                       class="w3-bar-item w3-button w3-hover-deep-purple">»</a>
                                 </c:otherwise>
                             </c:choose>
                         </div>

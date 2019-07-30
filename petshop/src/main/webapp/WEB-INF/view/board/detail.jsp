@@ -47,6 +47,10 @@
 		</tr>
 		<tr>
 			<td colspan="2" style="border: 0; padding-top: 20px">
+				<c:if test="${board.refstep == 0}">
+					<a class="w3-button w3-bar-item w3-deep-purple" href="reply.shop?type=${param.type}&num=${board.num}&item_no=${board.item_no}"
+					   style="margin-right: 10px">답변</a>
+				</c:if>
 				<a class="w3-button w3-bar-item w3-deep-purple" href="update.shop?type=${param.type}&num=${board.num}"
 				   style="margin-right: 10px">수정</a>
 				<a class="w3-button w3-bar-item w3-deep-purple" href="delete.shop?type=${param.type}&num=${board.num}"
