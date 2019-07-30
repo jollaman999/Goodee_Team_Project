@@ -408,9 +408,8 @@ public class ShopService {
 
         String decryted_email = dbMember.getEmail();
         String encryted_temp_pass = new SecurityUtil().encryptSHA256(pw.toString());
-        String encryted_email = CipherUtil.encrypt(decryted_email, encryted_temp_pass.substring(0, 16));
         member.setPass(encryted_temp_pass);
-        member.setEmail(encryted_email);
+        member.setEmail(decryted_email);
         memberDao.update_pass(member);
 
         member.setPass(pw.toString());
