@@ -96,7 +96,6 @@
         <tr>
             <td colspan="7">
                 <input type="submit" value="메일보내기">&nbsp;&nbsp;
-                <input type="button" value="delete" onclick="location.href='delete.shop?id=${member.id}'">&nbsp;&nbsp;
             </td>
         </tr>
     </table>  <!--  테이블 종료  -->
