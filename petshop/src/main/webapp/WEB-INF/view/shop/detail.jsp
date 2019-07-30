@@ -22,9 +22,13 @@
 
     <script type="text/javascript">
         function check_quantity() {
-            if (document.getElementById("quantity") == null ||
-                parseInt(document.getElementById("quantity").value) == 0) {
+            if (document.getElementById("quantity") == null) {
                 alert("해당 상품의 재고가 없습니다!");
+                return false;
+            }
+
+            if (parseInt(document.getElementById("quantity").value) < 1) {
+                alert("수량을 1개 이상으로 입력해 주세요!");
                 return false;
             }
 
@@ -127,7 +131,7 @@
                     <c:if test="${item.remained_quantity > 0}">
                         <p>수량</p>
                         <div class="pro-qty" style="margin-top: 10px">
-                            <input type="number" value="1" min="0" pattern="[0-9]*" id="quantity">
+                            <input type="number" value="1" min="1" pattern="[0-9]*" id="quantity">
                         </div>
                     </c:if>
                 </div>
