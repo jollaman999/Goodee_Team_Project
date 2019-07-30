@@ -194,6 +194,15 @@ public class MemberController {
         }
 
         Member member = service.memberSelect(id);
+        if (member == null) {
+            mav = new ModelAndView("/alert");
+
+            mav.addObject("msg", "해당 회원이 존재하지 않습니다!");
+            mav.addObject("url", "mypage.shop");
+
+            return mav;
+        }
+
         mav.addObject(member);
 
         return mav;
