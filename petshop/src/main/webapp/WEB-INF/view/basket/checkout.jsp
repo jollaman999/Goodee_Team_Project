@@ -260,7 +260,7 @@
                         <li>
                             입금하시는 분 계좌 번호<br>
                             <input type="text" name="account_bank" placeholder="은행 명" style="margin-top: 10px; width: 350px"><br>
-                            <input type="text" name="account_number" placeholder="계좌 번호" style="width: 350px">
+                            <input type="text" name="account_number" placeholder="계좌 번호" style="width: 350px" onkeydown="onlyNumber()">
                         </li>
 
                         <div style="color: red; font-size: 10pt">* 입금하시는 분 성함과 계좌번호는 환불요청시 해당 계좌로 입금해 드리는데 사용됩니다.</div>
