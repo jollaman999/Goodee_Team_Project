@@ -15,6 +15,7 @@
     </a>
     <ul>
         <!-- admin 사이드메뉴 -->
+        <li><a href="${path}/member/mypage.shop"><i class="fa fa-user-secret sidebaricon"></i>&nbsp;&nbsp;마이페이지</a></li>
         <li><a href="${path}/admin/list.shop"><i class="fa fa-address-book-o sidebaricon"></i>&nbsp;&nbsp;회원관리</a></li>
         <li><a href="${path}/inventory/money_day.shop"><i class="fa fa-line-chart sidebaricon"></i>&nbsp;&nbsp;판매분석</a></li>
         <li><a href="${path}/inventory/selling.shop"><i class="fa fa-archive sidebaricon"></i>&nbsp;&nbsp;주문내역</a></li>
