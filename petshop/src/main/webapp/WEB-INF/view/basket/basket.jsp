@@ -199,7 +199,7 @@
                             padding-right: 15px; padding-bottom: 22px" value="주문 하기" onclick="order_items()">
                 <input type="button" class="site-btn" style="font-size: 18px; min-width: 160px; padding-left: 15px;
                             padding-right: 15px; padding-bottom: 22px" value="삭제 하기" onclick="delete_items()">
-                <a href="" class="site-btn sb-dark" style="font-size: 18px; min-width: 160px; padding-left: 15px;
+                <a href="${path}/shop/list.shop" class="site-btn sb-dark" style="font-size: 18px; min-width: 160px; padding-left: 15px;
                         padding-right: 15px; padding-bottom: 22px">쇼핑 계속하기</a>
             </div>
         </div>
