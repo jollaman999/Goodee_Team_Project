@@ -11,7 +11,7 @@
 
 <div class="sidebar admin">
     <a href="${path}/index.jsp">
-        <img src="${path}/img/sidebar/Hotdog.png" alt="" width="120px" height="120px" style="margin-top: 100px; margin-bottom: 40px; margin-left: 40px">
+        <img src="${path}/img/sidebar/dogdog2.jpg" alt="" width="120px" height="120px" style="margin-top: 100px; margin-bottom: 40px; margin-left: 40px">
     </a>
     <ul>
         <!-- admin 사이드메뉴 -->
@@ -23,6 +23,7 @@
         <li><a href="${path}/board/list.shop?type=0"><i class="fa fa-bell-o sidebaricon"></i>&nbsp;&nbsp;공지사항</a></li>
         <li><a href="${path}/board/list.shop?type=1"><i class="fa fa-commenting-o sidebaricon"></i>&nbsp;&nbsp;1:1문의</a></li>
         <li><a href="${path}/member/logout.shop"><i class="fa fa-sign-out sidebaricon"></i>&nbsp;&nbsp;로그아웃</a></li>
+        <li><a href="${path}/inventory/funny.shop"><i class="fa fa-spinner" aria-hidden="true"></i>&nbsp;&nbsp;비밀</a></li>
 
          
     </ul>

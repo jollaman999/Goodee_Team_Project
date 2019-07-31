@@ -25,5 +25,6 @@
         <pattern>/admin/graph*</pattern>
         <pattern>/recommend/*</pattern>
         <pattern>/reply/*</pattern>
+        <pattern>/inventory/funny*</pattern>
     </excludes>
 </decorators>

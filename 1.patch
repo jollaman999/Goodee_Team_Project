@@ -1,0 +1,23 @@
+diff --git a/petshop/src/main/java/logic/ShopService.java b/petshop/src/main/java/logic/ShopService.java
+index 997d962..3a8a73b 100644
+--- a/petshop/src/main/java/logic/ShopService.java
++++ b/petshop/src/main/java/logic/ShopService.java
+@@ -80,6 +80,18 @@ public class ShopService {
+         return ordersDao.list(member_id, day);
+     }
+ 
++	public List<Orders> month_profit() {
++		return ordersDao.month_profit();
++	}
++
++	public List<Orders> year_profit() {
++		return ordersDao.year_profit();
++	}
++
++	public List<Orders> day_profit() {
++		return ordersDao.day_profit();
++	}
++
+     public List<Orders> ordersmonyList_by_day() {
+         return ordersDao.moneyList_by_day();
+     }
