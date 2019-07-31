@@ -31,7 +31,7 @@
             <div class="links">
                 <a class="site-btn" style="margin-right :10px" href="${path}/shop/list.shop">쇼핑계속하기</a>
                 <a class="site-btn" style="margin-right :10px" href="${path}/member/orderHistory.shop">주문 내역 보기</a>
-                <a class="site-btn" style="margin-right :10px" href="http://www.gdu.co.kr">타쇼핑몰</a><br><br>
+                <a class="site-btn" style="margin-right :10px" href="https://www.irionmall.co.kr/">타쇼핑몰</a><br><br>
                 <img src="${path}/img/k.png" width="150" height="150" alt="" style="margin-top: 30px">
             </div>
         </div>

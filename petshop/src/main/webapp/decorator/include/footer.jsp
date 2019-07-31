@@ -43,7 +43,7 @@
                     <h2>Questions</h2>
                     <div class="fw-latest-post-widget">
                         <div class="lp-item">
-                            <div class="lp-thumb set-bg" data-setbg="img/blog-thumbs/1.jpg"></div>
+                         <!-- <div class="lp-thumb set-bg" data-setbg="img/blog-thumbs/1.jpg"></div>  --> 
                             <div class="lp-content">
                                 <h6>what shoes to wear</h6>
                                 <span>Oct 21, 2018</span>
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="lp-item">
-                            <div class="lp-thumb set-bg" data-setbg="img/blog-thumbs/2.jpg"></div>
+                         <!--    <div class="lp-thumb set-bg" data-setbg="img/blog-thumbs/2.jpg"></div> --> 
                             <div class="lp-content">
                                 <h6>trends this year</h6>
                                 <span>Oct 21, 2018</span>
