@@ -9,12 +9,13 @@
 
     <script type="text/javascript">
         function listcall(page) {
-            document.f.pageNum.value = page;
-            document.f.submit();
+            location.href = "list.shop?pageNum=" + page + "&limit=${param.limit}";
         }
 
         function limitcall() {
-            document.f.submit();
+            var limit = document.getElementById("limit").value;
+
+            location.href = "list.shop?pageNum=${param.pageNum}&limit=" + limit;
         }
     </script>
 
@@ -63,14 +64,14 @@
 
             <div style="text-align: right; margin-top: 10px">
                 표시할 상품 갯수&nbsp;&nbsp;
-                    <select name="limit" onchange="limitcall()">
+                    <select id="limit" onchange="limitcall()">
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
                         <option value="40">40</option>
                         <option value="50">50</option>
                         <script>
-                            document.f.limit.value = "${limit}";
+                            document.getElementById("limit").value = "${limit}";
                         </script>
                     </select>
 
