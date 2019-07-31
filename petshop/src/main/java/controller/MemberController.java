@@ -93,7 +93,7 @@ public class MemberController {
     @RequestMapping("emailcheck")
     public ModelAndView emailcheck(String email) {
         ModelAndView mav = new ModelAndView("/alert");
-        List<Member> memberList = service.memberList();
+        List<Member> memberList = service.memberList(null, null, null, null);
         String msg;
 
         mav.addObject("url", "emailcheckForm.shop");

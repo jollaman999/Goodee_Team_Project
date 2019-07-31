@@ -28,10 +28,44 @@ public class AdminController {
     private ShopService service;
 
     @RequestMapping("list")
-    public ModelAndView list(HttpSession session) {
-        List<Member> list = service.memberList();
+    public ModelAndView list(HttpSession session, Integer pageNum, Integer limit, String searchtype, String searchcontent) {
         ModelAndView mav = new ModelAndView();
+
+        if (pageNum == null || pageNum.toString().equals("")) {
+            pageNum = 1;
+        }
+
+        if (limit == null || limit.toString().equals("")) {
+            limit = 10;
+        }
+
+        int listcount = service.memberCount(searchtype, searchcontent);
+        List<Member> list = service.memberList(pageNum, limit, searchtype, searchcontent);
+
+        int maxpage = listcount / limit;
+        if (listcount % limit != 0) {
+            maxpage++;
+        }
+
+        int startpage = pageNum / limit;
+        if (pageNum % limit != 0) {
+            startpage++;
+        }
+
+        int endpage = startpage + 9;
+        if (endpage > maxpage) {
+            endpage = maxpage;
+        }
+
+        mav.addObject("pageNum", pageNum);
+        mav.addObject("limit", limit);
+        mav.addObject("searchcontent", searchcontent);
+        mav.addObject("maxpage", maxpage);
+        mav.addObject("startpage", startpage);
+        mav.addObject("endpage", endpage);
+        mav.addObject("listcount", listcount);
         mav.addObject("list", list);
+
         return mav;
     }
 

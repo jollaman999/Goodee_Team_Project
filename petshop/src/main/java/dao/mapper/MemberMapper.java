@@ -9,15 +9,15 @@ public interface MemberMapper {
     @Insert("insert into member " +
             "(id, pass, name, phone, email, address, address_detail, postcode) " +
             "values (#{id}, #{pass}, #{name}, #{phone}, #{email}, #{address}, #{address_detail}, #{postcode})")
-    void insert(Member member);
+    int insert(Member member);
 
     @Update("update member set name = #{name}, phone = #{phone}," +
             "email = #{email}, address = #{address}, address_detail = #{address_detail}, postcode = #{postcode} where id = #{id}")
-    void update(Member member);
+    int update(Member member);
 
     @Update("update member set pass = #{pass}, email = #{email} where id = #{id}")
     int update_pass(Member member);
 
     @Delete("delete from member where id = #{id}")
-    void delete(Member member);
+    int delete(Member member);
 }

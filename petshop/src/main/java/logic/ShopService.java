@@ -100,8 +100,8 @@ public class ShopService {
         return ordersDao.moneyList_by_year();
     }
 
-    public List<Member> memberList() {
-        return memberDao.list();
+    public List<Member> memberList(Integer pageNum, Integer limit, String searchtype, String searchcontent) {
+        return memberDao.list(pageNum, limit, searchtype, searchcontent);
     }
 
     public List<Member> memberList(String[] idchks) {
@@ -247,6 +247,10 @@ public class ShopService {
     }
 
     // member
+    public int memberCount(String searchtype, String searchcontent) {
+        return memberDao.count(searchtype, searchcontent);
+    }
+
     public void memberCreate(Member member) {
         memberDao.insert(member);
     }
@@ -271,7 +275,7 @@ public class ShopService {
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        List<Member> memberList = memberDao.list();
+        List<Member> memberList = memberDao.list(null, null, null, null);
         for (Member member : memberList) {
             if (member.getEmail().equals(email)) {
                 return member.getId();
