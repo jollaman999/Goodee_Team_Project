@@ -138,9 +138,27 @@
                                     <c:set var="item_no" value="${basket.item_no}" />
                                     <%
                                         if (itemDao != null && pageContext.getAttribute("item_no") != null) {
-                                            pageContext.setAttribute("item", itemDao.selectOne((Integer)pageContext.getAttribute("item_no"), false));
+                                            pageContext.setAttribute("item", itemDao.selectOne((Integer)pageContext.getAttribute("item_no"), true));
                                         }
                                     %>
+
+                                    <script type="text/javascript">
+                                        function check_quantity_${basket.item_no}() {
+                                            var quantity = parseInt(document.getElementById("quantity_${basket.item_no}").value);
+
+                                            if (quantity < 1) {
+                                                alert("수량을 1개 이상으로 입력해 주세요!");
+                                                return false;
+                                            }
+
+                                            if (quantity > ${item.remained_quantity}) {
+                                                alert("입력 하신 수량이 주문 가능 수량 보다 많습니다!");
+                                                return false;
+                                            }
+
+                                            document.quantity_form_${basket.item_no}.submit();
+                                        }
+                                    </script>
                                     <tr>
                                         <td class="product-col">
                                             <a href="${path}/shop/detail.shop?item_no=${item.item_no}">
@@ -157,12 +175,13 @@
                                             <div class="quantity">
                                                 <c:choose>
                                                     <c:when test="${!empty items}">
-                                                        <form name="f" method="post" action="update.shop">
+                                                        <form name="quantity_form_${basket.item_no}" method="post" action="update.shop">
                                                             <div class="pro-qty">
-                                                                <input type="text" name="quantity" value="${basket.quantity}" onkeydown="onlyNumber()">
+                                                                <input type="number" id="quantity_${basket.item_no}" name="quantity" value="${basket.quantity}"
+                                                                       min="1" pattern="[0-9]*">
                                                             </div>
                                                             <input type="hidden" name="item_no" value="${item.item_no}">
-                                                            <input type="submit" class="site-btn sb-dark" value="변경"
+                                                            <input type="submit" class="site-btn sb-dark" value="변경" onclick="check_quantity_${basket.item_no}()"
                                                                    style="width: 50px; height: 20px; padding: 5px 0 20px; font-size: 12px; margin-left: 10px; margin-top: 6px">
                                                         </form>
                                                     </c:when>
@@ -241,7 +260,7 @@
                         <li>
                             입금하시는 분 계좌 번호<br>
                             <input type="text" name="account_bank" placeholder="은행 명" style="margin-top: 10px; width: 350px"><br>
-                            <input type="text" name="account_number" placeholder="계좌 번호" style="width: 350px">
+                            <input type="text" name="account_number" placeholder="계좌 번호" style="width: 350px" onkeydown="onlyNumber()">
                         </li>
 
                         <div style="color: red; font-size: 10pt">* 입금하시는 분 성함과 계좌번호는 환불요청시 해당 계좌로 입금해 드리는데 사용됩니다.</div>

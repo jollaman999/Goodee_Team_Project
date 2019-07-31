@@ -26,11 +26,13 @@
     <div style="text-align: center; width: 100%">
         <form class="header-search-form" action="delete.shop" method="post" name="deleteform">
             <input type="hidden" name="id" value="${param.id}" class="w3-input">
-            <div style="text-align: center; margin-top: 30px; margin-right: 10%; width: 100%">
-                비밀번호<input type="password" name="pass" style="margin-top: 10px; margin-bottom: 30px; margin-left: 30px; width: 70%" placeholder="PASSWORD">
-            </div>
+            <c:if test="${sessionScope.loginMember.id != 'admin'}">
+                <div style="text-align: center; margin-top: 30px; margin-right: 10%; width: 100%">
+                    비밀번호<input type="password" name="pass" style="margin-top: 10px; margin-left: 30px; width: 70%" placeholder="PASSWORD">
+                </div>
+            </c:if>
             <div class="container-contact100-form-btn">
-                <a href="javascript:deleteform.submit()" class="submit-btn contact100-form-btn">회원탈퇴</a>
+                <a href="javascript:deleteform.submit()" class="submit-btn contact100-form-btn" style="margin-top: 30px">회원탈퇴</a>
             </div>
         </form>
     </div>

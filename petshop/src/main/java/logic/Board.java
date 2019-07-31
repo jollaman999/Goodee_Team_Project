@@ -20,6 +20,8 @@ public class Board {
     private MultipartFile file1;
     private String fileurl;
     private Date regdate;
+    private int ref;
+    private int refstep;
 
     public int getNum() {
         return num;
@@ -107,5 +109,21 @@ public class Board {
 
     public void setRegdate(Date regdate) {
         this.regdate = regdate;
+    }
+
+    public int getRef() {
+        return ref;
+    }
+
+    public void setRef(int ref) {
+        this.ref = ref;
+    }
+
+    public int getRefstep() {
+        return refstep;
+    }
+
+    public void setRefstep(int refstep) {
+        this.refstep = refstep;
     }
 }

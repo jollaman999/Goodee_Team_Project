@@ -192,7 +192,17 @@ public class MemberController {
         if (id == null || id.length() == 0) {
             id = ((Member)session.getAttribute("loginMember")).getId();
         }
+
         Member member = service.memberSelect(id);
+        if (member == null) {
+            mav = new ModelAndView("/alert");
+
+            mav.addObject("msg", "해당 회원이 존재하지 않습니다!");
+            mav.addObject("url", "mypage.shop");
+
+            return mav;
+        }
+
         mav.addObject(member);
 
         return mav;
@@ -292,14 +302,16 @@ public class MemberController {
             throw new ShopException("로그인 후 이용해 주십시오!", "login.shop");
         }
 
-        if (!loginMember.getPass().equals(securityUtil.encryptSHA256(member.getPass()))) {
+        if (!loginMember.getId().equals("admin") && !loginMember.getPass().equals(securityUtil.encryptSHA256(member.getPass()))) {
             throw new ShopException("비밀번호가 일치하지 않습니다!", "delete.shop?id=" + member.getId());
         }
 
         try {
             service.memberDelete(member);
             if (loginMember.getId().equals("admin")) {
-                mav.setViewName("redirect:/admin/list.shop");
+                mav.addObject("msg", "해당 회원의 탈퇴가 완료되었습니다.");
+                mav.addObject("url", "../admin/list.shop");
+                mav.setViewName("alert");
             } else {
                 session.invalidate();
                 mav.addObject("msg", "탈퇴 되었습니다. 그동안 이용해 주셔서 감사합니다.");
@@ -308,7 +320,7 @@ public class MemberController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ShopException("회원 정보 삭제가 실패했습니다. 전산부 전화요망. (전화 : 1234)", "delete.shop?id=" + member.getId());
+            throw new ShopException("회원 정보 삭제가 실패했습니다!", "delete.shop?id=" + member.getId());
         }
 
         return mav;

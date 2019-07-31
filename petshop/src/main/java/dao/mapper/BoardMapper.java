@@ -27,8 +27,8 @@ public interface BoardMapper {
     		"where type = #{type} and b.item_no = i.item_no and i.name like '%${item_name}%' order by b.num desc limit #{startrow}, #{limit}")
     List<Board> search_by_item_name(Map map);
 
-    @Insert("insert into board (num, item_no, type, member_id, title, content, file1, regdate) " +
-                            "values (#{num}, #{item_no}, #{type}, #{member_id}, #{title}, #{content}, #{fileurl}, now())")
+    @Insert("insert into board (num, item_no, type, member_id, title, content, file1, regdate, ref, refstep) " +
+                            "values (#{num}, #{item_no}, #{type}, #{member_id}, #{title}, #{content}, #{fileurl}, now(), #{ref}, #{refstep})")
     int insert(Board board);
 
     @Update("update board set title = #{title}, content = #{content}, file1 = #{fileurl}, regdate = now() where num = #{num}")

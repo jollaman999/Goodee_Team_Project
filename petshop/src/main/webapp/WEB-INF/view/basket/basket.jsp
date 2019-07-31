@@ -152,7 +152,7 @@
                                                         <form name="quantity_form_${basket.item_no}" method="post" action="update.shop">
                                                             <div class="pro-qty">
                                                                 <input type="number" id="quantity_${basket.item_no}" name="quantity" value="${basket.quantity}"
-                                                                        min="0" pattern="[0-9]*">
+                                                                        min="1" pattern="[0-9]*">
                                                             </div>
                                                             <input type="hidden" name="item_no" value="${item.item_no}">
                                                             <input type="button" class="site-btn sb-dark" value="변경" onclick="check_quantity_${basket.item_no}()"
@@ -199,7 +199,7 @@
                             padding-right: 15px; padding-bottom: 22px" value="주문 하기" onclick="order_items()">
                 <input type="button" class="site-btn" style="font-size: 18px; min-width: 160px; padding-left: 15px;
                             padding-right: 15px; padding-bottom: 22px" value="삭제 하기" onclick="delete_items()">
-                <a href="" class="site-btn sb-dark" style="font-size: 18px; min-width: 160px; padding-left: 15px;
+                <a href="${path}/shop/list.shop" class="site-btn sb-dark" style="font-size: 18px; min-width: 160px; padding-left: 15px;
                         padding-right: 15px; padding-bottom: 22px">쇼핑 계속하기</a>
             </div>
         </div>
@@ -260,9 +260,14 @@
             function check_quantity_${basket.item_no}() {
                 var quantity = parseInt(document.getElementById("quantity_${basket.item_no}").value);
 
-                if (quantity > ${item.remained_quantity}) {
+                if (quantity < 1) {
+                    alert("수량을 1개 이상으로 입력해 주세요!");
+                    return false;
+                }
+
+               if (quantity > ${item.remained_quantity}) {
                     alert("입력 하신 수량이 주문 가능 수량 보다 많습니다!");
-                    return;
+                    return false;
                 }
 
                 document.quantity_form_${basket.item_no}.submit();

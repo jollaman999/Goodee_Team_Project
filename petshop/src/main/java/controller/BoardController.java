@@ -9,6 +9,7 @@ import logic.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("board")
@@ -81,9 +83,7 @@ public class BoardController {
 
     @PostMapping("write")
     public ModelAndView writeBoard(HttpSession session, Integer type, String member_id, MultipartHttpServletRequest request, @Valid Board board) {
-        Member loginMember = (Member) session.getAttribute("loginMember");
-
-        if (type == 0 && !loginMember.getId().equals("admin")) {
+        if (type == 0 && !member_id.equals("admin")) {
             throw new ShopException("잘못된 접근입니다!", "list.shop?type=" + type);
         }
 
@@ -108,6 +108,7 @@ public class BoardController {
         }
 
         board.setNum(num);
+        board.setRef(num);
 
         int result = service.boardInsert(board);
 
@@ -117,6 +118,54 @@ public class BoardController {
         } else {
             mav.addObject("msg","게시글 작성을 실패하였습니다!.");
             mav.addObject("url","write.shop?type=" + type + "&num=" + num);
+        }
+
+        return mav;
+    }
+
+    @PostMapping("reply")
+    public ModelAndView replyBoard(HttpSession session, Integer type, String member_id, MultipartHttpServletRequest request, @Valid Board board) {
+        if (type == 0 || !member_id.equals("admin")) {
+            throw new ShopException("잘못된 접근입니다!", "list.shop?type=" + type);
+        }
+
+        ModelAndView mav = new ModelAndView("/alert");
+
+        if (request.getParameter("num") == null) {
+            mav.addObject("msg","답변글을 남길 게시글 정보를 가져올 수 없습니다!");
+            mav.addObject("url","list.shop?type=" + type);
+
+            return mav;
+        }
+
+        int num = Integer.parseInt(request.getParameter("num"));
+
+        if (request.getParameter("item_no") == null) {
+            throw new ShopException("상품 정보를 가져올 수 없습니다!", "list.shop?type=" + type);
+        }
+
+        board.setType(type);
+        board.setMember_id(member_id);
+        board.setItem_no(Integer.parseInt(request.getParameter("item_no")));
+
+        int write_num = service.boardmaxnum() + 1;
+
+        if (!fileUtil.FileUpload(write_num, service, board, mav, request, "reply.shop?num=" + write_num)) {
+            return mav;
+        }
+
+        board.setNum(write_num);
+        board.setRef(num);
+        board.setRefstep(1);
+
+        int result = service.boardInsert(board);
+
+        if (result > 0) {
+            mav.addObject("msg","답변글 작성이 완료되었습니다.");
+            mav.addObject("url","detail.shop?type=" + type + "&num=" + write_num);
+        } else {
+            mav.addObject("msg","답변글 작성을 실패하였습니다!.");
+            mav.addObject("url","reply.shop?type=" + type + "&num=" + num);
         }
 
         return mav;
@@ -252,6 +301,14 @@ public class BoardController {
             throw new ShopException("잘못된 접근입니다!", "list.shop?type=" + type);
         }
 
+        if (request.getRequestURI().contains("reply")) {
+            if (!loginMember.getId().equals("admin")) {
+                throw new ShopException("답변글을 남길 게시글 정보를 가져올 수 없습니다!", "list.shop?type=" + type);
+            } else if (num == null || num.toString().length() == 0) {
+                throw new ShopException("잘못된 접근입니다!", "list.shop?type=" + type);
+            }
+        }
+
         if (request.getRequestURI().contains("write") && type == 1 && request.getParameter("item_no") == null) {
             throw new ShopException("상품 정보를 가져올 수 없습니다!", "list.shop?type=" + type);
         }
@@ -260,6 +317,15 @@ public class BoardController {
 
         if (num != null) {
             board = service.getBoard(num, type);
+            if (board == null) {
+                throw new ShopException("답변글을 남길 게시글 정보를 가져올 수 없습니다!", "list.shop?type=" + type);
+            }
+
+            if (request.getRequestURI().contains("reply")) {
+                if (board.getRef() != 0) {
+                    throw new ShopException("답변글을 남길 수 없는 게시글 입니다!", "detail.shop?type=" + type + "&num=" + num);
+                }
+            }
         }
 
         if (request.getRequestURI().contains("detail")) {

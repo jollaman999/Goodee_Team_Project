@@ -16,7 +16,7 @@
         </where>
     </select>
     <select id="list" resultType="Board" parameterType="map">
-        select num, item_no, member_id, title, content, file1 fileurl, regdate from board
+        select num, item_no, member_id, title, content, file1 fileurl, regdate, ref, refstep from board
         <where>
             <if test="num != null">
                 and num = #{num}
@@ -31,7 +31,7 @@
                 and member_id = #{id}
             </if>
         </where>
-        order by num desc
+        order by ref desc, refstep asc
         <if test="startrow != null and limit != null">
             limit #{startrow}, #{limit}
         </if>
