@@ -51,7 +51,7 @@
                             <input type="hidden" name="item_no" value="${item.item_no}">
 
                             <input type="submit" value="상품 삭제">
-                            <input type="button" value="리스트로 가기" onclick="location.href='${path}/inventory/list.shop?pageNum=${param.pageNum}'">
+                            <input type="button" value="상품 리스트" onclick="location.href='${path}/inventory/list.shop?pageNum=${param.pageNum}'">
                         </form>
                     </td>
                 </tr>

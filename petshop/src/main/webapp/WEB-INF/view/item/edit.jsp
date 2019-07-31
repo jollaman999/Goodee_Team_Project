@@ -193,7 +193,7 @@
         <tr>
             <td colspan="3">
                 <input type="button" value="상품 수정" onclick="do_submit()">&nbsp;
-                <input type="button" value="리스트로 가기" onclick="location.href='${path}/inventory/list.shop?pageNum=${param.pageNum}'">
+                <input type="button" value="상품 리스트" onclick="location.href='${path}/inventory/list.shop?pageNum=${param.pageNum}'">
             </td>
         </tr>
     </table>

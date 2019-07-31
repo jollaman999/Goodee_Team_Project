@@ -37,7 +37,7 @@
 
             <table>
                 <tr>
-                    <td style="width: 15%">상품명</td>
+                    <td style="width: 30%">상품명</td>
                     <td>${item.name}</td>
                 </tr>
 
@@ -108,7 +108,7 @@
                             <table>
                                 <tr class="nohover">
                                     <td>
-                                        <input type="button" value="리스트로 가기"
+                                        <input type="button" value="상품 리스트"
                                                onclick="location.href='list.shop?pageNum=${param.pageNum}'">
                                         <input type="button" value="상품 수정"
                                                onclick="location.href='${path}/item/edit.shop?item_no=${item.item_no}&pageNum=${param.pageNum}'">

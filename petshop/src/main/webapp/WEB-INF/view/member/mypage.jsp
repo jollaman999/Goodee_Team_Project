@@ -48,7 +48,7 @@
     <br>
     <div class="container-contact100-form-btn">
         <a href="update.shop?id=${member.id}" class="submit-btn contact100-form-btn">회원 정보 수정</a>
-        <a href="update_pw.shop" class="submit-btn contact100-form-btn" style="margin-left: 30px">비밀번호 변경</a>
+        <a href="update_pw.shop" class="submit-btn contact100-form-btn" style="margin-left: 30px">비밀 번호 변경</a>
         <c:if test="${member.id != 'admin'}">
             <a href="delete.shop?id=${member.id}" class="submit-btn contact100-form-btn" style="margin-left: 30px">회원 탈퇴</a>
         </c:if>
