@@ -15,20 +15,7 @@
 <h2>주문 내역</h2>
 
 <!-- 재고관리 리스트 -->
-<form action="selling" method="post">
-<div style="width: 100%; text-align: center; margin-bottom: 15px; margin-top: 30px">
-    <select name="searchtype" style="height: 30px; margin-right: 5px; margin-bottom: 20px">
-        <option value="">선택하세요</option>
-        <option value="#">그룹코드</option>
-        <option value="#">아이템코드</option>
-        <option value="#">국가별</option>
-    </select>
-    <input type='text' name='word' value='' placeholder="특수문자는 사용할수 없습니다." style="width: 50%; height: 30px; margin-right: 5px">
-    <button type='submit' class="w3-button w3-dark-gray" style="font-size: 14px; margin-bottom: 4px">검색</button>
-</div>
-</form>
-
-<table>
+<table style="margin-top: 30px">
 <!-- 테이블 바 이름 -->
         <tr>
             <th>주문번호</th>
