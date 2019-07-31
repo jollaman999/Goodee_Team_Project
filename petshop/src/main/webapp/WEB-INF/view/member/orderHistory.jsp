@@ -116,7 +116,7 @@
 <%-- weekinfo --%>
 <!-- -------------------------------------------------------------------------------------------------------- -->
 <div id="weekinfo" class="info" style="display: none; width:100%;">
-    <table>
+    <table style="word-break:break-all";>
         <tr>
             <td colspan="15" align="center">
                 <h3>7일 주문 내역</h3>
@@ -135,6 +135,10 @@
         </tr>
 
         <c:forEach items="${ordersList_7}" var="order" varStatus="stat1">
+		
+		<!-- 상품 유효성 검사 -->
+        <c:if test="${not empty order.orders_lists}">
+        
             <tr>
                 <!-- 주문번호 -->
                 <td rowspan="${order.orders_lists.size()}">
@@ -180,6 +184,7 @@
                             ${orders_lists.quantity}개
                         </td>
                     </c:if>
+               
                 </c:forEach>
 
                 <!-- 금액(총) -->
@@ -347,7 +352,7 @@
 						</table>
 					</td>
 				</tr>
-				
+		</c:if>
         </c:forEach>
 	
     </table>
@@ -374,6 +379,9 @@
         </tr>
 
         <c:forEach items="${ordersList_30}" var="order" varStatus="stat1">
+        <!-- 상품 유효성 검사 -->
+        <c:if test="${not empty order.orders_lists}">
+        
             <tr>
                 <!-- 주문번호 -->
                 <td rowspan="${order.orders_lists.size()}">
@@ -587,7 +595,7 @@
 						</table>
 					</td>
 				</tr>
-				
+				</c:if>
         </c:forEach>
     </table>
 </div>
@@ -613,6 +621,8 @@
         </tr>
 
         <c:forEach items="${ordersList_180}" var="order" varStatus="stat1">
+        <!-- 상품 유효성 검사 -->
+        <c:if test="${not empty order.orders_lists}">
             <tr>
                 <!-- 주문번호 -->
                 <td rowspan="${order.orders_lists.size()}">
@@ -821,7 +831,7 @@
 					</td>
 				</tr>
 				
-				
+				</c:if>
         </c:forEach>
     </table>
 </div>
@@ -847,6 +857,8 @@
         </tr>
 
         <c:forEach items="${ordersList_all}" var="order" varStatus="stat1">
+        <!-- 상품 유효성 검사 -->
+        <c:if test="${not empty order.orders_lists}">
             <tr>
                 <!-- 주문번호 -->
                 <td rowspan="${order.orders_lists.size()}">
@@ -1054,7 +1066,7 @@
 						</table>
 					</td>
 				</tr>
-            
+         </c:if>
         </c:forEach>
     </table>
 </div>
