@@ -160,6 +160,21 @@ public class ItemDao {
         return sqlSessionTemplate.selectOne(NS + "list", param);
     }
 
+    public List<Item> get_latest_items(int limit) {
+        param.clear();
+        param.put("limit", limit);
+
+        return sqlSessionTemplate.getMapper(ItemMapper.class).get_latest_items(param);
+    }
+
+    public List<Item> get_sold_items(int category_group_code, int limit) {
+        param.clear();
+        param.put("category_group_code", category_group_code);
+        param.put("limit", limit);
+
+        return sqlSessionTemplate.getMapper(ItemMapper.class).get_sold_items(param);
+    }
+
     public int insert(Item item) {
         int no = sqlSessionTemplate.getMapper(ItemMapper.class).max_item_no();
         item.setItem_no(++no);

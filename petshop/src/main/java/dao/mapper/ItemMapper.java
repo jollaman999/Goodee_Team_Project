@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ItemMapper {
     @Select("select ifnull(max(item_no), 0) from item")
     int max_item_no();
@@ -27,6 +30,15 @@ public interface ItemMapper {
 
     @Select("select i.quantity - ifnull(sum(ol.quantity), 0) from item i, orders_list ol where i.item_no = #{item_no} and ol.item_no = #{item_no}")
     int remained_quantity(Integer item_no);
+
+    @Select("select *, mainpic as mainpicurl from item order by update_time desc limit 0, #{limit}")
+    List<Item> get_latest_items(Map map);
+
+    @Select("select i.item_no, i.name, i.price, i.category_group_code, ifnull(sum(o.quantity), 0) sold_quantity, i.mainpic mainpicurl " +
+            "from item i, orders_list o " +
+            "where i.item_no = o.item_no and i.category_group_code = #{category_group_code} " +
+            "group by i.item_no order by sold_quantity desc limit #{limit}")
+    List<Item> get_sold_items(Map map);
     
     /*  한솔이 하던거.
     @Select("select ifnull(sum(quantity), 0) from orders_list where item_no = #{item_no}")
