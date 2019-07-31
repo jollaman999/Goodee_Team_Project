@@ -190,11 +190,4 @@ public class InventoryController {
 
         return mav;
     }
-
-    @RequestMapping("map")
-    public ModelAndView map(HttpSession session) {
-        ModelAndView mav = new ModelAndView();
-
-        return mav;
-    }
 }
