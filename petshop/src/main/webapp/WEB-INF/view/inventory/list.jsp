@@ -43,7 +43,7 @@
 <h2>
     <a href="${path}/inventory/list.shop">상품 관리</a>&nbsp;&nbsp;
     <a href="${path}/item/create.shop?pageNum=${param.pageNum}">상품등록</a>&nbsp;&nbsp;
-    <a href="${path}/inventory/map.shop">지역 관리</a></h2><br>
+    <a href="${path}/inventory/map.shop">지역 관리</a><br>
 </h2><br>
 
 <!-- 재고관리 리스트 -->
@@ -51,17 +51,6 @@
     <tr class="header">
         <td colspan="9">
             <input type="hidden" name="pageNum" value="${pageNum}">
-            <div style="width: 100%">
-                <select name="searchtype" style="height: 30px; margin-right: 5px">
-                    <option value="">선택하세요</option>
-                    <option value="#">그룹코드</option>
-                    <option value="#">아이템코드</option>
-                    <option value="#">국가별</option>
-                </select>
-                <input type='text' name='word' value='' placeholder="특수문자는 사용할수 없습니다." style="width: 50%; height: 30px; margin-right: 5px">
-                <button type='submit' class="w3-button w3-dark-gray" style="font-size: 14px; margin-bottom: 4px">검색</button>
-            </div>
-
             <div style="text-align: right; margin-top: 10px">
                 표시할 상품 갯수&nbsp;&nbsp;
                     <select id="limit" onchange="limitcall()">
