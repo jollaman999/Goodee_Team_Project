@@ -199,17 +199,6 @@
            onclick="printIt(document.getElementById('printme').innerHTML)"/>
 </div>
 
-<div style="width: 100%; text-align: center; margin-bottom: 15px">
-    <select name="searchtype" style="height: 30px; margin-right: 5px">
-        <option value="">선택하세요</option>
-        <option value="#">그룹코드</option>
-        <option value="#">아이템코드</option>
-        <option value="#">국가별</option>
-    </select>
-    <input type='text' name='word' value='' placeholder="특수문자는 사용할수 없습니다." style="width: 50%; height: 30px; margin-right: 5px">
-    <button type='submit' class="w3-button w3-dark-gray" style="font-size: 14px; margin-bottom: 4px">검색</button>
-</div>
-
 <!-- orders 테이블에 status=1(입금확인) 만 가져옴.orders mapper 에서 확인  -->
 <div id="printme">
     <table id='tblExport'>
