@@ -137,47 +137,37 @@
         }
 
         //  구글 차트
-        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.load('current', {packages: ['corechart', 'bar']});
         google.charts.setOnLoadCallback(drawBasic);
 
-        function drawBasic() {
-            var data = new google.visualization.DataTable();
+  function drawBasic() {
 
-            //오른쪽 인덱스 표기
-            data.addColumn('string', '년도');
-            data.addColumn('number', '년별 총판매금');
+        var data = google.visualization.arrayToDataTable([
+      	  
+          ['', '('+'원'+')',],
+          <c:forEach items="${year_profit}" var="yearprofit">
+          ["<fmt:formatDate value="${yearprofit.update_time}" pattern="yy"/>년", ${yearprofit.price_total}],
+          </c:forEach>
+      ]);
 
+        var options = {
+          title: '',
+          //width: '100%'
+          chartArea: {width: '90%'},
+          hAxis: {
+            title: '',
+            minValue: 0
+          },
+          vAxis: {
+            title: ''
+          }
+        };
 
-            // [시간(YY,MM,DD),총판매가격]
-            data.addRows([
-                <c:forEach items="${year_profit}" var="yearprofit">
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
 
-                ["<fmt:formatDate value="${yearprofit.update_time}" pattern="yyyy"/>년", ${yearprofit.price_total}],
-                </c:forEach>
-            ]);
+        chart.draw(data, options);
+      } 
 
-            // 차트 옵션
-            var options = {
-                title: '',
-                width: 0,
-                height: 900,
-
-                hAxis: {
-                    slantedText:true,
-                    slantedTextAngle:90 // here you can even use 180
-                }
-            };
-
-            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-
-            $(window).resize(function(){
-                var container = document.getElementById("chart_div").firstChild.firstChild;
-                container.style.width = "100%";
-
-                chart.draw(data, options);
-            });
-        }
     </script>
 
     <link rel="stylesheet" type="text/css" href="${path}/css/w3.css">
@@ -245,10 +235,10 @@
     </table>
 </div>
 
-<!-- 구글 차트 출력  -->
-<div id="chart_div" style="text-align: center"></div>
-<!--  https://jsfiddle.net/api/post/library/pure/
-      https://private.tistory.com/66 -->
+
+<!-- 구글 차트 출력  --><div id="printme">
+<div id="chart_div" style="text-align: center; margin-top: 150px; height:350px;"></div>
+</div>
 
 <script type="text/javascript">
     // 엑셀
@@ -258,13 +248,13 @@
             $num < 10 ? $num = '0' + $num : $num;
             return $num.toString();
         }
-
-        var btn = $('#btnExport');
-        var tbl = 'tblExport';
-
-        btn.on('click', function () {
-            var dt = new Date();
-            var year = itoStr(dt.getFullYear());
+	
+	        var btn = $('#btnExport');
+	        var tbl = 'tblExport';
+	
+	        btn.on('click', function () {
+	            var dt = new Date();
+	            var year = itoStr(dt.getFullYear());
             var month = itoStr(dt.getMonth() + 1);
             var day = itoStr(dt.getDate());
             var hour = itoStr(dt.getHours());
