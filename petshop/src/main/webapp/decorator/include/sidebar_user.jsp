@@ -11,7 +11,7 @@
 
 <div class="sidebar user">
     <a href="${path}/index.jsp">
-        <img src="${path}/img/sidebar/dogdog.png" alt="" width="120px" height="120px" style="margin-top: 100px; margin-bottom: 40px; margin-left: 40px">
+        <img src="${path}/img/sidebar/dogdog.jpg" alt="" width="120px" height="120px" style="margin-top: 100px; margin-bottom: 40px; margin-left: 40px">
     </a>
     <ul>
         <!-- user 사이드메뉴 -->
