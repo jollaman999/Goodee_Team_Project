@@ -5,26 +5,25 @@
 <c:set value="${pageContext.request.contextPath}" var="path" />
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-<!-- style -->
-<link rel="stylesheet" href="${path}/css/funny.css"/>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDo cmd</title>
+    
+    <link rel="stylesheet" href="${path}/css/funny/funny2.css"/>
 </head>
-<body>
-<!--  마리오   -->
-<div class="sky">
-    <img class="cloud" src="http://shimotmk.com/wp-content/uploads/2019/07/cloud.png" alt="">
-    <img class="cloud" src="http://shimotmk.com/wp-content/uploads/2019/07/cloud.png" alt="">
-  </div>
-  <div class="grass"></div>  
-  <div class="road">
-    <div class="lines"></div>
-    <img class="mario" src="http://shimotmk.com/wp-content/uploads/2019/07/mario.png" alt="">
-    <img class="luigi" src="http://shimotmk.com/wp-content/uploads/2019/07/luigi.png" alt="">
-  </div>
-</div>
 
+<body>
+<script type="text/javascript" src="${path}/js/funnyjs/funny.js"></script>
+    <div id="result">
+      <span>Soll's soft Windows [Version 10.0.666]<br>
+      (c) Microsoft Corporation, 2017. All rights reserved.<br>   
+      </span>
+      <br><br>
+    </div>
+    <label id="label" for="cmd">C:\Users\Soll></label>
+    <input id="cmd" type="text" onkeypress="return cmd(event)" maxlength="255" autofocus/>
 </body>
 </html>

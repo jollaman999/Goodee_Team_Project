@@ -197,4 +197,16 @@ ModelAndView mav = new ModelAndView();
 return mav;
 }
 
+@RequestMapping("funnygame")
+public ModelAndView funnygame(HttpSession session) {
+ModelAndView mav = new ModelAndView();
+return mav;
+}
+
+@RequestMapping("memo")
+public ModelAndView memo(HttpSession session) {
+ModelAndView mav = new ModelAndView();
+return mav;
+}
+
 }
