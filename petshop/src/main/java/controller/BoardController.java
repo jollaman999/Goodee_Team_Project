@@ -322,7 +322,7 @@ public class BoardController {
             }
 
             if (request.getRequestURI().contains("reply")) {
-                if (board.getRef() != 0) {
+                if (board.getRefstep() != 0) {
                     throw new ShopException("답변글을 남길 수 없는 게시글 입니다!", "detail.shop?type=" + type + "&num=" + num);
                 }
             }
