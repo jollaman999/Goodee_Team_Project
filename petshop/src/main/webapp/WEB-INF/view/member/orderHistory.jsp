@@ -217,10 +217,10 @@
                             <div style="margin-bottom: 8px">발송완료</div>
                             
                             <c:if test="${delivery.courier eq '1'}">
-                            	<div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회<br> (ex우체국택배)</a></div>
+                            	<div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회</a></div>
                             </c:if> 
                            
-                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회<br> (ex우체국택배)</a></div>                          
+                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회</a></div>                          
                         </c:when>
                         <c:when test="${order.status eq '4'}">
                             취소접수
@@ -457,7 +457,7 @@
                         </c:when>
                         <c:when test="${order.status eq '3'}">
                             <div style="margin-bottom: 8px">발송완료</div>
-                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회<br> (ex우체국택배)</a></div>
+                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회</a></div>
                         </c:when>
                         <c:when test="${order.status eq '4'}">
                             취소접수
@@ -698,7 +698,7 @@
                         </c:when>
                         <c:when test="${order.status eq '3'}">
                             <div style="margin-bottom: 8px">발송완료</div>
-                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회<br> (ex우체국택배)</a></div>
+                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회</a></div>
                         </c:when>
                         <c:when test="${order.status eq '4'}">
                             취소접수
@@ -934,7 +934,7 @@
                         </c:when>
                         <c:when test="${order.status eq '3'}">
                             <div style="margin-bottom: 8px">발송완료</div>
-                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회<br> (ex우체국택배)</a></div>
+                            <div><a href="https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=&displayHeader=N" target="_blank">배송조회</a></div>
                         </c:when>
                         <c:when test="${order.status eq '4'}">
                             취소접수
