@@ -26,53 +26,53 @@ function cmd(e) {
         } else if (command === "exit" && newToDo !== 1 && del !==1) {
             ToDoList.splice(1, ToDoList.length - 1);
             document.getElementById("result").innerHTML += "success<br>";       
-            location.href = 'http://localhost:8080/petshop/index.jsp';
+            location.href = '../index.jsp';
             
         } else if (command === "list" && newToDo !== 1 && del !==1) {
             ToDoList.splice(1, ToDoList.length - 1);
             document.getElementById("result").innerHTML += "success<br>";       
-            location.href = 'http://localhost:8080/petshop/admin/list.shop';   
+            location.href = '../admin/list.shop';
             
         } else if (command === "profit_d" && newToDo !== 1 && del !==1) {
             ToDoList.splice(1, ToDoList.length - 1);
             document.getElementById("result").innerHTML += "success<br>";       
-            location.href = 'http://localhost:8080/petshop/inventory/money_day.shop';
+            location.href = '../inventory/money_day.shop';
             
         } else if (command === "profit_m" && newToDo !== 1 && del !==1) {
             ToDoList.splice(1, ToDoList.length - 1);
             document.getElementById("result").innerHTML += "success<br>";       
-            location.href = 'http://localhost:8080/petshop/inventory/money_month.shop';
+            location.href = '../inventory/money_month.shop';
             
         } else if (command === "profit_y" && newToDo !== 1 && del !==1) {
             ToDoList.splice(1, ToDoList.length - 1);
             document.getElementById("result").innerHTML += "success<br>";       
-            location.href = 'http://localhost:8080/petshop/inventory/money_year.shop';
+            location.href = '../inventory/money_year.shop';
             
             
         } else if (command === "order" && newToDo !== 1 && del !==1) {
             ToDoList.splice(1, ToDoList.length - 1);
             document.getElementById("result").innerHTML += "success<br>";       
-            location.href = 'http://localhost:8080/petshop/inventory/selling.shop';  
+            location.href = '../inventory/selling.shop';
             
         } else if (command === "management" && newToDo !== 1 && del !==1) {
             ToDoList.splice(1, ToDoList.length - 1);
             document.getElementById("result").innerHTML += "success<br>";       
-            location.href = 'http://localhost:8080/petshop/inventory/list.shop'; 
+            location.href = '../inventory/list.shop';
        
         } else if (command === "add" && newToDo !== 1 && del !==1) {
             ToDoList.splice(1, ToDoList.length - 1);
             document.getElementById("result").innerHTML += "success<br>";       
-            location.href = 'http://localhost:8080/petshop/item/create.shop?pageNum='; 
+            location.href = '../item/create.shop?pageNum=';
         
        } else if (command === "game" && newToDo !== 1 && del !==1) {
             ToDoList.splice(1, ToDoList.length - 1);
             document.getElementById("result").innerHTML += "success<br>";       
-            location.href = 'http://localhost:8080/petshop/inventory/funnygame.shop'; 
+            location.href = '../inventory/funnygame.shop';
             
        } else if (command === "memo" && newToDo !== 1 && del !==1) {
            ToDoList.splice(1, ToDoList.length - 1);
            document.getElementById("result").innerHTML += "success<br>";       
-           location.href = 'http://localhost:8080/petshop/inventory/memo.shop'; 
+           location.href = '../inventory/memo.shop';
   	
         } else {
             document.getElementById("result").innerHTML += '"' + command + '"' + '<br>';
