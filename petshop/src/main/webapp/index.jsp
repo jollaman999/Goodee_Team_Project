@@ -226,26 +226,7 @@
 </section>
 <!-- latest product section end -->
 
-<!--  강아지   미완성   https://codepen.io/jesusramiropr/pen/peWyZa  -->
-
-<div class="dog" style="margin-top: 100px; margin-bottom: 150px;">
-	<div class="head">
-		<div class="ears"></div>
-		<div class="eyes"></div>
-		<div class="beard">
-			<div class="mouth">
-				<div class="tongue"></div>
-			</div>
-		</div>
-	</div>
-	<div class="belt"></div>
-	<div class="stomach"></div>
-	<div class="legs">
-		<div class="left"></div>
-		<div class="right"></div>
-	</div>
-	<div class="tail"></div>
-</div>
+<div id="tuna" style="margin-top: 100px; margin-bottom: 150px;"></div>
 
 
 <!-- Product filter section -->

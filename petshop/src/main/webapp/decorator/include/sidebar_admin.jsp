@@ -22,9 +22,8 @@
         <li><a href="${path}/inventory/list.shop"><i class="fa fa-cubes sidebaricon"></i>&nbsp;&nbsp;상품관리</a></li>
         <li><a href="${path}/board/list.shop?type=0"><i class="fa fa-bell-o sidebaricon"></i>&nbsp;&nbsp;공지사항</a></li>
         <li><a href="${path}/board/list.shop?type=1"><i class="fa fa-commenting-o sidebaricon"></i>&nbsp;&nbsp;1:1문의</a></li>
+        <li><a href="${path}/inventory/funny.shop"><i class="fa fa-spinner" aria-hidden="true"></i>&nbsp;&nbsp;관리자모드</a></li>
         <li><a href="${path}/member/logout.shop"><i class="fa fa-sign-out sidebaricon"></i>&nbsp;&nbsp;로그아웃</a></li>
-
-         
     </ul>
 </div>
 

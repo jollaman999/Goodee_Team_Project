@@ -190,4 +190,16 @@ public class InventoryController {
 
         return mav;
     }
+
+    @RequestMapping("funny")
+    public ModelAndView funny(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        return mav;
+    }
+
+    @RequestMapping("funnygame")
+    public ModelAndView funnygame(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        return mav;
+    }
 }
